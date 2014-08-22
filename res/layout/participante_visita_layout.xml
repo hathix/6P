@@ -1,0 +1,138 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".ParticipanteVisitaActivity" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+                    
+	     <TextView
+	        android:id="@+id/tvw_nombres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	        android:text="@string/nombres" />
+	
+	    <EditText
+	        android:id="@+id/edt_nombres"
+	        android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_weight="1" 
+            android:enabled="false"
+            android:inputType="text" />  
+   	    <TextView
+	        android:id="@+id/tvwLocal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/txtLocal" />	                    
+	    <Spinner
+	        android:id="@+id/spnLocal"
+	        android:layout_height="wrap_content"
+	        android:layout_width="300dp"
+	        android:layout_gravity="center_horizontal"
+	        android:paddingLeft="10dip"
+	        android:paddingRight="10dip"
+	        android:textColor="#000000"
+	         android:textSize="17sp" />
+   	    <TextView
+	        android:id="@+id/tvwProyecto"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/txtproject" />	                    
+	    <Spinner
+	        android:id="@+id/spnProyecto"
+	        android:layout_height="wrap_content"
+	        android:layout_width="300dp"
+	        android:layout_gravity="center_horizontal"
+	        android:paddingLeft="10dip"
+	        android:paddingRight="10dip"
+	        android:textColor="#000000"
+	         android:textSize="17sp" />
+   	    <TextView
+	        android:id="@+id/tvwGrupo"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/txtvisitgroup" />	   
+    	<Spinner
+	        android:id="@+id/spnGrupo"
+	        android:layout_height="wrap_content"
+	        android:layout_width="300dp"
+	        android:layout_gravity="center_horizontal"
+	        android:paddingLeft="10dip"
+	        android:paddingRight="10dip"
+	        android:textColor="#000000"
+	         android:textSize="17sp" />
+   	    <TextView
+	        android:id="@+id/tvwVisita"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/txtvisit" />	   
+	    <Spinner
+	        android:id="@+id/spnVisita"
+	        android:layout_height="wrap_content"
+	        android:layout_width="300dp"
+	        android:layout_gravity="center_horizontal"
+	        android:paddingLeft="10dip"
+	        android:paddingRight="10dip"
+	        android:textColor="#000000"
+	         android:textSize="17sp" />
+
+
+	    <TextView
+	        android:id="@+id/tvDate"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:minHeight="30dip"
+	        android:textSize="14sp" 
+	        android:text="@string/txtfecha_visita" /> 
+	        
+	    <TextView
+	        android:id="@+id/tvwfecha_visita"
+	        android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_weight="1"
+            style="@android:style/Widget.DeviceDefault.Light.Spinner"
+	        android:text=""/>	   
+	        
+	    <TextView
+	        android:id="@+id/tvw_txthora_visita"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	        android:text="@string/txthora_visita" />
+	
+<!-- 	    <EditText
+	        android:id="@+id/edt_hora_visita"
+	        android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_weight="1" 
+	        android:inputType="text" />	     -->
+
+	    <TextView
+	        android:id="@+id/tvwhora_visita"
+	        android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_weight="1"
+            style="@android:style/Widget.DeviceDefault.Light.Spinner"
+	        android:text=""/>	
+	        	    	        	    	    
+	    <org.ses.android.soap.widgets.GrupoBotones android:id="@+id/btgNavega"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" />			    
+      </LinearLayout>	    	    	    	    
+    </ScrollView> 
+ 
+</LinearLayout>

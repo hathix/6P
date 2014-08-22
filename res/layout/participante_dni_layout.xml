@@ -1,0 +1,85 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".ParticipanteDNIActivity" >
+
+ 	<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >   
+	     <RadioGroup android:id="@+id/rbgTipoDoc"
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" >
+
+			<RadioButton
+			    android:id="@+id/rboDNI"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:checked="true"
+			    android:text="@string/tipdoc_dni" />
+
+			<RadioButton android:id="@+id/rboOtros"
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/tipdoc_otros" />
+		</RadioGroup> 
+    </LinearLayout>
+      
+ 	<LinearLayout 
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >     	        
+	    <TextView
+	        android:id="@+id/tvw_doc_identidad"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+	        android:text="@string/ingrese_doc_identidad" />
+	
+	    <EditText
+	        android:id="@+id/edt_doc_identidad"
+            android:layout_height="wrap_content"
+            android:layout_width="120dp"
+	        android:layout_marginLeft="10dp"
+	        android:layout_marginRight="10dp"
+	        android:layout_marginTop="5dp"
+	        android:inputType="text" />
+    </LinearLayout>
+    
+<!-- 	<LinearLayout 
+	    android:layout_width="wrap_content" 
+	    android:layout_height="wrap_content"  
+	    android:layout_gravity="center">
+
+	    <Button
+	        android:id="@+id/btnAnterior"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="left"
+	        android:height="30dip"
+	        android:padding="16dp"
+	        android:text="@string/opc_anterior"
+	        android:textSize="14sp" />
+
+	    <Button
+	        android:id="@+id/btnSiguiente"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="right"
+	        android:height="30dip"
+	        android:padding="16dp"
+	        android:text="@string/opc_siguiente"
+	        android:textSize="14sp" />
+
+    </LinearLayout> -->
+    <org.ses.android.soap.widgets.GrupoBotones android:id="@+id/btgNavega"
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content" />
+       	
+</LinearLayout>

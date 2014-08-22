@@ -1,0 +1,111 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".ParticipanteDatosActivity" >
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+                    
+	     <TextView
+	        android:id="@+id/tvw_nombres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	        android:text="@string/nombres" />
+	
+	    <EditText
+	        android:id="@+id/edt_nombres"
+	        android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_weight="1" 
+	        android:inputType="text" />  
+	                    
+	    <TextView
+	        android:id="@+id/tvw_ape_pat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	        android:text="@string/ape_pat" />
+	
+	    <EditText
+	        android:id="@+id/edt_ape_pat"
+	        android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_weight="1" 
+	        android:inputType="text" />
+	    
+	    <TextView
+	        android:id="@+id/tvw_ape_mat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+	        android:text="@string/ape_mat" />
+	
+	    <EditText
+	        android:id="@+id/edt_ape_mat"
+	        android:layout_height="wrap_content"
+            android:layout_width="300dp"
+            android:layout_weight="1" 
+	        android:inputType="text" />
+	    <TextView
+	        android:id="@+id/tvDate"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/fecha_nacimiento" />
+	    
+<!-- 	    <Button
+	        android:id="@+id/btnfecha_nacimiento"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:minHeight="30dip"
+	        android:textSize="14sp"
+	        android:text="@string/fecha_nacimiento" /> -->
+	    
+	    <TextView
+	        android:id="@+id/tvwfecha_nacimiento"
+	        android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_weight="1"
+            style="@android:style/Widget.DeviceDefault.Light.Spinner"
+	        android:text=""/>		    
+
+
+	     <RadioGroup android:id="@+id/rbgSexo"
+			android:orientation="horizontal"
+			android:layout_width="fill_parent"
+			android:layout_height="fill_parent" >
+
+			<RadioButton
+			    android:id="@+id/rboMasculino"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/masculino"
+			    android:textSize="14sp" />
+
+			<RadioButton
+			    android:id="@+id/rboFemenino"
+			    android:layout_width="wrap_content"
+			    android:layout_height="wrap_content"
+			    android:text="@string/femenino"
+			    android:textSize="14sp" />
+
+		</RadioGroup> 
+	    <org.ses.android.soap.widgets.GrupoBotones android:id="@+id/btgNavega"
+			android:layout_width="fill_parent"
+			android:layout_height="wrap_content" />			    
+      </LinearLayout>	    	    	    	    
+    </ScrollView> 
+ 
+</LinearLayout>

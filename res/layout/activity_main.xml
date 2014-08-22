@@ -1,0 +1,110 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical"
+    tools:context=".Login" >
+
+
+     <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+	   <TextView
+	       android:id="@+id/tvwMensaje"
+	       android:layout_width="wrap_content"
+	       android:layout_height="wrap_content" />
+         
+        <TextView
+             android:id="@+id/TextView01"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:text="@string/login_usuario"
+             android:textColor="#151414"
+             android:textSize="20sp"
+             android:typeface="monospace"
+             android:textStyle="bold"
+             android:shadowColor="#FFFFFF"
+             android:shadowRadius="1.5"
+             android:shadowDx="1"
+             android:shadowDy="2" />
+ 
+	    <EditText
+	        android:id="@+id/txtUsuario"
+	        android:layout_width="300dp"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:paddingLeft="10dip"
+	        android:paddingRight="10dip"
+	        android:textColor="#000000"
+	        android:textSize="17sp" />
+
+	    <TextView
+	        android:id="@+id/TextView02"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:shadowColor="#FFFFFF"
+	        android:shadowDx="1"
+	        android:shadowDy="2"
+	        android:shadowRadius="1.5"
+	        android:text="@string/login_password"
+	        android:textColor="#151414"
+	        android:textSize="20sp"
+	        android:textStyle="bold"
+	        android:typeface="monospace" />
+ 
+	    <EditText android:id="@+id/txtPassword"
+	        android:layout_height="wrap_content"
+	        android:layout_width="300dp"
+	        android:layout_gravity="center_horizontal"
+	        android:paddingLeft="10dip"
+	        android:paddingRight="10dip"
+	        android:textColor="#000000"
+	         android:textSize="17sp"
+	        android:inputType="textPassword" />
+
+   	    <TextView
+	        android:id="@+id/tvwLocal"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:shadowColor="#FFFFFF"
+	        android:shadowDx="1"
+	        android:shadowDy="2"
+	        android:shadowRadius="1.5"
+	        android:text="@string/txtLocal"
+	        android:textColor="#151414"
+	        android:textSize="20sp"
+	        android:textStyle="bold"
+	        android:typeface="monospace" />
+	    <Spinner
+	        android:id="@+id/spnLocal"
+	        android:layout_height="wrap_content"
+	        android:layout_width="300dp"
+	        android:layout_gravity="center_horizontal"
+	        android:paddingLeft="10dip"
+	        android:paddingRight="10dip"
+	        android:textColor="#000000"
+	         android:textSize="17sp" />
+ 
+	    <Button
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:id="@+id/btnIngresar"
+	            android:text="@string/login_ingresar"
+	            android:typeface="serif"
+	            android:textStyle="bold"
+	            android:textSize="18sp"
+	            android:paddingLeft="20dip"
+	            android:paddingRight="20dip"
+	            android:background="#0099CC"
+	            android:textColor="#FFFFFF"
+	            android:shadowColor="#FF8800"
+	            android:shadowRadius="1.5"
+	             android:shadowDx="1"
+	             android:shadowDy="2"
+	            android:layout_gravity="center_horizontal" />     
+
+   </LinearLayout>
+</LinearLayout>
