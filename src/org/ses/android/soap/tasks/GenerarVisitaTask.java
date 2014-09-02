@@ -55,7 +55,7 @@ public class GenerarVisitaTask extends AsyncTask<String,String,String> {
 
 				SoapPrimitive resultado_xml =(SoapPrimitive)envelope.getResponse();
 				String res = resultado_xml.toString();
-				
+
 				if(!res.equals("1"))
 					resul = "";
 			} 

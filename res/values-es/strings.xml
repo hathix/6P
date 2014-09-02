@@ -299,5 +299,13 @@
 	<string name="busq_2ndname">Apellido Materno :</string>
 	<string name="busq_birthdate">Fecha de Nacimiento :</string>
 	<string name="busq_gender">Sexo :</string>
-	<string name="question_visit_done">Visita Atendida?</string>					
+	<string name="question_visit_done">Visita Atendida?</string>
+    <string name="opc_generate_id">Generar ID</string>
+    <string name="participant_id:">ID Participante</string>
+    <string name="id_type">Tipo de ID</string>
+    <string name="participant_name:">Participante</string>
+    <string name="id_assign_title">Asignacion ID Participante</string>
+    <string name="screening">Tamizaje</string>
+    <string name="enrollment">Enrolamiento</string>
+    <string name="id_assign_ok">Aceptar</string>
 </resources>

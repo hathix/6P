@@ -142,7 +142,7 @@ public class MainActivity extends Activity {
 				    editor.putString(PreferencesActivity.KEY_LOCAL_ID, selLocal);
 //				    editor.commit();
 
-					//response = login.Mensaje;
+
 					Log.i("login", "OnClick_response:" + response);
 		//				 //Sale despues
 		//					Intent i=new Intent(MainActivity.this,Menu_principal.class); 
@@ -167,10 +167,10 @@ public class MainActivity extends Activity {
 					}
 				} catch (InterruptedException e1) {
 					response = e1.getMessage();
-				} catch (ExecutionException e1) {
-					response = e1.getMessage();
-				} catch (Exception e1) {
-					response = e1.getMessage();
+				} catch (ExecutionException e2) {
+					response = e2.getMessage();
+				} catch (Exception e3) {
+					response = e3.getMessage();
 				}
 				tvwMensaje.setText(response); 
 				
