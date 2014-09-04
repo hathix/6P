@@ -60,19 +60,23 @@
             android:singleLine="true" />
 
         <LinearLayout
-            android:layout_width="100dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:orientation="horizontal" >
+            android:layout_gravity="center" >
 
             <Button
                 android:id="@+id/btn_accept1"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="2dp"
-                android:layout_marginTop="5dp"
                 android:layout_weight="1"
                 android:text="@string/id_assign_ok" />
+            <Button
+                android:id="@+id/btn_cancel1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/id_assign_cancel" />
         </LinearLayout>
     </LinearLayout>
 

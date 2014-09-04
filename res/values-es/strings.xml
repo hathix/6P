@@ -308,4 +308,5 @@
     <string name="screening">Tamizaje</string>
     <string name="enrollment">Enrolamiento</string>
     <string name="id_assign_ok">Aceptar</string>
+    <string name="id_assign_cancel">Volver</string>
 </resources>

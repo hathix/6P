@@ -34,6 +34,7 @@ public class ParticipanteAsignarIdActivity extends Activity {
 	//private static final int VISITLIST_ID = Menu.FIRST;
 
 	private Button btn_accept1;
+    private Button btn_cancel1;
     private TextView txt_id_type;
     private TextView txt_participant_name;
     private EditText edt_participant_name;
@@ -65,23 +66,23 @@ public class ParticipanteAsignarIdActivity extends Activity {
         btn_accept1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                idAsigTAM = "";
-//                idAsigENR = "";
-                String mIdAsig = edt_participant_id.getText().toString();
-                Log.i("btn_accept1","mIdAsig:" + mIdAsig);
-                String resul = AsignarID(selLocal, selProyecto,codigopaciente, mIdAsig,  codigousuario, url);
-                txt_assign_msg.setText(resul);
-                Log.i("btn_accept1","resul:" + resul);
-                Toast.makeText(getBaseContext(), resul, Toast.LENGTH_SHORT).show();
-//                if (resul.equals("OK")) {
-//                    Toast.makeText(getBaseContext(), "ID creado con exito!!", Toast.LENGTH_SHORT).show();
-//                }else{
-//                    Toast.makeText(getBaseContext(), "No se creado el ID !!", Toast.LENGTH_SHORT).show();
-//                }
 
+            String mIdAsig = edt_participant_id.getText().toString();
+            Log.i("btn_accept1","mIdAsig:" + mIdAsig);
+            String resul = AsignarID(selLocal, selProyecto,codigopaciente, mIdAsig,  codigousuario, url);
+            txt_assign_msg.setText(resul);
+            //btn_accept1.setVisibility(View.INVISIBLE);
+            btn_accept1.setEnabled(false);
+            Log.i("btn_accept1","resul:" + resul);
+            Toast.makeText(getBaseContext(), resul, Toast.LENGTH_SHORT).show();
             }
         });
-
+        btn_cancel1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
 	}
 
     private void DataLoad(){
@@ -102,6 +103,7 @@ public class ParticipanteAsignarIdActivity extends Activity {
         edt_participant_name = (EditText)findViewById(R.id.edt_participant_name);
         edt_participant_id= (EditText)findViewById(R.id.edt_participant_id);
         btn_accept1 = (Button)findViewById(R.id.btn_accept1);
+        btn_cancel1 = (Button)findViewById(R.id.btn_cancel1);
         txt_id_type = (TextView)findViewById(R.id.txt_id_type);
         txt_assign_msg = (TextView)findViewById(R.id.txt_assign_msg);
         edt_participant_name.setFocusable(false);
@@ -130,11 +132,14 @@ public class ParticipanteAsignarIdActivity extends Activity {
                 if (mTipoAsig.equals("2"))  //   Asignar automáticamente
                 {
                     edt_participant_id.setFocusable(false);
+                    //btn_accept1.setVisibility(View.INVISIBLE);
+                    btn_accept1.setEnabled(false);
                 }
                 if (mTipoAsig.equals("0") || mTipoAsig.equals("1"))  //     Asignar manualmente
                 {
                     edt_participant_id.setFocusable(true);
-                    btn_accept1.setVisibility(View.VISIBLE);
+                    //btn_accept1.setVisibility(View.VISIBLE);
+                    btn_accept1.setEnabled(true);
                 }
             }
             if (selGrupo.equals("2")  && selVisita.equals("1"))
@@ -145,21 +150,26 @@ public class ParticipanteAsignarIdActivity extends Activity {
                 edt_participant_id.setText(tipoID[0].IdENR);
                 if (tipoID[0].IdENR == null || tipoID[0].IdENR.equals("anyType{}")){
                     edt_participant_id.setText("");
-                    btn_accept1.setVisibility(View.VISIBLE);
+                    //btn_accept1.setVisibility(View.VISIBLE);
+                    btn_accept1.setEnabled(true);
                     edt_participant_id.setFocusable(false);
                 }else{
                     edt_participant_id.setText(tipoID[0].IdENR);
-                    btn_accept1.setVisibility(View.INVISIBLE);
+                    //btn_accept1.setVisibility(View.INVISIBLE);
+                    btn_accept1.setEnabled(false);
                     edt_participant_id.setFocusable(false);
                 }
                 if (mTipoAsig == "2")      // Asignar automáticamente
                 {
                     edt_participant_id.setFocusable(false);
+                    //btn_accept1.setVisibility(View.INVISIBLE);
+                    btn_accept1.setEnabled(false);
                 }
                 if (mTipoAsig == "0" || mTipoAsig == "1")    // Asignar manualmente
                 {
                     edt_participant_id.setFocusable(true);
-                    btn_accept1.setVisibility(View.VISIBLE);
+                    //btn_accept1.setVisibility(View.VISIBLE);
+                    btn_accept1.setEnabled(true);
                 }
             }
         } catch (InterruptedException e) {
