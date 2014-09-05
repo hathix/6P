@@ -132,13 +132,11 @@ public class ParticipanteAsignarIdActivity extends Activity {
                 if (mTipoAsig.equals("2"))  //   Asignar automáticamente
                 {
                     edt_participant_id.setFocusable(false);
-                    //btn_accept1.setVisibility(View.INVISIBLE);
                     btn_accept1.setEnabled(false);
                 }
                 if (mTipoAsig.equals("0") || mTipoAsig.equals("1"))  //     Asignar manualmente
                 {
                     edt_participant_id.setFocusable(true);
-                    //btn_accept1.setVisibility(View.VISIBLE);
                     btn_accept1.setEnabled(true);
                 }
             }
@@ -150,25 +148,19 @@ public class ParticipanteAsignarIdActivity extends Activity {
                 edt_participant_id.setText(tipoID[0].IdENR);
                 if (tipoID[0].IdENR == null || tipoID[0].IdENR.equals("anyType{}")){
                     edt_participant_id.setText("");
-                    //btn_accept1.setVisibility(View.VISIBLE);
-                    btn_accept1.setEnabled(true);
-                    edt_participant_id.setFocusable(false);
+                    edt_participant_id.setFocusable(true);
                 }else{
                     edt_participant_id.setText(tipoID[0].IdENR);
-                    //btn_accept1.setVisibility(View.INVISIBLE);
-                    btn_accept1.setEnabled(false);
                     edt_participant_id.setFocusable(false);
                 }
-                if (mTipoAsig == "2")      // Asignar automáticamente
+                if (mTipoAsig.equals("2"))      // Asignar automáticamente
                 {
                     edt_participant_id.setFocusable(false);
-                    //btn_accept1.setVisibility(View.INVISIBLE);
                     btn_accept1.setEnabled(false);
                 }
-                if (mTipoAsig == "0" || mTipoAsig == "1")    // Asignar manualmente
+                if (mTipoAsig.equals("0") || mTipoAsig.equals("1"))  //     Asignar manualmente
                 {
                     edt_participant_id.setFocusable(true);
-                    //btn_accept1.setVisibility(View.VISIBLE);
                     btn_accept1.setEnabled(true);
                 }
             }
