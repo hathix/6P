@@ -23,7 +23,7 @@ public class ParticipantLoadTask extends AsyncTask<String,String,Participant> {
 		final String METHOD_NAME = "BuscarParticipante";
 		final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
 		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-//		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
 		request.addProperty("DocIdentidad", params[0]);
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
 		envelope.dotNet = true;

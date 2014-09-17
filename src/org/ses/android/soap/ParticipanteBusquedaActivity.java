@@ -64,48 +64,42 @@ public class ParticipanteBusquedaActivity extends Activity {
 			ParticipantLoadTask tarea = new ParticipantLoadTask();
 			doc_identidad = edt_dni_document.getText().toString();
 			
-	        if (!UrlUtils.validData(doc_identidad, "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]")){
-				Toast.makeText(getBaseContext(), "Nro. de DNI invalido!!",Toast.LENGTH_SHORT).show();
-			}
-	        else
-			{
-                mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                String url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
-                        getString(R.string.default_server_url));
-	        	asyncTask=tarea.execute(doc_identidad,url);
-		        Participant objParticipante;
-				try {
-					objParticipante = asyncTask.get();
-					Log.i("doc_identidad",doc_identidad );
-					if (objParticipante == null){
-						Toast.makeText(getBaseContext(), "No existe partipante con ese DNI!!",Toast.LENGTH_SHORT).show();
-					}else{
-						txt_nombresb.setText(objParticipante.Nombres);
-						txt_ape_patb.setText(objParticipante.ApellidoPaterno);
-						txt_ape_matb.setText(objParticipante.ApellidoMaterno);
-						txt_fechab.setText(objParticipante.FechaNacimiento);
-						nombres = objParticipante.ApellidoPaterno.trim()+" "+objParticipante.ApellidoMaterno.trim()+" "+
-								objParticipante.Nombres.trim();
-						String msexo="Masculino";
-						if (objParticipante.Sexo==2) msexo="Femenino";
-						txt_sexob.setText( msexo);
+            mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            String url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
+                    getString(R.string.default_server_url));
+            asyncTask=tarea.execute(doc_identidad,url);
+            Participant objParticipante;
+            try {
+                objParticipante = asyncTask.get();
+                Log.i("doc_identidad",doc_identidad );
+                if (objParticipante == null){
+                    Toast.makeText(getBaseContext(), "No existe partipante con ese DNI!!",Toast.LENGTH_SHORT).show();
+                }else{
+                    txt_nombresb.setText(objParticipante.Nombres);
+                    txt_ape_patb.setText(objParticipante.ApellidoPaterno);
+                    txt_ape_matb.setText(objParticipante.ApellidoMaterno);
+                    txt_fechab.setText(objParticipante.FechaNacimiento);
+                    nombres = objParticipante.ApellidoPaterno.trim()+" "+objParticipante.ApellidoMaterno.trim()+" "+
+                            objParticipante.Nombres.trim();
+                    String msexo="Masculino";
+                    if (objParticipante.Sexo==2) msexo="Femenino";
+                    txt_sexob.setText( msexo);
 
-                    	Editor editor = mPreferences.edit();
-						editor.putString("CodigoPaciente",objParticipante.CodigoPaciente);
-						editor.putString("patient_name",nombres);
-						editor.commit();
-					}
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-				
-			}
-			
-		}
+                    Editor editor = mPreferences.edit();
+                    editor.putString("CodigoPaciente",objParticipante.CodigoPaciente);
+                    editor.putString("patient_name",nombres);
+                    editor.commit();
+                }
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        }
+
 		});
 		
         btgNavega.setOnAnteriorListener(new GrupoBotones.OnAnteriorListener() {
@@ -129,14 +123,10 @@ public class ParticipanteBusquedaActivity extends Activity {
 		btnShowVisits.setOnClickListener(new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
-	        if (!UrlUtils.validData(doc_identidad, "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]")){
-				Toast.makeText(getBaseContext(), "Nro. de DNI invalido!!",Toast.LENGTH_SHORT).show();
+
+            visitList();
 			}
-	        else
-			{
-                VISITLIST();
-			}
-		}
+//		}
 		});
 		        
 	}
@@ -152,19 +142,13 @@ public class ParticipanteBusquedaActivity extends Activity {
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
         switch(item.getItemId()) {
             case VISITLIST_ID:
-    	        if (!UrlUtils.validData(doc_identidad, "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]")){
-    				Toast.makeText(getBaseContext(), "Nro. de DNI invalido!!",Toast.LENGTH_SHORT).show();
-    			}
-    	        else
-    			{
-                    VISITLIST();
-    			}
+                visitList();
                 return true;
         }
 
         return super.onMenuItemSelected(featureId, item);
     }
-    private void VISITLIST() {
+    private void visitList() {
         Intent i = new Intent(this, VisitListActivity.class);
         startActivityForResult(i, ACTIVITY_VISITLIST);
     }

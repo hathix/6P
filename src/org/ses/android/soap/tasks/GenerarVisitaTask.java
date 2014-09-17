@@ -7,6 +7,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class GenerarVisitaTask extends AsyncTask<String,String,String> {
 	
@@ -56,7 +57,8 @@ public class GenerarVisitaTask extends AsyncTask<String,String,String> {
 				SoapPrimitive resultado_xml =(SoapPrimitive)envelope.getResponse();
 				String res = resultado_xml.toString();
 
-				if(!res.equals("1"))
+                Log.i("GenerarVisitaTask:res",res);
+                if(Integer.valueOf(res)<1)
 					resul = "";
 			} 
 			catch (Exception e) 

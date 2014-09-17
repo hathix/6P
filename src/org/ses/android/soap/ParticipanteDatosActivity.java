@@ -121,12 +121,13 @@ public class ParticipanteDatosActivity extends Activity {
 
 	
 			        
-			        int idSexo= rbgSexo.getCheckedRadioButtonId();	
+			        int idSexo= rbgSexo.getCheckedRadioButtonId();
 
         			Log.i("onSiguiente_rgbSexo","ID opcion seleccionada: " + Integer.toString(idSexo));
-					
-					if (idSexo==2131427371)	sexo="1";
-					if (idSexo==2131427372) sexo="2";
+                    Log.i("onSiguiente_rboMasculino","R.id.rboMasculino:" + String.valueOf(R.id.rboMasculino));
+                    Log.i("onSiguiente_rboFemenino","R.id.rboFemenino:" + String.valueOf(R.id.rboFemenino));
+                    if (idSexo== R.id.rboMasculino)	sexo="1";
+					if (idSexo==R.id.rboFemenino) sexo="2";
 					if (idSexo==-1) sexo="";
 					Log.i("onSiguiente sexo:",sexo);
         			

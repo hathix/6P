@@ -77,7 +77,10 @@ public class ParticipanteDNIActivity extends Activity {
 			        int tipdocSeleccionado = rbgTipoDoc.getCheckedRadioButtonId();			        
         			Log.i("dni","OnSiguiente_ID Tipo Doc. opcion seleccionada: " + Integer.toString(tipdocSeleccionado));
 			        String doc_identidad = edt_doc_identidad.getText().toString();
-        			if (tipdocSeleccionado==2131427368){
+
+                    Log.i("dni","onSiguiente_ID Tipo Doc.:R.id.rboDNI:" + String.valueOf(R.id.rboDNI));
+//                  if (tipdocSeleccionado==2131427368){
+                    if (tipdocSeleccionado==R.id.rboDNI){
     			        if (!UrlUtils.validData(doc_identidad, "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]")){
     						Toast.makeText(getBaseContext(), "Nro. de DNI invalido!!",Toast.LENGTH_SHORT).show();
     					}
