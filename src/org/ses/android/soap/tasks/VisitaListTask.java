@@ -24,7 +24,7 @@ public class VisitaListTask extends AsyncTask<String,String,Visitas[]> {
 		final String METHOD_NAME = "ListadoVisitas1";
 		final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
 		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-//		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
+
 		request.addProperty("CodigoPaciente", params[0]);
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
 		envelope.dotNet = true;

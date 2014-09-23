@@ -1,15 +1,24 @@
 package org.ses.android.soap;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import org.ses.android.seispapp.R;
+import org.ses.android.soap.database.Idreg;
 import org.ses.android.soap.database.Participant;
+import org.ses.android.soap.database.PatId;
+import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;
+import org.ses.android.soap.tasks.IdsListTask;
 import org.ses.android.soap.tasks.ParticipantLoadTask;
+import org.ses.android.soap.tasks.VisitaListTask;
 import org.ses.android.soap.utilities.UrlUtils;
 import org.ses.android.soap.widgets.GrupoBotones;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -17,11 +26,16 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,6 +55,7 @@ public class ParticipanteBusquedaActivity extends Activity {
 	private AsyncTask<String, String, Participant> asyncTask;
 	private SharedPreferences mPreferences ;
 	String nombres,doc_identidad;
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -67,6 +82,8 @@ public class ParticipanteBusquedaActivity extends Activity {
             mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             String url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
                     getString(R.string.default_server_url));
+            String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID,"");
+            Log.i("codigousuario",codigousuario );
             asyncTask=tarea.execute(doc_identidad,url);
             Participant objParticipante;
             try {
@@ -84,7 +101,9 @@ public class ParticipanteBusquedaActivity extends Activity {
                     String msexo="Masculino";
                     if (objParticipante.Sexo==2) msexo="Femenino";
                     txt_sexob.setText( msexo);
-
+                    //
+                    showIds(objParticipante.CodigoPaciente, codigousuario, url);
+                    //
                     Editor editor = mPreferences.edit();
                     editor.putString("CodigoPaciente",objParticipante.CodigoPaciente);
                     editor.putString("patient_name",nombres);
@@ -152,5 +171,64 @@ public class ParticipanteBusquedaActivity extends Activity {
         Intent i = new Intent(this, VisitListActivity.class);
         startActivityForResult(i, ACTIVITY_VISITLIST);
     }
-	
+    public void showIds(String codigopaciente,String codigousuario,String url){
+//        AdaptadorIds adaptador;
+        PatId[] datos ;
+        //String[] idData = null;
+        AsyncTask<String, String, PatId[]> loadIdsList;
+        IdsListTask tareaIds = new IdsListTask();
+        TextView lbl_noids ;
+        GridView lstIds;
+        loadIdsList = tareaIds.execute(codigopaciente,codigousuario,url);
+        ArrayList<PatId> idsArray = new ArrayList<PatId>();
+
+        try {
+            datos = loadIdsList.get();
+            /**
+             * set item into adapter
+             */
+            lbl_noids = (TextView)findViewById(R.id.lbl_noIds);
+            lstIds = (GridView)findViewById(R.id.lstIds);
+
+            if (datos != null){
+                Log.i("showIds:datos",datos.toString());
+                /**
+                 * add item in arraylist
+                 */
+                for (int i = 0; i < datos.length; i++)
+                {
+                    if (datos[i].IdTAM.equals("anyType{}")) datos[i].IdTAM="";
+                    if (datos[i].IdENR.equals("anyType{}")) datos[i].IdENR="";
+                }
+                String[] idData = new String[datos.length*3];
+                int x = 0;
+                for (int j = 0; j < datos.length; j++)
+                {
+
+                    idData[x] = datos[j].Proyecto;
+                    x++;
+                    idData[x] = datos[j].IdTAM;
+                    x++;
+                    idData[x] = datos[j].IdENR;
+                    x++;
+                }
+
+                ArrayAdapter<String> adaptador1 =
+                        new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, idData);
+
+                lstIds.setAdapter(adaptador1);
+            }else{
+                lbl_noids.setText(R.string.no_ids);
+            }
+
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (ExecutionException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+    }
+
 }

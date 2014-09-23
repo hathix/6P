@@ -130,9 +130,32 @@
 		            android:layout_width="300dp"
 		            android:layout_weight="1" 
 			        android:textStyle="bold" />
-            </TableRow>            
-        
+            </TableRow>
         </TableLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="200dp" >
+
+            <GridView android:id="@+id/lstIds"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:numColumns="auto_fit"
+                android:columnWidth="80dp"
+                android:horizontalSpacing="5dp"
+                android:verticalSpacing="5dp"
+                android:textStyle="normal"
+                android:textSize="12sp"
+                android:stretchMode="columnWidth" />
+
+            <TextView android:id="@+id/lbl_noIds"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""/>
+
+        </LinearLayout>
+
 	    <org.ses.android.soap.widgets.GrupoBotones android:id="@+id/btgNavega"
 			android:layout_width="fill_parent"
 			android:layout_height="wrap_content" />			    
