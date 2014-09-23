@@ -1,24 +1,6 @@
 package org.ses.android.soap;
 
-import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-
-import org.ses.android.seispapp.R;
-import org.ses.android.soap.database.Idreg;
-import org.ses.android.soap.database.Participant;
-import org.ses.android.soap.database.PatId;
-import org.ses.android.soap.database.Visitas;
-import org.ses.android.soap.preferences.PreferencesActivity;
-import org.ses.android.soap.tasks.IdsListTask;
-import org.ses.android.soap.tasks.ParticipantLoadTask;
-import org.ses.android.soap.tasks.VisitaListTask;
-import org.ses.android.soap.utilities.UrlUtils;
-import org.ses.android.soap.widgets.GrupoBotones;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
@@ -26,18 +8,26 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import org.ses.android.seispapp.R;
+import org.ses.android.soap.database.Participant;
+import org.ses.android.soap.database.PatId;
+import org.ses.android.soap.preferences.PreferencesActivity;
+import org.ses.android.soap.tasks.IdsListTask;
+import org.ses.android.soap.tasks.ParticipantLoadTask;
+import org.ses.android.soap.widgets.GrupoBotones;
+
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class ParticipanteBusquedaActivity extends Activity {
 	private static final int ACTIVITY_VISITLIST=1;
