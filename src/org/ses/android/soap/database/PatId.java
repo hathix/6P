@@ -11,25 +11,27 @@ import java.util.Hashtable;
 
 public class PatId implements KvmSerializable {
 
+    public String CodigoProyecto;
     public String Proyecto;
     public String IdTAM;
     public String IdENR;
 
     public PatId()
     {
+        CodigoProyecto = "";
         Proyecto = "";
         IdTAM = "";
         IdENR = "";
     }
 
     public PatId(
-
+            String CodigoProyecto,
             String Proyecto,
             String IdTAM,
             String IdENR
-
     )
     {
+        this.CodigoProyecto = CodigoProyecto;
         this.Proyecto = Proyecto;
         this.IdTAM = IdTAM;
         this.IdENR  = IdENR;
@@ -41,10 +43,12 @@ public class PatId implements KvmSerializable {
         switch(arg0)
         {
             case 0:
-                return Proyecto;
+                return CodigoProyecto;
             case 1:
-                return IdTAM;
+                return Proyecto;
             case 2:
+                return IdTAM;
+            case 3:
                 return IdENR;
         }
 
@@ -53,7 +57,7 @@ public class PatId implements KvmSerializable {
 
     @Override
     public int getPropertyCount() {
-        return 3;
+        return 4;
     }
 
     @SuppressWarnings("rawtypes")
@@ -63,12 +67,15 @@ public class PatId implements KvmSerializable {
         {
             case 0:
                 info.type = PropertyInfo.STRING_CLASS;
-                info.name = "Proyecto";
+                info.name = "CodigoProyecto";
             case 1:
+                info.type = PropertyInfo.STRING_CLASS;
+                info.name = "Proyecto";
+            case 2:
                 info.type = PropertyInfo.STRING_CLASS;
                 info.name = "IdTAM";
                 break;
-            case 2:
+            case 3:
                 info.type = PropertyInfo.STRING_CLASS;
                 info.name = "IdENR";
                 break;
@@ -82,12 +89,15 @@ public class PatId implements KvmSerializable {
         switch(ind)
         {
             case 0:
-                Proyecto = val.toString();
+                CodigoProyecto = val.toString();
                 break;
             case 1:
-                IdTAM = val.toString();
+                Proyecto = val.toString();
                 break;
             case 2:
+                IdTAM = val.toString();
+                break;
+            case 3:
                 IdENR  = val.toString();
                 break;
             default:

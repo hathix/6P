@@ -138,16 +138,12 @@
             android:layout_width="match_parent"
             android:layout_height="200dp" >
 
-            <GridView android:id="@+id/lstIds"
+
+            <ListView android:id="@+id/lstIds"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:numColumns="auto_fit"
-                android:columnWidth="80dp"
-                android:horizontalSpacing="5dp"
-                android:verticalSpacing="5dp"
-                android:textStyle="normal"
-                android:textSize="12sp"
-                android:stretchMode="columnWidth" />
+                android:textStyle="bold"
+                android:textSize="10sp" />
 
             <TextView android:id="@+id/lbl_noIds"
                 android:layout_width="wrap_content"
@@ -158,9 +154,9 @@
 
 	    <org.ses.android.soap.widgets.GrupoBotones android:id="@+id/btgNavega"
 			android:layout_width="fill_parent"
-			android:layout_height="wrap_content" />			    
+			android:layout_height="wrap_content" />
       </LinearLayout>
-      	    	    	    	    
-    </ScrollView> 
+
+    </ScrollView>
 
 </LinearLayout>

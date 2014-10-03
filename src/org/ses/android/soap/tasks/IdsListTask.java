@@ -48,18 +48,13 @@ public class IdsListTask extends AsyncTask<String,String,PatId[]> {
 		        SoapObject ic = (SoapObject)resSoap.getProperty(i);
 
                 PatId reg = new PatId();
-                if (i == 0){
-                    reg.Proyecto = "Proyecto...";
-                    reg.IdTAM    = "Id.Tamizaje";
-                    reg.IdENR    = "Id.Enrolam.";
-                }else{
-                    reg.Proyecto = ic.getProperty(0).toString();
-                    reg.IdTAM= ic.getProperty(1).toString();
-                    reg.IdENR= ic.getProperty(2).toString();
-                }
+                reg.CodigoProyecto = ic.getProperty(0).toString();
+                reg.Proyecto = ic.getProperty(1).toString();
+                reg.IdTAM= ic.getProperty(2).toString();
+                reg.IdENR= ic.getProperty(3).toString();
 
                 lstIds[i] = reg;
-                Log.i("", reg.Proyecto + "-" + reg.IdTAM + "-" + reg.IdENR);
+                Log.i("", reg.CodigoProyecto + "-" + reg.IdTAM + "-" + reg.IdENR);
 		    }
 			if (resSoap.getPropertyCount()>0){
 				resul = lstIds;

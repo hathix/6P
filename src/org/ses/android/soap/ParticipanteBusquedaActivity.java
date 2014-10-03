@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.GridView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -168,7 +169,8 @@ public class ParticipanteBusquedaActivity extends Activity {
         AsyncTask<String, String, PatId[]> loadIdsList;
         IdsListTask tareaIds = new IdsListTask();
         TextView lbl_noids ;
-        GridView lstIds;
+        //GridView lstIds;
+        ListView lstIds;
         loadIdsList = tareaIds.execute(codigopaciente,codigousuario,url);
         ArrayList<PatId> idsArray = new ArrayList<PatId>();
 
@@ -178,10 +180,11 @@ public class ParticipanteBusquedaActivity extends Activity {
              * set item into adapter
              */
             lbl_noids = (TextView)findViewById(R.id.lbl_noIds);
-            lstIds = (GridView)findViewById(R.id.lstIds);
+            //lstIds = (GridView)findViewById(R.id.lstIds);
+            lstIds = (ListView)findViewById(R.id.lstIds);
 
             if (datos != null){
-                Log.i("showIds:datos",datos.toString());
+                //Log.i("showIds:datos",datos.toString());
                 /**
                  * add item in arraylist
                  */
@@ -190,23 +193,17 @@ public class ParticipanteBusquedaActivity extends Activity {
                     if (datos[i].IdTAM.equals("anyType{}")) datos[i].IdTAM="";
                     if (datos[i].IdENR.equals("anyType{}")) datos[i].IdENR="";
                 }
-                String[] idData = new String[datos.length*3];
-                int x = 0;
+                String[] idData = new String[datos.length];
                 for (int j = 0; j < datos.length; j++)
                 {
-
-                    idData[x] = datos[j].Proyecto;
-                    x++;
-                    idData[x] = datos[j].IdTAM;
-                    x++;
-                    idData[x] = datos[j].IdENR;
-                    x++;
+                    idData[j] = "("+datos[j].Proyecto + ")IdTAM:" +datos[j].IdTAM + "/IdENR:" +datos[j].IdENR;
                 }
 
                 ArrayAdapter<String> adaptador1 =
                         new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, idData);
 
                 lstIds.setAdapter(adaptador1);
+
             }else{
                 lbl_noids.setText(R.string.no_ids);
             }
