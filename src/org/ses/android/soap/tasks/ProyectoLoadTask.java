@@ -18,14 +18,15 @@ public class ProyectoLoadTask extends AsyncTask<String,String,Proyecto[]> {
     	
     	Proyecto[] resul= null;
 
-		String urlserver = params[1];
+		String urlserver = params[2];
     	final String NAMESPACE = urlserver+"/";
 		final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
-		final String METHOD_NAME = "ListadoProyectos";
+		final String METHOD_NAME = "ListadoProyectos1";
 		final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
 		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-		request.addProperty("local", params[0]);
+		request.addProperty("CodigoLocal", params[0]);
+        request.addProperty("CodigoUsuario", params[1]);
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
 		envelope.dotNet = true;
 

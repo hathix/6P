@@ -127,7 +127,9 @@ public class VisitListActivity extends Activity {
 	public void loadVisitsListView(){
 		VisitaListTask tareaVisits = new VisitaListTask();
 		AdaptadorVisitas adaptador;
-		loadVisitas = tareaVisits.execute(codigopaciente,url);
+
+        String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID,"");
+		loadVisitas = tareaVisits.execute(codigopaciente,codigousuario,url);
 
 		try {
 			ArrayList<Visitas> visitasArray = new ArrayList<Visitas>();

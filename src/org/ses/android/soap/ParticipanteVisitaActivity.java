@@ -121,7 +121,8 @@ public class ParticipanteVisitaActivity extends Activity {
 				public void onItemSelected(AdapterView<?> parent,
 				android.view.View v, int position, long id) {
 					selLocal = Integer.toString(position);
-					if (!selLocal.equals("0")) loadProyectoSpinner(selLocal);
+                    codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
+                    if (!selLocal.equals("0")) loadProyectoSpinner(selLocal,codigousuario);
 					Log.i("Visita","Seleccionado: pos: "+ selLocal + " valor:" + parent.getItemAtPosition(position));
 				}
 				@Override
@@ -492,10 +493,10 @@ public class ParticipanteVisitaActivity extends Activity {
 			}
 
 	}
-	public void loadProyectoSpinner(String local){
+	public void loadProyectoSpinner(String local,String codigousuario){
 		ProyectoLoadTask tareaProyecto = new ProyectoLoadTask();
 		
-		loadProyecto = tareaProyecto.execute(local,url);
+		loadProyecto = tareaProyecto.execute(local,codigousuario,url);
 		Proyecto[] objProyecto;
 		String[] wee;
 		try {
