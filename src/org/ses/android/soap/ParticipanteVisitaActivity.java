@@ -213,8 +213,8 @@ public class ParticipanteVisitaActivity extends Activity {
         			Log.i("Visita","Loc:"+selLocal+"-Proy:"+selProyecto+"-Grupo:"+selGrupo+"-Vis:"+selVisita);
         			Log.i("Visita","codigopaciente:"+codigopaciente+"-fec_visita:"+fec_visita+"-hora_visita:"+hora_visita+"-codigousuario:"+codigousuario);
     				if (selLocal.equals("0")){
-    					Toast.makeText(getBaseContext(), "Elija Local!!",Toast.LENGTH_SHORT).show();
-	        		}else{
+                        Toast.makeText(getBaseContext(), "Elija Local!!",Toast.LENGTH_SHORT).show();
+                    }else{
 	    				if (selProyecto.equals("")){
 	    					Toast.makeText(getBaseContext(), "Elija Proyecto!!",Toast.LENGTH_SHORT).show();
 		        		}else{
@@ -224,7 +224,7 @@ public class ParticipanteVisitaActivity extends Activity {
 			    				if (selVisita.equals("")){
 			    					Toast.makeText(getBaseContext(), "Elija Visita!!",Toast.LENGTH_SHORT).show();
 				        		}else{
-									if (elapsedDays < 0){
+									if (elapsedDays > 0){
 										Toast.makeText(getBaseContext(), "Fecha de Visita invalida, F.Visita > F.Hoy!!",Toast.LENGTH_SHORT).show();
 					        		}else{
 					        			if (!UrlUtils.validData(hora_visita, "^(0?[0-9]|1?[0-9]|2[0-3]):[0-5][0-9]$")){
