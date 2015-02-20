@@ -131,7 +131,12 @@ public class ParticipanteAsignarIdActivity extends Activity {
                 }
                 if (mTipoAsig.equals("2"))  //   Asignar automáticamente
                 {
-                    edt_participant_id.setFocusable(false);
+                    //
+                    String mIdAsig = "";
+                    String resul = AsignarID(selLocal, selProyecto,codigopaciente, mIdAsig,  codigousuario, url);
+                    Toast.makeText(getBaseContext(), resul, Toast.LENGTH_SHORT).show();
+                    edt_participant_id.setText(resul);
+                    //                    edt_participant_id.setFocusable(false);
                     btn_accept1.setEnabled(false);
                 }
                 if (mTipoAsig.equals("0") || mTipoAsig.equals("1"))  //     Asignar manualmente
@@ -155,6 +160,12 @@ public class ParticipanteAsignarIdActivity extends Activity {
                 }
                 if (mTipoAsig.equals("2"))      // Asignar automáticamente
                 {
+                    //
+                    String mIdAsig = "";
+                    String resul = AsignarID(selLocal, selProyecto,codigopaciente, mIdAsig,  codigousuario, url);
+                    Toast.makeText(getBaseContext(), resul, Toast.LENGTH_SHORT).show();
+                    edt_participant_id.setText(resul);
+                    //
                     edt_participant_id.setFocusable(false);
                     btn_accept1.setEnabled(false);
                 }
@@ -203,6 +214,7 @@ public class ParticipanteAsignarIdActivity extends Activity {
         Log.i("AsignarID","AsignarID: " + msj);
         return msj;
     }
+
 
     @Override
     public boolean onMenuItemSelected(int featureId, MenuItem item) {
