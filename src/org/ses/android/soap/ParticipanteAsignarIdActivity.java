@@ -136,7 +136,7 @@ public class ParticipanteAsignarIdActivity extends Activity {
                     String resul = AsignarID(selLocal, selProyecto,codigopaciente, mIdAsig,  codigousuario, url);
                     Toast.makeText(getBaseContext(), resul, Toast.LENGTH_SHORT).show();
                     edt_participant_id.setText(resul);
-                    //                    edt_participant_id.setFocusable(false);
+
                     btn_accept1.setEnabled(false);
                 }
                 if (mTipoAsig.equals("0") || mTipoAsig.equals("1"))  //     Asignar manualmente
