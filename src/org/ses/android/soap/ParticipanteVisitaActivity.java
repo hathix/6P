@@ -122,8 +122,13 @@ public class ParticipanteVisitaActivity extends Activity {
 				android.view.View v, int position, long id) {
 					selLocal = Integer.toString(position);
                     codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
-                    if (!selLocal.equals("0")) loadProyectoSpinner(selLocal,codigousuario);
-					Log.i("Visita","Seleccionado: pos: "+ selLocal + " valor:" + parent.getItemAtPosition(position));
+                    Log.i("Visita","Seleccionado(1): pos: "+ selLocal + " valor:" + parent.getItemAtPosition(position));
+                    if ( selLocal != null) {
+                        if (!selLocal.equals("0")) loadProyectoSpinner(selLocal,codigousuario);
+                    }
+
+					Log.i("Visita","Seleccionado(2): pos: "+ selLocal + " valor:" + parent.getItemAtPosition(position));
+                    Log.i("Visita"," valor:" + selLocal);
 				}
 				@Override
 				public void onNothingSelected(AdapterView<?> parent) {
@@ -497,30 +502,34 @@ public class ParticipanteVisitaActivity extends Activity {
 		ProyectoLoadTask tareaProyecto = new ProyectoLoadTask();
 		
 		loadProyecto = tareaProyecto.execute(local,codigousuario,url);
-		Proyecto[] objProyecto;
-		String[] wee;
-		try {
 
-			objProyecto = loadProyecto.get();
-			wee = new String[objProyecto.length];
-			
-		     for(int i = 0;i < objProyecto.length; i++){
-		         wee[i]= String.valueOf(objProyecto[i].id) +" - "+objProyecto[i].nombre;
-		     }
-		     ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-		             this, android.R.layout.simple_spinner_item, wee);
-		    spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
-		    spnProyecto.setAdapter(spinnerArrayAdapter);	
-		     
-			Log.i("Visita","Proyecto Array");
-			
-		} catch (InterruptedException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (ExecutionException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
+        if (loadProyecto != null){
+            Proyecto[] objProyecto;
+            String[] wee;
+            try {
+
+                objProyecto = loadProyecto.get();
+                wee = new String[objProyecto.length];
+
+                for(int i = 0;i < objProyecto.length; i++){
+                    wee[i]= String.valueOf(objProyecto[i].id) +" - "+objProyecto[i].nombre;
+                }
+                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                        this, android.R.layout.simple_spinner_item, wee);
+                spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+                spnProyecto.setAdapter(spinnerArrayAdapter);
+
+                Log.i("Visita","Proyecto Array");
+
+            } catch (InterruptedException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            } catch (ExecutionException e1) {
+                // TODO Auto-generated catch block
+                e1.printStackTrace();
+            }
+
+        }
 
 }
 

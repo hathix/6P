@@ -20,10 +20,13 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import org.ses.android.seispapp.R;
+import org.ses.android.soap.database.Idreg;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.EstadoVisitaTask;
+import org.ses.android.soap.tasks.FormList1Task;
 import org.ses.android.soap.tasks.FormListTask;
+import org.ses.android.soap.tasks.MostrarTipoIDTask;
 import org.ses.android.soap.tasks.RegistrarParticipanteTask;
 import org.ses.android.soap.tasks.VisitaListTask;
 
@@ -31,6 +34,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -61,6 +65,7 @@ public class VisitListActivity extends Activity {
 	private String url= "";
 	String codigopaciente = "";
 	String patientname = "";
+    String codigoproyecto = "";
 	private AsyncTask<String, String, Visitas[]> loadVisitas;
 	SharedPreferences mPreferences ;	
 	private String mAlertMsg;
@@ -74,7 +79,11 @@ public class VisitListActivity extends Activity {
 	private VisitaListTask mVisitaListTask;
 	private AsyncTask<String, String, String> formListTask;
 	private AsyncTask<String, String, String> estadoVisita;
-	
+    private AsyncTask<String,String,Idreg[]> mostrarTipoID;
+    private Idreg[] tipoID;
+    String participantID = "";
+    String participantName = "";
+    private AsyncTask<String, String, String> formList1Task;
 	@SuppressWarnings("deprecation")
 	@Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,8 +96,8 @@ public class VisitListActivity extends Activity {
     	codigopaciente = mPreferences.getString("CodigoPaciente", "");
     	patientname = getString(R.string.txtvisit)+"("+mPreferences.getString("patient_name", "")+")";
     	lbl_nombres.setText(patientname);
-    	mAlertMsg = getString(R.string.please_wait);	
- 
+    	mAlertMsg = getString(R.string.please_wait);
+        codigoproyecto = mPreferences.getString("CodigoProyecto", "");
         if (getLastNonConfigurationInstance() instanceof VisitaListTask) {
             mVisitaListTask = (VisitaListTask) getLastNonConfigurationInstance();
             if (mVisitaListTask.getStatus() == AsyncTask.Status.FINISHED) {
@@ -129,7 +138,7 @@ public class VisitListActivity extends Activity {
 		AdaptadorVisitas adaptador;
 
         String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID,"");
-		loadVisitas = tareaVisits.execute(codigopaciente,codigousuario,url);
+		loadVisitas = tareaVisits.execute(codigopaciente,codigousuario,codigoproyecto,url);
 
 		try {
 			ArrayList<Visitas> visitasArray = new ArrayList<Visitas>();
@@ -263,7 +272,7 @@ public class VisitListActivity extends Activity {
 //	   			    Toast.makeText(context, "btnSeisD Clicked",
 //	   			      Toast.LENGTH_LONG).show();
 		      
-    			    callSeisD(position,data);
+    			    call1SeisD(position,data);
 	   			   }
    			  });    		  
     		  
@@ -290,15 +299,19 @@ public class VisitListActivity extends Activity {
       String project_id = visrow.CodigoProyecto;
       String visit_group_id = visrow.CodigoGrupoVisita;
       String visit_id = visrow.CodigoVisita;     
-      
+
       Editor editor = mPreferences.edit();
       
 		FormListTask formList=new FormListTask();
 		formListTask=formList.execute(userid,local_id,project_id,visit_group_id,visit_id,url);
 //		String filterForms;
+        // JT:2015-05-15, Obtener ID de Tamizaje del Participante
+        MostrarTipoIDTask mostrarID =  new MostrarTipoIDTask();
+        mostrarTipoID = mostrarID.execute(local_id,project_id,codigopaciente,url);
+        // JT:2015-05-15, Obtener ID de Tamizaje del Participante
 		try {
 			String filterForms = formList.get();
-			
+
 			Log.i("menu", ".filterForms:"+filterForms );
 			editor.putString(PreferencesActivity.KEY_FILTERFORMS, filterForms);
 			editor.commit();
@@ -307,6 +320,16 @@ public class VisitListActivity extends Activity {
 			editor1.clear();
 			editor1.commit();
             editor1.putString("stringFilterForms", filterForms);
+
+            // JT:2015-05-15, Obtener ID de Tamizaje del Participante
+            tipoID = mostrarTipoID.get();
+            if (tipoID[0].IdTAM != null){
+                participantID = tipoID[0].IdTAM;
+                participantName = tipoID[0].NombreCompleto;
+            }
+            editor1.putString("stringParticipantID", participantID);
+            editor1.putString("stringParticipantName", participantName);
+            // JT:2015-05-15, Obtener ID de Tamizaje del Participante
             editor1.commit();
 			Intent i;
 			PackageManager manager = getPackageManager();
@@ -374,5 +397,81 @@ public class VisitListActivity extends Activity {
 			e.printStackTrace();
 		}
     }
+    public void call1SeisD(int pos,ArrayList<Visitas> data){
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        //testSP
+        SharedPreferences prefs = getSharedPreferences("demopref",Context.MODE_WORLD_READABLE);
+        //testSP
+        String url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
+                getString(R.string.default_server_url));
+        String userid = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
+        String local_id = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
+        Visitas visrow = data.get(pos);
+        String project_id = visrow.CodigoProyecto;
+        String visit_group_id = visrow.CodigoGrupoVisita;
+        String visit_id = visrow.CodigoVisita;
+
+        Editor editor = mPreferences.edit();
+
+        FormList1Task formList1=new FormList1Task();
+        formList1Task=formList1.execute(userid,local_id,project_id,url);
+//		String filterForms;
+        // JT:2015-05-15, Obtener ID de Tamizaje del Participante
+        MostrarTipoIDTask mostrarID =  new MostrarTipoIDTask();
+        mostrarTipoID = mostrarID.execute(local_id,project_id,codigopaciente,url);
+        // JT:2015-05-15, Obtener ID de Tamizaje del Participante
+        try {
+            String filterForms1 = formList1.get();
+
+            Log.i("menu", ".filterForms1:"+filterForms1 );
+            editor.putString(PreferencesActivity.KEY_FILTERFORMS, filterForms1);
+            editor.commit();
+            //testSP
+            SharedPreferences.Editor editor1 = prefs.edit();
+            editor1.clear();
+            editor1.commit();
+            editor1.putString("stringFilterForms", filterForms1);
+
+            // JT:2015-05-15, Obtener ID de Tamizaje del Participante
+            tipoID = mostrarTipoID.get();
+            if (tipoID[0].IdTAM != null){
+                participantID = tipoID[0].IdTAM;
+                participantName = tipoID[0].NombreCompleto;
+            }
+            editor1.putString("stringParticipantID", participantID);
+            editor1.putString("stringParticipantName", participantName);
+            // JT:2015-05-15, Obtener ID de Tamizaje del Participante
+            editor1.commit();
+//            Intent i;
+//            PackageManager manager = getPackageManager();
+//            try {
+//                i = manager.getLaunchIntentForPackage("org.odk.collect.android");
+//                if (i == null)
+//                    throw new PackageManager.NameNotFoundException();
+//                i.addCategory(Intent.CATEGORY_LAUNCHER);
+////			    i.addCategory(Intent.CATEGORY_HOME);
+////			    i.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+//                startActivity(i);
+//            } catch (PackageManager.NameNotFoundException e) {
+//                e.printStackTrace();
+//            }
+            //String Codigo = "002009-1234-2";
+            Intent intents = new Intent(Intent.ACTION_MAIN);
+            intents.setComponent(new ComponentName("org.odk.collect.android", "org.odk.collect.android.activities.MainMenuActivity"));
+            intents.putExtra("idParticipante", participantID);
+            intents.putExtra("idProyecto", filterForms1);
+
+            startActivity(intents);
+
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (ExecutionException e2) {
+            // TODO Auto-generated catch block
+            e2.printStackTrace();
+        }
+
+    }
+
 }
 

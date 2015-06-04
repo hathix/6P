@@ -1,9 +1,13 @@
 package org.ses.android.soap.utilities;
 
 import android.content.Context;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
+
+import org.ses.android.seispapp.R;
 
 
 public class AppStatus {
@@ -36,4 +40,5 @@ public class AppStatus {
         }
         return connected;
     }
+
 }

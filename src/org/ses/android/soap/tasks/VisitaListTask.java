@@ -17,16 +17,18 @@ public class VisitaListTask extends AsyncTask<String,String,Visitas[]> {
     	
     	Visitas[] resul= null;
 
-		String urlserver = params[2];
+		String urlserver = params[3];
     	final String NAMESPACE = urlserver+"/";
 		final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 //		final String METHOD_NAME = "ListadoVisitas";
-		final String METHOD_NAME = "ListadoVisitas2";
+//		final String METHOD_NAME = "ListadoVisitas2";
+        final String METHOD_NAME = "ListadoVisitas3";
 		final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
 		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
 		request.addProperty("CodigoPaciente", params[0]);
         request.addProperty("CodigoUsuario", params[1]);
+        request.addProperty("CodigoProyecto", params[2]);
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
 		envelope.dotNet = true;
 

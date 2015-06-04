@@ -45,7 +45,7 @@ public class ParticipanteBusquedaActivity extends Activity {
 	private GrupoBotones btgNavega;
 	private AsyncTask<String, String, Participant> asyncTask;
 	private SharedPreferences mPreferences ;
-	String nombres,doc_identidad;
+	String nombres,doc_identidad,codigo_proyecto;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,7 +74,7 @@ public class ParticipanteBusquedaActivity extends Activity {
             String url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
                     getString(R.string.default_server_url));
             String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID,"");
-            Log.i("codigousuario",codigousuario );
+            Log.i("codigousuario",codigousuario);
             asyncTask=tarea.execute(doc_identidad,url);
             Participant objParticipante;
             try {
@@ -98,6 +98,7 @@ public class ParticipanteBusquedaActivity extends Activity {
                     Editor editor = mPreferences.edit();
                     editor.putString("CodigoPaciente",objParticipante.CodigoPaciente);
                     editor.putString("patient_name",nombres);
+
                     editor.commit();
                 }
             } catch (InterruptedException e) {
@@ -165,7 +166,7 @@ public class ParticipanteBusquedaActivity extends Activity {
     public void showIds(String codigopaciente,String codigousuario,String url){
 //        AdaptadorIds adaptador;
         PatId[] datos ;
-        //String[] idData = null;
+
         AsyncTask<String, String, PatId[]> loadIdsList;
         IdsListTask tareaIds = new IdsListTask();
         TextView lbl_noids ;
@@ -176,6 +177,7 @@ public class ParticipanteBusquedaActivity extends Activity {
 
         try {
             datos = loadIdsList.get();
+
             /**
              * set item into adapter
              */
@@ -185,6 +187,13 @@ public class ParticipanteBusquedaActivity extends Activity {
 
             if (datos != null){
                 //Log.i("showIds:datos",datos.toString());
+                //Establece Codigo de Proyecto del Participante
+                mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                codigo_proyecto = datos[0].CodigoProyecto;
+                Editor editor = mPreferences.edit();
+                editor.putString("CodigoProyecto",codigo_proyecto);
+                editor.commit();
+                //
                 /**
                  * add item in arraylist
                  */
