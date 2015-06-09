@@ -414,6 +414,9 @@ public class VisitListActivity extends Activity {
         Editor editor = mPreferences.edit();
 
         FormList1Task formList1=new FormList1Task();
+        Log.i("call1SeisD", ".userid:"+userid );
+        Log.i("call1SeisD", ".local_id:"+local_id );
+        Log.i("call1SeisD", ".project_id:"+project_id );
         formList1Task=formList1.execute(userid,local_id,project_id,url);
 //		String filterForms;
         // JT:2015-05-15, Obtener ID de Tamizaje del Participante
@@ -423,7 +426,7 @@ public class VisitListActivity extends Activity {
         try {
             String filterForms1 = formList1.get();
 
-            Log.i("menu", ".filterForms1:"+filterForms1 );
+            Log.i("call1SeisD", ".filterForms1:"+filterForms1 );
             editor.putString(PreferencesActivity.KEY_FILTERFORMS, filterForms1);
             editor.commit();
             //testSP
@@ -438,24 +441,17 @@ public class VisitListActivity extends Activity {
                 participantID = tipoID[0].IdTAM;
                 participantName = tipoID[0].NombreCompleto;
             }
+            Log.i("call1SeisD", ".participantID:"+participantID );
+            Log.i("call1SeisD", ".participantName:"+participantName );
+
             editor1.putString("stringParticipantID", participantID);
             editor1.putString("stringParticipantName", participantName);
             // JT:2015-05-15, Obtener ID de Tamizaje del Participante
             editor1.commit();
-//            Intent i;
-//            PackageManager manager = getPackageManager();
-//            try {
-//                i = manager.getLaunchIntentForPackage("org.odk.collect.android");
-//                if (i == null)
-//                    throw new PackageManager.NameNotFoundException();
-//                i.addCategory(Intent.CATEGORY_LAUNCHER);
-////			    i.addCategory(Intent.CATEGORY_HOME);
-////			    i.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-//                startActivity(i);
-//            } catch (PackageManager.NameNotFoundException e) {
-//                e.printStackTrace();
-//            }
-            //String Codigo = "002009-1234-2";
+
+            Log.i("call1SeisD", ".participantID:"+participantID);
+            Log.i("call1SeisD", ".filterForms1:"+filterForms1);
+
             Intent intents = new Intent(Intent.ACTION_MAIN);
             intents.setComponent(new ComponentName("org.odk.collect.android", "org.odk.collect.android.activities.MainMenuActivity"));
             intents.putExtra("idParticipante", participantID);

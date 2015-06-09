@@ -509,17 +509,21 @@ public class ParticipanteVisitaActivity extends Activity {
             try {
 
                 objProyecto = loadProyecto.get();
-                wee = new String[objProyecto.length];
+//JT:2015-06-08
+                if (objProyecto != null){
+                    wee = new String[objProyecto.length];
 
-                for(int i = 0;i < objProyecto.length; i++){
-                    wee[i]= String.valueOf(objProyecto[i].id) +" - "+objProyecto[i].nombre;
+                    for(int i = 0;i < objProyecto.length; i++){
+                        wee[i]= String.valueOf(objProyecto[i].id) +" - "+objProyecto[i].nombre;
+                    }
+                    ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                            this, android.R.layout.simple_spinner_item, wee);
+                    spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+                    spnProyecto.setAdapter(spinnerArrayAdapter);
+
+                    Log.i("Visita","Proyecto Array");
                 }
-                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                        this, android.R.layout.simple_spinner_item, wee);
-                spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
-                spnProyecto.setAdapter(spinnerArrayAdapter);
-
-                Log.i("Visita","Proyecto Array");
+//JT:2015-06-08
 
             } catch (InterruptedException e1) {
                 // TODO Auto-generated catch block
