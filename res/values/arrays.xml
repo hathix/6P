@@ -37,15 +37,15 @@
 		<item>@string/font_size_small</item>
 		<item>@string/font_size_extra_small</item>
 	</string-array>
-
 	<string-array name="ArrayOfLocal">
         <item>Select a Local</item>
         <item>CB</item>
         <item>SMP</item>
         <item>SB</item>
-        <item>CO</item>
+        <item>LABSES</item>
         <item>HNSB</item>
         <item>HNHU</item>
+        <item>CH</item>
     </string-array>
 	
 </resources>

@@ -4,16 +4,13 @@ import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
 import org.ses.android.seispapp.R;
-import org.ses.android.soap.database.Idreg;
 import org.ses.android.soap.database.Local;
 import org.ses.android.soap.database.Proyecto;
 import org.ses.android.soap.database.Visita;
 import org.ses.android.soap.preferences.PreferencesActivity;
-import org.ses.android.soap.tasks.GenerarIdENRTask;
-import org.ses.android.soap.tasks.GenerarIdTAMTask;
+import org.ses.android.soap.tasks.EstadoENR_TAMTask;
 import org.ses.android.soap.tasks.GenerarVisitaTask;
 import org.ses.android.soap.tasks.LocalLoadTask;
-import org.ses.android.soap.tasks.MostrarTipoIDTask;
 import org.ses.android.soap.tasks.ProyectoLoadTask;
 import org.ses.android.soap.tasks.VisitaLoadTask;
 import org.ses.android.soap.utilities.UrlUtils;
@@ -85,6 +82,9 @@ public class ParticipanteVisitaActivity extends Activity {
 	private AsyncTask<String, String, Local[]> loadLocal;
 	private AsyncTask<String, String, Proyecto[]> loadProyecto;
 	private AsyncTask<String, String, Visita[]> loadVisita;
+    private AsyncTask<String, String, String> loadEstadoENR_TAM;
+
+    EstadoENR_TAMTask estadoENR_TAM;
 	SharedPreferences mPreferences ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -258,26 +258,39 @@ public class ParticipanteVisitaActivity extends Activity {
 					    						        					url);
 
 					    						        			String guardado;
+                                                                    String estadoENR;
+                                                                    String estadoTAM;
 																	try {
+
+
 																		guardado = generarVisita.get();
 						    											if (!guardado.equals("OK")){
 						    												Toast.makeText(getBaseContext(), "No se creo visita!!",Toast.LENGTH_SHORT).show();
 						    											}else{
 						    												Toast.makeText(getBaseContext(), "Datos guardados!!",Toast.LENGTH_SHORT).show();
-                                                                            // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
-                                                                            if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
-                                                                                Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
-                                                                                Bundle extras = new Bundle();
-                                                                                extras.putString("selLocal", selLocal);
-                                                                                extras.putString("selProyecto", selProyecto);
-                                                                                extras.putString("codigopaciente",codigopaciente);
-                                                                                extras.putString("selGrupo", selGrupo);
-                                                                                extras.putString("selVisita",selVisita);
-                                                                                extras.putString("codigousuario",codigousuario);
-                                                                                extras.putString("url",url);
-                                                                                pass.putExtras(extras);
-                                                                                startActivity(pass);
+                                                                            EstadoENR_TAMTask tareaEstado = new EstadoENR_TAMTask();
+                                                                            loadEstadoENR_TAM = tareaEstado.execute("ENR",selProyecto,url);
+                                                                            estadoENR = loadEstadoENR_TAM.get();
+                                                                            loadEstadoENR_TAM = tareaEstado.execute("TAM",selProyecto,url);
+                                                                            estadoTAM = loadEstadoENR_TAM.get();
+                                                                            Log.i("Visita","estadoENR: "+ estadoENR + "--- estadoTAM: "+ estadoTAM);
+                                                                            if (estadoENR.equals("1") || estadoTAM.equals("1")){
+                                                                                // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
+                                                                                if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
+                                                                                    Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
+                                                                                    Bundle extras = new Bundle();
+                                                                                    extras.putString("selLocal", selLocal);
+                                                                                    extras.putString("selProyecto", selProyecto);
+                                                                                    extras.putString("codigopaciente",codigopaciente);
+                                                                                    extras.putString("selGrupo", selGrupo);
+                                                                                    extras.putString("selVisita",selVisita);
+                                                                                    extras.putString("codigousuario",codigousuario);
+                                                                                    extras.putString("url",url);
+                                                                                    pass.putExtras(extras);
+                                                                                    startActivity(pass);
+                                                                                }
                                                                             }
+
 						    											}	
 						        	        	                        finish();
 																	} catch (InterruptedException e) {
