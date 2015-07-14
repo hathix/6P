@@ -1,6 +1,7 @@
 package org.ses.android.soap.tasks;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -8,7 +9,7 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-public class EstadoENR_TAMTask extends AsyncTask<String,String,String> {
+public class EstadoENRTask extends AsyncTask<String,String,String> {
 	
 	 
     @Override
@@ -42,8 +43,9 @@ public class EstadoENR_TAMTask extends AsyncTask<String,String,String> {
 
 				SoapPrimitive resultado_xml =(SoapPrimitive)envelope.getResponse();
 				String res = resultado_xml.toString();
-				
-				if(!res.equals("0") || !res.equals("1"))
+                resul = res;
+                Log.i("EstadoENRTask", "res: " + res);
+                if(!res.equals("0") && !res.equals("1"))
 					resul = "";
 			} 
 			catch (Exception e) 

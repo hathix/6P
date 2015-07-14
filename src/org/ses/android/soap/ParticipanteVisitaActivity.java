@@ -8,7 +8,8 @@ import org.ses.android.soap.database.Local;
 import org.ses.android.soap.database.Proyecto;
 import org.ses.android.soap.database.Visita;
 import org.ses.android.soap.preferences.PreferencesActivity;
-import org.ses.android.soap.tasks.EstadoENR_TAMTask;
+import org.ses.android.soap.tasks.EstadoENRTask;
+import org.ses.android.soap.tasks.EstadoTAMTask;
 import org.ses.android.soap.tasks.GenerarVisitaTask;
 import org.ses.android.soap.tasks.LocalLoadTask;
 import org.ses.android.soap.tasks.ProyectoLoadTask;
@@ -82,9 +83,11 @@ public class ParticipanteVisitaActivity extends Activity {
 	private AsyncTask<String, String, Local[]> loadLocal;
 	private AsyncTask<String, String, Proyecto[]> loadProyecto;
 	private AsyncTask<String, String, Visita[]> loadVisita;
-    private AsyncTask<String, String, String> loadEstadoENR_TAM;
-
-    EstadoENR_TAMTask estadoENR_TAM;
+    //private AsyncTask<String, String, String> loadEstadoENR_TAM;
+    private AsyncTask<String, String, String> loadEstadoENR;
+    private AsyncTask<String, String, String> loadEstadoTAM;
+    EstadoENRTask estadoENR;
+    EstadoTAMTask estadoTAM;
 	SharedPreferences mPreferences ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -268,15 +271,49 @@ public class ParticipanteVisitaActivity extends Activity {
 						    												Toast.makeText(getBaseContext(), "No se creo visita!!",Toast.LENGTH_SHORT).show();
 						    											}else{
 						    												Toast.makeText(getBaseContext(), "Datos guardados!!",Toast.LENGTH_SHORT).show();
-                                                                            EstadoENR_TAMTask tareaEstado = new EstadoENR_TAMTask();
-                                                                            loadEstadoENR_TAM = tareaEstado.execute("ENR",selProyecto,url);
-                                                                            estadoENR = loadEstadoENR_TAM.get();
-                                                                            loadEstadoENR_TAM = tareaEstado.execute("TAM",selProyecto,url);
-                                                                            estadoTAM = loadEstadoENR_TAM.get();
-                                                                            Log.i("Visita","estadoENR: "+ estadoENR + "--- estadoTAM: "+ estadoTAM);
-                                                                            if (estadoENR.equals("1") || estadoTAM.equals("1")){
-                                                                                // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
+                                                                            EstadoENRTask tareaEstadoENR = new EstadoENRTask();
+                                                                            EstadoTAMTask tareaEstadoTAM = new EstadoTAMTask();
+                                                                            loadEstadoENR = tareaEstadoENR.execute("ENR",selProyecto,url);
+                                                                            estadoENR = loadEstadoENR.get();
+                                                                            loadEstadoTAM = tareaEstadoTAM.execute("TAM",selProyecto,url);
+                                                                            estadoTAM = loadEstadoTAM.get();
+                                                                            //selGrupo=1 TAM, selGrupo=2  ENR
+                                                                            Log.i("Visita","estadoENR: "+ estadoENR.toString() + "--- estadoTAM: "+ estadoTAM.toString());
+//                                                                            if (estadoENR.equals("1") || estadoTAM.equals("1")){
+//                                                                                // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
+//                                                                                if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
+//                                                                                    Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
+//                                                                                    Bundle extras = new Bundle();
+//                                                                                    extras.putString("selLocal", selLocal);
+//                                                                                    extras.putString("selProyecto", selProyecto);
+//                                                                                    extras.putString("codigopaciente",codigopaciente);
+//                                                                                    extras.putString("selGrupo", selGrupo);
+//                                                                                    extras.putString("selVisita",selVisita);
+//                                                                                    extras.putString("codigousuario",codigousuario);
+//                                                                                    extras.putString("url",url);
+//                                                                                    pass.putExtras(extras);
+//                                                                                    startActivity(pass);
+//                                                                                }
+//                                                                            }
+                                                                            Boolean asignarID = false;
+                                                                            if (estadoTAM.equals("1") && estadoENR.equals("1")){
                                                                                 if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
+                                                                                    asignarID = true;
+                                                                                }
+                                                                            }
+                                                                            if (estadoTAM.equals("0") && estadoENR.equals("1")){
+                                                                                if ((selGrupo.equals("2"))  && selVisita.equals("1")) {
+                                                                                    asignarID = true;
+                                                                                }
+                                                                            }
+                                                                            if (estadoTAM.equals("1") && estadoENR.equals("0")){
+                                                                                if (selGrupo.equals("1") && selVisita.equals("1")) {
+                                                                                    asignarID = true;
+                                                                                }
+                                                                            }
+                                                                            if (asignarID.equals(true)){
+                                                                                // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
+                                                                                //if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
                                                                                     Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
                                                                                     Bundle extras = new Bundle();
                                                                                     extras.putString("selLocal", selLocal);
@@ -288,9 +325,8 @@ public class ParticipanteVisitaActivity extends Activity {
                                                                                     extras.putString("url",url);
                                                                                     pass.putExtras(extras);
                                                                                     startActivity(pass);
-                                                                                }
+                                                                                //}
                                                                             }
-
 						    											}	
 						        	        	                        finish();
 																	} catch (InterruptedException e) {
