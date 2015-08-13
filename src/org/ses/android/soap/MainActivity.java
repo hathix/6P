@@ -130,6 +130,7 @@ public class MainActivity extends Activity {
 				}
 		});
 
+// Modificado x JT 20150813
 //         spnProyecto.setOnItemSelectedListener(
 //                 new AdapterView.OnItemSelectedListener() {
 //                     @Override
