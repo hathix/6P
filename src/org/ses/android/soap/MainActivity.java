@@ -4,10 +4,13 @@ import java.util.concurrent.ExecutionException;
 import org.ses.android.seispapp.R;
 import org.ses.android.soap.database.Local;
 import org.ses.android.soap.database.Login;
+import org.ses.android.soap.database.Proyecto;
 import org.ses.android.soap.preferences.AdminPreferencesActivity;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.AsyncTaskRunner;
 import org.ses.android.soap.tasks.LocalLoadTask;
+import org.ses.android.soap.tasks.ProyectoLoad1Task;
+import org.ses.android.soap.tasks.ProyectoLoadTask;
 import org.ses.android.soap.utilities.AppStatus;
 
 import android.annotation.SuppressLint;
@@ -38,16 +41,21 @@ public class MainActivity extends Activity {
 	private EditText txtPassword;
 	private TextView tvwMensaje;
 	private Spinner spnLocal;
-
+    //jt
+    private Spinner spnProyecto;
+    //
 	private AsyncTask<String, String, Login> asyncTask;
 	private AsyncTask<String, String, Local[]> loadLocal;
-//	private AsyncTask<String, String, String> formListTask;
-	
+    //jt
+    private AsyncTask<String, String, Proyecto[]> loadProyecto1;
+    //
 	private String response;
 	private static Context context;
 	private String selLocal,mAlertMsg;
 	private Boolean connected;
-
+    //jt
+    private String selProyecto  = "";
+    //
 //   public static final String MisPREFERENCIAS = "mis_pref" ;
    public static final String usuario = "usuarioKey"; 
    public static final String pass = "passKey";
@@ -56,7 +64,8 @@ public class MainActivity extends Activity {
    SharedPreferences mPreferences;
    public ProgressDialog mProgressDialog;
    private AsyncTaskRunner mAsyncTaskRunner;
-  /** Called when the activity is first created. */
+
+    /** Called when the activity is first created. */
 	 @SuppressWarnings("deprecation")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -68,12 +77,15 @@ public class MainActivity extends Activity {
 		btnIngresar = (Button)findViewById(R.id.btnIngresar);
 		tvwMensaje = (TextView) findViewById(R.id.tvwMensaje);
 		spnLocal = (Spinner) findViewById(R.id.spnLocal);
-		mAlertMsg = getString(R.string.please_wait);		
+        spnProyecto = (Spinner) findViewById(R.id.spnProyecto);
+
+         mAlertMsg = getString(R.string.please_wait);
 		if (AppStatus.getInstance(this).isOnline(this)) {
 
 //		    Toast.makeText(this,"You are online!!!!",8000).show();
 		    tvwMensaje.setText(R.string.online);
 		    connected = true;
+            //loadProyectoSpinner("1","0");
 		} else {
 
 //		    Toast.makeText(this,"You are not online!!!!",8000).show();
@@ -105,13 +117,36 @@ public class MainActivity extends Activity {
 				android.view.View v, int position, long id) {
 					selLocal = Integer.toString(position);
 //					if (selLocal.equals("0")) loadLocalSpinner();
+                    Log.i("MainActivity","Seleccionado(1): pos: "+ selLocal + " valor:" + parent.getItemAtPosition(position));
+                    //jt
+//                    if ( selLocal != null) {
+//                        if (!selLocal.equals("0")) loadProyectoSpinner(selLocal);
+//                    }
+                    loadProyectoSpinner(selLocal,"0");
 				}
 				@Override
 				public void onNothingSelected(AdapterView<?> parent) {
 					tvwMensaje.setText(getString(R.string.select_local));
 				}
 		});
-		
+
+//         spnProyecto.setOnItemSelectedListener(
+//                 new AdapterView.OnItemSelectedListener() {
+//                     @Override
+//                     public void onItemSelected(AdapterView<?> parent,
+//                                                android.view.View v, int position, long id) {
+//                         selProyecto = parent.getItemAtPosition(position).toString().substring(0,1);
+//                         //codigopaciente = mPreferences.getString("CodigoPaciente", "");
+//                         //Log.i("Visita","codigopaciente:"+codigopaciente+",selLocal:"+selLocal+",selProyecto:"+selProyecto);
+//                         //if (position > -1) loadVisitaSpinner(codigopaciente,selLocal,selProyecto);
+//                         Log.i("Visita","Proyecto: pos: "+ selProyecto + " valor:" + parent.getItemAtPosition(position));
+//                     }
+//                     @Override
+//                     public void onNothingSelected(AdapterView<?> parent) {
+//                         Toast.makeText(getBaseContext(), "Seleccione un Proyecto!!",Toast.LENGTH_SHORT).show();
+//                     }
+//                 });
+         //
 		btnIngresar.setOnClickListener(new View.OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -229,7 +264,52 @@ public class MainActivity extends Activity {
 				e1.printStackTrace();
 			}
 
-		}	
+		}
+    public void loadProyectoSpinner(String local,String codigousuario){
+        ProyectoLoad1Task tareaProyecto1 = new ProyectoLoad1Task();
+
+        boolean connected = AppStatus.getInstance(this).isOnline(this);
+        if (connected){
+            loadProyecto1 = tareaProyecto1.execute(local,codigousuario,url);
+
+            if (loadProyecto1 != null){
+                Proyecto[] objProyecto;
+                String[] wee;
+                try {
+
+                    objProyecto = loadProyecto1.get();
+//JT:2015-07-15
+                    if (objProyecto != null){
+                        wee = new String[objProyecto.length];
+
+                        for(int i = 0;i < objProyecto.length; i++){
+                            wee[i]= String.valueOf(objProyecto[i].id) +" - "+objProyecto[i].nombre;
+                        }
+                        ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                                this, android.R.layout.simple_spinner_item, wee);
+                        spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
+                        spnProyecto.setAdapter(spinnerArrayAdapter);
+
+                        Log.i("MainActivity","Proyecto1 Array");
+                    }
+//JT:2015-07-15
+
+                } catch (InterruptedException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                } catch (ExecutionException e1) {
+                    // TODO Auto-generated catch block
+                    e1.printStackTrace();
+                }
+
+            }
+
+        }
+
+
+    }
+
+
 	   protected Dialog onCreateDialog(int id) {
 	        switch (id) {
 	        case PROGRESS_DIALOG:
@@ -244,4 +324,5 @@ public class MainActivity extends Activity {
 	        }
 	        return null;
        }
+
 }

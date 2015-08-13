@@ -138,6 +138,7 @@ public class VisitListActivity extends Activity {
 		AdaptadorVisitas adaptador;
 
         String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID,"");
+        //  JT_2015_08_13:tareaVisits pide 3 parametros  pero solo usa 2 (codigopaciente,codigousuario)
 		loadVisitas = tareaVisits.execute(codigopaciente,codigousuario,codigoproyecto,url);
 
 		try {

@@ -87,7 +87,29 @@
 	        android:paddingRight="10dip"
 	        android:textColor="#000000"
 	         android:textSize="17sp" />
- 
+         <!--<TextView-->
+             <!--android:id="@+id/tvwProyecto"-->
+             <!--android:layout_width="wrap_content"-->
+             <!--android:layout_height="wrap_content"-->
+             <!--android:shadowColor="#FFFFFF"-->
+             <!--android:shadowDx="1"-->
+             <!--android:shadowDy="2"-->
+             <!--android:shadowRadius="1.5"-->
+             <!--android:text="@string/txtProject"-->
+             <!--android:textColor="#151414"-->
+             <!--android:textSize="20sp"-->
+             <!--android:textStyle="bold"-->
+             <!--android:typeface="monospace" />-->
+         <!--<Spinner-->
+             <!--android:id="@+id/spnProyecto"-->
+             <!--android:layout_height="wrap_content"-->
+             <!--android:layout_width="300dp"-->
+             <!--android:layout_gravity="center_horizontal"-->
+             <!--android:paddingLeft="10dip"-->
+             <!--android:paddingRight="10dip"-->
+             <!--android:textColor="#000000"-->
+             <!--android:textSize="17sp" />-->
+
 	    <Button
 	            android:layout_width="wrap_content"
 	            android:layout_height="wrap_content"

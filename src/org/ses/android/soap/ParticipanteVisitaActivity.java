@@ -144,7 +144,11 @@ public class ParticipanteVisitaActivity extends Activity {
 				@Override
 				public void onItemSelected(AdapterView<?> parent,
 						android.view.View v, int position, long id) {
-					selProyecto = parent.getItemAtPosition(position).toString().substring(0,1);
+					//selProyecto = parent.getItemAtPosition(position).toString().substring(0,1);
+                    // 20 - XXX
+                    // 01234567
+                    selProyecto = parent.getItemAtPosition(position).toString();
+                    selProyecto = selProyecto.substring(0,selProyecto.indexOf("-",0)-1).trim();
 					codigopaciente = mPreferences.getString("CodigoPaciente", "");
 					Log.i("Visita","codigopaciente:"+codigopaciente+",selLocal:"+selLocal+",selProyecto:"+selProyecto);
 					if (position > -1) loadVisitaSpinner(codigopaciente,selLocal,selProyecto);

@@ -30,6 +30,7 @@
 	<string name="femenino">Femenino</string>
 	<string name="fecha_nacimiento">Fecha Nacimiento:</string>
 	<string name="txtLocal">Local:</string>
+    <string name="txtProject">Proyecto:</string>
 	<string name="tipdoc_dni">DNI</string>
 	<string name="tipdoc_otros">Sin documento</string>
 	<string name="accept_location">Obtener localización</string>

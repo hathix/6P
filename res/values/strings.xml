@@ -28,6 +28,7 @@
     <string name="femenino">Female</string>
     <string name="fecha_nacimiento">Birth Date:</string>
     <string name="txtLocal">Locale:</string>
+    <string name="txtProject">Project:</string>
     <string name="tipdoc_dni">DNI</string>
     <string name="tipdoc_otros">No document</string>
     <string name="accept_location">Record Location</string>
