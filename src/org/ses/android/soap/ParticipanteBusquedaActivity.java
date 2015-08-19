@@ -46,7 +46,7 @@ public class ParticipanteBusquedaActivity extends Activity {
 	private AsyncTask<String, String, Participant> asyncTask;
 	private SharedPreferences mPreferences ;
 	String nombres,doc_identidad,codigo_proyecto;
-
+    Boolean partipantExist=false;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,10 +79,25 @@ public class ParticipanteBusquedaActivity extends Activity {
             Participant objParticipante;
             try {
                 objParticipante = asyncTask.get();
-                Log.i("doc_identidad",doc_identidad );
+                Log.i("doc_identidad:",doc_identidad );
+
                 if (objParticipante == null){
+                    partipantExist=false;
+                    txt_nombresb.setText("");
+                    txt_ape_patb.setText("");
+                    txt_ape_matb.setText("");
+                    txt_fechab.setText("");
+                    txt_sexob.setText("");
+                    TextView lbl_noids ;
+                    ListView lstIds;
+                    lbl_noids = (TextView)findViewById(R.id.lbl_noIds);
+                    lstIds = (ListView)findViewById(R.id.lstIds);
+                    lbl_noids.setText(R.string.no_ids);
+                    lstIds.setAdapter(null);
                     Toast.makeText(getBaseContext(), "No existe partipante con ese DNI!!",Toast.LENGTH_SHORT).show();
                 }else{
+                    Log.i("CodigoPaciente:",objParticipante.CodigoPaciente );
+                    partipantExist=true;
                     txt_nombresb.setText(objParticipante.Nombres);
                     txt_ape_patb.setText(objParticipante.ApellidoPaterno);
                     txt_ape_matb.setText(objParticipante.ApellidoMaterno);
@@ -160,8 +175,10 @@ public class ParticipanteBusquedaActivity extends Activity {
         return super.onMenuItemSelected(featureId, item);
     }
     private void visitList() {
-        Intent i = new Intent(this, VisitListActivity.class);
-        startActivityForResult(i, ACTIVITY_VISITLIST);
+        if (partipantExist==true){
+            Intent i = new Intent(this, VisitListActivity.class);
+            startActivityForResult(i, ACTIVITY_VISITLIST);
+        }
     }
     public void showIds(String codigopaciente,String codigousuario,String url){
 //        AdaptadorIds adaptador;

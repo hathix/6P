@@ -104,7 +104,7 @@ public class VisitListActivity extends Activity {
                 try {
                     dismissDialog(PROGRESS_DIALOG);
                 } catch (IllegalArgumentException e) {
-                    Log.i("Login", "Attempting to close a dialog that was not previously opened");
+                    Log.i("VisitListActivity", "Attempting to close a dialog that was not previously opened");
                 }
                 mVisitaListTask = null;
             }
@@ -217,9 +217,15 @@ public class VisitListActivity extends Activity {
 	   			holder.btnSeisD = (Button) row.findViewById(R.id.btnSeisD);
 	   			holder.btnDone.setEnabled(false);
 	   			holder.btnSeisD.setEnabled(false);
-	    		if (vis.EstadoVisita.equals("Pendiente")){
-					holder.btnDone.setEnabled(true);
-					holder.btnSeisD.setEnabled(true);
+                Log.i("VisitListACtivity.getView:",vis.EstadoVisita.toString());
+	    		if (vis.EstadoVisita.equals("Pendiente")) {
+                    holder.btnDone.setEnabled(true);
+                    holder.btnSeisD.setEnabled(true);
+//                }else{
+//                    if (vis.EstadoVisita.equals("Atendido")) {
+//                        holder.btnDone.setEnabled(false);
+//                        holder.btnSeisD.setEnabled(false);
+//                    }
 	    		}   			
     			row.setTag(holder);
     		  } else {
@@ -368,6 +374,14 @@ public class VisitListActivity extends Activity {
         String visits_id = visrow.CodigoVisitas;  
         String estado_visita_id = "3";
         String codigo_estatus_paciente = "1";
+//        Log.i("local_id",local_id);
+//        Log.i("project_id",project_id);
+//        Log.i("visit_id",visit_id);
+//        Log.i("visits_id",visits_id);
+//        Log.i("codigopaciente",codigopaciente);
+//        Log.i("estado_visita_id",estado_visita_id);
+//        Log.i("codigo_estatus_paciente",codigo_estatus_paciente);
+//        Log.i("user_id",user_id);
         estadoVisita=mEstadoVisitaTask.execute(
         		local_id,
         		project_id,

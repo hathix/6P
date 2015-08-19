@@ -180,7 +180,11 @@ public class ParticipanteVisitaActivity extends Activity {
 				@Override
 				public void onItemSelected(AdapterView<?> parent,
 				android.view.View v, int position, long id) {
-					selVisita = parent.getItemAtPosition(position).toString().substring(0,1);
+                    // JT:20150817
+				    //selVisita = parent.getItemAtPosition(position).toString().substring(0,1);
+                    selVisita = parent.getItemAtPosition(position).toString();
+                    selVisita = selVisita.substring(0,selVisita.indexOf("-",0)-1).trim();
+
 //					if (!selVisita.equals("0")) loadProyectoSpinner(selVisita);
 					Log.i("Visita","Visita: pos: "+ selVisita + " valor:" + parent.getItemAtPosition(position));
 				}
