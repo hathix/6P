@@ -21,9 +21,6 @@ import org.ses.android.soap.tasks.EstadoTAMTask;
 import org.ses.android.soap.tasks.LoginTask;
 import org.ses.android.soap.tasks.TienePermisosTask;
 
-/**
- * TODO: author, description of the file
- */
 
 @SuppressWarnings("ALL")
 public class AccountLogin {
