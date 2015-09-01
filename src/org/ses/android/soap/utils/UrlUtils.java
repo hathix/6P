@@ -12,7 +12,7 @@
  * the License.
  */
 
-package org.ses.android.soap.utilities;
+package org.ses.android.soap.utils;
 
 import java.net.MalformedURLException;
 import java.net.URL;

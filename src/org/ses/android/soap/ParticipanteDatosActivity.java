@@ -3,18 +3,16 @@ package org.ses.android.soap;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
-import org.ses.android.seispapp.R;
-import org.ses.android.soap.preferences.AdminPreferencesActivity;
+import org.ses.android.seispapp120.R;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.RegistrarParticipanteTask;
-import org.ses.android.soap.utilities.UrlUtils;
+import org.ses.android.soap.utils.UrlUtils;
 import org.ses.android.soap.widgets.GrupoBotones;
 
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -26,7 +24,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnTouchListener;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioGroup;

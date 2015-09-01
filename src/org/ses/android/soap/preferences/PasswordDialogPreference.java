@@ -1,7 +1,7 @@
 
 package org.ses.android.soap.preferences;
 
-import org.ses.android.seispapp.R;
+import org.ses.android.seispapp120.R;
 
 import android.app.AlertDialog;
 import android.content.Context;

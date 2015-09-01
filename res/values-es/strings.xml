@@ -17,7 +17,7 @@
 	<string name="opc_gen_visitas">Generar Visita</string>
 	<string name="opc_cerrar_sesion">Cerrar Sesion</string>
 	<string name="login_usuario">Usuario :</string>
-	<string name="login_password">Contraseña :</string>
+	<string name="login_password">Contraseña</string>
 	<string name="login_logo">logo.jpg</string>
 	<string name="login_ingresar">Ingresar</string>
 	<string name="opc_anterior">Anterior</string>
@@ -161,7 +161,7 @@
 	<string name="trigger">OK. Por favor continue.</string>
 	<string name="uploading_data">Enviando el formulario</string>
 	<string name="url_error">URL invalida!</string>
-	<string name="username">Nombre del Usuario</string>
+	<string name="username">Nombre de Usuario</string>
 	<string name="view_hierarchy">Ir a la Pregunta</string>
 	<string name="open_data_kit">Open Data Kit</string>
 	<string name="general_preferences">"Cambiar la configuración"</string>
@@ -311,4 +311,23 @@
     <string name="id_assign_ok">Aceptar</string>
     <string name="id_assign_cancel">Volver</string>
     <string name="no_ids">No hay Ids</string>
+    <string name="login_try_again">Intente de nuevo</string>
+    <string name="locale_filename">locale_data</string>
+    <string name="date">Date</string>
+    <string name="locale"> Locale</string>
+    <string name="button_promoter_login"> Login</string>
+    <string name="key_userid">userid</string>
+    <string name="login_locale">local_id</string>
+    <string name="login_locale_name">local_name</string>
+    <string name="project_filename">project_data</string>
+    <string name="login_project">project_id</string>
+    <string name="login_project_name">project_name</string>
+    <string name="txtLocalName"></string>
+    <string name="txtProjectName"></string>
+    <string name="login_data_incorrect_invalid">Login o contraseña incorrecta o invalida</string>
+    <string name="login_no_permission">Sin permisos para el Local o Proyecto solicitado</string>
+    <string name="login_enter_user">Ingrese ID de Usuario !!</string>
+    <string name="login_enter_password">Ingrese Contraseña !!</string>
+
+
 </resources>

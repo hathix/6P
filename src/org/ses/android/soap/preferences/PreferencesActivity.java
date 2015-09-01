@@ -14,8 +14,8 @@
 
 package org.ses.android.soap.preferences;
 
-import org.ses.android.seispapp.R;
-import org.ses.android.soap.utilities.UrlUtils;
+import org.ses.android.seispapp120.R;
+import org.ses.android.soap.utils.UrlUtils;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -60,7 +60,9 @@ public class PreferencesActivity extends PreferenceActivity implements
     public static final String KEY_USERID = "userid";
     public static final String KEY_FILTERFORMS = "filter_forms";
     public static final String KEY_LOCAL_ID = "local_id";
+    public static final String KEY_LOCAL_NAME = "local_name";
     public static final String KEY_PROJECT_ID = "project_id";
+    public static final String KEY_PROJECT_NAME = "project_name";
     public static final String KEY_VISIT_GROUP_ID = "visit_group_id";
     public static final String KEY_VISIT_ID = "visit_id";
     

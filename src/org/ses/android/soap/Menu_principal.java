@@ -3,22 +3,18 @@ package org.ses.android.soap;
 
 import java.util.concurrent.ExecutionException;
 
-import org.ses.android.seispapp.R;
+import org.ses.android.seispapp120.R;
 import org.ses.android.soap.preferences.AdminPreferencesActivity;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.FormList1Task;
-import org.ses.android.soap.tasks.FormListTask;
-import org.ses.android.soap.utilities.AppStatus;
+import org.ses.android.soap.utils.AppStatus;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -52,7 +48,9 @@ public class Menu_principal extends Activity {
 		setContentView(R.layout.activity_menu_principal);
         // dynamically construct the "ODK Collect vA.B" string
         TextView mainMenuMessageLabel = (TextView) findViewById(R.id.main_menu_header);
-        mainMenuMessageLabel.setText(getVersionedAppName());
+        AppStatus appStatus = new AppStatus();
+
+        mainMenuMessageLabel.setText(appStatus.getVersionedAppName(this));
 
         if (AppStatus.getInstance(this).isOnline(this)) {
 		    Toast.makeText(this,R.string.online,Toast.LENGTH_SHORT).show();
@@ -194,16 +192,18 @@ public class Menu_principal extends Activity {
 	        	                new DialogInterface.OnClickListener() {
 	        	                    @Override
 									public void onClick(DialogInterface dialog, int id) {
-	        	                    	SharedPreferences sharedpreferences = getSharedPreferences
-	        	                      	      (AdminPreferencesActivity.ADMIN_PREFERENCES, Context.MODE_PRIVATE);
-	        	                    	Editor editor = sharedpreferences.edit();
+	        	                    	//SharedPreferences sharedpreferences = getSharedPreferences
+	        	                      	//      (AdminPreferencesActivity.ADMIN_PREFERENCES, Context.MODE_PRIVATE);
+                                        //Editor editor = sharedpreferences.edit();
+                                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(Menu_principal.this);
+                                        Editor editor = prefs.edit();
 	        	                    	editor.clear();
 	        	                    	editor.commit();
 //	        	                    	moveTaskToBack(true); 
 //	        	                    	Menu_principal.this.finish();
 	        	                        // metodo que se debe implementar
 	        	                    	//envia al otro activity login
-	        	                    	Intent intent = new Intent(Menu_principal.this, MainActivity.class);
+	        	                    	Intent intent = new Intent(Menu_principal.this, PromoterLoginActivity.class);
 	        	                        startActivity(intent);
 	        	                        finish();
 	        	                    }
@@ -253,18 +253,18 @@ public class Menu_principal extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-    public String getVersionedAppName() {
-        String versionDetail = "";
-        try {
-            PackageInfo pinfo;
-            pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
-            int versionNumber = pinfo.versionCode;
-            String versionName = pinfo.versionName;
-            versionDetail = " " + versionName + " (" + versionNumber + ")";
-        } catch (PackageManager.NameNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        return getString(R.string.app_name) + versionDetail;
-    }
+//    public String getVersionedAppName() {
+//        String versionDetail = "";
+//        try {
+//            PackageInfo pinfo;
+//            pinfo = getPackageManager().getPackageInfo(getPackageName(), 0);
+//            int versionNumber = pinfo.versionCode;
+//            String versionName = pinfo.versionName;
+//            versionDetail = " " + versionName + " (" + versionNumber + ")";
+//        } catch (PackageManager.NameNotFoundException e) {
+//            // TODO Auto-generated catch block
+//            e.printStackTrace();
+//        }
+//        return getString(R.string.app_name) + versionDetail;
+//    }
 }

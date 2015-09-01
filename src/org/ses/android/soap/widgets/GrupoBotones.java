@@ -1,6 +1,6 @@
 package org.ses.android.soap.widgets;
 
-import org.ses.android.seispapp.R;
+import org.ses.android.seispapp120.R;
 import android.content.Context;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;

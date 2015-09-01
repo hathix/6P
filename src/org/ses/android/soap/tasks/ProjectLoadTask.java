@@ -6,27 +6,34 @@ import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
-import org.ses.android.soap.database.Proyecto;
+import org.ses.android.soap.models.Project;
 
-public class ProyectoLoad1Task extends AsyncTask<String,String,Proyecto[]> {
+import java.util.ArrayList;
+
+/**
+ * Created by User on 25/08/2015.
+ */
 
 
-    private Proyecto[] lstProyecto;
+public class ProjectLoadTask extends AsyncTask<String,String,ArrayList<Project>> {
+
+
+    private ArrayList<Project>  lstProjects;
 
     @Override
-    protected Proyecto[] doInBackground(String... params) {
+    protected ArrayList<Project> doInBackground(String... params) {
 
-        Proyecto[] resul= null;
+        ArrayList<Project> resul= null;
 
-        String urlserver = params[2];
+        String urlserver = params[1];
         final String NAMESPACE = urlserver+"/";
         final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
-        final String METHOD_NAME = "ListadoProyectos1";
+        final String METHOD_NAME = "ListadoProyectos";
         final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
-        request.addProperty("CodigoLocal", params[0]);
-        request.addProperty("CodigoUsuario", params[1]);
+        request.addProperty("local", params[0]);
+        //request.addProperty("CodigoUsuario", params[1]);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.dotNet = true;
@@ -41,20 +48,24 @@ public class ProyectoLoad1Task extends AsyncTask<String,String,Proyecto[]> {
 
             SoapObject resSoap =(SoapObject)envelope.getResponse();
 
-            lstProyecto = new Proyecto[resSoap.getPropertyCount()];
+            //lstProyecto = new Proyecto[resSoap.getPropertyCount()];
 
-            for (int i = 0; i < lstProyecto.length; i++)
+            // instantiate the locales list
+            lstProjects = new ArrayList<Project>();
+            int num_projects = resSoap.getPropertyCount();
+
+            for (int i = 0; i < num_projects; i++)
             {
                 SoapObject ic = (SoapObject)resSoap.getProperty(i);
 
-                Proyecto pro = new Proyecto();
+                Project pro = new Project();
 
                 pro.id = Integer.parseInt(ic.getProperty(0).toString());
-                pro.nombre = ic.getProperty(1).toString();
-                lstProyecto[i] = pro;
+                pro.name = ic.getProperty(1).toString();
+                lstProjects.add(pro);
             }
             if (resSoap.getPropertyCount()>0){
-                resul = lstProyecto;
+                resul = lstProjects;
             }
 
         }

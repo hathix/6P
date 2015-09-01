@@ -14,7 +14,7 @@
 
 package org.ses.android.soap.preferences;
 
-import org.ses.android.seispapp.R;
+import org.ses.android.seispapp120.R;
 
 import android.os.Bundle;
 import android.preference.PreferenceActivity;

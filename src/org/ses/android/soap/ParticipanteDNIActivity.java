@@ -7,9 +7,9 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
-import org.ses.android.seispapp.R;
+import org.ses.android.seispapp120.R;
 import org.ses.android.soap.preferences.PreferencesActivity;
-import org.ses.android.soap.utilities.UrlUtils;
+import org.ses.android.soap.utils.UrlUtils;
 import org.ses.android.soap.widgets.GrupoBotones;
 
 import android.app.Activity;

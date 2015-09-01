@@ -19,7 +19,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import org.ses.android.seispapp.R;
+import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.PatId;
 import org.ses.android.soap.preferences.PreferencesActivity;

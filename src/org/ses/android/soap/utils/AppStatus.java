@@ -1,4 +1,4 @@
-package org.ses.android.soap.utilities;
+package org.ses.android.soap.utils;
 
 import android.content.Context;
 import android.content.pm.PackageInfo;
@@ -7,7 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.util.Log;
 
-import org.ses.android.seispapp.R;
+import org.ses.android.seispapp120.R;
 
 
 public class AppStatus {
@@ -40,5 +40,18 @@ public class AppStatus {
         }
         return connected;
     }
-
+    public String getVersionedAppName(Context c) {
+        String versionDetail = "";
+        try {
+            PackageInfo pinfo;
+            pinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
+            int versionNumber = pinfo.versionCode;
+            String versionName = pinfo.versionName;
+            versionDetail = " " + versionName + " (" + versionNumber + ")";
+        } catch (PackageManager.NameNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return c.getString(R.string.app_name) + versionDetail;
+    }
 }

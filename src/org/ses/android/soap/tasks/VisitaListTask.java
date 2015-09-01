@@ -22,15 +22,15 @@ public class VisitaListTask extends AsyncTask<String,String,Visitas[]> {
 		final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 //		final String METHOD_NAME = "ListadoVisitas";
 //  JT_2015_08_13:ListadoVisitas2 pide 2 parametros muestra todas las visitas
-		final String METHOD_NAME = "ListadoVisitas2";
+//		final String METHOD_NAME = "ListadoVisitas2";
 //  JT_2015_08_13:ListadoVisitas3 pide 3 parametros  muestra todas las visitas x Py
-//        final String METHOD_NAME = "ListadoVisitas3";
+        final String METHOD_NAME = "ListadoVisitas3";
 		final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
 		SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
 		request.addProperty("CodigoPaciente", params[0]);
         request.addProperty("CodigoUsuario", params[1]);
-        //request.addProperty("CodigoProyecto", params[2]);
+        request.addProperty("CodigoProyecto", params[2]);
 		SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
 		envelope.dotNet = true;
 

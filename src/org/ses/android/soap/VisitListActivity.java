@@ -19,7 +19,7 @@ package org.ses.android.soap;
 import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
-import org.ses.android.seispapp.R;
+import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Idreg;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;
@@ -97,7 +97,10 @@ public class VisitListActivity extends Activity {
     	patientname = getString(R.string.txtvisit)+"("+mPreferences.getString("patient_name", "")+")";
     	lbl_nombres.setText(patientname);
     	mAlertMsg = getString(R.string.please_wait);
-        codigoproyecto = mPreferences.getString("CodigoProyecto", "");
+        //codigoproyecto = mPreferences.getString("CodigoProyecto", "");
+		codigoproyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
+		Log.i("VisitListActivity",".codigoproyecto:"+codigoproyecto);
+		int intProject = Integer.valueOf(codigoproyecto);
         if (getLastNonConfigurationInstance() instanceof VisitaListTask) {
             mVisitaListTask = (VisitaListTask) getLastNonConfigurationInstance();
             if (mVisitaListTask.getStatus() == AsyncTask.Status.FINISHED) {
@@ -139,6 +142,7 @@ public class VisitListActivity extends Activity {
 
         String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID,"");
         //  JT_2015_08_13:tareaVisits pide 3 parametros  pero solo usa 2 (codigopaciente,codigousuario)
+        //  JT_2015_08_27:tareaVisits pide 3 parametros  pero solo usa 3 (codigopaciente,codigousuario,codigoproyecto)
 		loadVisitas = tareaVisits.execute(codigopaciente,codigousuario,codigoproyecto,url);
 
 		try {
