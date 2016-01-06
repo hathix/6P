@@ -31,7 +31,8 @@ public class LocaleLoadTask extends AsyncTask<String,String,ArrayList<Locale>> {
 
         // setup server parameters
         String urlserver = params[0];
-        final String NAMESPACE = urlserver+"/";
+        final String NAMESPACE = StringConexion.conexion;
+        //final String NAMESPACE = urlserver+"/";
         final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
         final String METHOD_NAME = "ListadoLocales";
         final String SOAP_ACTION = NAMESPACE+METHOD_NAME;

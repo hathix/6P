@@ -9,6 +9,7 @@ import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.preferences.PreferencesActivity;
+import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.utils.UrlUtils;
 import org.ses.android.soap.widgets.GrupoBotones;
 
@@ -22,6 +23,7 @@ import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
@@ -33,13 +35,17 @@ public class ParticipanteDNIActivity extends Activity {
 	private RadioGroup rbgTipoDoc;
 	private GrupoBotones btgNavega;
 	private AsyncTask<String, String, String> asyncTask;
-	private SharedPreferences mPreferences ;	
+	private SharedPreferences mPreferences ;
+	private RadioButton  rboDN ;
+	private RadioButton  rboOtro ;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.participante_dni_layout);
 		
 		edt_doc_identidad = (EditText)findViewById(R.id.edt_doc_identidad);
+		rboDN = (RadioButton)findViewById(R.id.rboDNI);
+		rboOtro  = (RadioButton)findViewById(R.id.rboOtros);
 		
 		rbgTipoDoc = (RadioGroup)findViewById(R.id.rbgTipoDoc);
         rbgTipoDoc.clearCheck();
@@ -73,6 +79,15 @@ public class ParticipanteDNIActivity extends Activity {
 				ExisteParticipante tarea = new ExisteParticipante();
 
 		        try {
+
+					if (rboDN.isChecked()==false && rboOtro.isChecked()==false){
+
+						Toast.makeText(getApplicationContext(),"Seleccionar una opcion de documento",Toast.LENGTH_LONG).show();
+					}
+
+					 else {
+
+
 	                mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
 			        int tipdocSeleccionado = rbgTipoDoc.getCheckedRadioButtonId();			        
         			Log.i("dni","OnSiguiente_ID Tipo Doc. opcion seleccionada: " + Integer.toString(tipdocSeleccionado));
@@ -116,6 +131,8 @@ public class ParticipanteDNIActivity extends Activity {
 						Intent intent=new Intent(ParticipanteDNIActivity.this,ParticipanteDatosActivity.class); 
 						startActivity(intent); 
         			}
+
+					 }
 			        
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -147,7 +164,7 @@ public class ParticipanteDNIActivity extends Activity {
 	    	String existe = "no";
 	    	String resp;
 			String urlserver = params[1];
-	    	final String NAMESPACE = urlserver+"/";
+	    	final String NAMESPACE = StringConexion.conexion;
 			final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 			final String METHOD_NAME = "ExisteParticipante";
 			final String SOAP_ACTION = NAMESPACE+METHOD_NAME;

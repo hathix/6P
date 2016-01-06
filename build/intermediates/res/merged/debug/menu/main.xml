@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+
+    <item
+        android:id="@+id/cambio_server"
+        android:orderInCategory="100"
+        android:showAsAction="never"
+        android:title="@string/cambio_server"/>
+
+</menu>
+<!-- From: file:/E:/SEISPapp120_20150922_1547/SEISPapp120/res/menu/main.xml -->

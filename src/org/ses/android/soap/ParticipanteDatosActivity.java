@@ -5,14 +5,19 @@ import java.util.concurrent.ExecutionException;
 
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.preferences.PreferencesActivity;
+import org.ses.android.soap.tasks.ObtenerIdPacienteTask;
 import org.ses.android.soap.tasks.RegistrarParticipanteTask;
+import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.utils.UrlUtils;
 import org.ses.android.soap.widgets.GrupoBotones;
+import org.ses.android.soap.widgets.ParticipanteDatosSecund;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Application;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -47,6 +52,8 @@ public class ParticipanteDatosActivity extends Activity {
 	private int year;
 	private int month;
 	private int day;
+	public Context con =  this;
+	private  AsyncTask<String,String,String> getIdPaciente;
  
 	static final int DATE_DIALOG_ID = 999;	
 	String tip_doc= "2";
@@ -60,7 +67,7 @@ public class ParticipanteDatosActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.participante_datos_layout);
-		
+	//	setTitle("Datos Secundarios");
 		edt_nombres = (EditText)findViewById(R.id.edt_nombres);
 		edt_ape_pat = (EditText)findViewById(R.id.edt_ape_pat);
 		edt_ape_mat = (EditText)findViewById(R.id.edt_ape_mat);
@@ -102,8 +109,7 @@ public class ParticipanteDatosActivity extends Activity {
 
 
                 	mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                	url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
-                        getString(R.string.default_server_url));				
+                	url = StringConexion.conexion;
                 	Log.i("URL",url);
 		        	dni = mPreferences.getString("doc_identidad", "");
 		        	
@@ -175,6 +181,12 @@ public class ParticipanteDatosActivity extends Activity {
 			    		    		    								Toast.makeText(getBaseContext(), "Ya existe partipante con ese DNI!!",Toast.LENGTH_SHORT).show();
 			    		    		    							}else{
 			    		    		    								Toast.makeText(getBaseContext(), "Datos guardados!!",Toast.LENGTH_SHORT).show();
+																		ObtenerIdPacienteTask  obtenerIdPacienteTask = new ObtenerIdPacienteTask();
+																		getIdPaciente= obtenerIdPacienteTask.execute(nombres,ape_pat,ape_mat,fec_nacimiento,url);
+																		String id_pac = getIdPaciente.get();
+																		Intent  newfra  = new Intent (con,ParticipanteDatosSecund.class);
+																		 newfra.putExtra("id_pact",id_pac);
+																	 	startActivity(newfra);
 			    		    		    							}
 			    		    	        	                        finish();
 																} catch (InterruptedException e) {

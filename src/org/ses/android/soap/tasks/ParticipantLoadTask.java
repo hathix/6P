@@ -18,7 +18,7 @@ public class ParticipantLoadTask extends AsyncTask<String,String,Participant> {
     	Participant resul= null;
 
 		String urlserver = params[1];
-    	final String NAMESPACE = urlserver+"/";
+    	final String NAMESPACE = StringConexion.conexion;
 		final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 		final String METHOD_NAME = "BuscarParticipante";
 		final String SOAP_ACTION = NAMESPACE+METHOD_NAME;

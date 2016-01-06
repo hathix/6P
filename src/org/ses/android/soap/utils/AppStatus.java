@@ -47,7 +47,7 @@ public class AppStatus {
             pinfo = c.getPackageManager().getPackageInfo(c.getPackageName(), 0);
             int versionNumber = pinfo.versionCode;
             String versionName = pinfo.versionName;
-            versionDetail = " " + versionName + " (" + versionNumber + ")";
+            versionDetail = " " + versionName ;
         } catch (PackageManager.NameNotFoundException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();

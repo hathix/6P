@@ -19,7 +19,7 @@ public class EstadoENRTask extends AsyncTask<String,String,String> {
     	if(count==3){
 
 			String urlserver = params[2];
-	    	final String NAMESPACE = urlserver+"/";
+	    	final String NAMESPACE = StringConexion.conexion;
 			final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 			final String METHOD_NAME = "EstadoENR_TAM";
 			final String SOAP_ACTION = NAMESPACE+METHOD_NAME;

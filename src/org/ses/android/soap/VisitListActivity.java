@@ -28,6 +28,7 @@ import org.ses.android.soap.tasks.FormList1Task;
 import org.ses.android.soap.tasks.FormListTask;
 import org.ses.android.soap.tasks.MostrarTipoIDTask;
 import org.ses.android.soap.tasks.RegistrarParticipanteTask;
+import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.tasks.VisitaListTask;
 
 import android.app.Activity;
@@ -54,6 +55,7 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -90,16 +92,16 @@ public class VisitListActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.visits_list);
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
-                getString(R.string.default_server_url));		
+        url = StringConexion.conexion;
 		lbl_nombres = (TextView) findViewById(R.id.lbl_nombres);
     	codigopaciente = mPreferences.getString("CodigoPaciente", "");
+		Log.i("codigo paciente:" ,codigopaciente);
     	patientname = getString(R.string.txtvisit)+"("+mPreferences.getString("patient_name", "")+")";
     	lbl_nombres.setText(patientname);
     	mAlertMsg = getString(R.string.please_wait);
         //codigoproyecto = mPreferences.getString("CodigoProyecto", "");
 		codigoproyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
-		Log.i("VisitListActivity",".codigoproyecto:"+codigoproyecto);
+		Log.i("VisitListActivity", ".codigoproyecto:" + codigoproyecto);
 		int intProject = Integer.valueOf(codigoproyecto);
         if (getLastNonConfigurationInstance() instanceof VisitaListTask) {
             mVisitaListTask = (VisitaListTask) getLastNonConfigurationInstance();
@@ -143,7 +145,7 @@ public class VisitListActivity extends Activity {
         String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID,"");
         //  JT_2015_08_13:tareaVisits pide 3 parametros  pero solo usa 2 (codigopaciente,codigousuario)
         //  JT_2015_08_27:tareaVisits pide 3 parametros  pero solo usa 3 (codigopaciente,codigousuario,codigoproyecto)
-		loadVisitas = tareaVisits.execute(codigopaciente,codigousuario,codigoproyecto,url);
+		loadVisitas = tareaVisits.execute(codigopaciente,codigousuario,codigoproyecto,StringConexion.conexion);
 
 		try {
 			ArrayList<Visitas> visitasArray = new ArrayList<Visitas>();
@@ -164,8 +166,11 @@ public class VisitListActivity extends Activity {
 				}	        
 		        adaptador = new AdaptadorVisitas(VisitListActivity.this, R.layout.visits_row,
 					    visitasArray);
-		        lstVisit.setItemsCanFocus(false);
-		        lstVisit.setAdapter(adaptador);
+		       lstVisit.setItemsCanFocus(true);
+		       lstVisit.setAdapter(adaptador);
+				//lstVisit.deferNotifyDataSetChanged();
+
+
 		    }else{
 		        lbl_novisits.setText(R.string.no_visits);
 			}
@@ -207,34 +212,55 @@ public class VisitListActivity extends Activity {
 			  this.context = context;
 			  this.data = data;
     	}
+
+
     	public View getView(final int position, View convertView, ViewGroup parent) {
-    		  View row = convertView;
+
+    		    View row = convertView;
+				//final  int pos = position;
     		  VisitHolder holder = null;
     		  vis = data.get(position);
+
     		  if (row == null) {
     			LayoutInflater inflater = ((Activity) context).getLayoutInflater();
     			row = inflater.inflate(layoutResourceId, parent, false);
-    			holder = new VisitHolder(); 
+    			holder = new VisitHolder();
+
 	   			holder.lblTitulo= (TextView) row.findViewById(R.id.LblTitulo);
 	   			holder.lblSubtitulo= (TextView) row.findViewById(R.id.LblSubTitulo);
 	   			holder.btnDone = (Button) row.findViewById(R.id.btnDone);
 	   			holder.btnSeisD = (Button) row.findViewById(R.id.btnSeisD);
 	   			holder.btnDone.setEnabled(false);
 	   			holder.btnSeisD.setEnabled(false);
-                Log.i("VisitListACtivity.getView:",vis.EstadoVisita.toString());
-	    		if (vis.EstadoVisita.equals("Pendiente")) {
-                    holder.btnDone.setEnabled(true);
-                    holder.btnSeisD.setEnabled(true);
-//                }else{
-//                    if (vis.EstadoVisita.equals("Atendido")) {
-//                        holder.btnDone.setEnabled(false);
-//                        holder.btnSeisD.setEnabled(false);
-//                    }
-	    		}   			
+				  //holder.ActivarBotones(vis.EstadoVisita.toString());
+
+
+
     			row.setTag(holder);
     		  } else {
-    			  holder = (VisitHolder) row.getTag();
+
+    			 holder = (VisitHolder) convertView.getTag();
     		  }
+
+				VisitHolder visitHolder = (VisitHolder)row.getTag();
+
+			if (vis.EstadoVisita.equals("Atendido")){
+
+  				visitHolder.btnSeisD.setEnabled(false);
+				visitHolder.btnDone.setEnabled(false);
+				Log.i("Enable:", "false");
+			}
+
+			else if (vis.EstadoVisita.toString() !="Atendido" ) {
+
+				visitHolder.btnSeisD.setEnabled(true);
+				visitHolder.btnDone.setEnabled(true);
+				Log.i("Enable:", "true");
+
+			}
+
+			//lstVisit.setClickable(false);
+
 
     		  holder.lblTitulo.setText(vis.Proyecto+"/"+vis.Visita);
     		  holder.lblSubtitulo.setText(vis.FechaVisita+"-"+vis.HoraCita+"-"+vis.EstadoVisita);
@@ -284,10 +310,11 @@ public class VisitListActivity extends Activity {
 //	   			      Toast.LENGTH_LONG).show();
 		      
     			    call1SeisD(position,data);
+
 	   			   }
    			  });    		  
     		  
-			return(row);
+			return row;
 		}
     	
     }
@@ -296,14 +323,20 @@ public class VisitListActivity extends Activity {
     	  TextView lblSubtitulo;
     	  Button btnDone;
     	  Button btnSeisD;
+
+		public  void AsignarBotones( View row){
+
+
+		}
+
+
     }  
     public void callSeisD(int pos,ArrayList<Visitas> data){
       mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
     //testSP
       SharedPreferences prefs = getSharedPreferences("demopref",Context.MODE_WORLD_READABLE);
     //testSP
-      String url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
-              getString(R.string.default_server_url));		        
+      String url = StringConexion.conexion;
       String userid = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
       String local_id = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
       Visitas visrow = data.get(pos);
@@ -366,8 +399,7 @@ public class VisitListActivity extends Activity {
     }
     public void actualizarVisita(int pos,ArrayList<Visitas> data){
     	EstadoVisitaTask mEstadoVisitaTask = new EstadoVisitaTask();
-        String url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
-                getString(R.string.default_server_url));		        
+        String url = StringConexion.conexion;
         String codigopaciente = mPreferences.getString("CodigoPaciente", "");
         String local_id = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
         String user_id = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
@@ -421,8 +453,7 @@ public class VisitListActivity extends Activity {
         //testSP
         SharedPreferences prefs = getSharedPreferences("demopref",Context.MODE_WORLD_READABLE);
         //testSP
-        String url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
-                getString(R.string.default_server_url));
+        String url = StringConexion.conexion;
         String userid = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         String local_id = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
         Visitas visrow = data.get(pos);

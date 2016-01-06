@@ -30,7 +30,14 @@
 
 		    <ListView android:id="@+id/lstVisit"
 		          android:layout_width="wrap_content"
-		        	android:layout_height="wrap_content"/>
+		        	android:layout_height="wrap_content"
+                android:focusable="true"
+                android:fastScrollEnabled="true"
+                android:fastScrollAlwaysVisible="true"
+                android:choiceMode="singleChoice"
+                android:footerDividersEnabled="true"
+                android:textFilterEnabled="true"
+                android:longClickable="false" />
 		  	<TextView android:id="@+id/lbl_novisits"
 		          android:layout_width="wrap_content"
 		        	android:layout_height="wrap_content"

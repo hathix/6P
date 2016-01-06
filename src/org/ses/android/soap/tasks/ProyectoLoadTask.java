@@ -19,7 +19,7 @@ public class ProyectoLoadTask extends AsyncTask<String,String,Proyecto[]> {
     	Proyecto[] resul= null;
 
 		String urlserver = params[2];
-    	final String NAMESPACE = urlserver+"/";
+    	final String NAMESPACE = StringConexion.conexion;
 		final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 		final String METHOD_NAME = "ListadoProyectos1";
 		final String SOAP_ACTION = NAMESPACE+METHOD_NAME;

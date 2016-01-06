@@ -319,10 +319,13 @@
     <string name="project_filename">project_data</string>
     <string name="login_project">project_id</string>
     <string name="login_project_name">project_name</string>
-    <string name="txtLocalName"></string>
-    <string name="txtProjectName"></string>
+    <string name="txtLocalName">Local Name</string>
+    <string name="txtProjectName">Project Name</string>
     <string name="login_data_incorrect_invalid">Your username or password was incorrect or invalid</string>
     <string name="login_no_permission">Do not have permissions to local or project</string>
     <string name="login_enter_user">Enter User Name !!</string>
     <string name="login_enter_password">Enter Password !!</string>
+    <string name="title_activity_participante_datos_secund">ParticipanteDatosSecund</string>
+    <string name="title_activity_cambio_server">CambioServer</string>
+    <string name="cambio_server">Configuracion</string>
 </resources>

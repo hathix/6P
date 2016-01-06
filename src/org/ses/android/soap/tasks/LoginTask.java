@@ -26,9 +26,11 @@ public class LoginTask extends  AsyncTask<String,String,Login>{
         if(count==4){
 
             String urlserver = params[3];
-            final String NAMESPACE = urlserver+"/";
+           // final String NAMESPACE = urlserver+"/";
+            final String NAMESPACE = StringConexion.conexion;
             //final String URL=NAMESPACE+"EdotsWS/Service1.asmx";
             final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
+            //WSSEIS/WSParticipante.asmx
             final String METHOD_NAME = "LoginUsuario1";
             final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
 

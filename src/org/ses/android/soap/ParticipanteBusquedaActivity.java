@@ -25,6 +25,7 @@ import org.ses.android.soap.database.PatId;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.IdsListTask;
 import org.ses.android.soap.tasks.ParticipantLoadTask;
+import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.widgets.GrupoBotones;
 
 import java.util.ArrayList;
@@ -71,8 +72,7 @@ public class ParticipanteBusquedaActivity extends Activity {
 			doc_identidad = edt_dni_document.getText().toString();
 			
             mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            String url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
-                    getString(R.string.default_server_url));
+            String url = StringConexion.conexion;
             String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID,"");
             Log.i("codigousuario",codigousuario);
             asyncTask=tarea.execute(doc_identidad,url);

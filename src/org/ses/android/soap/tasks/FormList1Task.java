@@ -19,7 +19,7 @@ public class FormList1Task extends AsyncTask<String,String,String> {
         String resul= "";
 
         String urlserver = params[3];
-        final String NAMESPACE = urlserver+"/";
+        final String NAMESPACE = StringConexion.conexion;
         final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
         final String METHOD_NAME = "ListadoFormatos1";
         final String SOAP_ACTION = NAMESPACE+METHOD_NAME;

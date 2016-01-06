@@ -11,6 +11,7 @@ import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.EstadoENRTask;
 import org.ses.android.soap.tasks.EstadoTAMTask;
 import org.ses.android.soap.tasks.GenerarVisitaTask;
+import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.tasks.VisitaLoadTask;
 import org.ses.android.soap.utils.UrlUtils;
 import org.ses.android.soap.widgets.GrupoBotones;
@@ -93,8 +94,7 @@ public class ParticipanteVisitaActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.participante_visita_layout);
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
-                getString(R.string.default_server_url));
+        url =  StringConexion.conexion;
         String nombres = mPreferences.getString("patient_name", "");
         Log.i("URL",url);
         edt_nombres = (EditText)findViewById(R.id.edt_nombres);
@@ -335,13 +335,13 @@ public class ParticipanteVisitaActivity extends Activity {
                                                                                 asignarID = true;
                                                                             }
                                                                         }
-                                                                        if (estadoTAM.equals("0") && estadoENR.equals("1")){
-                                                                            if ((selGrupo.equals("2"))  && selVisita.equals("1")) {
-                                                                                asignarID = true;
-                                                                            }
-                                                                        }
+                                                                     //   if (estadoTAM.equals("0") && estadoENR.equals("1")){
+                                                                       //     if ((selGrupo.equals("2"))  && selVisita.equals("1")) {
+                                                                    //            asignarID = true;
+                                                                       //     }
+                                                                       // }
                                                                         if (estadoTAM.equals("1") && estadoENR.equals("0")){
-                                                                            if (selGrupo.equals("1") && selVisita.equals("1")) {
+                                                                            if ((selGrupo.equals("1") ||  selGrupo.equals("2"))&& selVisita.equals("1")) {
                                                                                 asignarID = true;
                                                                             }
                                                                         }
@@ -357,6 +357,10 @@ public class ParticipanteVisitaActivity extends Activity {
                                                                             extras.putString("selVisita",selVisita);
                                                                             extras.putString("codigousuario",codigousuario);
                                                                             extras.putString("url",url);
+                                                                            extras.putString("estadoTAM",estadoTAM);
+                                                                            extras.putString("estadoENR",estadoENR);
+                                                                            extras.putInt("validar_emr",0);
+
                                                                             pass.putExtras(extras);
                                                                             startActivity(pass);
                                                                             //}

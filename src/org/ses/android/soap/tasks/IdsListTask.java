@@ -20,7 +20,7 @@ public class IdsListTask extends AsyncTask<String,String,PatId[]> {
         PatId[] resul= null;
 
 		String urlserver = params[2];
-    	final String NAMESPACE = urlserver+"/";
+    	final String NAMESPACE = StringConexion.conexion;
 		final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 		final String METHOD_NAME = "ListadoIds";
 		final String SOAP_ACTION = NAMESPACE+METHOD_NAME;

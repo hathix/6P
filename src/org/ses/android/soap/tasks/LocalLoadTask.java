@@ -19,7 +19,8 @@ public class LocalLoadTask extends AsyncTask<String,String,Local[]> {
     	Local[] resul= null;
 
 		String urlserver = params[0];
-    	final String NAMESPACE = urlserver+"/";
+		final String NAMESPACE ="http://demo.sociosensalud.org.pe/";
+    	//final String NAMESPACE = urlserver+"/";
 		final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 		final String METHOD_NAME = "ListadoLocales";
 		final String SOAP_ACTION = NAMESPACE+METHOD_NAME;

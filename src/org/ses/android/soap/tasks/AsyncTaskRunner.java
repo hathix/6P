@@ -24,14 +24,14 @@ public class AsyncTaskRunner extends  AsyncTask<String,String,Login>{
 	if(count==4){
         
 
-		
-//    	final String NAMESPACE = "http://demo.sociosensalud.org.pe/";
+		 String NAMESPACE  = StringConexion.conexion;
+     	//String NAMESPACE = "http://demo.sociosensalud.org.pe/";
 //		final String URL="http://demo.sociosensalud.org.pe/WSSEIS/WSParticipante.asmx";
 //		final String METHOD_NAME = "LoginUsuario";
 //		final String SOAP_ACTION = "http://demo.sociosensalud.org.pe/LoginUsuario";
 		
 		String urlserver = params[3];
-    	final String NAMESPACE = urlserver+"/";
+    	//final String NAMESPACE = urlserver+"/";
 		final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 		final String METHOD_NAME = "LoginUsuario1";
 		final String SOAP_ACTION = NAMESPACE+METHOD_NAME;	

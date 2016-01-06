@@ -44,6 +44,7 @@
 	        android:height="20dip"
 	        android:padding="14dp"
 	        android:text="@string/opc_search"
+			android:background="@drawable/botonblanco"
 	        android:textSize="12sp" />
         <Button
 	        android:id="@+id/btnShowVisits"
@@ -53,6 +54,7 @@
 	        android:height="20dip"
 	        android:padding="14dp"
 	        android:text="@string/opc_show_visits"
+			android:background="@drawable/botonblanco"
 	        android:textSize="12sp" />
     </LinearLayout>
     <ScrollView

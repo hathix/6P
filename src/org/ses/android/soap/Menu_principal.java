@@ -8,6 +8,7 @@ import org.ses.android.soap.preferences.AdminPreferencesActivity;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.FormList1Task;
 import org.ses.android.soap.utils.AppStatus;
+import org.ses.android.soap.widgets.CambioServer;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,6 +21,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -223,19 +225,17 @@ public class Menu_principal extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
-        super.onCreateOptionsMenu(menu);
-        menu.add(0, MENU_PREFERENCES, 0, getString(R.string.general_preferences)).setIcon(
-                android.R.drawable.ic_menu_preferences);
-//        menu.add(0, MENU_ADMIN, 0, getString(R.string.admin_preferences)).setIcon(
-//                R.drawable.ic_menu_login);
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main,menu);
+
         return true;
     }
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case MENU_PREFERENCES:
+            case R.id.cambio_server:
 
-                Intent ig = new Intent(this, PreferencesActivity.class);
+                Intent ig = new Intent(this, CambioServer.class);
                 startActivity(ig);
                 return true;
 //            case MENU_ADMIN:

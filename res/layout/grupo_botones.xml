@@ -18,12 +18,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/opc_anterior"
+            android:background="@drawable/botonblanco"
             android:layout_marginLeft="0dp"
             android:textStyle="normal" />"
  
         <Button
             android:id="@+id/btnSiguienteId"
             android:layout_width="wrap_content"
+            android:background="@drawable/botonblanco"
             android:layout_height="wrap_content"
             android:text="@string/opc_siguiente"
             android:layout_marginRight="0dp"

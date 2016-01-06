@@ -25,7 +25,7 @@ public class GenerarVisitaTask extends AsyncTask<String,String,String> {
 //			final String SOAP_ACTION = "http://demo.sociosensalud.org.pe/NuevoParticipanteSimple";
 			
 			String urlserver = params[8];
-	    	final String NAMESPACE = urlserver+"/";
+	    	final String NAMESPACE = StringConexion.conexion;
 			final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 			final String METHOD_NAME = "InsertarVisitas";
 			final String SOAP_ACTION = NAMESPACE+METHOD_NAME;

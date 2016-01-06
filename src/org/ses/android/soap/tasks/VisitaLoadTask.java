@@ -19,7 +19,7 @@ public class VisitaLoadTask extends AsyncTask<String,String,Visita[]> {
     	Visita[] resul= null;
 
 		String urlserver = params[3];
-    	final String NAMESPACE = urlserver+"/";
+    	final String NAMESPACE = StringConexion.conexion;
 		final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 		final String METHOD_NAME = "ListadoGrupoVisitas";
 		final String SOAP_ACTION = NAMESPACE+METHOD_NAME;

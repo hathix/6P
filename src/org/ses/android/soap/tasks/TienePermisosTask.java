@@ -19,7 +19,7 @@ public class TienePermisosTask extends AsyncTask<String,String,String> {
     	if(count==4){
 
 			String urlserver = params[3];
-	    	final String NAMESPACE = urlserver+"/";
+	    	final String NAMESPACE = StringConexion.conexion;
 			final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 			final String METHOD_NAME = "TienePermisos";
 			final String SOAP_ACTION = NAMESPACE+METHOD_NAME;

@@ -41,11 +41,13 @@ import org.ses.android.soap.models.Project;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.LocaleLoadTask;
 import org.ses.android.soap.tasks.ProjectLoadTask;
+import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.utils.AppStatus;
 import org.ses.android.soap.utils.AccountLogin;
 import org.ses.android.soap.utils.InternetConnection;
 import org.ses.android.soap.utils.OfflineStorageManager;
 import org.ses.android.seispapp120.R;
+import org.ses.android.soap.widgets.CambioServer;
 
 /*
  * Written by Brendan
@@ -71,9 +73,8 @@ public class PromoterLoginActivity extends Activity {
         } else {
             //String myurl = getString(R.string.server_url);
             // Get the server from the settings
-            mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            String myurl = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
-                    getString(R.string.default_server_url));
+         //   mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            String myurl =  StringConexion.conexion;
 
             loadLocaleSpinner(myurl);
         }
@@ -94,13 +95,7 @@ public class PromoterLoginActivity extends Activity {
         spnLocale = (Spinner) findViewById(R.id.locale_spinner);
         spnProject = (Spinner) findViewById(R.id.project_spinner);
         String username = AccountLogin.CheckAlreadyLoggedIn(this);
-
-//TEST Sale despues
-//        EditText ut = (EditText) findViewById(R.id.username);
-//        EditText pt = (EditText) findViewById(R.id.password);
-//        ut.setText("acondeso");
-//        pt.setText("acondeso");
-//TEST Sale despues
+        StringConexion.ifExistCreateFile();
         TextView mainMessageLabel = (TextView) findViewById(R.id.textView2);
         AppStatus appStatus = new AppStatus();
 
@@ -109,9 +104,8 @@ public class PromoterLoginActivity extends Activity {
             Intent intent = new Intent(this, Menu_principal.class);
             startActivity(intent);
         } else {
-            mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            String myurl = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
-                    getString(R.string.default_server_url));
+           // mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            String myurl = StringConexion.conexion;
             loadLocaleSpinner(myurl);
         }
         // Progress bar set to gone on page load
@@ -135,10 +129,9 @@ public class PromoterLoginActivity extends Activity {
                         String selLocal = Integer.toString(position);
                         Log.i("PromoterLogin Activity","spnLocale.setOnItemSelectedListener: pos: "+ selLocal + " valor:" + parent.getItemAtPosition(position));
                         if ( selLocal != null) {
-                            mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-                            String myurl = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
-                                    getString(R.string.default_server_url));
-                            if (!selLocal.equals("0")) loadProjectSpinner(selLocal,myurl);
+                           // mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                            String myurl = StringConexion.conexion;
+                            if (!selLocal.equals("0")) loadProjectSpinner(selLocal,StringConexion.conexion);
                         }
 
                         Log.i("PromoterLogin Activity","Seleccionado(2): pos: "+ selLocal + " valor:" + parent.getItemAtPosition(position));
@@ -191,6 +184,8 @@ public class PromoterLoginActivity extends Activity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent ig = new Intent(this, CambioServer.class);
+            startActivity(ig);
             return true;
         }
 
@@ -263,8 +258,7 @@ public class PromoterLoginActivity extends Activity {
             if (validLogin) {
                 SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                 String user_id = mPreferences.getString(PreferencesActivity.KEY_USERID,"");
-                String url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
-                        getString(R.string.default_server_url));
+                String url =  StringConexion.conexion;
                 try {
                     boolean validPermission = AccountLogin.CheckPermission(user_id, locale_num, project_num,url);
                     if (validPermission) {

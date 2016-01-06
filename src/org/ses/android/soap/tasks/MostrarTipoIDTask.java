@@ -25,7 +25,7 @@ public class MostrarTipoIDTask extends AsyncTask<String,String,Idreg[]> {
         if(count==4){
 
             String urlserver = params[3];
-            final String NAMESPACE = urlserver+"/";
+            final String NAMESPACE = StringConexion.conexion;
             final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
             final String METHOD_NAME = "MostrarTipoId";
             final String SOAP_ACTION = NAMESPACE+METHOD_NAME;

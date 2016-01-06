@@ -27,7 +27,7 @@ public class GenerarIdENRTask extends AsyncTask<String,String,String> {
 //			final String METHOD_NAME = "NuevoParticipanteSimple";
 //			final String SOAP_ACTION = "http://demo.sociosensalud.org.pe/NuevoParticipanteSimple";
             String urlserver = params[6];
-            final String NAMESPACE = urlserver+"/";
+            final String NAMESPACE = StringConexion.conexion;
             final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
             final String METHOD_NAME = "AsignarID_ENR";
 

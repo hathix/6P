@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="org.ses.android.soap.widgets.CambioServer">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayout4">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Url Server"
+            android:id="@+id/textView8"
+            android:textColor="#0560c8" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:id="@+id/txtUrlServ"
+
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:enabled="false" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/linearLayout4"
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/linearl2">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Guardar"
+            android:background="@drawable/botonrojo"
+            android:id="@+id/btnGuardarServer"
+            android:textColor="#ffffff"
+            android:enabled="false" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="   Salir   "
+            android:background="@drawable/botonrojo"
+            android:id="@+id/btnSalirC"
+            android:layout_marginLeft="15dp"
+            android:textColor="#ffffff"
+            android:singleLine="true" />
+    </LinearLayout>
+</RelativeLayout>
+<!-- From: file:/E:/SEISPapp120_20150922_1547/SEISPapp120/res/layout/activity_cambio_server.xml -->

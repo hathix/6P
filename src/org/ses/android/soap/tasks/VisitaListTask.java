@@ -18,7 +18,7 @@ public class VisitaListTask extends AsyncTask<String,String,Visitas[]> {
     	Visitas[] resul= null;
 
 		String urlserver = params[3];
-    	final String NAMESPACE = urlserver+"/";
+    	final String NAMESPACE = StringConexion.conexion;
 		final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 //		final String METHOD_NAME = "ListadoVisitas";
 //  JT_2015_08_13:ListadoVisitas2 pide 2 parametros muestra todas las visitas
