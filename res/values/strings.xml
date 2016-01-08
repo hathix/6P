@@ -329,10 +329,12 @@
     <string name="title_activity_cambio_server">CambioServer</string>
     <string name="cambio_server">Configuracion</string>
 
-    <string name="participante_optiones">Register Participant/Update Participant Info/Log Visit</string>
+    <string name="confirm">Confirm</string>
     <string name="lista">List of Participants Who Missed Their Visit</string>
+    <string name="participante_optiones">Register Participant/Update Participant Info/Log Visit</string>
     <string name="scan1">Scan again to confirm fingerprint.</string>
     <string name="scan2">Not confirmed. Please try again.</string>
-    <string name="confirm">Confirm</string>
+    <string name="textAddInfo">Enter Additional Info (Optional unless fingerprint not registered))</string>
+    <string name="textFingerprintInstruction">Please place your index finger on the device.</string>
 
 </resources>
