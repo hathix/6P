@@ -8,6 +8,17 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp" >
 
+        <TextView
+            android:id="@+id/add_fingerprint_existing_header"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingBottom="1dp"
+            android:paddingTop="6dp"
+            android:text="@string/add_fingerprint_existing_header"
+            android:textSize="21sp"
+            android:textStyle="bold" />
+
         <EditText
             android:id="@+id/enter_first_name"
             android:layout_height="wrap_content"

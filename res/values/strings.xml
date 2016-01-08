@@ -333,6 +333,7 @@
     <string name="cambio_server">Configuracion</string>
 
     <string name="add_fingerprint_existing">Add Fingerprint to Existing Patient</string>
+    <string name="add_fingerprint_existing_header">Search for Existing Patient Using the Following Optional Fields:</string>
     <string name="action_home">Home</string>
     <string name="action_logout">Logout</string>
     <string name="confirm">Confirm</string>
