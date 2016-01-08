@@ -11,7 +11,7 @@
     tools:context=".New_menu_principal" >
     
      <TextView
-        android:id="@+id/main_menu_header"
+        android:id="@+id/no_match_header"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -57,7 +57,7 @@
 				                android:padding="20dp"
 				                android:textSize="21sp"
                 android:background="@drawable/botonblanco"
-		        android:text="@string/register_new_user" />
+		        android:text="@string/register_new_patient" />
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="5dp"
