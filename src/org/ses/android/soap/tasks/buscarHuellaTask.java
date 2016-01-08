@@ -16,17 +16,12 @@ import org.ksoap2.transport.HttpTransportSE;
 /**
  * Created by franciscorivera on 1/8/16.
  */
-public class buscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
+public class BuscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
 
     @Override
     protected Participant doInBackground(Byte ... params)
     {
-        // return bogus information
         Participant par = new Participant();
-        return par;
-
-        /* what you should actually do--presently unbuilt because of lack of backend */
-
         final String NAMESPACE = StringConexion.conexion;
         final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
         final String METHOD_NAME = "BuscarHuella";
