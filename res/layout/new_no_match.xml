@@ -38,7 +38,7 @@
                 android:layout_height="10dp" />
     
 		    <Button
-		        android:id="@+id/btnParticipanteOpciones"
+		        android:id="@+id/btnTryAgain"
 		                android:layout_width="fill_parent"
 		                android:layout_height="wrap_content"
 		                android:padding="20dp"
@@ -51,7 +51,7 @@
                 android:layout_height="5dp"
                 android:id="@+id/review_spacer_new" />
 		    <Button
-		        android:id="@+id/btnLista"
+		        android:id="@+id/btnRegisterNewUser"
 				                android:layout_width="fill_parent"
 				                android:layout_height="wrap_content"
 				                android:padding="20dp"
@@ -63,7 +63,7 @@
                 android:layout_height="5dp"
                 android:id="@+id/review_spacer" />
 		    <Button
-		        android:id="@+id/btnRunODK_new"
+		        android:id="@+id/btnAddFingerprintExisting"
 				                android:layout_width="fill_parent"
 				                android:layout_height="wrap_content"
 				                android:padding="20dp"
