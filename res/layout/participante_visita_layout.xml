@@ -78,6 +78,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/txtvisitgroup" />
+
             <Spinner
                 android:id="@+id/spnGrupo"
                 android:layout_height="wrap_content"
