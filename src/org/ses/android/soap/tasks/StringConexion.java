@@ -23,7 +23,8 @@ import java.io.PrintWriter;
  */
 public class StringConexion extends Application {
 
-    public  static String  conexion = ReaderFile();
+    public static String conexion = ReaderFile();
+    public static String serviceName = "WSSEIS/WSParticipante.asmx";
 
 
         //"http://demo.sociosensalud.org.pe/"
