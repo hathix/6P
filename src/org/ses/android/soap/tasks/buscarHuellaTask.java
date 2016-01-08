@@ -15,15 +15,21 @@ import org.ksoap2.transport.HttpTransportSE;
 
 /**
  * Created by franciscorivera on 1/8/16.
+ * Used to query the SOAP API for a fingerprint and retrieve the
+ * participant object that the fingerprint belongs to (null if
+ * error)
  */
+
 public class BuscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
+
 
     @Override
     protected Participant doInBackground(Byte ... params)
     {
-        Participant par = new Participant();
+        Participant participant = new Participant();
         final String NAMESPACE = StringConexion.conexion;
-        final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
+        final String SERVICE_NAME = StringConexion.serviceName;
+        final String URL=NAMESPACE+SERVICE_NAME;
         final String METHOD_NAME = "BuscarHuella";
         final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
 
@@ -44,27 +50,27 @@ public class BuscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
             transporte.call(SOAP_ACTION, envelope);
 
             SoapObject resSoap =(SoapObject)envelope.getResponse();
-            SoapObject ic = (SoapObject)resSoap.getProperty(0);
+            SoapObject dataObject = (SoapObject)resSoap.getProperty(0);
 
-            par.CodigoPaciente = ic.getProperty(0).toString();
-            par.Nombres = ic.getProperty(1).toString();
-            par.ApellidoPaterno = ic.getProperty(2).toString();
-            par.ApellidoMaterno = ic.getProperty(3).toString();
-            par.CodigoTipoDocumento = Integer.parseInt(ic.getProperty(4).toString());
-            par.DocumentoIdentidad = ic.getProperty(5).toString();
-            par.FechaNacimiento = ic.getProperty(6).toString();
-            par.Sexo = Integer.parseInt(ic.getProperty(7).toString());
-            Log.i("CodigoPaciente", "res: " + par.DocumentoIdentidad);
+            participant.CodigoPaciente = dataObject.getProperty(0).toString();
+            participant.Nombres = dataObject.getProperty(1).toString();
+            participant.ApellidoPaterno = dataObject.getProperty(2).toString();
+            participant.ApellidoMaterno = dataObject.getProperty(3).toString();
+            participant.CodigoTipoDocumento = Integer.parseInt(dataObject.getProperty(4).toString());
+            participant.DocumentoIdentidad = dataObject.getProperty(5).toString();
+            participant.FechaNacimiento = dataObject.getProperty(6).toString();
+            participant.Sexo = Integer.parseInt(dataObject.getProperty(7).toString());
+            Log.i("CodigoPaciente", "res: " + participant.DocumentoIdentidad);
 
         }
         catch (Exception e)
         {
-            par = null;
+            participant = null;
             Log.i("Exception" ,e.getMessage());
         }
 
 
-        return par;
+        return participant;
 
     }
 }

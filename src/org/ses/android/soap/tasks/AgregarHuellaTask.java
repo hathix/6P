@@ -13,14 +13,18 @@ import org.ksoap2.transport.HttpTransportSE;
 
 /**
  * Created by franciscorivera on 1/8/16.
+ * Is initialized by a codigoPaciente (primary key corresponding to a participant,
+ * then the doInBackground method takes a 400 byte array representing a fingerprint
+ * and saves it to the database corresponding to the codigoPaciente. Returns
+ * whatever message the SOAP API returns.
  */
 public class AgregarHuellaTask extends AsyncTask<Byte, Void, String> {
 
-    private String CodigoPaciente;
+    private String codigoPaciente;
 
-    public  AgregarHuellaTask(String CodigoPaciente)
+    public  AgregarHuellaTask(String codigoPaciente)
     {
-        this.CodigoPaciente = CodigoPaciente;
+        this.codigoPaciente = codigoPaciente;
     }
 
     @Override
@@ -29,13 +33,14 @@ public class AgregarHuellaTask extends AsyncTask<Byte, Void, String> {
         String resul = "";
 
         final String NAMESPACE = StringConexion.conexion;
-        final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
+        final String SERVICE_NAME = StringConexion.serviceName;
+        final String URL=NAMESPACE+SERVICE_NAME;
         final String METHOD_NAME = "AgregarHuella";
         final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
 
         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
         request.addProperty("huella", params);
-        request.addProperty("codigo", CodigoPaciente);
+        request.addProperty("codigo", codigoPaciente);
 
         SoapSerializationEnvelope envelope =
                 new SoapSerializationEnvelope(SoapEnvelope.VER11);
