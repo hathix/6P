@@ -34,6 +34,7 @@
     <string name="txtProject">Project:</string>
     <string name="txtProjects">Projects:</string>
     <string name="past_month">Past Month</string>  <!-- patient dash -->
+    <string name="patient_dash">Patient Dashboard</string>  <!-- patient dash -->
     <string name="past_week">Past Week</string>  <!-- patient dash -->
     <string name="future">Future</string>  <!-- patient dash -->
     <string name="received">Received</string>  <!-- patient dash -->
