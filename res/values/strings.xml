@@ -22,6 +22,7 @@
     <string name="opc_siguiente">Next</string>
     <string name="ingrese_doc_identidad">Identity Document</string>
     <string name="nombres">Names:</string>
+    <string name="missed">Missed Visits:</string>
     <string name="ape_pat">1st Family name:</string>
     <string name="ape_mat">2nd Family name:</string>
     <string name="masculino">Male</string>
@@ -276,6 +277,8 @@
     <string name="txthora_visita">Visit Time(hh:mm)</string>
     <string name="txtproject">Project:</string>
     <string name="txtvisitgroup">Visit Group:</string>
+    <string name="txtenddate">End Date:</string>
+    <string name="txtstartdate">Start Date:</string>
     <string name="txtvisit">Visits</string>
     <string name="menu_visitlist">Visit List</string>
     <string name="no_visits">No Visits</string>
