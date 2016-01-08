@@ -3,8 +3,6 @@ package org.ses.android.soap.tasks;
 import android.os.AsyncTask;
 import android.util.Log;
 
-import org.ses.android.soap.database.Participant;
-
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
@@ -16,21 +14,20 @@ import org.ksoap2.transport.HttpTransportSE;
 /**
  * Created by franciscorivera on 1/8/16.
  */
-public class AgregarHuellaTask extends AsyncTask<Byte, Void, Participant> {
+public class AgregarHuellaTask extends AsyncTask<Byte, Void, String> {
 
     private String CodigoPaciente;
 
-    @Override
     public  AgregarHuellaTask(String CodigoPaciente)
     {
         this.CodigoPaciente = CodigoPaciente;
     }
 
     @Override
-    protected Participant doInBackground(Byte ... params)
+    protected String doInBackground(Byte ... params)
     {
-        String resul;
-        
+        String resul = "";
+
         final String NAMESPACE = StringConexion.conexion;
         final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
         final String METHOD_NAME = "AgregarHuella";
@@ -54,8 +51,8 @@ public class AgregarHuellaTask extends AsyncTask<Byte, Void, Participant> {
             transporte.call(SOAP_ACTION, envelope);
 
             SoapPrimitive resultado_xml =(SoapPrimitive)envelope.getResponse();
-            String res = resultado_xml.toString();
-            Log.i("mensaje", res);
+            resul = resultado_xml.toString();
+            Log.i("mensaje", resul);
 
 
         }
