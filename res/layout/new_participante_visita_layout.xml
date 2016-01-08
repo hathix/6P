@@ -27,14 +27,6 @@
                 android:layout_height="wrap_content"
                 android:text="@string/nombres" />
 
-            <EditText
-                android:id="@+id/edt_nombres"
-                android:layout_height="wrap_content"
-                android:layout_width="300dp"
-                android:layout_weight="1"
-                android:enabled="false"
-                android:inputType="text" />
-
             <TextView
                 android:id="@+id/tvwLocal"
                 android:layout_width="wrap_content"
@@ -84,8 +76,8 @@
 
             <Spinner
                 android:id="@+id/spnGrupo"
-                android:layout_height="wrap_content"
-                android:layout_width="300dp"
+                android:layout_height="53dp"
+                android:layout_width="241dp"
                 android:layout_gravity="center_horizontal"
                 android:paddingLeft="10dip"
                 android:paddingRight="10dip"
@@ -98,8 +90,8 @@
                 android:text="@string/txtvisit" />
             <Spinner
                 android:id="@+id/spnVisita"
-                android:layout_height="wrap_content"
-                android:layout_width="300dp"
+                android:layout_height="51dp"
+                android:layout_width="241dp"
                 android:layout_gravity="center_horizontal"
                 android:paddingLeft="10dip"
                 android:paddingRight="10dip"
@@ -114,11 +106,16 @@
                         android:layout_weight="1"
                         android:inputType="text" />	     -->
 
+
             <DatePicker
+                android:layout_width="319dp"
+                android:layout_height="147dp"
+                android:id="@+id/datePicker" />
+
+            <TimePicker
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/datePicker"
-                android:layout_gravity="center_horizontal" />
+                android:id="@+id/timePicker" />
 
             <org.ses.android.soap.widgets.GrupoBotones android:id="@+id/btgNavega"
                 android:layout_width="fill_parent"
@@ -126,10 +123,6 @@
         </LinearLayout>
     </ScrollView>
 
-    <TimePicker
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/timePicker"
-        android:layout_gravity="center_horizontal" />
+
 
 </LinearLayout>

@@ -22,12 +22,13 @@
     <string name="opc_siguiente">Next</string>
     <string name="ingrese_doc_identidad">Identity Document</string>
     <string name="nombres">Names:</string>
+    <string name="number_missed">Number Missed</string> <!-- in new_missed_visits -->
     <string name="missed">Missed Visits:</string>
     <string name="ape_pat">1st Family name:</string>
     <string name="ape_mat">2nd Family name:</string>
     <string name="masculino">Male</string>
     <string name="log_visit">Log Visit</string>
-    <string name="historia">Historia</string>
+    <string name="historia">History</string>
     <string name="femenino">Female</string>
     <string name="fecha_nacimiento">Birth Date:</string>
     <string name="txtLocal">Locale:</string>
@@ -346,6 +347,7 @@
     <string name="action_home">Home</string>
     <string name="action_logout">Logout</string>
     <string name="confirm">Confirm</string>
+    <string name="dob">Date of Birth</string>
     <string name="first_name">First Name</string>
     <string name="lista">View Missing Appointments</string>
     <string name="matches">Select Patient to Confirm</string>
