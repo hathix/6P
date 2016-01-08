@@ -1,0 +1,180 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context=".ParticipanteVisitaActivity"
+    android:id="@+id/dash"
+    android:weightSum="1">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/patient_dash"
+        android:id="@+id/patient_dashboard" />
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="266dp"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+
+            <Button
+                android:id="@+id/button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:textSize="21sp"
+                android:background="@drawable/botonblanco"
+                android:text="@string/log_visit"
+                android:layout_gravity="center_horizontal"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/button2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:textSize="21sp"
+                android:background="@drawable/botonblanco"
+                android:text="@string/historia"
+                android:layout_gravity="center_horizontal" />
+
+            <TextView
+                android:id="@+id/tvw_nombres"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/nombres" />
+
+            <TextView
+                android:id="@+id/tvwLocal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txtLocal" />
+            <!--<Spinner-->
+            <!--android:id="@+id/spnLocal"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_width="300dp"-->
+            <!--android:layout_gravity="center_horizontal"-->
+            <!--android:paddingLeft="10dip"-->
+            <!--android:paddingRight="10dip"-->
+            <!--android:textColor="#000000"-->
+            <!--android:textSize="17sp" />-->
+            <TextView
+                android:id="@+id/tvwProyecto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txtProject" />
+            <!--            <Spinner
+                            android:id="@+id/spnProyecto"
+                            android:layout_height="wrap_content"
+                            android:layout_width="300dp"
+                            android:layout_gravity="center_horizontal"
+                            android:paddingLeft="10dip"
+                            android:paddingRight="10dip"
+                            android:textColor="#000000"
+                            android:textSize="17sp" />-->
+            <TextView
+                android:id="@+id/tvwStart"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txtstartdate" />
+
+            <TextView
+                android:id="@+id/tvwEnd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/txtenddate" />
+
+
+            <!-- 	    <EditText
+                        android:id="@+id/edt_hora_visita"
+                        android:layout_height="wrap_content"
+                        android:layout_width="150dp"
+                        android:layout_weight="1"
+                        android:inputType="text" />	     -->
+
+        </LinearLayout>
+    </ScrollView>
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="5dp"
+        android:stretchColumns="0,1,2,3">
+        <TableRow>
+            <TextView />
+            <TextView
+                android:text="@string/missed"
+                android:gravity="center_horizontal"
+                android:padding="3dip" />
+            <TextView
+                android:text="@string/received"
+                android:gravity="center_horizontal"
+                android:padding="3dip" />
+            <TextView
+                android:text="@string/future"
+                android:gravity="center_horizontal"
+                android:padding="3dip" />
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="@string/past_week"
+                android:padding="3dip"/>
+            <TextView
+                android:id="@+id/past_week_missed"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/past_week_received"
+                android:gravity="center_horizontal"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="@string/past_month"
+                android:padding="3dip"/>
+            <TextView
+                android:id="@+id/past_month_missed"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/past_month_received"
+                android:gravity="center_horizontal"/>
+        </TableRow>
+        <TableRow>
+            <TextView
+                android:text="@string/total"
+                android:padding="3dip"/>
+            <TextView
+                android:id="@+id/total_missed"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/total_received"
+                android:gravity="center_horizontal"/>
+            <TextView
+                android:id="@+id/total_future"
+                android:gravity="center_horizontal"/>
+        </TableRow>
+
+    </TableLayout>
+
+    <Button
+        android:id="@+id/log_in_other"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:textSize="21sp"
+        android:background="@drawable/botonblanco"
+        android:text="@string/log_in_other"
+        android:layout_gravity="center_horizontal" />
+
+
+</LinearLayout>

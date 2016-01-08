@@ -22,13 +22,25 @@
     <string name="opc_siguiente">Next</string>
     <string name="ingrese_doc_identidad">Identity Document</string>
     <string name="nombres">Names:</string>
+    <string name="number_missed">Number Missed</string> <!-- in new_missed_visits -->
+    <string name="log_in_other">Log in another patient</string> <!-- in new_patient_dashboard -->
+    <string name="missed">Missed Visits:</string>
     <string name="ape_pat">1st Family name:</string>
     <string name="ape_mat">2nd Family name:</string>
     <string name="masculino">Male</string>
+    <string name="log_visit">Log Visit</string>
+    <string name="historia">History</string>
     <string name="femenino">Female</string>
     <string name="fecha_nacimiento">Birth Date:</string>
     <string name="txtLocal">Locale:</string>
     <string name="txtProject">Project:</string>
+    <string name="txtProjects">Projects:</string>
+    <string name="past_month">Past Month</string>  <!-- patient dash -->
+    <string name="patient_dash">Patient Dashboard</string>  <!-- patient dash -->
+    <string name="past_week">Past Week</string>  <!-- patient dash -->
+    <string name="future">Future</string>  <!-- patient dash -->
+    <string name="received">Received</string>  <!-- patient dash -->
+    <string name="total">Total</string> <!-- patient dash -->
     <string name="tipdoc_dni">DNI</string>
     <string name="tipdoc_otros">No document</string>
     <string name="accept_location">Record Location</string>
@@ -276,6 +288,8 @@
     <string name="txthora_visita">Visit Time(hh:mm)</string>
     <string name="txtproject">Project:</string>
     <string name="txtvisitgroup">Visit Group:</string>
+    <string name="txtenddate">End Date:</string>
+    <string name="txtstartdate">Start Date:</string>
     <string name="txtvisit">Visits</string>
     <string name="menu_visitlist">Visit List</string>
     <string name="no_visits">No Visits</string>
@@ -328,4 +342,30 @@
     <string name="title_activity_participante_datos_secund">ParticipanteDatosSecund</string>
     <string name="title_activity_cambio_server">CambioServer</string>
     <string name="cambio_server">Configuracion</string>
+
+    <string name="add_fingerprint_existing">Add Fingerprint to Existing Patient</string>
+    <string name="add_fingerprint_existing_header">Search for Existing Patient Using the Following Optional Fields:</string>
+    <string name="action_home">Home</string>
+    <string name="action_logout">Logout</string>
+    <string name="confirm">Confirm</string>
+    <string name="dob">Date of Birth (Tap to Change)</string>
+    <string name="first_name">First Name</string>
+    <string name="lista">View Missing Appointments</string>
+    <string name="matches">Select Patient to Confirm</string>
+    <string name="maternal_name">Maternal Name</string>
+    <string name="no_patient_found">No Patient Found</string>
+    <string name="participante_optiones">Check In/Register/Update Patient</string>
+    <string name="paternal_name">Paternal Name</string>
+    <string name="patient_not_listed">Patient Not Listed</string>
+    <string name="project">Project</string>
+    <string name="register_new_patient">Register New Patient</string>
+    <string name="scan">Scan</string>
+    <string name="scan1">Scan again to confirm fingerprint.</string>
+    <string name="scan2">Not confirmed. Please try again.</string>
+    <string name="search_patient">Search for Patient</string>
+    <string name="sexo">Gender:</string>
+    <string name="try_again">Try Again</string>
+    <string name="textAddInfo">Enter Additional Info (Optional unless fingerprint not registered)</string>
+    <string name="textFingerprintInstruction">Please place your index finger on the scanner.</string>
+
 </resources>
