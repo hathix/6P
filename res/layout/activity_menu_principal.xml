@@ -61,7 +61,7 @@
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="5dp"
-                android:id="@+id/review_spacer" />
+                android:id="@+id/review_spacer_2" />
 		    <Button
 		        android:id="@+id/btnRunODK"
 				                android:layout_width="fill_parent"
