@@ -328,4 +328,7 @@
     <string name="title_activity_participante_datos_secund">ParticipanteDatosSecund</string>
     <string name="title_activity_cambio_server">CambioServer</string>
     <string name="cambio_server">Configuracion</string>
+
+    <string name="participante_optiones">Register Participant/Update Participant Info/Log Visit</string>
+    <string name="lista">List of Participants Who Missed Their Visit</string>
 </resources>
