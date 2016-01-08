@@ -29,7 +29,8 @@ public class AgregarHuellaTask extends AsyncTask<Byte, Void, Participant> {
     @Override
     protected Participant doInBackground(Byte ... params)
     {
-        Participant par = new Participant();
+        String resul;
+        
         final String NAMESPACE = StringConexion.conexion;
         final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
         final String METHOD_NAME = "AgregarHuella";
@@ -37,6 +38,7 @@ public class AgregarHuellaTask extends AsyncTask<Byte, Void, Participant> {
 
         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
         request.addProperty("huella", params);
+        request.addProperty("codigo", CodigoPaciente);
 
         SoapSerializationEnvelope envelope =
                 new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -51,28 +53,18 @@ public class AgregarHuellaTask extends AsyncTask<Byte, Void, Participant> {
         {
             transporte.call(SOAP_ACTION, envelope);
 
-            SoapObject resSoap =(SoapObject)envelope.getResponse();
-            SoapObject ic = (SoapObject)resSoap.getProperty(0);
+            SoapPrimitive resultado_xml =(SoapPrimitive)envelope.getResponse();
+            String res = resultado_xml.toString();
+            Log.i("mensaje", res);
 
-            par.CodigoPaciente = ic.getProperty(0).toString();
-            par.Nombres = ic.getProperty(1).toString();
-            par.ApellidoPaterno = ic.getProperty(2).toString();
-            par.ApellidoMaterno = ic.getProperty(3).toString();
-            par.CodigoTipoDocumento = Integer.parseInt(ic.getProperty(4).toString());
-            par.DocumentoIdentidad = ic.getProperty(5).toString();
-            par.FechaNacimiento = ic.getProperty(6).toString();
-            par.Sexo = Integer.parseInt(ic.getProperty(7).toString());
-            Log.i("CodigoPaciente", "res: " + par.DocumentoIdentidad);
 
         }
         catch (Exception e)
         {
-            par = null;
-            Log.i("Exception" ,e.getMessage());
+            resul = "";
         }
 
-
-        return par;
+        return resul;
 
     }
 }
