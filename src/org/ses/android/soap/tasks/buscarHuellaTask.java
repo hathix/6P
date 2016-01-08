@@ -23,7 +23,7 @@ public class buscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
     {
         // return bogus information
         Participant resul = new Participant("", "", "", "", 0, "", "", 0);
-
+        return resul;
 
         /* what you should actually do--presently unbuilt because of lack of backend */
 
@@ -51,12 +51,22 @@ public class buscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
             SoapObject resSoap =(SoapObject)envelope.getResponse();
             SoapObject ic = (SoapObject)resSoap.getProperty(0);
 
-            Log.i("CodigoPaciente", "res: " + res);
+            Participant par = new Participant();
+
+            par.CodigoPaciente = ic.getProperty(0).toString();
+            par.Nombres = ic.getProperty(1).toString();
+            par.ApellidoPaterno = ic.getProperty(2).toString();
+            par.ApellidoMaterno = ic.getProperty(3).toString();
+            par.CodigoTipoDocumento = Integer.parseInt(ic.getProperty(4).toString());
+            par.DocumentoIdentidad = ic.getProperty(5).toString();
+            par.FechaNacimiento = ic.getProperty(6).toString();
+            par.Sexo = Integer.parseInt(ic.getProperty(7).toString());
+            Log.i("CodigoPaciente", "res: " + par.DocumentoIdentidad);
 
         }
         catch (Exception e)
         {
-            resul = "";
+            resul = null;
             Log.i("Exception" ,e.getMessage());
         }
 
