@@ -25,14 +25,13 @@
         android:layout_x="37dp"
         android:layout_y="241dp"
         android:src="@android:drawable/picture_frame"
-        android:layout_below="@+id/textFingerprintInstruction"
-        android:layout_alignRight="@+id/btnConfirm2" />
+        android:layout_below="@+id/textFingerprintInstruction" />
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="@string/capture_image"
+        android:text="@string/scan"
         android:id="@+id/btnCapture"
         android:layout_marginTop="73dp"
         android:layout_alignTop="@+id/imageViewFingerprint"
@@ -55,7 +54,7 @@
         android:id="@+id/enter_participant_name"
         android:layout_height="wrap_content"
         android:inputType="text"
-        android:hint="@string/participant_name"
+        android:hint="@string/nombres"
         android:layout_width="fill_parent"
         android:layout_below="@+id/textAddInfo"
         android:layout_alignParentLeft="true">
