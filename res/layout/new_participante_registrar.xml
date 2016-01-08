@@ -1,0 +1,260 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    tools:context="org.ses.android.soap.widgets.ParticipanteDatosSecund">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical" >
+
+        <!-- DNI/document -->
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp" >
+
+            <RadioGroup android:id="@+id/rbgTipoDoc"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <RadioButton
+                    android:id="@+id/rboDNI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:checked="true"
+                    android:text="@string/tipdoc_dni" />
+
+                <RadioButton android:id="@+id/rboOtros"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/tipdoc_otros" />
+            </RadioGroup>
+
+            <EditText
+                android:id="@+id/edt_doc_identidad"
+                android:layout_height="wrap_content"
+                android:layout_width="120dp"
+                android:layout_marginTop="5dp"
+                android:hint="@string/ingrese_doc_identidad"
+                android:inputType="text" />
+
+            <!-- Name, Birth Date, Sex -->
+
+            <EditText
+                android:id="@+id/edt_nombres"
+                android:layout_height="wrap_content"
+                android:layout_width="300dp"
+                android:layout_weight="1"
+                android:hint="@string/nombre"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edt_ape_pat"
+                android:layout_height="wrap_content"
+                android:layout_width="300dp"
+                android:layout_weight="1"
+                android:hint="@string/ape_pat"
+                android:inputType="text" />
+
+            <EditText
+                android:id="@+id/edt_ape_mat"
+                android:layout_height="wrap_content"
+                android:layout_width="300dp"
+                android:layout_weight="1"
+                android:hint="@string/ape_mat"
+                android:inputType="text" />
+
+            <TextView
+                android:id="@+id/tvDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/fecha_nacimiento" />
+
+            <TextView
+                android:id="@+id/tvwfecha_nacimiento"
+                android:layout_height="wrap_content"
+                android:layout_width="150dp"
+                android:layout_weight="1"
+                style="@android:style/Widget.DeviceDefault.Light.Spinner"
+                android:text=""/>
+
+            <TextView
+                android:id="@+id/gender"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sexo" />
+
+            <RadioGroup android:id="@+id/rbgSexo"
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent" >
+
+                <RadioButton
+                    android:id="@+id/rboMasculino"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/masculino"
+                    android:textSize="14sp" />
+
+                <RadioButton
+                    android:id="@+id/rboFemenino"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/femenino"
+                    android:textSize="14sp" />
+
+            </RadioGroup>
+
+            <!-- additional info -->
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spDepartamento_new"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:spinnerMode="dialog"
+                android:dropDownWidth="fill_parent"
+                android:contentDescription="Departamento" />
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spProvinc"
+                android:layout_weight="1"
+                android:spinnerMode="dialog"
+                android:clickable="true"
+                android:dropDownWidth="fill_parent"
+                android:contentDescription="Provincia"/>
+
+            <Spinner
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/spDistri"
+                android:layout_weight="1"
+                android:spinnerMode="dialog"
+                android:clickable="true"
+                android:dropDownWidth="fill_parent"
+                android:contentDescription="Distrito"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtDomic"
+                android:layout_weight="1"
+                android:inputType="textLongMessage"
+                android:hint="Domicilio"/>
+
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/txtRefer"
+                android:layout_weight="1"
+                android:inputType="textLongMessage"
+                android:hint="Referencia" />
+
+            <EditText
+                android:layout_width="113dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/textTelf"
+                android:layout_weight="0.31"
+                android:hint="Telefono"/>
+
+            <EditText
+                android:layout_width="113dp"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/txtCelular"
+                android:layout_weight="0.31"
+                android:hint="Celular"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout3"
+                android:layout_alignParentLeft="true">
+
+                <EditText
+                    android:layout_width="275dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/txtGeoLocalN"
+                    android:singleLine="false"
+                    android:hint="Localizac"/>
+
+                <ImageButton
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:id="@+id/ImgBtnGps"
+                    android:background="@drawable/gps_icon" />
+
+            </LinearLayout>
+
+            <EditText
+                android:layout_width="183dp"
+                android:layout_height="wrap_content"
+                android:inputType="text|number"
+                android:ems="10"
+                android:id="@+id/txtLong"
+                android:singleLine="false"
+                android:enabled="false"
+                android:editable="false"
+                android:hint="Longitud"/>
+
+            <EditText
+                android:layout_width="183dp"
+                android:layout_height="wrap_content"
+                android:inputType="text|number"
+                android:ems="10"
+                android:id="@+id/txtLat"
+                android:singleLine="false"
+                android:editable="false"
+                android:hint="Latitud"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="50dp">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Guardar"
+                    android:textColor="#ffffff"
+                    android:background="@drawable/botonrojo"
+                    android:id="@+id/btnGuardar"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp" />
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Volver "
+                    android:textColor="#ffffff"
+                    android:background="@drawable/botonrojo"
+                    android:layout_marginLeft="30dp"
+                    android:layout_marginTop="10dp"
+                    android:id="@+id/btnVolver" />
+            </LinearLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
