@@ -61,7 +61,7 @@
 				android:padding="20dp"
 				android:textSize="21sp"
 				android:background="@drawable/botonblanco"
-				android:text="@string/register_new_patient_or" />
+				android:text="@string/patient_not_listed" />
 
       </LinearLayout>
 

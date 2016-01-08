@@ -344,9 +344,9 @@
     <string name="no_patient_found">No Patient Found</string>
     <string name="participante_optiones">Register Participant/Update Participant Info/Log Visit</string>
     <string name="paternal_name">Paternal Name</string>
+    <string name="patient_not_listed">Patient Not Listed</string>
     <string name="project">Project</string>
     <string name="register_new_patient">Register New Patient</string>
-    <string name="register_new_patient_or">Or Register New Patient</string>
     <string name="scan1">Scan again to confirm fingerprint.</string>
     <string name="scan2">Not confirmed. Please try again.</string>
     <string name="search_patient">Search for Patient</string>
