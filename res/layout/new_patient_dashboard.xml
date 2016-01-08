@@ -8,7 +8,8 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
     tools:context=".ParticipanteVisitaActivity"
-    android:id="@+id/dash">
+    android:id="@+id/dash"
+    android:weightSum="1">
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,10 +71,10 @@
             <!--android:textColor="#000000"-->
             <!--android:textSize="17sp" />-->
             <TextView
-                android:id="@+id/tvwProyectos"
+                android:id="@+id/tvwProyecto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/txtProjects" />
+                android:text="@string/txtProject" />
             <!--            <Spinner
                             android:id="@+id/spnProyecto"
                             android:layout_height="wrap_content"
@@ -108,7 +109,7 @@
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="140dp"
         android:layout_marginTop="5dp"
         android:stretchColumns="0,1,2,3">
         <TableRow>
@@ -164,6 +165,16 @@
         </TableRow>
 
     </TableLayout>
+
+    <Button
+        android:id="@+id/log_in_other"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:padding="20dp"
+        android:textSize="21sp"
+        android:background="@drawable/botonblanco"
+        android:text="@string/log_in_other"
+        android:layout_gravity="center_horizontal" />
 
 
 </LinearLayout>
