@@ -22,8 +22,8 @@ public class buscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
     protected Participant doInBackground(Byte ... params)
     {
         // return bogus information
-        Participant resul = new Participant("", "", "", "", 0, "", "", 0);
-        return resul;
+        Participant par = new Participant();
+        return par;
 
         /* what you should actually do--presently unbuilt because of lack of backend */
 
@@ -51,8 +51,6 @@ public class buscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
             SoapObject resSoap =(SoapObject)envelope.getResponse();
             SoapObject ic = (SoapObject)resSoap.getProperty(0);
 
-            Participant par = new Participant();
-
             par.CodigoPaciente = ic.getProperty(0).toString();
             par.Nombres = ic.getProperty(1).toString();
             par.ApellidoPaterno = ic.getProperty(2).toString();
@@ -66,12 +64,12 @@ public class buscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
         }
         catch (Exception e)
         {
-            resul = null;
+            par = null;
             Log.i("Exception" ,e.getMessage());
         }
 
 
-        return resul;
+        return par;
 
     }
 }
