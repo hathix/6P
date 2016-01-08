@@ -30,6 +30,20 @@ android {
     }
 
     sourceSets {
+
+        buildTypes {
+            debug {
+                debuggable true
+            }
+            release {
+                minifyEnabled false
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            }
+            debug {
+                debuggable true
+            }
+        }
+
         main {
             manifest.srcFile 'AndroidManifest.xml'
             java.srcDirs = ['src']
