@@ -339,6 +339,7 @@
     <string name="register_new_user">Register New User</string>
     <string name="scan1">Scan again to confirm fingerprint.</string>
     <string name="scan2">Not confirmed. Please try again.</string>
+    <string name="sexo">Gender:</string>
     <string name="try_again">Try Again</string>
     <string name="textAddInfo">Enter Additional Info (Optional unless fingerprint not registered))</string>
     <string name="textFingerprintInstruction">Please place your index finger on the device.</string>
