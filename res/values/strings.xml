@@ -356,12 +356,13 @@
     <string name="patient_not_listed">Patient Not Listed</string>
     <string name="project">Project</string>
     <string name="register_new_patient">Register New Patient</string>
+    <string name="scan">Scan</string>
     <string name="scan1">Scan again to confirm fingerprint.</string>
     <string name="scan2">Not confirmed. Please try again.</string>
     <string name="search_patient">Search for Patient</string>
     <string name="sexo">Gender:</string>
     <string name="try_again">Try Again</string>
-    <string name="textAddInfo">Enter Additional Info (Optional unless fingerprint not registered))</string>
-    <string name="textFingerprintInstruction">Please place your index finger on the device.</string>
+    <string name="textAddInfo">Enter Additional Info (Optional unless fingerprint not registered)</string>
+    <string name="textFingerprintInstruction">Please place your index finger on the scanner.</string>
 
 </resources>
