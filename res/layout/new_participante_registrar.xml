@@ -23,30 +23,12 @@
             android:paddingLeft="10dp"
             android:paddingRight="10dp" >
 
-            <RadioGroup android:id="@+id/rbgTipoDoc"
-                android:orientation="horizontal"
-                android:layout_width="fill_parent"
-                android:layout_height="fill_parent" >
-
-                <RadioButton
-                    android:id="@+id/rboDNI"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:checked="true"
-                    android:text="@string/tipdoc_dni" />
-
-                <RadioButton android:id="@+id/rboOtros"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="@string/tipdoc_otros" />
-            </RadioGroup>
-
             <EditText
                 android:id="@+id/edt_doc_identidad"
                 android:layout_height="wrap_content"
-                android:layout_width="120dp"
+                android:layout_width="match_parent"
                 android:layout_marginTop="5dp"
-                android:hint="@string/ingrese_doc_identidad"
+                android:hint="@string/dni_document"
                 android:inputType="text" />
 
             <!-- Name, Birth Date, Sex -->
@@ -56,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="300dp"
                 android:layout_weight="1"
-                android:hint="@string/nombre"
+                android:hint="@string/first_name"
                 android:inputType="text" />
 
             <EditText
@@ -64,7 +46,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="300dp"
                 android:layout_weight="1"
-                android:hint="@string/ape_pat"
+                android:hint="@string/maternal_name"
                 android:inputType="text" />
 
             <EditText
@@ -72,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_width="300dp"
                 android:layout_weight="1"
-                android:hint="@string/ape_mat"
+                android:hint="@string/paternal_name"
                 android:inputType="text" />
 
             <TextView
