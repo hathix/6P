@@ -60,12 +60,12 @@
         </EditText>
 
         <EditText
-            android:id="@+id/enter_project"
+            android:id="@+id/enter_dob"
             android:layout_height="wrap_content"
             android:inputType="text"
-            android:hint="@string/project"
+            android:hint="@string/dob"
             android:layout_width="fill_parent"
-            android:layout_below="@+id/enter_project"
+            android:layout_below="@+id/enter_dob"
             android:layout_alignParentLeft="true">
         </EditText>
 
