@@ -12,6 +12,8 @@ import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -38,8 +40,16 @@ import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import SecuGen.FDxSDKPro.JSGFPLib;
-import SecuGen.FDxSDKPro.SGDeviceInfoParam;
+import SecuGen.FDxSDKPro.SGANSITemplateInfo;
+import SecuGen.FDxSDKPro.SGAutoOnEventNotifier;
+import SecuGen.FDxSDKPro.SGFDxDeviceName;
 import SecuGen.FDxSDKPro.SGFDxErrorCode;
+import SecuGen.FDxSDKPro.SGFDxSecurityLevel;
+import SecuGen.FDxSDKPro.SGFDxTemplateFormat;
+import SecuGen.FDxSDKPro.SGFingerInfo;
+import SecuGen.FDxSDKPro.SGFingerPresentEvent;
+import SecuGen.FDxSDKPro.SGISOTemplateInfo;
+import SecuGen.FDxSDKPro.SGImpressionType;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -58,6 +68,7 @@ public class FingerprintFindActivity extends Activity
     private byte[] rawFingerprint;
     private int imgWidth;
     private int imgHeight;
+    private int[] mMaxTemplateSize;
     private int[] grayBuffer;
     private Bitmap grayBitmap;
     private IntentFilter filter;
@@ -124,6 +135,7 @@ public class FingerprintFindActivity extends Activity
         grayBitmap = Bitmap.createBitmap(JSGFPLib.MAX_IMAGE_WIDTH_ALL_DEVICES, JSGFPLib.MAX_IMAGE_HEIGHT_ALL_DEVICES, Bitmap.Config.ARGB_8888);
         grayBitmap.setPixels(grayBuffer, 0, JSGFPLib.MAX_IMAGE_WIDTH_ALL_DEVICES, 0, 0, JSGFPLib.MAX_IMAGE_WIDTH_ALL_DEVICES, JSGFPLib.MAX_IMAGE_HEIGHT_ALL_DEVICES);
         imgFingerprint.setImageBitmap(grayBitmap);
+        mMaxTemplateSize = new int[1];
 
         //USB Permissions
         mPermissionIntent = PendingIntent.getBroadcast(this, 0, new Intent(ACTION_USB_PERMISSION), 0);
@@ -133,6 +145,62 @@ public class FingerprintFindActivity extends Activity
 
     }
 
+    @Override
+    public void onResume() {
+        Log.d(TAG, "onResume()");
+        super.onResume();
+        registerReceiver(mUsbReceiver, filter);
+        long error = jsgfpLib.Init(SGFDxDeviceName.SG_DEV_AUTO);
+        if (error != SGFDxErrorCode.SGFDX_ERROR_NONE) {
+            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+            if (error == SGFDxErrorCode.SGFDX_ERROR_DEVICE_NOT_FOUND)
+                dlgAlert.setMessage("The attached fingerprint device is not supported on Android");
+            else
+                dlgAlert.setMessage("Fingerprint device initialization failed!");
+            dlgAlert.setTitle("SecuGen Fingerprint SDK");
+            dlgAlert.setPositiveButton("OK",
+                    new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int whichButton) {
+                            finish();
+                            return;
+                        }
+                    }
+            );
+            dlgAlert.setCancelable(false);
+            dlgAlert.create().show();
+        } else {
+            UsbDevice usbDevice = jsgfpLib.GetUsbDevice();
+            if (usbDevice == null) {
+                AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
+                dlgAlert.setMessage("SDU04P or SDU03P fingerprint sensor not found!");
+                dlgAlert.setTitle("SecuGen Fingerprint SDK");
+                dlgAlert.setPositiveButton("OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                finish();
+                                return;
+                            }
+                        }
+                );
+                dlgAlert.setCancelable(false);
+                dlgAlert.create().show();
+            } else {
+                jsgfpLib.GetUsbManager().requestPermission(usbDevice, mPermissionIntent);
+                error = jsgfpLib.OpenDevice(0);
+                // debugMessage("OpenDevice() ret: " + error + "\n");
+                SecuGen.FDxSDKPro.SGDeviceInfoParam deviceInfo = new SecuGen.FDxSDKPro.SGDeviceInfoParam();
+                error = jsgfpLib.GetDeviceInfo(deviceInfo);
+                // debugMessage("GetDeviceInfo() ret: " + error + "\n");
+                imgWidth = deviceInfo.imageWidth;
+                imgHeight = deviceInfo.imageHeight;
+                jsgfpLib.SetTemplateFormat(SGFDxTemplateFormat.TEMPLATE_FORMAT_SG400);
+                jsgfpLib.GetMaxTemplateSize(mMaxTemplateSize);
+                // debugMessage("TEMPLATE_FORMAT_SG400 SIZE: " + mMaxTemplateSize[0] + "\n");
+                //Thread thread = new Thread(this);
+                //thread.start();
+            }
+        }
+    }
     public Bitmap toGrayscale(byte[] mImageBuffer) {
         byte[] Bits = new byte[mImageBuffer.length * 4];
         for (int i = 0; i < mImageBuffer.length; i++) {
@@ -150,12 +218,14 @@ public class FingerprintFindActivity extends Activity
         long dwTimeStart = 0, dwTimeEnd = 0, dwTimeElapsed = 0;
         byte[] buffer = new byte[imgWidth * imgHeight];
         dwTimeStart = System.currentTimeMillis();
-        if (jsgfpLib.GetImage(buffer) == SGFDxErrorCode.SGFDX_ERROR_NONE) {
+        // if (jsgfpLib.GetImage(buffer) == SGFDxErrorCode.SGFDX_ERROR_NONE) {
+            jsgfpLib.GetImage(buffer);
+            Log.i("Success!", "");
             dwTimeEnd = System.currentTimeMillis();
             dwTimeElapsed = dwTimeEnd - dwTimeStart;
             //debugMessage("getImage() ret:" + result + " [" + dwTimeElapsed + "ms]\n");
             imgFingerprint.setImageBitmap(this.toGrayscale(buffer));
-        }
+        // }
     }
 
     public void onClick(View v) {
