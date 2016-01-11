@@ -36,7 +36,7 @@
         <!-- </intent-filter> -->
         <!-- </activity> -->
         <activity
-            android:name="org.ses.android.soap.PromoterLoginActivity"
+            android:name="org.ses.android.soap.MainMenuActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Holo.Light" >
             <intent-filter>
