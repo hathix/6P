@@ -72,7 +72,7 @@ public class MainMenuActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent=new Intent(MainMenuActivity.this,ParticipantDashboardActivity.class);
+				Intent intent=new Intent(MainMenuActivity.this,FingerprintFindActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -163,7 +163,7 @@ public class MainMenuActivity extends Activity {
 	public boolean onCreateOptionsMenu(Menu menu) {
 
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.main,menu);
+		inflater.inflate(R.menu.new_menu_principal,menu);
 
 		return true;
 	}
