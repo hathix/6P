@@ -26,5 +26,4 @@ import java.util.concurrent.ExecutionException;
  * Created by anyway on 1/11/16.
  */
 public class FingerprintSearchActivity extends Activity {
-    // test
 }
