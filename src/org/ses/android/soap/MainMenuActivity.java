@@ -30,7 +30,7 @@ import org.ses.android.soap.widgets.CambioServer;
 
 import java.util.concurrent.ExecutionException;
 
-public class MainMenuActivity extends Activity {
+public class MainMenuActivity extends BaseActivity {
 
 	private Button btnCheckInRegisterUpdatePatient;
 	private Button btnViewMissingAppts;
@@ -159,24 +159,24 @@ public class MainMenuActivity extends Activity {
 			}
 		});
 	}
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-
-		MenuInflater inflater = getMenuInflater();
-		//inflater.inflate(R.menu.new_menu_principal,menu);
-
-		return true;
-	}
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-			case R.id.cambio_server:
-
-				Intent ig = new Intent(this, CambioServer.class);
-				startActivity(ig);
-				return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//
+//		MenuInflater inflater = getMenuInflater();
+//		//inflater.inflate(R.menu.new_menu_principal,menu);
+//
+//		return true;
+//	}
+//	@Override
+//	public boolean onOptionsItemSelected(MenuItem item) {
+//		switch (item.getItemId()) {
+//			case R.id.cambio_server:
+//
+//				Intent ig = new Intent(this, CambioServer.class);
+//				startActivity(ig);
+//				return true;
+//		}
+//		return super.onOptionsItemSelected(item);
+//	}
 
 }
