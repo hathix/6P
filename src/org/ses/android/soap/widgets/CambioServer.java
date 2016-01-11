@@ -16,7 +16,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.ses.android.seispapp120.R;
-import org.ses.android.soap.Menu_principal;
+import org.ses.android.soap.MainMenuActivity;
 import org.ses.android.soap.tasks.StringConexion;
 
 public class CambioServer extends Activity {
@@ -50,7 +50,7 @@ public class CambioServer extends Activity {
          btnSalir.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Intent ig = new Intent(context, Menu_principal.class);
+                 Intent ig = new Intent(context, MainMenuActivity.class);
                  startActivity(ig);
              }
          });
