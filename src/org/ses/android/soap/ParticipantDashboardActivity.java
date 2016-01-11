@@ -26,4 +26,10 @@ import java.util.concurrent.ExecutionException;
  * Created by anyway on 1/11/16.
  */
 public class ParticipantDashboardActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.participant_dashboard_layout);
+    }
 }

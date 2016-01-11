@@ -26,4 +26,10 @@ import java.util.concurrent.ExecutionException;
  * Created by anyway on 1/11/16.
  */
 public class AddFingerprintExistingActivity extends Activity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.add_fingerprint_existing_layout);
+    }
 }
