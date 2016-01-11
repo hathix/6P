@@ -23,7 +23,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import org.ses.android.seispapp120.R;
-import org.ses.android.soap.Menu_principal;
+import org.ses.android.soap.MainMenuActivity;
 import org.ses.android.soap.database.Departamento;
 import org.ses.android.soap.models.Depart;
 import org.ses.android.soap.models.Distrit;
@@ -102,7 +102,7 @@ public class ParticipanteDatosSecund extends Activity {
         btnvolv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                 Intent  i = new Intent(getApplicationContext(),Menu_principal.class);
+                 Intent  i = new Intent(getApplicationContext(),MainMenuActivity.class);
                 startActivity(i);
 
 
@@ -352,7 +352,7 @@ public class ParticipanteDatosSecund extends Activity {
                 try {
                     String msj = regPaciente.get();
                     Toast.makeText(getApplicationContext(), "Datos Guardados Correctamente", Toast.LENGTH_LONG).show();
-                    Intent i = new Intent(context, Menu_principal.class);
+                    Intent i = new Intent(context, MainMenuActivity.class);
                      startActivity(i);
 
                 } catch (InterruptedException e) {
