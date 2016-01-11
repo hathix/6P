@@ -52,14 +52,13 @@ public class ParticipantDashboardActivity extends BaseActivity {
             }
         });
         // "Log in another patient" button should return to FingerprintFindActivity
-        // TODO uncomment once FingerprintFindActivity works
-//        Button btnLogInAnother = (Button) findViewById(R.id.log_in_other);
-//        btnLogInAnother.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(ParticipantDashboardActivity.this, FingerprintFindActivity.class);
-//                startActivity(intent);
-//            }
-//        });
+        Button btnLogInAnother = (Button) findViewById(R.id.log_in_other);
+        btnLogInAnother.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ParticipantDashboardActivity.this, FingerprintFindActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
