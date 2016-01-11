@@ -59,15 +59,22 @@
             android:layout_alignParentLeft="true">
         </EditText>
 
-        <EditText
-            android:id="@+id/enter_dob"
-            android:layout_height="wrap_content"
-            android:inputType="text"
-            android:hint="@string/dob"
+        <TextView
+            android:id="@+id/dob_text"
             android:layout_width="fill_parent"
-            android:layout_below="@+id/enter_dob"
-            android:layout_alignParentLeft="true">
-        </EditText>
+            android:layout_height="wrap_content"
+            android:gravity="left"
+            android:paddingBottom="1dp"
+            android:paddingTop="6dp"
+            android:text="@string/dob"
+            android:textSize="21sp" />
+
+        <TextView
+            android:id="@+id/tvwfecha_nacimiento"
+            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_weight="1"
+            style="@android:style/Widget.DeviceDefault.Light.Spinner" />
 
         <TextView
             android:layout_width="wrap_content"
