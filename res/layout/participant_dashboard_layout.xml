@@ -30,7 +30,7 @@
             android:paddingRight="10dp" >
 
             <Button
-                android:id="@+id/button"
+                android:id="@+id/log_visit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
@@ -41,7 +41,7 @@
                 android:layout_weight="1" />
 
             <Button
-                android:id="@+id/button2"
+                android:id="@+id/participant_history"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
