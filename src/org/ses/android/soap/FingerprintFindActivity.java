@@ -26,6 +26,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.view.View.OnTouchListener;
+import android.view.View.OnClickListener;
+import android.view.MotionEvent;
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.widget.DatePicker;
+
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.PatId;
@@ -34,6 +41,8 @@ import org.ses.android.soap.tasks.IdsListTask;
 import org.ses.android.soap.tasks.ParticipantLoadTask;
 import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.widgets.GrupoBotones;
+
+import java.util.Calendar;
 
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
@@ -75,7 +84,7 @@ public class FingerprintFindActivity extends Activity
     private PendingIntent mPermissionIntent;
 
     private JSGFPLib jsgfpLib;
-
+    private byte[] mTemplate;
     private Button btnScan;
     private EditText edt_first_name;
     private EditText edt_maternal_name;
@@ -86,6 +95,9 @@ public class FingerprintFindActivity extends Activity
 
     private AsyncTask<String, String, Participant> asyncTask;
     private SharedPreferences mPreferences;
+
+    private int year, month, day;
+    private final int DATE_DIALOG_ID = 999;
 
     private Participant participant;
     String dni, names, paternalLast, maternalLast;
@@ -142,9 +154,20 @@ public class FingerprintFindActivity extends Activity
         filter = new IntentFilter(ACTION_USB_PERMISSION);
         registerReceiver(mUsbReceiver, filter);
         jsgfpLib = new JSGFPLib((UsbManager) getSystemService(Context.USB_SERVICE));
+        addListenerOntvwfecha_nacimiento();
+        setCurrentDateOnView();
 
     }
 
+    @Override
+    public void onPause() {
+        Log.d(TAG, "onPause()");
+        jsgfpLib.CloseDevice();
+        unregisterReceiver(mUsbReceiver);
+        mTemplate = null;
+        imgFingerprint.setImageBitmap(grayBitmap);
+        super.onPause();
+    }
     @Override
     public void onResume() {
         Log.d(TAG, "onResume()");
@@ -195,6 +218,7 @@ public class FingerprintFindActivity extends Activity
                 imgHeight = deviceInfo.imageHeight;
                 jsgfpLib.SetTemplateFormat(SGFDxTemplateFormat.TEMPLATE_FORMAT_SG400);
                 jsgfpLib.GetMaxTemplateSize(mMaxTemplateSize);
+                mTemplate = new byte[mMaxTemplateSize[0]];
                 // debugMessage("TEMPLATE_FORMAT_SG400 SIZE: " + mMaxTemplateSize[0] + "\n");
                 //Thread thread = new Thread(this);
                 //thread.start();
@@ -218,15 +242,94 @@ public class FingerprintFindActivity extends Activity
         long dwTimeStart = 0, dwTimeEnd = 0, dwTimeElapsed = 0;
         byte[] buffer = new byte[imgWidth * imgHeight];
         dwTimeStart = System.currentTimeMillis();
-        // if (jsgfpLib.GetImage(buffer) == SGFDxErrorCode.SGFDX_ERROR_NONE) {
+        if (jsgfpLib.GetImage(buffer) == SGFDxErrorCode.SGFDX_ERROR_NONE) {
             jsgfpLib.GetImage(buffer);
-            Log.i("Success!", "");
+            Log.d("Success!", "");
             dwTimeEnd = System.currentTimeMillis();
             dwTimeElapsed = dwTimeEnd - dwTimeStart;
             //debugMessage("getImage() ret:" + result + " [" + dwTimeElapsed + "ms]\n");
             imgFingerprint.setImageBitmap(this.toGrayscale(buffer));
-        // }
+
+            SGFingerInfo fpInfo = new SGFingerInfo();
+            long result = jsgfpLib.CreateTemplate(fpInfo, buffer, mTemplate);
+
+        }
     }
+
+    public void setCurrentDateOnView() {
+
+
+        final Calendar c = Calendar.getInstance();
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+
+        // set current date into textview
+        edt_dob.setText(day + "/" +
+                (month + 1) + "/" +
+                year);
+
+    }
+
+    public void addListenerOntvwfecha_nacimiento() {
+
+        edt_dob.setOnTouchListener(new OnTouchListener() {
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                showDialog(DATE_DIALOG_ID);
+                return true;
+            }
+
+
+        });
+        edt_dob.setOnClickListener(new OnClickListener() {
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onClick(View v) {
+
+                showDialog(DATE_DIALOG_ID);
+
+            }
+
+        });
+
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_DIALOG_ID:
+                // set date picker as current date
+                return new DatePickerDialog(this, datePickerListener,
+                        year, month,day);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener
+            = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        @Override
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+            year = selectedYear;
+            month = selectedMonth;
+            day = selectedDay;
+
+            // set selected date into textview
+            edt_dob.setText(new StringBuilder().append(day)
+                    .append("/").append(month + 1).append("/").append(year)
+                    .append(" "));
+
+            // set selected date into datepicker also
+//			dpResult.init(year, month, day, null);
+
+        }
+    };
 
     public void onClick(View v) {
         if (v == btnScan) {
@@ -241,30 +344,29 @@ public class FingerprintFindActivity extends Activity
             // read in other stuff as well
 
             mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID,"");
-            Log.i("codigousuario",codigousuario);
+            String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
+            Log.i("codigousuario", codigousuario);
 
             // Don't really need this, but whatever: tasks have not been properly updated
             String url = StringConexion.conexion;
 
             // valid-length DNI has been entered, search just off that
-            if (dni != null && dni.length() == 8)
-            {
+            if (dni != null && dni.length() == 8) {
                 ParticipantLoadTask tarea = new ParticipantLoadTask();
-                asyncTask=tarea.execute(dni,url);
+                asyncTask = tarea.execute(dni, url);
 
-                try{
+                try {
                     participant = asyncTask.get();
                     Log.i("DNI:", dni);
 
-                    if (participant == null){
+                    if (participant == null) {
                         Intent intent = new Intent(getBaseContext(), NoMatchActivity.class);
                         startActivity(intent);
-                    }else{
-                        Log.i("CodigoPaciente:",participant.CodigoPaciente );
+                    } else {
+                        Log.i("CodigoPaciente:", participant.CodigoPaciente);
                         Editor editor = mPreferences.edit();
-                        editor.putString("CodigoPaciente",participant.CodigoPaciente);
-                        editor.putString("patient_name",participant.Nombres);
+                        editor.putString("CodigoPaciente", participant.CodigoPaciente);
+                        editor.putString("patient_name", participant.Nombres);
                         editor.commit();
 
                         Intent intent = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
@@ -282,13 +384,19 @@ public class FingerprintFindActivity extends Activity
 
             // We have full name + DOB information
             if (names != null && maternalLast != null && paternalLast != null &&
-                    names.length() > 0 && maternalLast.length() > 0 && paternalLast.length() > 0)
-            {
+                    names.length() > 0 && maternalLast.length() > 0 && paternalLast.length() > 0) {
                 // search based off name
             }
-
-
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        Log.d(TAG, "onDestroy()");
+        jsgfpLib.CloseDevice();
+        mTemplate = null;
+        jsgfpLib.Close();
+        super.onDestroy();
     }
 
 }
