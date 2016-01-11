@@ -73,6 +73,12 @@ public class FingerprintFindActivity extends Activity
     private TextView edt_dob;
     private Button btnSearch;
 
+    private AsyncTask<String, String, Participant> asyncTask;
+    private SharedPreferences mPreferences;
+
+    private Participant participant;
+    String dni, names, paternalLast, maternalLast;
+
     //RILEY
     //This broadcast receiver is necessary to get user permissions to access the attached USB device
     private static final String ACTION_USB_PERMISSION = "com.android.example.USB_PERMISSION";
@@ -125,7 +131,6 @@ public class FingerprintFindActivity extends Activity
         registerReceiver(mUsbReceiver, filter);
         jsgfpLib = new JSGFPLib((UsbManager) getSystemService(Context.USB_SERVICE));
 
-
     }
 
     public Bitmap toGrayscale(byte[] mImageBuffer) {
@@ -158,6 +163,60 @@ public class FingerprintFindActivity extends Activity
             ScanFingerPrint();
         }
         if (v == btnSearch) {
+            dni = edt_dni_document.getText().toString();
+            names = edt_first_name.getText().toString();
+            maternalLast = edt_maternal_name.getText().toString();
+            paternalLast = edt_paternal_name.getText().toString();
+
+            // read in other stuff as well
+
+            mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID,"");
+            Log.i("codigousuario",codigousuario);
+
+            // Don't really need this, but whatever: tasks have not been properly updated
+            String url = StringConexion.conexion;
+
+            // valid-length DNI has been entered, search just off that
+            if (dni != null && dni.length() == 8)
+            {
+                ParticipantLoadTask tarea = new ParticipantLoadTask();
+                asyncTask=tarea.execute(dni,url);
+
+                try{
+                    participant = asyncTask.get();
+                    Log.i("DNI:", dni);
+
+                    if (participant == null){
+                        Intent intent = new Intent(getBaseContext(), NoMatchActivity.class);
+                        startActivity(intent);
+                    }else{
+                        Log.i("CodigoPaciente:",participant.CodigoPaciente );
+                        Editor editor = mPreferences.edit();
+                        editor.putString("CodigoPaciente",participant.CodigoPaciente);
+                        editor.putString("patient_name",participant.Nombres);
+                        editor.commit();
+
+                        Intent intent = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
+                        startActivity(intent);
+                    }
+                } catch (InterruptedException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
+                    // TODO Auto-generated catch block
+                    e.printStackTrace();
+                }
+
+            }
+
+            // We have full name + DOB information
+            if (names != null && maternalLast != null && paternalLast != null &&
+                    names.length() > 0 && maternalLast.length() > 0 && paternalLast.length() > 0)
+            {
+                // search based off name
+            }
+
 
         }
     }
