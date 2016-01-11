@@ -30,7 +30,7 @@ import org.ses.android.soap.widgets.CambioServer;
 
 import java.util.concurrent.ExecutionException;
 
-public class MainMenuActivity extends Activity {
+public class MainMenuActivity extends BaseActivity {
 
 	private Button btnCheckInRegisterUpdatePatient;
 	private Button btnViewMissingAppts;

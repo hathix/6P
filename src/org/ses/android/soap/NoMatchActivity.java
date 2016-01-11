@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by anyway on 1/11/16.
  */
-public class NoMatchActivity extends Activity {
+public class NoMatchActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by anyway on 1/11/16.
  */
-public class AddFingerprintExistingActivity extends Activity {
+public class AddFingerprintExistingActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
