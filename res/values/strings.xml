@@ -349,13 +349,13 @@
     <string name="action_logout">Logout</string>
     <string name="confirm">Confirm</string>
     <string name="dob">Date of Birth (Tap to Change)</string>
-    <string name="first_name">First Name</string>
+    <string name="first_name">First Name:</string>
     <string name="lista">View Missing Appointments</string>
     <string name="matches">Select Patient to Confirm</string>
-    <string name="maternal_name">Maternal Name</string>
+    <string name="maternal_name">Maternal Name:</string>
     <string name="no_patient_found">No Patient Found</string>
     <string name="participante_optiones">Check In/Register/Update Patient</string>
-    <string name="paternal_name">Paternal Name</string>
+    <string name="paternal_name">Paternal Name:</string>
     <string name="patient_not_listed">Patient Not Listed</string>
     <string name="project">Project</string>
     <string name="register_new_patient">Register New Patient</string>
