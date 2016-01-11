@@ -29,7 +29,7 @@ public class GrupoBotones extends LinearLayout
 	String infService = Context.LAYOUT_INFLATER_SERVICE;
 	LayoutInflater li =
 	(LayoutInflater)getContext().getSystemService(infService);
-	li.inflate(R.layout.grupo_botones, this, true);
+	li.inflate(R.layout.old_button_group, this, true);
 	//Obtenemoslas referencias a los distintos control
 
 	btnAnterior = (Button)findViewById(R.id.btnAnteriorId);

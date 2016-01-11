@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.opengl.GLException;
 import android.os.Bundle;
 import android.app.Activity;
 import android.text.Editable;
@@ -33,7 +32,7 @@ public class CambioServer extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cambio_server);
+        setContentView(R.layout.old_change_server);
         btnGuardar = (Button)findViewById(R.id.btnGuardarServer);
         btnSalir =(Button)findViewById(R.id.btnSalirC);
         txtServer = (EditText)findViewById(R.id.txtUrlServ);

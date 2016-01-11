@@ -10,8 +10,6 @@ import android.location.Geocoder;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.preference.PreferenceManager;
-import android.text.Editable;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,21 +22,16 @@ import android.widget.Toast;
 
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.MainMenuActivity;
-import org.ses.android.soap.database.Departamento;
 import org.ses.android.soap.models.Depart;
 import org.ses.android.soap.models.Distrit;
-import org.ses.android.soap.models.Locale;
 import org.ses.android.soap.models.Prov;
-import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.LoadDepartTask;
 import org.ses.android.soap.tasks.LoadDsitritoTask;
 import org.ses.android.soap.tasks.LoadProvincias;
-import org.ses.android.soap.tasks.LocaleLoadTask;
 import org.ses.android.soap.tasks.RegistrarPacienteContacto;
 import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.utils.GPSTracker;
 import org.ses.android.soap.utils.InternetConnection;
-import org.ses.android.soap.utils.OfflineStorageManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +68,7 @@ public class ParticipanteDatosSecund extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("Datos Secundarios");
-        setContentView(R.layout.participante_datos_secund);
+        setContentView(R.layout.old_participant_second_data);
         btnGps = (ImageButton)findViewById(R.id.ImgBtnGps);
         Spinner   spDepart= (Spinner)findViewById(R.id.spDepartamento);
         Spinner  spProv = (Spinner)findViewById(R.id.spProvinc);
