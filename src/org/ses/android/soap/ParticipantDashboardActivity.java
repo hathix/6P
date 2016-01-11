@@ -31,5 +31,34 @@ public class ParticipantDashboardActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.participant_dashboard_layout);
+
+        // "Log visit" button should open NewVisitActivity
+        Button btnLogVisit = (Button) findViewById(R.id.log_visit);
+        btnLogVisit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ParticipantDashboardActivity.this, NewVisitActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // "History" button should open ParticipantHistoryActivity
+        Button btnHistory = (Button) findViewById(R.id.participant_history);
+        btnHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ParticipantDashboardActivity.this, ParticipantHistoryActivity.class);
+                startActivity(intent);
+            }
+        });
+        // "Log in another patient" button should return to FingerprintFindActivity
+        Button btnLogInAnother = (Button) findViewById(R.id.log_in_other);
+        btnLogInAnother.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ParticipantDashboardActivity.this, FingerprintFindActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
