@@ -31,5 +31,16 @@ public class ParticipantDashboardActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.participant_dashboard_layout);
+
+        // "Log in another patient" button should return to FingerprintFindActivity
+        // TODO uncomment once FingerprintFindActivity works
+//        Button btnLogInAnother = (Button) findViewById(R.id.log_in_other);
+//        btnLogInAnother.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent=new Intent(ParticipantDashboardActivity.this, FingerprintFindActivity.class);
+//                startActivity(intent);
+//            }
+//        });
     }
 }
