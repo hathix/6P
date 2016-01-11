@@ -21,8 +21,7 @@ import org.ksoap2.transport.HttpTransportSE;
  */
 
 public class BuscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
-
-
+    
     @Override
     protected Participant doInBackground(Byte ... params)
     {
