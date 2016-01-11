@@ -116,6 +116,7 @@
             android:text="@string/opc_search"
             android:id="@+id/btnSearch"
             android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true" />
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center" />
 
     </LinearLayout>
