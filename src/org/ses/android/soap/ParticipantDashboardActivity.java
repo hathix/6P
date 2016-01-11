@@ -27,6 +27,8 @@ import java.util.concurrent.ExecutionException;
  */
 public class ParticipantDashboardActivity extends Activity {
 
+    private
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
