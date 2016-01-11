@@ -27,4 +27,9 @@ import java.util.concurrent.ExecutionException;
  */
 public class ParticipantHistoryActivity extends Activity {
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.participant_history_layout);
+    }
 }
