@@ -92,7 +92,7 @@ public class ParticipanteVisitaActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.participante_visita_layout);
+        setContentView(R.layout.new_visit_layout);
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         url =  StringConexion.conexion;
         String nombres = mPreferences.getString("patient_name", "");
