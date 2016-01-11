@@ -31,6 +31,7 @@ import org.ses.android.soap.widgets.CambioServer;
 import java.util.concurrent.ExecutionException;
 
 public class MainMenuActivity extends Activity {
+/*
 	private Button btnCheckInRegisterUpdatePatient;
 	private Button btnViewMissingAppts;
 	private Button btnCerrarSesion;
@@ -267,4 +268,5 @@ public class MainMenuActivity extends Activity {
 //        }
 //        return getString(R.string.app_name) + versionDetail;
 //    }
+*/
 }
