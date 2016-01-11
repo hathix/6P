@@ -68,8 +68,7 @@ import android.hardware.usb.UsbManager;
 /**
  * Created by fanneyzhu on 1/11/16.
  */
-public class FingerprintFindActivity extends Activity
-        implements View.OnClickListener {
+public class FingerprintFindActivity extends Activity {
 
     private static final String TAG = "SecuGen USB";
 
@@ -134,7 +133,6 @@ public class FingerprintFindActivity extends Activity
 
         imgFingerprint = (ImageView) findViewById(R.id.imgFingerprint);
         btnScan = (Button) findViewById(R.id.btnScan);
-        btnScan.setOnClickListener(this);
         edt_first_name = (EditText) findViewById(R.id.edt_first_name);
         edt_maternal_name = (EditText) findViewById(R.id.edt_maternal_name);
         edt_paternal_name = (EditText) findViewById(R.id.edt_paternal_name);
@@ -156,6 +154,7 @@ public class FingerprintFindActivity extends Activity
         jsgfpLib = new JSGFPLib((UsbManager) getSystemService(Context.USB_SERVICE));
         addListenerOntvwfecha_nacimiento();
         setCurrentDateOnView();
+        setListeners();
 
     }
 
@@ -331,12 +330,81 @@ public class FingerprintFindActivity extends Activity
         }
     };
 
-    public void onClick(View v) {
+    public void setListeners() {
+        btnScan.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                ScanFingerPrint();
+            }
+        });
+
+        btnSearch.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                dni = edt_dni_document.getText().toString();
+                Log.e("DNI", dni);
+                names = edt_first_name.getText().toString();
+                maternalLast = edt_maternal_name.getText().toString();
+                paternalLast = edt_paternal_name.getText().toString();
+
+                // read in other stuff as well
+
+                mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
+                Log.e("codigousuario", codigousuario);
+
+                // Don't really need this, but whatever: tasks have not been properly updated
+                String url = StringConexion.conexion;
+
+                // valid-length DNI has been entered, search just off that
+                if (dni != null && dni.length() == 8) {
+                    ParticipantLoadTask tarea = new ParticipantLoadTask();
+                    asyncTask = tarea.execute(dni, url);
+                    Log.i("Searching for...", "");
+
+                    try {
+                        participant = asyncTask.get();
+
+                        if (participant == null) {
+                            Intent intent = new Intent(getBaseContext(), NoMatchActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Log.i("CodigoPaciente:", participant.CodigoPaciente);
+                            Editor editor = mPreferences.edit();
+                            editor.putString("CodigoPaciente", participant.CodigoPaciente);
+                            editor.putString("patient_name", participant.Nombres);
+                            editor.commit();
+
+                            Intent intent = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
+                            startActivity(intent);
+                        }
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                }
+
+                // We have full name + DOB information
+                if (names != null && maternalLast != null && paternalLast != null &&
+                        names.length() > 0 && maternalLast.length() > 0 && paternalLast.length() > 0) {
+                    // search based off name
+                }
+            }
+        });
+    }
+
+    /*public void onClick(View v) {
         if (v == btnScan) {
             ScanFingerPrint();
         }
         if (v == btnSearch) {
+            edt_dni_document.setText("Button is live!");
             dni = edt_dni_document.getText().toString();
+            Log.e("DNI", dni);
             names = edt_first_name.getText().toString();
             maternalLast = edt_maternal_name.getText().toString();
             paternalLast = edt_paternal_name.getText().toString();
@@ -345,7 +413,7 @@ public class FingerprintFindActivity extends Activity
 
             mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
-            Log.i("codigousuario", codigousuario);
+            Log.e("codigousuario", codigousuario);
 
             // Don't really need this, but whatever: tasks have not been properly updated
             String url = StringConexion.conexion;
@@ -354,10 +422,10 @@ public class FingerprintFindActivity extends Activity
             if (dni != null && dni.length() == 8) {
                 ParticipantLoadTask tarea = new ParticipantLoadTask();
                 asyncTask = tarea.execute(dni, url);
+                Log.i("Searching for...", "");
 
-                try {
+                 try {
                     participant = asyncTask.get();
-                    Log.i("DNI:", dni);
 
                     if (participant == null) {
                         Intent intent = new Intent(getBaseContext(), NoMatchActivity.class);
@@ -388,7 +456,7 @@ public class FingerprintFindActivity extends Activity
                 // search based off name
             }
         }
-    }
+    }*/
 
     @Override
     public void onDestroy() {
