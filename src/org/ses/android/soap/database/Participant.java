@@ -6,6 +6,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
+import java.io.Serializable;
 
 public class Participant implements KvmSerializable, Parcelable {
 
