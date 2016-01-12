@@ -1,6 +1,7 @@
 package org.ses.android.soap;
 
 import android.app.Activity;
+import android.os.Parcelable;
 import android.view.View;
 import android.app.Activity;
 import android.app.PendingIntent;
@@ -43,6 +44,7 @@ import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.utils.PreferencesManager;
 import org.ses.android.soap.widgets.GrupoBotones;
 
+import java.io.Serializable;
 import java.util.Calendar;
 
 import java.nio.ByteBuffer;
@@ -391,6 +393,7 @@ public class FingerprintFindActivity extends BaseActivity {
                             editor.commit();
 
                             Intent intent = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
+                            intent.putExtra("Participant", participant);
                             startActivity(intent);
                         }
                     } catch (InterruptedException e) {
