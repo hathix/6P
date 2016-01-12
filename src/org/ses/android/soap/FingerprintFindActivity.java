@@ -386,12 +386,6 @@ public class FingerprintFindActivity extends BaseActivity {
                         }
                         else {
                             Log.i("CodigoPaciente", participant.CodigoPaciente);
-                            Editor editor = mPreferences.edit();
-                            editor.putString("CodigoPaciente", participant.CodigoPaciente);
-                            editor.putString("patient_name", participant.Nombres + " " + participant.ApellidoMaterno
-                                    + " " + participant.ApellidoPaterno);
-                            editor.commit();
-
                             Intent intent = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
                             intent.putExtra("Participant", participant);
                             startActivity(intent);
