@@ -1,7 +1,12 @@
 package org.ses.android.soap;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,12 +35,37 @@ public class BaseActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId()){
             case R.id.action_home:
-                // open up MainMenuActivity (there's probably some code that already does this)
-//                Log.v("menu", "home");
+                Intent intent = new Intent(getBaseContext(), MainMenuActivity.class);
+                startActivity(intent);
                 break;
             case R.id.action_logout:
-                // TODO get some common code that logs user out (abstract away from MainMenuActivity)
-//                Log.v("menu", "logout");
+                AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
+                builder.setMessage(getString(R.string.exit_yes_no))
+                        .setTitle(getString(R.string.warning))
+                        .setCancelable(false)
+                        .setPositiveButton(getString(R.string.answer_yes),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(BaseActivity.this);
+                                        SharedPreferences.Editor editor = prefs.edit();
+                                        editor.clear();
+                                        editor.commit();
+                                        Intent intent = new Intent(BaseActivity.this, PromoterLoginActivity.class);
+                                        startActivity(intent);
+                                        finish();
+                                    }
+                                })
+                        .setNegativeButton(getString(R.string.answer_no),
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int id) {
+                                        dialog.cancel();
+                                    }
+                                });
+                AlertDialog alert = builder.create();
+                alert.show();
+//              Log.v("menu", "logout");
                 break;
             case R.id.action_settings:
                 // TODO make the settings activity lol
