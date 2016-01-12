@@ -109,6 +109,8 @@
     <string name="file_invalid">File: %s is invalid.</string>
     <string name="file_missing">File: %s is missing.</string>
     <string name="finished_disk_scan">Finished scanning. All forms loaded.</string>
+    <string name="fingerprint_scanner_not_found">Fingerprint Scanner not found!</string>
+    <string name="fingerprint_init_failed">Fingerprint initialization failed!</string>
     <string name="forms">Blank Forms</string>
     <string name="getting_location">Loading Location</string>
     <string name="get_barcode">Get Barcode</string>
