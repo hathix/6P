@@ -30,6 +30,36 @@ public class BaseActivity extends Activity {
         return true;
     }
 
+    public void logOut()
+    {
+        AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
+        builder.setMessage(getString(R.string.exit_yes_no))
+                .setTitle(getString(R.string.warning))
+                .setCancelable(false)
+                .setPositiveButton(getString(R.string.answer_yes),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(BaseActivity.this);
+                                SharedPreferences.Editor editor = prefs.edit();
+                                editor.clear();
+                                editor.commit();
+                                Intent intent = new Intent(BaseActivity.this, PromoterLoginActivity.class);
+                                startActivity(intent);
+                                finish();
+                            }
+                        })
+                .setNegativeButton(getString(R.string.answer_no),
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+    }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -39,33 +69,8 @@ public class BaseActivity extends Activity {
                 startActivity(intent);
                 break;
             case R.id.action_logout:
-                AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
-                builder.setMessage(getString(R.string.exit_yes_no))
-                        .setTitle(getString(R.string.warning))
-                        .setCancelable(false)
-                        .setPositiveButton(getString(R.string.answer_yes),
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(BaseActivity.this);
-                                        SharedPreferences.Editor editor = prefs.edit();
-                                        editor.clear();
-                                        editor.commit();
-                                        Intent intent = new Intent(BaseActivity.this, PromoterLoginActivity.class);
-                                        startActivity(intent);
-                                        finish();
-                                    }
-                                })
-                        .setNegativeButton(getString(R.string.answer_no),
-                                new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int id) {
-                                        dialog.cancel();
-                                    }
-                                });
-                AlertDialog alert = builder.create();
-                alert.show();
-//              Log.v("menu", "logout");
+                logOut();
+                Log.v("menu", "logout");
                 break;
             case R.id.action_settings:
                 // TODO make the settings activity lol
