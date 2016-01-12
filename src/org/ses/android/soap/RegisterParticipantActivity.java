@@ -568,17 +568,53 @@ public class RegisterParticipantActivity extends BaseActivity {
         day = c.get(Calendar.DAY_OF_MONTH);
         StringBuilder sb = new StringBuilder()
                 .append(day).append("/").append(month + 1).append("/")
-                .append(year).append(" ");
+                .append(year);
         String fec_hoy = sb.toString();
-        long elapsedDays = UrlUtils.daysBetween(fec_nacimiento,fec_hoy);
-        if (elapsedDays == 0  || elapsedDays > 10 ){
+        long elapsedDays = UrlUtils.daysBetween(fec_nacimiento, fec_hoy);
+        String[] hoy = fec_hoy.split("/");
+        String[] birthdate = fec_nacimiento.split("/");
+        int[] hoy_ints = new int[3];
+        int[] birthdate_ints = new int[3];
+        for (int i = 0; i < hoy.length; i++) {
+            hoy_ints[i] = Integer.parseInt(hoy[i]);
+            birthdate_ints[i] = Integer.parseInt(birthdate[i]);
+        };
+
+        if (elapsedDays == 0  || elapsedDays > 10){
             Toast.makeText(getBaseContext(), "Fecha de Nacimiento invalida!!",Toast.LENGTH_SHORT).show();
             return false;
         }
+        else if ((hoy_ints[2] == birthdate_ints[2] && hoy_ints[1] < birthdate_ints[1]) ||
+                (hoy_ints[2] == birthdate_ints[2] && hoy_ints[1] == birthdate_ints[1] &&
+                        hoy_ints[0] <= birthdate_ints[0])) {
+            Toast.makeText(getBaseContext(), "Fecha de Nacimiento invalida!!",Toast.LENGTH_SHORT).show();
+            return false;
+    }
         else{
             //TODO: save info in bundle
-            return true;
+            /* String existe;
+            try {
+                tarea_registrar = new RegistrarParticipanteTask();
+                registrarParticipante=tarea_registrar.execute(dni,tip_doc,nombres,ape_pat,ape_mat,fec_nacimiento,sexo,url);
+                existe = registrarParticipante.get();
+                if (existe.equals("OK")){
+                    Toast.makeText(getBaseContext(), "Ya existe partipante con ese DNI!!",Toast.LENGTH_SHORT).show();
+                }else{
+                    ObtenerIdPacienteTask  obtenerIdPacienteTask = new ObtenerIdPacienteTask();
+                    getIdPaciente= obtenerIdPacienteTask.execute(nombres,ape_pat,ape_mat,fec_nacimiento,url);
+                    String id_pac = getIdPaciente.get();
+                }
+                finish();
+            } catch (InterruptedException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } */
         }
+
+        return true;
 
     }
 
