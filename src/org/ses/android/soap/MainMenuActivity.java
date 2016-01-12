@@ -129,33 +129,7 @@ public class MainMenuActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-
-				AlertDialog.Builder builder = new AlertDialog.Builder(MainMenuActivity.this);
-				builder.setMessage(getString(R.string.exit_yes_no))
-						.setTitle(getString(R.string.warning))
-						.setCancelable(false)
-						.setPositiveButton(getString(R.string.answer_yes),
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog, int id) {
-										SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(MainMenuActivity.this);
-										Editor editor = prefs.edit();
-										editor.clear();
-										editor.commit();
-										Intent intent = new Intent(MainMenuActivity.this, PromoterLoginActivity.class);
-										startActivity(intent);
-										finish();
-									}
-								})
-						.setNegativeButton(getString(R.string.answer_no),
-								new DialogInterface.OnClickListener() {
-									@Override
-									public void onClick(DialogInterface dialog, int id) {
-										dialog.cancel();
-									}
-								});
-				AlertDialog alert = builder.create();
-				alert.show();
+				logOut();
 			}
 		});
 	}

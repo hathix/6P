@@ -45,7 +45,8 @@ captures/
 .idea
 *.iml
 
-# exclude some JARs
+# exclude some built files
 !gradle/wrapper/gradle-wrapper.jar
 !libs/*.jar
 !libs
+!*.so

@@ -12,10 +12,10 @@
         android:showAsAction="ifRoom"
         android:title="@string/action_logout"/>
 
-    <item
+    <!-- <item
         android:id="@+id/action_settings"
         android:orderInCategory="3"
         android:showAsAction="ifRoom"
         android:title="@string/action_settings"/>
-
+    -->
 </menu>
