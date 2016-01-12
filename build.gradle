@@ -64,3 +64,6 @@ android {
         release.setRoot('build-types/release')
     }
 }
+dependencies {
+    compile 'com.google.android.gms:play-services-appindexing:8.1.0'
+}
