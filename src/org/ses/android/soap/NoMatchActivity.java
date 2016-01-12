@@ -34,7 +34,7 @@ public class NoMatchActivity extends BaseActivity {
 
 
         // "Register Patient" button should open RegisterParticipantActivity
-        Button buttonRegisterNewParticipant = (Button) findViewById(R.id.btnRegisterNewUser);
+        Button buttonRegisterNewParticipant = (Button) findViewById(R.id.btnRegisterNewParticipant);
         buttonRegisterNewParticipant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
