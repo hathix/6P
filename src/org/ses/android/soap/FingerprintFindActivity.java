@@ -363,8 +363,10 @@ public class FingerprintFindActivity extends BaseActivity {
                 // DNI has been entered, but it's not valid length
                 if (dni != null && dni.length() > 0 && dni.length() != 8)
                 {
-                    String alertMsg = getString(R.string.dni_wrong_length);
-                    Toast.makeText(FingerprintFindActivity.this,alertMsg , Toast.LENGTH_SHORT).show();
+                    Log.v("dni", "Invalid DNI");
+                    Toast.makeText(FingerprintFindActivity.this,
+                            getString(R.string.dni_wrong_length),
+                            Toast.LENGTH_SHORT).show();
                 }
 
                 // valid-length DNI has been entered, search just off that
