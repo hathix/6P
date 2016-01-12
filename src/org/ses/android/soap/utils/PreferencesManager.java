@@ -4,6 +4,7 @@ import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import android.util.Base64;
+import android.util.Log;
 
 /**
  * Created by franciscorivera on 1/12/16.
@@ -15,10 +16,11 @@ public class PreferencesManager
      * takes a context and a fingerprint template byte array, formats it as a string
      * and saves it to share preferences
      */
-    public static void setFingerprint(Context context, byte ... fingerprint)
+    public static void setFingerprint(Context context, byte[] fingerprint)
     {
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String savedFingerprint = Base64.encodeToString(fingerprint, Base64.DEFAULT);
+        Log.i("fingerprint", savedFingerprint);
         SharedPreferences.Editor editor = mPreferences.edit();
         editor.putString("Fingerprint", savedFingerprint);
         editor.commit();
