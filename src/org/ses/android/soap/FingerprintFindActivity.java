@@ -360,8 +360,15 @@ public class FingerprintFindActivity extends BaseActivity {
                 // Don't really need this, but whatever: tasks have not been properly updated
                 String url = StringConexion.conexion;
 
+                // DNI has been entered, but it's not valid length
+                if (dni != null && dni.length() > 0 && dni.length() != 8)
+                {
+                    String alertMsg = getString(R.string.dni_wrong_length);
+                    Toast.makeText(FingerprintFindActivity.this,alertMsg , Toast.LENGTH_SHORT).show();
+                }
+
                 // valid-length DNI has been entered, search just off that
-                if (dni != null && dni.length() == 8) {
+                else if (dni != null && dni.length() == 8) {
                     try {
                         ParticipantLoadTask tarea = new ParticipantLoadTask();
                         Log.v("Loaded Task", "");
