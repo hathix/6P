@@ -70,6 +70,7 @@ public class BaseActivity extends Activity {
             case R.id.action_home:
                 Intent intent = new Intent(getBaseContext(), MainMenuActivity.class);
                 startActivity(intent);
+                Log.v("menu", "homepage");
                 break;
             case R.id.action_logout:
                 logOut();
