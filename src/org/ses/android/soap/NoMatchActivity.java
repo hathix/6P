@@ -23,7 +23,7 @@ import org.ses.android.soap.tasks.TienePermisosTask;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Created by anyway on 1/11/16.
+ * Created by saranya on 1/12/16.
  */
 public class NoMatchActivity extends BaseActivity {
 
@@ -31,5 +31,36 @@ public class NoMatchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.no_match_layout);
+    }
+
+
+        // "Register Patient" button should open RegisterParticipantActivity
+        Button buttonRegisterNewParticipant = (Button) findViewById(R.id.btnRegisterNewUser);
+        buttonRegisterNewParticipant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoMatchActivity.this, RegisterParticipantActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        // "Add Fingerprint to Existing Patient" button should open AddFingerprintExistingActivity
+        Button buttonAddFingerprintExisting = (Button) findViewById(R.id.btnAddFingerprintExisting);
+        buttonAddFingerprintExisting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoMatchActivity.this, AddFingerprintExistingActivity.class);
+                startActivity(intent);
+            }
+        });
+        // "Try Again" button should return to FingerprintFindActivity
+        Button buttonTryAgain = (Button) findViewById(R.id.btnTryAgain);
+        buttonTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoMatchActivity.this, FingerprintFindActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
