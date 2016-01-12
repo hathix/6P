@@ -32,6 +32,7 @@ public class NoMatchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.no_match_layout);
 
+
         // "Register Patient" button should open RegisterParticipantActivity
         Button buttonRegisterNewParticipant = (Button) findViewById(R.id.btnRegisterNewUser);
         buttonRegisterNewParticipant.setOnClickListener(new View.OnClickListener() {

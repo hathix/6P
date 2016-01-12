@@ -38,7 +38,7 @@
                 android:paddingRight="10dp" >
 
                 <ImageView
-                    android:id="@+id/imageViewFingerprint"
+                    android:id="@+id/imgFingerprint"
                     android:layout_width="225dp"
                     android:layout_height="200dp"
                     android:layout_x="37dp"
@@ -51,7 +51,7 @@
                     android:layout_width="100dp"
                     android:layout_height="wrap_content"
                     android:text="@string/scan"
-                    android:id="@+id/btnCapture"
+                    android:id="@+id/btnScan"
                     android:layout_marginTop="73dp"
                     android:layout_alignTop="@+id/imageViewFingerprint"
                     android:layout_alignRight="@+id/textFingerprintInstruction" />
@@ -72,7 +72,7 @@
                 android:layout_alignParentLeft="true" />
 
             <EditText
-                android:id="@+id/enter_first_name"
+                android:id="@+id/edt_first_name"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:hint="@string/first_name"
@@ -82,7 +82,7 @@
             </EditText>
 
             <EditText
-                android:id="@+id/enter_maternal_name"
+                android:id="@+id/edt_maternal_name"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:hint="@string/maternal_name"
@@ -92,7 +92,7 @@
             </EditText>
 
             <EditText
-                android:id="@+id/enter_paternal_name"
+                android:id="@+id/edt_paternal_name"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:hint="@string/paternal_name"
@@ -101,7 +101,7 @@
                 android:layout_alignParentLeft="true">
             </EditText>
             <EditText
-                android:id="@+id/enter_dni"
+                android:id="@+id/edt_dni_document"
                 android:layout_height="wrap_content"
                 android:inputType="text"
                 android:hint="@string/dni_document"
