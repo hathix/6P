@@ -362,12 +362,12 @@ public class FingerprintFindActivity extends BaseActivity {
                         asyncTask = tarea.execute(dni, url);
                         Log.v("Executed task", "");
                         participant = asyncTask.get();
-                        Log.i("ParticipantCode", participant.CodigoPaciente);
 
                         if (participant == null) {
                             Intent intent = new Intent(getBaseContext(), NoMatchActivity.class);
                             startActivity(intent);
-                        } else {
+                        }
+                        else {
                             Log.i("CodigoPaciente", participant.CodigoPaciente);
                             Editor editor = mPreferences.edit();
                             editor.putString("CodigoPaciente", participant.CodigoPaciente);

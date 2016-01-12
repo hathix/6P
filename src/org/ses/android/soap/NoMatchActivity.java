@@ -36,7 +36,7 @@ public class NoMatchActivity extends BaseActivity {
         btnRegisterNewUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NoMatchActivity.this, FingerprintFindActivity.class);
+                Intent intent = new Intent(getBaseContext(), FingerprintFindActivity.class);
                 startActivity(intent);
             }
         });
@@ -45,7 +45,7 @@ public class NoMatchActivity extends BaseActivity {
         btnAddFingerprintExisting.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NoMatchActivity.this, FingerprintConfirmActivity.class);
+                Intent intent = new Intent(getBaseContext(), FingerprintConfirmActivity.class);
                 startActivity(intent);
             }
         });
@@ -54,7 +54,7 @@ public class NoMatchActivity extends BaseActivity {
         btnTryAgain.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(NoMatchActivity.this, FingerprintFindActivity.class);
+                Intent intent = new Intent(getBaseContext(), FingerprintFindActivity.class);
                 startActivity(intent);
             }
         });
