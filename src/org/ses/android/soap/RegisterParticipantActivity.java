@@ -21,6 +21,7 @@ import org.ses.android.seispapp120.R;
 import org.ses.android.soap.utils.UrlUtils;
 import org.ses.android.soap.tasks.RegistrarParticipanteTask;
 import org.ses.android.soap.tasks.ObtenerIdPacienteTask;
+import org.ses.android.soap.database.Participant;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
@@ -114,6 +115,8 @@ public class RegisterParticipantActivity extends BaseActivity {
 
     static final int DATE_DIALOG_ID = 999;
 
+    private Participant participant;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -169,6 +172,7 @@ public class RegisterParticipantActivity extends BaseActivity {
         btn_guardar = (Button)findViewById(R.id.btn_guardar);
         btn_volver = (Button)findViewById(R.id.btn_volver);
 
+        // load districts
         LoadaDepar(myurl);
         sp_district.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -184,6 +188,7 @@ public class RegisterParticipantActivity extends BaseActivity {
             }
         });
 
+        // load provinces
         sp_province.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -200,6 +205,7 @@ public class RegisterParticipantActivity extends BaseActivity {
             }
         });
 
+        // load departments
         sp_department.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -458,6 +464,7 @@ public class RegisterParticipantActivity extends BaseActivity {
 
     }
 
+    // verify that the participant entered a valid DNI
     public boolean verifyDNI() {
 
         ExisteParticipante tarea_existe = new ExisteParticipante();
@@ -515,6 +522,7 @@ public class RegisterParticipantActivity extends BaseActivity {
         return false;
     }
 
+    // verify that the participant filled in names, dob, and gender
     public boolean verifyInfo() {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         url = StringConexion.conexion;
@@ -584,40 +592,17 @@ public class RegisterParticipantActivity extends BaseActivity {
             Toast.makeText(getBaseContext(), "Fecha de Nacimiento invalida!!",Toast.LENGTH_SHORT).show();
             return false;
         }
-        else if ((hoy_ints[2] == birthdate_ints[2] && hoy_ints[1] < birthdate_ints[1]) ||
-                (hoy_ints[2] == birthdate_ints[2] && hoy_ints[1] == birthdate_ints[1] &&
-                        hoy_ints[0] <= birthdate_ints[0])) {
+        if (hoy_ints[2] == birthdate_ints[2] && hoy_ints[1] <= birthdate_ints[1] &&
+                        hoy_ints[0] <= birthdate_ints[0]) {
             Toast.makeText(getBaseContext(), "Fecha de Nacimiento invalida!!",Toast.LENGTH_SHORT).show();
             return false;
-    }
-        else{
-            //TODO: save info in bundle
-            /* String existe;
-            try {
-                tarea_registrar = new RegistrarParticipanteTask();
-                registrarParticipante=tarea_registrar.execute(dni,tip_doc,nombres,ape_pat,ape_mat,fec_nacimiento,sexo,url);
-                existe = registrarParticipante.get();
-                if (existe.equals("OK")){
-                    Toast.makeText(getBaseContext(), "Ya existe partipante con ese DNI!!",Toast.LENGTH_SHORT).show();
-                }else{
-                    ObtenerIdPacienteTask  obtenerIdPacienteTask = new ObtenerIdPacienteTask();
-                    getIdPaciente= obtenerIdPacienteTask.execute(nombres,ape_pat,ape_mat,fec_nacimiento,url);
-                    String id_pac = getIdPaciente.get();
-                }
-                finish();
-            } catch (InterruptedException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                // TODO Auto-generated catch block
-                e.printStackTrace();
-            } */
         }
 
         return true;
 
     }
 
+    // alert dialog to confirm
     public  void  AlertaGuardar(){
 
         AlertDialog.Builder alertdialobuilder = new AlertDialog.Builder(context);
@@ -627,6 +612,10 @@ public class RegisterParticipantActivity extends BaseActivity {
         alertdialobuilder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+
+                tarea_registrar = new RegistrarParticipanteTask();
+                registrarParticipante = tarea_registrar.execute(dni,tip_doc,nombres,ape_pat,
+                        ape_mat,fec_nacimiento,sexo,url);
 
                 RegistrarPacienteContacto registrarPacienteContactoTask = new RegistrarPacienteContacto();
 
@@ -638,8 +627,13 @@ public class RegisterParticipantActivity extends BaseActivity {
 
                 try {
                     String msj = regPaciente.get();
+                    ObtenerIdPacienteTask  obtenerIdPacienteTask = new ObtenerIdPacienteTask();
+                    getIdPaciente= obtenerIdPacienteTask.execute(nombres,ape_pat,ape_mat,fec_nacimiento,url);
+                    String id_pac = getIdPaciente.get();
                     Toast.makeText(getApplicationContext(), "Datos Guardados Correctamente", Toast.LENGTH_LONG).show();
+
                     Intent i = new Intent(context, MainMenuActivity.class);
+
                     startActivity(i);
 
                 } catch (InterruptedException e) {
