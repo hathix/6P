@@ -91,7 +91,6 @@
     <string name="discard_answer">Remove response</string>
     <string name="discard_group">Remove group</string>
     <string name="dni_wrong_length">DNI must be 8 digits long!</string>
-    <string name="dni_has_letters">DNI must be only numeric!</string>
     <string name="download">Get Selected</string>
     <string name="download_forms_result">Download Result</string>
     <string name="downloading_data">Connecting to Server</string>
