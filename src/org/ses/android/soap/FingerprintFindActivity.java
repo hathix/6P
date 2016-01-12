@@ -40,6 +40,7 @@ import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.IdsListTask;
 import org.ses.android.soap.tasks.ParticipantLoadTask;
 import org.ses.android.soap.tasks.StringConexion;
+import org.ses.android.soap.utils.PreferencesManager;
 import org.ses.android.soap.widgets.GrupoBotones;
 
 import java.util.Calendar;
@@ -154,6 +155,10 @@ public class FingerprintFindActivity extends BaseActivity {
         setCurrentDateOnView();
         setListeners();
 
+        // wipe presently stored fingerprint
+        PreferencesManager.removeFingerprint(getBaseContext());
+
+
     }
 
     @Override
@@ -249,6 +254,7 @@ public class FingerprintFindActivity extends BaseActivity {
 
             SGFingerInfo fpInfo = new SGFingerInfo();
             long result = jsgfpLib.CreateTemplate(fpInfo, buffer, mTemplate);
+            PreferencesManager.setFingerprint(getBaseContext(), mTemplate);
 
         }
     }
