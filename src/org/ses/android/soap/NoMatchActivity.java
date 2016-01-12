@@ -23,7 +23,7 @@ import org.ses.android.soap.tasks.TienePermisosTask;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Created by saranya on 1/12/16.
+ * Created by svijayakumar2 on 1/12/16.
  */
 public class NoMatchActivity extends BaseActivity {
 
@@ -33,6 +33,7 @@ public class NoMatchActivity extends BaseActivity {
         setContentView(R.layout.no_match_layout);
 
         // "Register Patient" button should open RegisterParticipantActivity
+        // Should carry fingerprint data on
         Button buttonRegisterNewParticipant = (Button) findViewById(R.id.btnRegisterNewUser);
         buttonRegisterNewParticipant.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +44,7 @@ public class NoMatchActivity extends BaseActivity {
         });
 
         // "Add Fingerprint to Existing Patient" button should open AddFingerprintExistingActivity
+        // Should carry fingerprint data on
         Button buttonAddFingerprintExisting = (Button) findViewById(R.id.btnAddFingerprintExisting);
         buttonAddFingerprintExisting.setOnClickListener(new View.OnClickListener() {
             @Override
