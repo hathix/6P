@@ -27,6 +27,11 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by anyway on 1/11/16.
+ *
+ * The "command center" for a patient, providing information at a glance about them and providing
+ * links to log a new visit, see their visit history, etc.
+ *
+ * Any Intent that opens this Activity **MUST** pass a Patient in the Bundle.
  */
 public class ParticipantDashboardActivity extends BaseActivity {
 
