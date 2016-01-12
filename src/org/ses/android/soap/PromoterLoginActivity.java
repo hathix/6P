@@ -174,7 +174,7 @@ public class PromoterLoginActivity extends Activity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_worker_login, menu);
+        // getMenuInflater().inflate(R.menu.menu_worker_login, menu);
         return true;
     }
 
@@ -265,7 +265,7 @@ public class PromoterLoginActivity extends Activity {
                 try {
                     boolean validPermission = AccountLogin.CheckPermission(user_id, locale_num, project_num,url);
                     if (validPermission) {
-                        //Intent intent = new Intent(this, Menu_principal.class);
+
                         Intent intent=new Intent(PromoterLoginActivity.this,MainMenuActivity.class);
                         startActivity(intent);
                         finish();

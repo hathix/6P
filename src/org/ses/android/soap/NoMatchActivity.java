@@ -32,6 +32,7 @@ public class NoMatchActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.no_match_layout);
 
+
         // "Register Patient" button should open RegisterParticipantActivity
         // Should carry fingerprint data on
         Button buttonRegisterNewParticipant = (Button) findViewById(R.id.btnRegisterNewUser);

@@ -133,6 +133,7 @@ public class MainMenuActivity extends BaseActivity {
 			}
 		});
 	}
+
 //	@Override
 //	public boolean onCreateOptionsMenu(Menu menu) {
 //
