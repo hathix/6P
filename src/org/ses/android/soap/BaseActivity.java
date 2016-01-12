@@ -30,6 +30,9 @@ public class BaseActivity extends Activity {
         return true;
     }
 
+    /*
+     * pops up a menu asking user to confirm logout, and if yes, wipes all session memory
+     */
     public void logOut()
     {
         AlertDialog.Builder builder = new AlertDialog.Builder(BaseActivity.this);
