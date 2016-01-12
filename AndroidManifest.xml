@@ -4,7 +4,7 @@
     android:versionCode="1"
     android:versionName="2.2.0" >
 
-    <uses-sdk android:minSdkVersion="8" />
+    <uses-sdk android:minSdkVersion="11" />
 
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
@@ -25,54 +25,67 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
-        <!-- <activity -->
-        <!-- android:name="org.ses.android.soap.MainActivity" -->
-        <!-- android:label="@string/app_name" > -->
-        <!-- <intent-filter> -->
-        <!-- <action android:name="android.intent.action.MAIN" /> -->
-
-
-        <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
-        <!-- </intent-filter> -->
-        <!-- </activity> -->
         <activity
             android:name="org.ses.android.soap.PromoterLoginActivity"
             android:label="@string/app_name"
             android:theme="@android:style/Theme.Holo.Light" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
-            android:name="org.ses.android.soap.Menu_principal"
+            android:name="org.ses.android.soap.MainMenuActivity"
             android:theme="@android:style/Theme.Holo.Light"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.Menu_principal" />
-
+                <action android:name="android.intent.action.MainMenuActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
         <activity
-            android:name="org.ses.android.soap.ParticipanteDNIActivity"
+            android:name="org.ses.android.soap.ViewMissedVisitsActivity"
 
             android:theme="@android:style/Theme.Holo.Light"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.ParticipanteDNIActivity" />
-
+                <action android:name="android.intent.action.ViewMissedVisitsActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
         <activity
-            android:name="org.ses.android.soap.ParticipanteDatosActivity"
+            android:name="org.ses.android.soap.ParticipantDashboardActivity"
             android:theme="@android:style/Theme.Holo.Light"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="android.intent.action.ParticipanteDatosActivity" />
-
+                <action android:name="android.intent.action.ParticipantDashboardActivity" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.ses.android.soap.NewVisitActivity"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.NewVisitActivity" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.ses.android.soap.ParticipantHistoryActivity"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="org.ses.android.soap.ParticipantHistoryActivity" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.ses.android.soap.FingerprintFindActivity"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="org.ses.android.soap.FingerprintFindActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
@@ -83,30 +96,6 @@
         <activity
             android:theme="@android:style/Theme.Holo.Light"
             android:name="org.ses.android.soap.preferences.AdminPreferencesActivity"
-            android:label="@string/app_name" />
-        <activity
-            android:theme="@android:style/Theme.Holo.Light"
-            android:name="org.ses.android.soap.ParticipanteBusquedaActivity"
-            android:label="@string/app_name" />
-        <!--
-                 <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        -->
-        <activity
-            android:name="org.ses.android.soap.ParticipanteVisitaActivity"
-            android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name" />
-        <activity
-            android:name="org.ses.android.soap.VisitListActivity"
-            android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name" />
-        <activity
-            android:name="org.ses.android.soap.ParticipanteAsignarIdActivity"
-            android:theme="@android:style/Theme.Holo.Light"
             android:label="@string/app_name" />
        <activity
             android:name="org.ses.android.soap.widgets.ParticipanteDatosSecund"

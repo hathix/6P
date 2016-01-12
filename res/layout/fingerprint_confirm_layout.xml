@@ -20,8 +20,8 @@
 
     <ImageView
         android:id="@+id/imageViewScan1"
-        android:layout_width="225dp"
-        android:layout_height="300dp"
+        android:layout_width="250dp"
+        android:layout_height="350dp"
         android:layout_x="37dp"
         android:layout_y="241dp"
         android:src="@android:drawable/picture_frame"
@@ -30,9 +30,9 @@
 
     <Button
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:text="@string/capture_image"
+        android:text="@string/scan"
         android:id="@+id/btnScan1"
         android:layout_centerVertical="true"
         android:layout_alignRight="@+id/textScan1" />

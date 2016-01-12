@@ -56,10 +56,7 @@ import org.ses.android.soap.widgets.CambioServer;
  *
  * onSubmit Behavior: Switches to Menu principal Intent
  *
- * NOTE(neel): this extends Activity, not BaseActivity, since we don't need home, logout, etc.
- * buttons on the login screen.
  */
-
 public class PromoterLoginActivity extends Activity {
     private SharedPreferences mPreferences;
     private Spinner spnLocale;
@@ -71,7 +68,7 @@ public class PromoterLoginActivity extends Activity {
         String username = AccountLogin.CheckAlreadyLoggedIn(this);
 
         if (username != null) {
-            Intent intent = new Intent(this, MainMenuActivity.class);
+            Intent intent = new Intent(this, Menu_principal.class);
             startActivity(intent);
         } else {
             //String myurl = getString(R.string.server_url);
@@ -104,7 +101,7 @@ public class PromoterLoginActivity extends Activity {
 
         mainMessageLabel.setText(appStatus.getVersionedAppName(this));
         if (username != null) {
-            Intent intent = new Intent(this, MainMenuActivity.class);
+            Intent intent = new Intent(this, Menu_principal.class);
             startActivity(intent);
         } else {
            // mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -266,7 +263,7 @@ public class PromoterLoginActivity extends Activity {
                     boolean validPermission = AccountLogin.CheckPermission(user_id, locale_num, project_num,url);
                     if (validPermission) {
                         //Intent intent = new Intent(this, Menu_principal.class);
-                        Intent intent=new Intent(PromoterLoginActivity.this,MainMenuActivity.class);
+                        Intent intent=new Intent(PromoterLoginActivity.this,Menu_principal.class);
                         startActivity(intent);
                         finish();
                         p_d.getHandler().post(new Runnable() {
@@ -444,4 +441,5 @@ public class PromoterLoginActivity extends Activity {
             Log.e("PromoterLoginActivity: loadProjectActivity", "Null Pointer Exception ");
         }
     }
+
 }

@@ -7,7 +7,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
-    tools:context=".ParticipanteVisitaActivity" >
+    tools:context=".NewVisitLayout" >
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -27,24 +27,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/nombres" />
 
-            <EditText
-                android:id="@+id/edt_nombres"
-                android:layout_height="wrap_content"
-                android:layout_width="300dp"
-                android:layout_weight="1"
-                android:enabled="false"
-                android:inputType="text" />
-
             <TextView
                 android:id="@+id/tvwLocal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/txtLocal" />
-            <TextView
-                android:id="@+id/tvwLocalName"
-                android:layout_width="300dp"
-                android:layout_height="wrap_content"
-                android:text="@string/txtLocalName" />
             <!--<Spinner-->
             <!--android:id="@+id/spnLocal"-->
             <!--android:layout_height="wrap_content"-->
@@ -59,29 +46,38 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/txtproject" />
+            <!--            <Spinner
+                            android:id="@+id/spnProyecto"
+                            android:layout_height="wrap_content"
+                            android:layout_width="300dp"
+                            android:layout_gravity="center_horizontal"
+                            android:paddingLeft="10dip"
+                            android:paddingRight="10dip"
+                            android:textColor="#000000"
+                            android:textSize="17sp" />-->
             <TextView
-                android:id="@+id/tvwProjectName"
-                android:layout_width="300dp"
+                android:id="@+id/tvwStart"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/txtProjectName" />
-<!--            <Spinner
-                android:id="@+id/spnProyecto"
+                android:text="@string/txtstartdate" />
+
+            <TextView
+                android:id="@+id/tvwEnd"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_width="300dp"
-                android:layout_gravity="center_horizontal"
-                android:paddingLeft="10dip"
-                android:paddingRight="10dip"
-                android:textColor="#000000"
-                android:textSize="17sp" />-->
+                android:text="@string/txtenddate" />
+
             <TextView
                 android:id="@+id/tvwGrupo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/txtvisitgroup" />
+
+
             <Spinner
                 android:id="@+id/spnGrupo"
-                android:layout_height="wrap_content"
-                android:layout_width="300dp"
+                android:layout_height="53dp"
+                android:layout_width="241dp"
                 android:layout_gravity="center_horizontal"
                 android:paddingLeft="10dip"
                 android:paddingRight="10dip"
@@ -94,36 +90,14 @@
                 android:text="@string/txtvisit" />
             <Spinner
                 android:id="@+id/spnVisita"
-                android:layout_height="wrap_content"
-                android:layout_width="300dp"
+                android:layout_height="51dp"
+                android:layout_width="241dp"
                 android:layout_gravity="center_horizontal"
                 android:paddingLeft="10dip"
                 android:paddingRight="10dip"
                 android:textColor="#000000"
                 android:textSize="17sp" />
 
-
-            <TextView
-                android:id="@+id/tvDate"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:minHeight="30dip"
-                android:textSize="14sp"
-                android:text="@string/txtfecha_visita" />
-
-            <TextView
-                android:id="@+id/tvwfecha_visita"
-                android:layout_height="wrap_content"
-                android:layout_width="150dp"
-                android:layout_weight="1"
-                style="@android:style/Widget.DeviceDefault.Light.Spinner"
-                android:text=""/>
-
-            <TextView
-                android:id="@+id/tvw_txthora_visita"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/txthora_visita" />
 
             <!-- 	    <EditText
                         android:id="@+id/edt_hora_visita"
@@ -132,18 +106,25 @@
                         android:layout_weight="1"
                         android:inputType="text" />	     -->
 
-            <TextView
-                android:id="@+id/tvwhora_visita"
-                android:layout_height="wrap_content"
-                android:layout_width="150dp"
-                android:layout_weight="1"
-                style="@android:style/Widget.DeviceDefault.Light.Spinner"
-                android:text=""/>
+
+            <DatePicker
+                android:layout_width="319dp"
+                android:layout_height="147dp"
+                android:id="@+id/datePicker"
+                android:calendarViewShown="false" />
+
+            <TimePicker
+                android:layout_width="wrap_content"
+                android:layout_height="73dp"
+                android:id="@+id/timePicker"
+                android:layout_gravity="center_horizontal" />
 
             <org.ses.android.soap.widgets.GrupoBotones android:id="@+id/btgNavega"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" />
         </LinearLayout>
     </ScrollView>
+
+
 
 </LinearLayout>

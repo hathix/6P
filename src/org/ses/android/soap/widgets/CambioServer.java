@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.opengl.GLException;
 import android.os.Bundle;
 import android.app.Activity;
 import android.text.Editable;
@@ -16,7 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.ses.android.seispapp120.R;
-import org.ses.android.soap.Menu_principal;
+import org.ses.android.soap.MainMenuActivity;
 import org.ses.android.soap.tasks.StringConexion;
 
 public class CambioServer extends Activity {
@@ -33,7 +32,7 @@ public class CambioServer extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_cambio_server);
+        setContentView(R.layout.old_change_server);
         btnGuardar = (Button)findViewById(R.id.btnGuardarServer);
         btnSalir =(Button)findViewById(R.id.btnSalirC);
         txtServer = (EditText)findViewById(R.id.txtUrlServ);
@@ -50,7 +49,7 @@ public class CambioServer extends Activity {
          btnSalir.setOnClickListener(new View.OnClickListener() {
              @Override
              public void onClick(View v) {
-                 Intent ig = new Intent(context, Menu_principal.class);
+                 Intent ig = new Intent(context, MainMenuActivity.class);
                  startActivity(ig);
              }
          });
