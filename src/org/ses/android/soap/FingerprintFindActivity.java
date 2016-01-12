@@ -155,6 +155,10 @@ public class FingerprintFindActivity extends BaseActivity {
         setCurrentDateOnView();
         setListeners();
 
+        // wipe presently stored fingerprint
+        PreferencesManager.removeFingerprint(getBaseContext());
+
+
     }
 
     @Override

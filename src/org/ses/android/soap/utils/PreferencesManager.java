@@ -27,7 +27,20 @@ public class PreferencesManager
     }
 
     /*
-     * if there is currently a fingerprint stored in shared preferences, then retrives
+     * if there is a fingerprint stored, this gets rid of it
+     */
+    public static void removeFingerprint(Context context) {
+        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = mPreferences.edit();
+        if (mPreferences.getString("Fingerprint", "").length() > 0)
+        {
+            editor.remove("Fingerprint");
+            editor.commit();
+        }
+    }
+
+    /*
+     * if there is currently a fingerprint stored in shared preferences, then retrieves
      * it as a byte array. Otherwise, returns null.
      */
     public static byte[] getFingerprint(Context context) {
