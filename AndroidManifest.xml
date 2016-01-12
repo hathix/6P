@@ -80,6 +80,11 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="org.ses.android.soap.NoMatchActivity"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="org.ses.android.soap.FingerprintFindActivity"
             android:theme="@android:style/Theme.Holo.Light"
             android:label="@string/app_name" >
