@@ -43,6 +43,7 @@ android {
 
         main {
             manifest.srcFile 'AndroidManifest.xml'
+            jniLibs.srcDir 'libs/jniLibs'
             java.srcDirs = ['src']
             resources.srcDirs = ['src']
             aidl.srcDirs = ['src']
