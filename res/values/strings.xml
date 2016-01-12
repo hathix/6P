@@ -176,6 +176,7 @@
     <string name="url_error">Sorry, invalid URL!</string>
     <string name="username">User Name</string>
     <string name="view_hierarchy">Go To Prompt</string>
+    <string name="visit_history">%s's Visit History</string>
     <string name="open_data_kit">Open Data Kit</string>
     <string name="general_preferences">General Settings</string>
     <string name="click_to_web">Tap to visit http://sociosensalud.org.pe</string>
@@ -287,6 +288,7 @@
     <string name="opc_search">Search</string>
     <string name="no_participants">No Participants Yet</string>
     <string name="opc_visit">Visit</string>
+    <string name="time">Time</string>
     <string name="txtfecha_visita">Visit Date(dd/mm/yyyy):</string>
     <string name="txthora_visita">Visit Time(hh:mm)</string>
     <string name="txtproject">Project:</string>
