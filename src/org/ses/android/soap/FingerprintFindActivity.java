@@ -356,11 +356,13 @@ public class FingerprintFindActivity extends BaseActivity {
 
                 // valid-length DNI has been entered, search just off that
                 if (dni != null && dni.length() == 8) {
-                    ParticipantLoadTask tarea = new ParticipantLoadTask();
-                    asyncTask = tarea.execute(dni, url);
-
                     try {
+                        ParticipantLoadTask tarea = new ParticipantLoadTask();
+                        Log.v("Loaded Task", "");
+                        asyncTask = tarea.execute(dni, url);
+                        Log.v("Executed task", "");
                         participant = asyncTask.get();
+                        Log.i("ParticipantCode", participant.CodigoPaciente);
 
                         if (participant == null) {
                             Intent intent = new Intent(getBaseContext(), NoMatchActivity.class);
@@ -369,9 +371,8 @@ public class FingerprintFindActivity extends BaseActivity {
                             Log.i("CodigoPaciente", participant.CodigoPaciente);
                             Editor editor = mPreferences.edit();
                             editor.putString("CodigoPaciente", participant.CodigoPaciente);
-                            Log.i("PatientName", participant.Nombres);
                             editor.putString("patient_name", participant.Nombres + " " + participant.ApellidoMaterno
-                                + " " + participant.ApellidoPaterno);
+                                    + " " + participant.ApellidoPaterno);
                             editor.commit();
 
                             Intent intent = new Intent(getBaseContext(), ParticipantDashboardActivity.class);

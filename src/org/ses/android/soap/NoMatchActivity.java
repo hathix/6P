@@ -31,5 +31,32 @@ public class NoMatchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.no_match_layout);
+
+        Button btnRegisterNewUser = (Button) findViewById(R.id.btnRegisterNewUser);
+        btnRegisterNewUser.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoMatchActivity.this, FingerprintFindActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button btnAddFingerprintExisting = (Button) findViewById(R.id.btnAddFingerprintExisting);
+        btnAddFingerprintExisting.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoMatchActivity.this, FingerprintConfirmActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        Button btnTryAgain = (Button) findViewById(R.id.btnTryAgain);
+        btnTryAgain.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoMatchActivity.this, FingerprintFindActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
