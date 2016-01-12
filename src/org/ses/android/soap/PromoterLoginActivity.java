@@ -56,6 +56,8 @@ import org.ses.android.soap.widgets.CambioServer;
  *
  * onSubmit Behavior: Switches to Menu principal Intent
  *
+ * NOTE(neel): this extends Activity, not BaseActivity, since we don't need home, logout, etc.
+ * buttons on the login screen.
  */
 
 public class PromoterLoginActivity extends Activity {

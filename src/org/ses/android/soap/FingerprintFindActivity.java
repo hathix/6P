@@ -64,16 +64,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
+import android.os.Bundle;
 
-/**
- * Created by fanneyzhu on 1/11/16.
- */
-public class FingerprintFindActivity extends Activity {
+import org.ses.android.seispapp120.R;
+
+public class FingerprintFindActivity extends BaseActivity {
 
     private static final String TAG = "SecuGen USB";
 
     private ImageView imgFingerprint;
-    private byte[] rawFingerprint;
     private int imgWidth;
     private int imgHeight;
     private int[] mMaxTemplateSize;
@@ -130,7 +129,6 @@ public class FingerprintFindActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fingerprint_search_layout);
-
         imgFingerprint = (ImageView) findViewById(R.id.imgFingerprint);
         btnScan = (Button) findViewById(R.id.btnScan);
         edt_first_name = (EditText) findViewById(R.id.edt_first_name);
@@ -176,14 +174,14 @@ public class FingerprintFindActivity extends Activity {
         if (error != SGFDxErrorCode.SGFDX_ERROR_NONE) {
             AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
             if (error == SGFDxErrorCode.SGFDX_ERROR_DEVICE_NOT_FOUND)
-                dlgAlert.setMessage("The attached fingerprint device is not supported on Android");
+                dlgAlert.setMessage(R.string.fingerprint_scanner_not_found);
             else
-                dlgAlert.setMessage("Fingerprint device initialization failed!");
+                dlgAlert.setMessage(R.string.fingerprint_init_failed);
             dlgAlert.setTitle("SecuGen Fingerprint SDK");
             dlgAlert.setPositiveButton("OK",
                     new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int whichButton) {
-                            finish();
+                            //finish();
                             return;
                         }
                     }
@@ -342,7 +340,7 @@ public class FingerprintFindActivity extends Activity {
             @Override
             public void onClick(View v){
                 dni = edt_dni_document.getText().toString();
-                Log.e("DNI", dni);
+                Log.i("DNI", dni);
                 names = edt_first_name.getText().toString();
                 maternalLast = edt_maternal_name.getText().toString();
                 paternalLast = edt_paternal_name.getText().toString();
@@ -351,7 +349,7 @@ public class FingerprintFindActivity extends Activity {
 
                 mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
-                Log.e("codigousuario", codigousuario);
+                Log.i("codigousuario", codigousuario);
 
                 // Don't really need this, but whatever: tasks have not been properly updated
                 String url = StringConexion.conexion;
@@ -360,7 +358,6 @@ public class FingerprintFindActivity extends Activity {
                 if (dni != null && dni.length() == 8) {
                     ParticipantLoadTask tarea = new ParticipantLoadTask();
                     asyncTask = tarea.execute(dni, url);
-                    Log.i("Searching for...", "");
 
                     try {
                         participant = asyncTask.get();
@@ -369,10 +366,12 @@ public class FingerprintFindActivity extends Activity {
                             Intent intent = new Intent(getBaseContext(), NoMatchActivity.class);
                             startActivity(intent);
                         } else {
-                            Log.i("CodigoPaciente:", participant.CodigoPaciente);
+                            Log.i("CodigoPaciente", participant.CodigoPaciente);
                             Editor editor = mPreferences.edit();
                             editor.putString("CodigoPaciente", participant.CodigoPaciente);
-                            editor.putString("patient_name", participant.Nombres);
+                            Log.i("PatientName", participant.Nombres);
+                            editor.putString("patient_name", participant.Nombres + " " + participant.ApellidoMaterno
+                                + " " + participant.ApellidoPaterno);
                             editor.commit();
 
                             Intent intent = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
@@ -466,6 +465,5 @@ public class FingerprintFindActivity extends Activity {
         jsgfpLib.Close();
         super.onDestroy();
     }
-
 }
 
