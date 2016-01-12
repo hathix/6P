@@ -31,8 +31,6 @@ public class NoMatchActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.no_match_layout);
-    }
-
 
         // "Register Patient" button should open RegisterParticipantActivity
         Button buttonRegisterNewParticipant = (Button) findViewById(R.id.btnRegisterNewUser);
@@ -53,7 +51,7 @@ public class NoMatchActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-        // "Try Again" button should return to FingerprintFindActivity
+        // "Try Again" button should return to FingerprintFindActivity (Fingerprint search layout)
         Button buttonTryAgain = (Button) findViewById(R.id.btnTryAgain);
         buttonTryAgain.setOnClickListener(new View.OnClickListener() {
             @Override
