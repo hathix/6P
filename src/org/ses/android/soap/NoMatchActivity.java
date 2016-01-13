@@ -2,8 +2,10 @@ package org.ses.android.soap;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 import android.view.MenuItem;
@@ -29,11 +31,19 @@ import java.util.concurrent.ExecutionException;
 public class NoMatchActivity extends BaseActivity {
 
     private String dni;
+    private String names;
+    private String maternalLast;
+    private String paternalLast;
+    private SharedPreferences mPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.no_match_layout);
 
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+
+        // load in all the relevant fields the intent passed
         try{
             dni = getIntent().getStringExtra("dni");
         }
@@ -41,6 +51,31 @@ public class NoMatchActivity extends BaseActivity {
         {
             dni = null;
         }
+
+        try{
+            names = getIntent().getStringExtra("names");
+        }
+        catch(Exception e)
+        {
+            names = null;
+        }
+
+        try{
+            maternalLast = getIntent().getStringExtra("maternalLast");
+        }
+        catch(Exception e)
+        {
+            maternalLast = null;
+        }
+
+        try{
+            paternalLast = getIntent().getStringExtra("paternalLast");
+        }
+        catch(Exception e)
+        {
+            paternalLast = null;
+        }
+
 
 
         // "Register Patient" button should open RegisterParticipantActivity
@@ -56,22 +91,30 @@ public class NoMatchActivity extends BaseActivity {
         });
 
         // "Add Fingerprint to Existing Patient" button should open AddFingerprintExistingActivity
+        // if there's a fingerprint, otherwise, get rid of the button
         Button buttonAddFingerprintExisting = (Button) findViewById(R.id.btnAddFingerprintExisting);
-        buttonAddFingerprintExisting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NoMatchActivity.this, AddFingerprintExistingActivity.class);
-                startActivity(intent);
-            }
-        });
-        // "Try Again" button should return to FingerprintFindActivity (Fingerprint search layout)
-        Button buttonTryAgain = (Button) findViewById(R.id.btnTryAgain);
-        buttonTryAgain.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(NoMatchActivity.this, FingerprintFindActivity.class);
-                startActivity(intent);
-            }
-        });
+
+        if (mPreferences.getString("Fingerprint", "notFound").equals("notFound"))
+        {
+            buttonAddFingerprintExisting.setVisibility(View.GONE);
+        }
+        else {
+            buttonAddFingerprintExisting.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(NoMatchActivity.this, AddFingerprintExistingActivity.class);
+                    startActivity(intent);
+                }
+            });
+            // "Try Again" button should return to FingerprintFindActivity (Fingerprint search layout)
+            Button buttonTryAgain = (Button) findViewById(R.id.btnTryAgain);
+            buttonTryAgain.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(NoMatchActivity.this, FingerprintFindActivity.class);
+                    startActivity(intent);
+                }
+            });
+        }
     }
 }
