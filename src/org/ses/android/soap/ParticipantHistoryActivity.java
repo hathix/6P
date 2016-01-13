@@ -61,11 +61,13 @@ public class ParticipantHistoryActivity extends BaseActivity {
 
         // get patient's history
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
-        String codigoproyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
+        String codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
+        String codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
 
         VisitaListTask tarea = new VisitaListTask();
-        asyncTask = tarea.execute(participant.CodigoPaciente, codigousuario, codigoproyecto, "bogusurl");
+
+        // tasks all have extra url parameter at the end that's unused
+        asyncTask = tarea.execute(participant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
             visits = asyncTask.get();
             TableRow tr;
