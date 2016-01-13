@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.Button;
 import android.widget.Spinner;
-import org.ses.android.soap.tasks.VisitaListTask;
+
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -64,6 +64,8 @@ import org.ses.android.soap.tasks.VisitaLoadTask;
 //import org.ses.android.soap.utils.TimePickerFragment;
 //import org.ses.android.soap.tasks.NewVisitUploadTask;
 import org.ses.android.soap.preferences.PreferencesActivity;
+import org.ses.android.soap.tasks.VisitasListTask;
+
 
 
 
@@ -83,9 +85,11 @@ public class NewVisitActivity extends Activity {
     private String startDay;
     TextView visitLocaleEditor;
     private Visitas[] visits;
+    private Visita[] visit_array;
     private int totalVisits;
     private AsyncTask<String, String, Visitas[]> asyncTask;
     private AsyncTask<String, String, Visitas[]> loadVisitas;
+    private AsyncTask<String, String, Visita[]> loadVisit;
     DateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     DateFormat displayTimeFormat = new SimpleDateFormat("HH:mm");
     DateFormat dbDateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00.0");
@@ -154,7 +158,7 @@ public class NewVisitActivity extends Activity {
          *counts how many visits the Patient has already done
         */
 
-        /* VisitaListTask tarea = new VisitaListTask();
+         VisitasListTask tarea = new VisitasListTask();
         // tasks all have extra url parameter at the end that's unused
         asyncTask = tarea.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
@@ -186,7 +190,7 @@ public class NewVisitActivity extends Activity {
             ex.printStackTrace();
         }
 
-*/
+
 
         /*
         *start day of the treatment + total time of treatment = end day
@@ -194,8 +198,9 @@ public class NewVisitActivity extends Activity {
         *
          */
 
+        //possibly comment this out
+        VisitasListTask tareaVisits = new VisitasListTask();
 
-        VisitaListTask tareaVisits = new VisitaListTask();
 
         loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
@@ -210,16 +215,26 @@ public class NewVisitActivity extends Activity {
         }
 
 
+        VisitaLoadTask tareaVisit = new VisitaLoadTask();
+
+        loadVisit = tareaVisit.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
+        try {
+            ArrayList<Visita> visitArray = new ArrayList<Visita>();
+            visit_array = loadVisit.get(); //Visit
+
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+
+        } catch (ExecutionException e1) {
+            e1.printStackTrace();
+        }
+
+
 
         String startDay = (String)(visits[firstvisit]).FechaVisita;  // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
 
-        proyectoLength = (int)(totalVisits - firstvisit) * currentVisit.DiasVisitaProx; //access currentVisit or some visit
+        proyectoLength = (int)(totalVisits - firstvisit) * visit_array[firstvisit].DiasVisitaProx; //access currentVisit or some visit
         // endDay = startDay + proyectoLength; */
-
-        //the Time picker automatically set to current time
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
 
 
 

@@ -8,7 +8,7 @@ import org.ses.android.soap.database.Visitas;
 
 import android.os.AsyncTask;
 
-public class VisitaListTask extends AsyncTask<String,String,Visitas[]> {
+public class VisitasListTask extends AsyncTask<String,String,Visitas[]> {
 	
 	private Visitas[] lstVisitas;
 	 
