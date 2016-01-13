@@ -104,7 +104,7 @@ public class FingerprintConfirmActivity extends FingerprintBaseActivity {
                         // TODO putFingerprint = registerPatientFingerprint.execute(..., url);
                         finish();
 
-                        Toast.makeText(getBaseContext(), "Huella guardada!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getApplicationContext(), getString(R.string.fingerprint_saved), Toast.LENGTH_SHORT).show();
 
                         // Continue to patient dashboard activity
                         Intent intent = new Intent(FingerprintConfirmActivity.this, ParticipantDashboardActivity.class);
