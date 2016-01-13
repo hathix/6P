@@ -14,6 +14,7 @@ public class Visita implements KvmSerializable {
 	public String DescripcionVisita;
 	public Boolean GenerarAuto;
 	public int Dependiente;
+	public int DiasVisitaProx;
 	
 	public Visita()
 	{
@@ -24,6 +25,7 @@ public class Visita implements KvmSerializable {
 		DescripcionVisita= "";
 		GenerarAuto = false;
 		Dependiente = 0;
+		DiasVisitaProx = 0;
 	}
 	
 	public Visita(
@@ -33,7 +35,8 @@ public class Visita implements KvmSerializable {
 			int CodigoVisita,
 			String DescripcionVisita,
 			Boolean GenerarAuto,
-			int Dependiente
+			int Dependiente,
+			int DiasVisitaProx
 			)
 	{
 		this.CodigoProyecto = CodigoProyecto;
@@ -43,6 +46,7 @@ public class Visita implements KvmSerializable {
 		this.DescripcionVisita  = DescripcionVisita ;
 		this.GenerarAuto = GenerarAuto;
 		this.Dependiente = Dependiente;
+		this.DiasVisitaProx = DiasVisitaProx;
 
 	}
 	
@@ -65,6 +69,8 @@ public class Visita implements KvmSerializable {
             return GenerarAuto;
         case 6:
             return Dependiente;
+		case 7:
+			return DiasVisitaProx;
 
         }
 		
@@ -108,7 +114,10 @@ public class Visita implements KvmSerializable {
         case 6:
             info.type = PropertyInfo.INTEGER_CLASS;
             info.name = "Dependiente";
-            break;	            
+            break;
+		case 7:
+			info.type = PropertyInfo.INTEGER_CLASS;
+			info.name = "DiasVisitaProx";
             
 	            
 	        default:break;
@@ -140,6 +149,9 @@ public class Visita implements KvmSerializable {
         case 6:
         	Dependiente  = Integer.parseInt(val.toString());
             break;
+		case 7:
+			DiasVisitaProx = Integer.parseInt(val.toString());
+			break;
 
 	    default:
 	        break;

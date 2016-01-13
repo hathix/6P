@@ -77,7 +77,7 @@ public class NewVisitActivity extends Activity {
     int firstvisit = 2; // 3rd visit == first real visit
     EditText timePicker;
     private int participantVisits;
-    private Date startDay;
+    private String startDay;
     TextView visitLocaleEditor;
     private Visitas[] visits;
     private int totalVisits;
@@ -177,26 +177,26 @@ public class NewVisitActivity extends Activity {
         *
          */
 
-        /* public void loadVisitsList(){
-            VisitaListTask tareaVisits = new VisitaListTask();
 
-            loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
-            try {
-                ArrayList<Visitas> visitasArray = new ArrayList<Visitas>();
-                visits = loadVisitas.get();
+        VisitaListTask tareaVisits = new VisitaListTask();
 
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
+        loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
+        try {
+            ArrayList<Visitas> visitasArray = new ArrayList<Visitas>();
+            visits = loadVisitas.get(); //Visitas
 
-            } catch (ExecutionException e1) {
-                e1.printStackTrace();
-            }
-        } */
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
 
-        /* //call loadVisitsList()
-        startDay = (Date)(visits[firstvisit]).FechaVisita;  // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
+        } catch (ExecutionException e1) {
+            e1.printStackTrace();
+        }
 
-        proyectoLength = (int)(totalVisits - firstvisit) * (int)currentVisit.DiasVisitaProx;
+
+
+        String startDay = (String)(visits[firstvisit]).FechaVisita;  // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
+
+        proyectoLength = (int)(totalVisits - firstvisit) * currentVisit.DiasVisitaProx; //access currentVisit or some visit
         // endDay = startDay + proyectoLength; */
 
         //the Time picker automatically set to current time
@@ -204,14 +204,8 @@ public class NewVisitActivity extends Activity {
         int hour = c.get(Calendar.HOUR_OF_DAY);
         int minute = c.get(Calendar.MINUTE);
 
-        /**
-         * set the text field as the selected date
-         */
-        /* @Override
-        public void returnDate (Date date){
-            datePicker.setText(displayDateFormat.format(date));
-            visitDate = date;
-        } */
+
+
     }
 
 }
