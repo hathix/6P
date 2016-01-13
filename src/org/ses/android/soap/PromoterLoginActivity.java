@@ -6,7 +6,6 @@ package org.ses.android.soap;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -94,7 +93,7 @@ public class PromoterLoginActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_promoter_login);
+        setContentView(R.layout.promoter_login_layout);
         spnLocale = (Spinner) findViewById(R.id.locale_spinner);
         spnProject = (Spinner) findViewById(R.id.project_spinner);
         String username = AccountLogin.CheckAlreadyLoggedIn(this);

@@ -2,10 +2,13 @@ package org.ses.android.soap.database;
 
 import java.util.Hashtable;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
+import java.io.Serializable;
 
-public class Participant implements KvmSerializable {
+public class Participant implements KvmSerializable, Parcelable {
 
 	public String CodigoPaciente;
 	public String Nombres;
@@ -48,7 +51,52 @@ public class Participant implements KvmSerializable {
 		this.Sexo = Sexo;
 
 	}
-	
+
+	@Override
+	public int describeContents() {
+		return 0;
+	}
+
+	@Override
+	public void writeToParcel(Parcel dest, int flags) {
+		dest.writeString(CodigoPaciente);
+		dest.writeString(Nombres);
+		dest.writeString(ApellidoPaterno);
+		dest.writeString(ApellidoMaterno);
+		dest.writeInt(CodigoTipoDocumento);
+		dest.writeString(DocumentoIdentidad);
+		dest.writeString(FechaNacimiento);
+		dest.writeInt(Sexo);
+	}
+
+	public static final Parcelable.Creator<Participant> CREATOR =
+			new Parcelable.Creator<Participant>() {
+		public Participant createFromParcel(Parcel in) {
+			return new Participant(in);
+		}
+
+		public Participant[] newArray(int size) {
+			return new Participant[size];
+		}
+	};	
+
+	private Participant(Parcel in) {
+		CodigoPaciente = in.readString();
+		Nombres = in.readString();
+		ApellidoPaterno = in.readString();
+		ApellidoMaterno = in.readString();
+		CodigoTipoDocumento = in.readInt();
+		DocumentoIdentidad = in.readString();
+		FechaNacimiento = in.readString();
+		Sexo = in.readInt();
+	}
+		
+	@Override
+	public String toString() {
+		return "Nombres: " + this.Nombres + "\nApellido Paterno: " + this.ApellidoPaterno +
+				"\nApellido Materno: " + this.ApellidoMaterno;
+	}
+
 	@Override
 	public Object getProperty(int arg0) {
 
@@ -154,4 +202,25 @@ public class Participant implements KvmSerializable {
 	        break;
         }
 	}
+
+    public String getNombresTitleCase() {
+        StringBuilder titleCase = new StringBuilder();
+        boolean nextTitleCase = true;
+
+        for (char c : Nombres.toCharArray()) {
+            if (Character.isSpaceChar(c)) {
+                nextTitleCase = true;
+            } else if (nextTitleCase) {
+                c = Character.toUpperCase(c);
+                nextTitleCase = false;
+            } else {
+                c = Character.toLowerCase(c);
+                nextTitleCase = false;
+            }
+
+            titleCase.append(c);
+        }
+
+        return titleCase.toString();
+    }
 }

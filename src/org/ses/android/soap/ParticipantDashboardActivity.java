@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Idreg;
+import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.tasks.GenerarIdENRTask;
 import org.ses.android.soap.tasks.GenerarIdTAMTask;
 import org.ses.android.soap.tasks.MostrarTipoIDTask;
@@ -26,10 +27,16 @@ import java.util.concurrent.ExecutionException;
 
 /**
  * Created by anyway on 1/11/16.
+ *
+ * The "command center" for a patient, providing information at a glance about them and providing
+ * links to log a new visit, see their visit history, etc.
+ *
+ * Any Intent that opens this Activity **MUST** pass a Patient in the Bundle.
  */
 public class ParticipantDashboardActivity extends BaseActivity {
 
     private TextView tvw_nombres;
+    private Participant participant;
 
     private SharedPreferences mPreferences;
 
@@ -41,8 +48,13 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
         setContentView(R.layout.participant_dashboard_layout);
 
+        // load up the participant
+        participant = (Participant) getIntent().getParcelableExtra("Participant");
+
         tvw_nombres = (TextView) findViewById(R.id.tvw_nombres);
-        String fullName = mPreferences.getString("patient_name", "");
+        String fullName = participant.Nombres + " " +
+                            participant.ApellidoMaterno + " " +
+                            participant.ApellidoPaterno;
         tvw_nombres.setText(getString(R.string.nombres) + " " + fullName);
         // still need some more
 
@@ -62,6 +74,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ParticipantDashboardActivity.this, ParticipantHistoryActivity.class);
+                intent.putExtra("Participant", participant);
                 startActivity(intent);
             }
         });

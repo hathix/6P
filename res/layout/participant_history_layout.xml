@@ -1,6 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/patient_history"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/lbl_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/visit_history"
+        android:textSize="21sp"
+        android:textStyle="bold" />
+
+    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/history_table"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="5dp"
+        android:stretchColumns="0,1,2,3,4">
+        <TableRow>
+            <TextView android:text="@string/date"
+                android:id="@+id/name" />
+            <TextView
+                android:text="@string/time"
+                android:padding="3dip" />
+            <TextView
+                android:text="@string/group_number"
+                android:padding="3dip" />
+            <TextView
+                android:text="@string/project"
+                android:padding="3dip" />
+            <TextView
+                android:text="@string/status"/>
+        </TableRow>
+    </TableLayout>
 
 </LinearLayout>

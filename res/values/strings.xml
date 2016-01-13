@@ -4,6 +4,7 @@
     <string name="app_name">SEISP Mobile</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
+    <string name="home_phone">Home</string>
     <string name="nombre">Name</string>
     <string name="telefono">Phone</string>
     <string name="consultar">View</string>
@@ -21,6 +22,8 @@
     <string name="opc_anterior">Before</string>
     <string name="opc_siguiente">Next</string>
     <string name="ingrese_doc_identidad">Identity Document</string>
+    <string name="invalid_dni">Invalid DNI!</string>
+    <string name="invalid_dob">Invalid date of birth!</string>
     <string name="nombres">Names:</string>
     <string name="number_missed">Number Missed</string> <!-- in missed_visits_layout -->
     <string name="log_in_other">Log in another patient</string> <!-- in participant_layout_dashboard -->
@@ -40,6 +43,7 @@
     <string name="past_week">Past Week</string>  <!-- patient dash -->
     <string name="future">Future</string>  <!-- patient dash -->
     <string name="received">Received</string>  <!-- patient dash -->
+    <string name="registration_success">Information stored successfully</string>
     <string name="total">Total</string> <!-- patient dash -->
     <string name="tipdoc_dni">DNI</string>
     <string name="tipdoc_otros">No document</string>
@@ -65,10 +69,12 @@
     <string name="capture_audio">Record Sound</string>
     <string name="capture_image">Take Picture</string>
     <string name="capture_video">Record Video</string>
+    <string name="cell">Cell</string>
     <string name="change_language">Change Language</string>
     <string name="change_password">Password</string>
     <string name="change_server_url">Server URL</string>
     <string name="change_username">SeisP Username</string>
+    <string name="check_gps">Check GPS is on.</string>
     <string name="clearanswer_confirm">Remove the response to \"%s\"?</string>
     <string name="clear_answer">Remove response</string>
     <string name="clear_answer_ask">Remove This Response?</string>
@@ -90,6 +96,9 @@
     <string name="delete_yes">Delete Forms</string>
     <string name="discard_answer">Remove response</string>
     <string name="discard_group">Remove group</string>
+    <string name="district">District</string>
+    <string name="dni_wrong_length">DNI must be 8 digits long!</string>
+    <string name="dni_already_exists">That DNI has already been used!</string>
     <string name="download">Get Selected</string>
     <string name="download_forms_result">Download Result</string>
     <string name="downloading_data">Connecting to Server</string>
@@ -116,8 +125,12 @@
     <string name="get_barcode">Get Barcode</string>
     <string name="get_forms">Get Blank Form</string>
     <string name="get_location">Record Location</string>
+    <string name="group_number">Group</string>
     <string name="provider_disabled_error">Sorry, Location providers are disabled!</string>
     <string name="invalid_answer_error">Sorry, this response is invalid!</string>
+    <string name="invalid_name">Invalid name!</string>
+    <string name="invalid_paternal_last">Invalid paternal last name!</string>
+    <string name="invalid_maternal_last">Invalid maternal last name!</string>
     <string name="jump_to_beginning">Go To Start</string>
     <string name="jump_to_end">Go To End</string>
     <string name="jump_to_previous">Go Up</string>
@@ -127,6 +140,7 @@
     <string name="list_failed_with_error">Form listing failed. %s.</string>
     <string name="loading_form">Loading Form</string>
     <string name="load_remote_form_error">Error Getting Form List</string>
+    <string name="localizer">Localize</string>
     <string name="location_provider_accuracy">Using %1$s. Accuracy is %2$s m.</string>
     <string name="location_provider">Using %1$s provider. Please wait for greater accuracy.</string>
     <string name="location_accuracy">Accuracy is %1$s m</string>
@@ -169,12 +183,14 @@
     <string name="server_requires_auth">Server Requires Authentication</string>
     <string name="server_url">URL</string>
     <string name="server_preferences">Server</string>
+    <string name="status">Status</string>
     <string name="toggle_selected">Toggle All</string>
     <string name="trigger">OK. Please continue.</string>
     <string name="uploading_data">Sending Form</string>
     <string name="url_error">Sorry, invalid URL!</string>
     <string name="username">User Name</string>
     <string name="view_hierarchy">Go To Prompt</string>
+    <string name="visit_history">%s\'s Visit History</string>
     <string name="open_data_kit">Open Data Kit</string>
     <string name="general_preferences">General Settings</string>
     <string name="click_to_web">Tap to visit http://sociosensalud.org.pe</string>
@@ -186,7 +202,10 @@
     <string name="select_another_image">Select Another Image</string>
     <string name="use_odk_default">Use Default Image</string>
     <string name="change_splash_path">Change Image</string>
+    <string name="choose_gender">Choose a gender!</string>
     <string name="show_location">Show Location</string>
+    <string name="address">Address</string>
+    <string name="address_description">Description</string>
     <string name="app_url">http://sociosensalud.org.pe</string>
     <string name="keep_changes">Save Changes</string>
     <string name="go_to_location">Go to Location</string>
@@ -212,6 +231,7 @@
     <string name="fetching_manifest">%s. Getting manifest </string>
     <string name="success">Success</string>
     <string name="no_forms_uploaded">Sorry, no form was uploaded.</string>
+    <string name="no_visit_history">No visits found for %s!</string>
     <string name="upload_results">Upload Results</string>
     <string name="xform_parse_error">XForm parse error. %1$s is missing element %2$s</string>
     <string name="choose_sound">Choose Sound</string>
@@ -251,6 +271,7 @@
     <string name="sign_button">Gather Signature</string>
     <string name="markup_image">Markup Image</string>
     <string name="draw_image">Sketch Image</string>
+    <string name="region">Region</string> <!-- equivalent to departamento -->
     <string name="reset_image">Reset</string>
     <string name="set_color">Set Color</string>
     <string name="select_drawing_color">Select Drawing Color</string>
@@ -286,6 +307,7 @@
     <string name="opc_search">Search</string>
     <string name="no_participants">No Participants Yet</string>
     <string name="opc_visit">Visit</string>
+    <string name="time">Time</string>
     <string name="txtfecha_visita">Visit Date(dd/mm/yyyy):</string>
     <string name="txthora_visita">Visit Time(hh:mm)</string>
     <string name="txtproject">Project:</string>
@@ -304,6 +326,7 @@
     <string name="warning">Warning</string>
     <string name="session_init_key">Gracias por Iniciar Sesion</string>
     <string name="password_expired_key">Contraseña caducada</string>
+    <string name="province">Province</string>
     <string name="select_local">Select a Local!!</string>
     <string name="call_odk">Call to SeisD?</string>
     <string name="visit_seisd">SeisD</string>
@@ -351,6 +374,7 @@
     <string name="action_logout">Logout</string>
     <string name="confirm">Confirm</string>
     <string name="dob">Date of Birth (Tap to Change)</string>
+    <string name="fingerprint_saved">Huella guardada</string>
     <string name="first_name">First Name:</string>
     <string name="lista">View Missing Appointments</string>
     <string name="matches">Select Patient to Confirm</string>
@@ -364,6 +388,7 @@
     <string name="scan">Scan</string>
     <string name="scan1">Scan again to confirm fingerprint.</string>
     <string name="scan2">Not confirmed. Please try again.</string>
+    <string name="scan_again">Does not match previous scan; please scan again.</string>
     <string name="search_patient">Search for Patient</string>
     <string name="sexo">Gender:</string>
     <string name="try_again">Try Again</string>

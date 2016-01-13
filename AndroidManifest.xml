@@ -71,11 +71,38 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="org.ses.android.soap.NoMatchActivity"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.NoMatchActivity" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="org.ses.android.soap.ParticipantHistoryActivity"
             android:theme="@android:style/Theme.Holo.Light"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="org.ses.android.soap.ParticipantHistoryActivity" />
+                <action android:name="android.intent.action.ParticipantHistoryActivity" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.ses.android.soap.ParticipantMatchActivity"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.ParticipantMatchActivity" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.ses.android.soap.RegisterParticipantActivity"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.RegisterParticipantActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
@@ -84,19 +111,29 @@
             android:theme="@android:style/Theme.Holo.Light"
             android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="org.ses.android.soap.FingerprintFindActivity" />
+                <action android:name="android.intent.action.FingerprintFindActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
         <activity
-            android:name="org.ses.android.soap.NoMatchActivity"
+            android:name="org.ses.android.soap.AddFingerprintExistingActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name">
+            android:label="@string/app_name" >
             <intent-filter>
-                <action android:name="org.ses.android.soap.NoMatchActivity" />
+                <action android:name="android.intent.action.AddFingerprintExistingActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="org.ses.android.soap.FingerprintConfirmActivity"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.FingerprintConfirmActivity" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+
         <activity
             android:theme="@android:style/Theme.Holo.Light"
             android:name="org.ses.android.soap.preferences.PreferencesActivity"
