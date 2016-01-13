@@ -117,6 +117,7 @@
     <string name="get_barcode">Get Barcode</string>
     <string name="get_forms">Get Blank Form</string>
     <string name="get_location">Record Location</string>
+    <string name="group_number">Group</string>
     <string name="provider_disabled_error">Sorry, Location providers are disabled!</string>
     <string name="invalid_answer_error">Sorry, this response is invalid!</string>
     <string name="jump_to_beginning">Go To Start</string>
@@ -170,12 +171,14 @@
     <string name="server_requires_auth">Server Requires Authentication</string>
     <string name="server_url">URL</string>
     <string name="server_preferences">Server</string>
+    <string name="status">Status</string>
     <string name="toggle_selected">Toggle All</string>
     <string name="trigger">OK. Please continue.</string>
     <string name="uploading_data">Sending Form</string>
     <string name="url_error">Sorry, invalid URL!</string>
     <string name="username">User Name</string>
     <string name="view_hierarchy">Go To Prompt</string>
+    <string name="visit_history">%s\'s Visit History</string>
     <string name="open_data_kit">Open Data Kit</string>
     <string name="general_preferences">General Settings</string>
     <string name="click_to_web">Tap to visit http://sociosensalud.org.pe</string>
@@ -213,6 +216,7 @@
     <string name="fetching_manifest">%s. Getting manifest </string>
     <string name="success">Success</string>
     <string name="no_forms_uploaded">Sorry, no form was uploaded.</string>
+    <string name="no_visit_history">No visits found for %s!</string>
     <string name="upload_results">Upload Results</string>
     <string name="xform_parse_error">XForm parse error. %1$s is missing element %2$s</string>
     <string name="choose_sound">Choose Sound</string>
@@ -287,6 +291,7 @@
     <string name="opc_search">Search</string>
     <string name="no_participants">No Participants Yet</string>
     <string name="opc_visit">Visit</string>
+    <string name="time">Time</string>
     <string name="txtfecha_visita">Visit Date(dd/mm/yyyy):</string>
     <string name="txthora_visita">Visit Time(hh:mm)</string>
     <string name="txtproject">Project:</string>
