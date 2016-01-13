@@ -25,17 +25,6 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
 
-        <!-- delete this later -->
-        <activity
-            android:name="org.ses.android.soap.RegisterParticipantActivity"
-            android:label="@string/app_name"
-            android:theme="@android:style/Theme.Holo.Light" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <!--
         <activity
             android:name="org.ses.android.soap.PromoterLoginActivity"
             android:label="@string/app_name"
@@ -45,7 +34,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        -->
         <activity
             android:name="org.ses.android.soap.MainMenuActivity"
             android:theme="@android:style/Theme.Holo.Light"
@@ -118,6 +106,8 @@
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
+
+
         <activity
             android:name="org.ses.android.soap.FingerprintFindActivity"
             android:theme="@android:style/Theme.Holo.Light"
