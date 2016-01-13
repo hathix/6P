@@ -24,7 +24,7 @@
             android:paddingRight="10dp" >
 
             <EditText
-                android:id="@+id/edt_doc_identidad"
+                android:id="@+id/edt_dni_document"
                 android:layout_height="wrap_content"
                 android:layout_width="match_parent"
                 android:layout_marginTop="5dp"
@@ -34,7 +34,7 @@
             <!-- Name, Birth Date, Sex -->
 
             <EditText
-                android:id="@+id/edt_nombres"
+                android:id="@+id/edt_first_name"
                 android:layout_height="wrap_content"
                 android:layout_width="300dp"
                 android:layout_weight="1"
@@ -42,7 +42,7 @@
                 android:inputType="text" />
 
             <EditText
-                android:id="@+id/edt_ape_pat"
+                android:id="@+id/edt_maternal_name"
                 android:layout_height="wrap_content"
                 android:layout_width="300dp"
                 android:layout_weight="1"
@@ -50,7 +50,7 @@
                 android:inputType="text" />
 
             <EditText
-                android:id="@+id/edt_ape_mat"
+                android:id="@+id/edt_paternal_name"
                 android:layout_height="wrap_content"
                 android:layout_width="300dp"
                 android:layout_weight="1"
@@ -64,7 +64,7 @@
                 android:text="@string/fecha_nacimiento" />
 
             <TextView
-                android:id="@+id/tvwfecha_nacimiento"
+                android:id="@+id/edt_dob"
                 android:layout_height="wrap_content"
                 android:layout_width="150dp"
                 android:layout_weight="1"
@@ -77,20 +77,20 @@
                 android:layout_height="wrap_content"
                 android:text="@string/sexo" />
 
-            <RadioGroup android:id="@+id/rbgSexo"
+            <RadioGroup android:id="@+id/rbg_gender"
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" >
 
                 <RadioButton
-                    android:id="@+id/rboMasculino"
+                    android:id="@+id/rbo_male"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/masculino"
                     android:textSize="14sp" />
 
                 <RadioButton
-                    android:id="@+id/rboFemenino"
+                    android:id="@+id/rbo_female"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/femenino"
@@ -103,7 +103,7 @@
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spDepartamento_new"
+                android:id="@+id/sp_department"
                 android:layout_weight="1"
                 android:clickable="true"
                 android:spinnerMode="dialog"
@@ -113,7 +113,7 @@
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spProvinc"
+                android:id="@+id/sp_province"
                 android:layout_weight="1"
                 android:spinnerMode="dialog"
                 android:clickable="true"
@@ -123,7 +123,7 @@
             <Spinner
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/spDistri"
+                android:id="@+id/sp_district"
                 android:layout_weight="1"
                 android:spinnerMode="dialog"
                 android:clickable="true"
@@ -133,7 +133,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtDomic"
+                android:id="@+id/edt_domicilio"
                 android:layout_weight="1"
                 android:inputType="textLongMessage"
                 android:hint="Domicilio"/>
@@ -141,7 +141,7 @@
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/txtRefer"
+                android:id="@+id/edt_referencia"
                 android:layout_weight="1"
                 android:inputType="textLongMessage"
                 android:hint="Referencia" />
@@ -151,7 +151,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/textTelf"
+                android:id="@+id/edt_telefono"
                 android:layout_weight="0.31"
                 android:hint="Telefono"/>
 
@@ -160,7 +160,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="number"
                 android:ems="10"
-                android:id="@+id/txtCelular"
+                android:id="@+id/edt_celular"
                 android:layout_weight="0.31"
                 android:hint="Celular"/>
 
@@ -176,14 +176,14 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:ems="10"
-                    android:id="@+id/txtGeoLocalN"
+                    android:id="@+id/edt_localizac"
                     android:singleLine="false"
                     android:hint="Localizac"/>
 
                 <ImageButton
                     android:layout_width="40dp"
                     android:layout_height="40dp"
-                    android:id="@+id/ImgBtnGps"
+                    android:id="@+id/btn_gps"
                     android:background="@drawable/gps_icon" />
 
             </LinearLayout>
@@ -193,7 +193,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text|number"
                 android:ems="10"
-                android:id="@+id/txtLong"
+                android:id="@+id/edt_long"
                 android:singleLine="false"
                 android:enabled="false"
                 android:editable="false"
@@ -204,7 +204,7 @@
                 android:layout_height="wrap_content"
                 android:inputType="text|number"
                 android:ems="10"
-                android:id="@+id/txtLat"
+                android:id="@+id/edt_lat"
                 android:singleLine="false"
                 android:editable="false"
                 android:hint="Latitud"/>
@@ -221,7 +221,7 @@
                     android:text="Guardar"
                     android:textColor="#ffffff"
                     android:background="@drawable/botonrojo"
-                    android:id="@+id/btnGuardar"
+                    android:id="@+id/btn_guardar"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="10dp" />
 
@@ -233,7 +233,7 @@
                     android:background="@drawable/botonrojo"
                     android:layout_marginLeft="30dp"
                     android:layout_marginTop="10dp"
-                    android:id="@+id/btnVolver" />
+                    android:id="@+id/btn_volver" />
             </LinearLayout>
 
         </LinearLayout>
