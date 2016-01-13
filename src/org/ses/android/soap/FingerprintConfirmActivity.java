@@ -113,7 +113,7 @@ public class FingerprintConfirmActivity extends BaseActivity {
 
         imgFingerprint = (ImageView) findViewById(R.id.imageViewScan1);
         headerText = (TextView) findViewById(R.id.textScan1);
-        btnScan = (Button) findViewById(R.id.btnScan);
+        btnScan = (Button) findViewById(R.id.btnScan1);
         btnConfirm = (Button) findViewById(R.id.btnConfirm1);
 
         grayBuffer = new int[JSGFPLib.MAX_IMAGE_WIDTH_ALL_DEVICES * JSGFPLib.MAX_IMAGE_HEIGHT_ALL_DEVICES];
@@ -268,12 +268,12 @@ public class FingerprintConfirmActivity extends BaseActivity {
 
                         registrarParticipante = registerPatientDetails.execute(
                                 (String) currParticipant.getProperty(5),
-                                (String) currParticipant.getProperty(4),
+                                currParticipant.getProperty(4).toString(),
                                 (String) currParticipant.getProperty(1),
                                 (String) currParticipant.getProperty(2),
                                 (String) currParticipant.getProperty(3),
                                 (String) currParticipant.getProperty(6),
-                                (String) currParticipant.getProperty(7), url);
+                                currParticipant.getProperty(7).toString(), url);
 
                         putFingerprint = null; //TODO
 
@@ -298,7 +298,7 @@ public class FingerprintConfirmActivity extends BaseActivity {
     public void askForRescan() {
         headerText.setText(this.getString(R.string.scan_again));
         imgFingerprint.setImageBitmap(grayBitmap);
-        mTemplate = null;
+        //mTemplate = null;
     }
 
     @Override

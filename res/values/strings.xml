@@ -365,7 +365,7 @@
     <string name="scan">Scan</string>
     <string name="scan1">Scan again to confirm fingerprint.</string>
     <string name="scan2">Not confirmed. Please try again.</string>
-    <string name="scan_again">No match; scan again.</string>
+    <string name="scan_again">Does not match previous scan; please scan again.</string>
     <string name="search_patient">Search for Patient</string>
     <string name="sexo">Gender:</string>
     <string name="try_again">Try Again</string>
