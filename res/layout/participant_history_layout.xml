@@ -4,16 +4,17 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/lbl_missed"
+        android:id="@+id/lbl_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/visit_history" />
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/history_table"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginTop="5dp"
-        android:stretchColumns="0,1,2,3">
+        android:stretchColumns="0,1,2,3,4">
         <TableRow>
             <TextView android:text="@string/date"
                 android:id="@+id/name" />
@@ -22,13 +23,15 @@
                 android:gravity="center_horizontal"
                 android:padding="3dip" />
             <TextView
-                android:text="@string/number_missed"
+                android:text="@string/group_number"
                 android:gravity="center_horizontal"
                 android:padding="3dip" />
             <TextView
                 android:text="@string/project"
                 android:gravity="center_horizontal"
                 android:padding="3dip" />
+            <TextView
+                android:text="@string/status"/>
         </TableRow>
     </TableLayout>
 
