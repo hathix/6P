@@ -42,7 +42,7 @@ public class FingerprintBaseActivity extends BaseActivity {
     protected JSGFPLib jsgfpLib;
     protected byte[] mTemplate;
 
-    protected String url = StringConexion.conexion;
+    String url = StringConexion.conexion;
 
     //RILEY
     //This broadcast receiver is necessary to get user permissions to access the attached USB device
