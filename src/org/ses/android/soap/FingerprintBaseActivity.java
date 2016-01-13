@@ -11,6 +11,7 @@ import android.graphics.Bitmap;
 import android.hardware.usb.UsbDevice;
 import android.hardware.usb.UsbManager;
 import android.util.Log;
+import android.widget.Toast;
 
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.tasks.StringConexion;
@@ -95,21 +96,17 @@ public class FingerprintBaseActivity extends BaseActivity {
         registerReceiver(mUsbReceiver, filter);
         long error = jsgfpLib.Init(SGFDxDeviceName.SG_DEV_AUTO);
         if (error != SGFDxErrorCode.SGFDX_ERROR_NONE) {
-            AlertDialog.Builder dlgAlert = new AlertDialog.Builder(this);
-            if (error == SGFDxErrorCode.SGFDX_ERROR_DEVICE_NOT_FOUND)
-                dlgAlert.setMessage(R.string.fingerprint_scanner_not_found);
-            else
-                dlgAlert.setMessage(R.string.fingerprint_init_failed);
-            dlgAlert.setTitle("SecuGen Fingerprint SDK");
-            dlgAlert.setPositiveButton("OK",
-                    new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int whichButton) {
-                            return;
-                        }
-                    }
-            );
-            dlgAlert.setCancelable(false);
-            dlgAlert.create().show();
+            // show error message in a toast
+            Toast toast;
+            if (error == SGFDxErrorCode.SGFDX_ERROR_DEVICE_NOT_FOUND) {
+                toast = Toast.makeText(getBaseContext(), R.string.fingerprint_scanner_not_found,
+                        Toast.LENGTH_LONG);
+            }
+            else {
+                toast = Toast.makeText(getBaseContext(), R.string.fingerprint_init_failed,
+                        Toast.LENGTH_LONG);
+            }
+            toast.show();
         } else {
             UsbDevice usbDevice = jsgfpLib.GetUsbDevice();
             if (usbDevice == null) {
