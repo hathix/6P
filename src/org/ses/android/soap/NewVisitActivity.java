@@ -199,8 +199,6 @@ public class NewVisitActivity extends Activity {
         proyectoLength = (int)(totalVisits - firstvisit) * (int)currentVisit.DiasVisitaProx;
         // endDay = startDay + proyectoLength; */
 
-
-
         //the Time picker automatically set to current time
         final Calendar c = Calendar.getInstance();
         int hour = c.get(Calendar.HOUR_OF_DAY);
