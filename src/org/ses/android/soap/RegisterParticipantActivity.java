@@ -639,9 +639,18 @@ public class RegisterParticipantActivity extends BaseActivity {
 
                     Participant participant = new Participant(id_pac,nombres,ape_pat,ape_mat,
                             Integer.parseInt(tip_doc),dni,fec_nacimiento,Integer.parseInt(sexo));
-                    Intent i = new Intent(context, FingerprintConfirmActivity.class);
-                    i.putExtra("Participant", participant);
-                    startActivity(i);
+                    // participant fingerprint was never taken
+                    if (mPreferences.getString("Fingerprint", "notFound").equals("notFound")){
+                        Intent i = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
+                        i.putExtra("Participant", participant);
+                        startActivity(i);
+                    }
+                    // participant logged fingerprint before registering
+                    else {
+                        Intent i = new Intent(context, FingerprintConfirmActivity.class);
+                        i.putExtra("Participant", participant);
+                        startActivity(i);
+                    }
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
