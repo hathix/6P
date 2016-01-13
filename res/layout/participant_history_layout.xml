@@ -7,7 +7,9 @@
         android:id="@+id/lbl_history"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/visit_history" />
+        android:text="@string/visit_history"
+        android:textSize="21sp"
+        android:textStyle="bold" />
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/history_table"
@@ -20,15 +22,12 @@
                 android:id="@+id/name" />
             <TextView
                 android:text="@string/time"
-                android:gravity="center_horizontal"
                 android:padding="3dip" />
             <TextView
                 android:text="@string/group_number"
-                android:gravity="center_horizontal"
                 android:padding="3dip" />
             <TextView
                 android:text="@string/project"
-                android:gravity="center_horizontal"
                 android:padding="3dip" />
             <TextView
                 android:text="@string/status"/>

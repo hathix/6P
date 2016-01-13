@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TableLayout;
+import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -65,9 +66,43 @@ public class ParticipantHistoryActivity extends BaseActivity {
 
         VisitaListTask tarea = new VisitaListTask();
         asyncTask = tarea.execute(participant.CodigoPaciente, codigousuario, codigoproyecto, "bogusurl");
-        try{
-        visits = asyncTask.get();
+        try {
+            visits = asyncTask.get();
+            TableRow tr;
+            Visitas visit;
+            TextView date, time, group, project, status;
+            for (int i=0; i < visits.length; i++)
+            {
+                visit = visits[i];
+                tr = new TableRow(this);
+                date = new TextView(this);
+                date.setText(visit.FechaVisita);
+                time = new TextView(this);
+                time.setText(visit.HoraCita);
+                group = new TextView(this);
+                group.setText(visit.CodigoGrupoVisita);
+                project = new TextView(this);
+                project.setText(visit.Proyecto);
+                status = new TextView(this);
+                status.setText(visit.EstadoVisita);
 
+                tr.addView(date);
+                tr.addView(time);
+                tr.addView(group);
+                tr.addView(project);
+                tr.addView(status);
+
+                historyTable.addView(tr);
+
+            }
+        } catch (InterruptedException e) {
+            // TODO do something?
+            e.printStackTrace();
+        } catch (ExecutionException e)
+        {
+            // TODO do something else?
+            e.printStackTrace();
+        }
 
     }
 }
