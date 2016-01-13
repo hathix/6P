@@ -84,9 +84,4 @@ public class BaseActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//    }
-
 }

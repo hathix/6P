@@ -72,7 +72,7 @@ public class MainMenuActivity extends BaseActivity {
 
 			@Override
 			public void onClick(View v) {
-				Intent intent=new Intent(MainMenuActivity.this,FingerprintFindActivity.class);
+				Intent intent=new Intent(MainMenuActivity.this, FingerprintFindActivity.class);
 				startActivity(intent);
 			}
 		});
