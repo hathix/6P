@@ -92,7 +92,7 @@ public class FingerprintConfirmActivity extends FingerprintBaseActivity {
                     // Unpack patient info
                     Bundle patientInfo = getIntent().getExtras();
                     if (patientInfo != null) { // it shouldn't be null
-                        currParticipant = patientInfo.getParcelable("patient");
+                        currParticipant = patientInfo.getParcelable("Participant");
                     }
 
                     // Save everything
@@ -102,7 +102,7 @@ public class FingerprintConfirmActivity extends FingerprintBaseActivity {
                         // TODO registerPatientFingerprint = new PutFingerprintTask();
 
                         // TODO putFingerprint = registerPatientFingerprint.execute(..., url);
-                        finish();
+                        //finish();
 
                         Toast.makeText(getApplicationContext(), getString(R.string.fingerprint_saved), Toast.LENGTH_SHORT).show();
 
