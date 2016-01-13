@@ -10,13 +10,6 @@
     tools:context=".ViewMissedVisitsLayout" >
 
     <TextView
-        android:id="@+id/lbl_missed"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/missed" />
-
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/project"

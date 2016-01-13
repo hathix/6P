@@ -46,7 +46,7 @@
         <activity
             android:name="org.ses.android.soap.ViewMissedVisitsActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name" >
+            android:label="@string/title_view_missed_visits" >
             <intent-filter>
                 <action android:name="android.intent.action.ViewMissedVisitsActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
@@ -55,7 +55,7 @@
         <activity
             android:name="org.ses.android.soap.ParticipantDashboardActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name" >
+            android:label="@string/patient_dash" >
             <intent-filter>
                 <action android:name="android.intent.action.ParticipantDashboardActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
@@ -64,7 +64,7 @@
         <activity
             android:name="org.ses.android.soap.NewVisitActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name" >
+            android:label="@string/title_log_new_visit" >
             <intent-filter>
                 <action android:name="android.intent.action.NewVisitActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
@@ -73,7 +73,7 @@
         <activity
             android:name="org.ses.android.soap.NoMatchActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name" >
+            android:label="@string/title_fingerprint_not_found" >
             <intent-filter>
                 <action android:name="android.intent.action.NoMatchActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
@@ -82,7 +82,7 @@
         <activity
             android:name="org.ses.android.soap.ParticipantHistoryActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name" >
+            android:label="@string/title_participant_history" >
             <intent-filter>
                 <action android:name="android.intent.action.ParticipantHistoryActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
@@ -91,7 +91,7 @@
         <activity
             android:name="org.ses.android.soap.ParticipantMatchActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name" >
+            android:label="@string/title_fingerprint_found" >
             <intent-filter>
                 <action android:name="android.intent.action.ParticipantMatchActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
@@ -100,7 +100,7 @@
         <activity
             android:name="org.ses.android.soap.RegisterParticipantActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name" >
+            android:label="@string/title_register_patient" >
             <intent-filter>
                 <action android:name="android.intent.action.RegisterParticipantActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
@@ -109,7 +109,7 @@
         <activity
             android:name="org.ses.android.soap.FingerprintFindActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name" >
+            android:label="@string/title_scan_fingerprint" >
             <intent-filter>
                 <action android:name="android.intent.action.FingerprintFindActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
@@ -118,7 +118,7 @@
         <activity
             android:name="org.ses.android.soap.AddFingerprintExistingActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name" >
+            android:label="@string/title_add_fingerprint" >
             <intent-filter>
                 <action android:name="android.intent.action.AddFingerprintExistingActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
@@ -127,7 +127,7 @@
         <activity
             android:name="org.ses.android.soap.FingerprintConfirmActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/app_name" >
+            android:label="@string/title_confirm_fingerprint" >
             <intent-filter>
                 <action android:name="android.intent.action.FingerprintConfirmActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />

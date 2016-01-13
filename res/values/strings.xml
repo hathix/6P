@@ -393,6 +393,15 @@
     <string name="scan_again">Does not match previous scan; please scan again.</string>
     <string name="search_patient">Search for Patient</string>
     <string name="sexo">Gender:</string>
+    <string name="title_add_fingerprint">Add Fingerprint to Patient</string>
+    <string name="title_confirm_fingerprint">Confirm Fingerprint</string>
+    <string name="title_fingerprint_found">Fingerprint Found</string>
+    <string name="title_fingerprint_not_found">New Fingerprint</string>
+    <string name="title_log_new_visit">Log New Visit</string>
+    <string name="title_participant_history">Patient History</string>
+    <string name="title_register_patient">Register New Patient</string>
+    <string name="title_scan_fingerprint">Scan Fingerprint</string>
+    <string name="title_view_missed_visits">View Missed Visits</string>
     <string name="try_again">Try Again</string>
     <string name="textAddInfo">Enter Optional Additional Info</string>
     <string name="textFingerprintInstruction">Please place index finger on scanner.</string>
