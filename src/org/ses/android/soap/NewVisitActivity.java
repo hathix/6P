@@ -129,6 +129,11 @@ public class NewVisitActivity extends Activity {
          */
         currentParticipant = (Participant) getIntent().getParcelableExtra("Participant");
 
+        String fullName = currentParticipant.Nombres + " " +
+                currentParticipant.ApellidoMaterno + " " +
+                currentParticipant.ApellidoPaterno;
+        names.setText(fullName);
+
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         String codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
@@ -137,7 +142,7 @@ public class NewVisitActivity extends Activity {
          *counts how many visits the Patient has already done
         */
 
-        VisitaListTask tarea = new VisitaListTask();
+        /* VisitaListTask tarea = new VisitaListTask();
         // tasks all have extra url parameter at the end that's unused
         asyncTask = tarea.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
@@ -169,7 +174,7 @@ public class NewVisitActivity extends Activity {
             ex.printStackTrace();
         }
 
-
+*/
 
         /*
         *start day of the treatment + total time of treatment = end day
