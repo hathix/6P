@@ -47,7 +47,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
     private final int DATE_DIALOG_ID = 999;
 
     private Participant participant;
-    String dni, names, paternalLast, maternalLast;
+    String dni, names, paternalLast, maternalLast, dob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -170,6 +170,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 names = edt_first_name.getText().toString();
                 maternalLast = edt_maternal_name.getText().toString();
                 paternalLast = edt_paternal_name.getText().toString();
+                dob = edt_dob.getText().toString();
 
                 // read in other stuff as well
 
@@ -206,6 +207,8 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                                 intent.putExtra("maternalLast", maternalLast);
                             if (paternalLast != null && !paternalLast.equals(""))
                                 intent.putExtra("paternalLast", paternalLast);
+                            if (dob != null && !dob.equals(""))
+                                intent.putExtra("dob", dob);
                             startActivity(intent);
                         } else {
                             Log.i("CodigoPaciente", participant.CodigoPaciente);

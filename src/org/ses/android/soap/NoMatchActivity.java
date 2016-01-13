@@ -34,6 +34,7 @@ public class NoMatchActivity extends BaseActivity {
     private String names;
     private String maternalLast;
     private String paternalLast;
+    private String dob;
     private SharedPreferences mPreferences;
 
     @Override
@@ -76,6 +77,14 @@ public class NoMatchActivity extends BaseActivity {
             paternalLast = null;
         }
 
+        try{
+            dob = getIntent().getStringExtra("dob");
+        }
+        catch (Exception e)
+        {
+            dob = null;
+        }
+
 
 
         // "Register Patient" button should open RegisterParticipantActivity
@@ -86,6 +95,16 @@ public class NoMatchActivity extends BaseActivity {
                 Intent intent = new Intent(NoMatchActivity.this, RegisterParticipantActivity.class);
                 if (dni != null)
                     intent.putExtra("dni", dni);
+                if (names != null)
+                    intent.putExtra("names", names);
+                if (paternalLast != null)
+                    intent.putExtra("paternalLast", paternalLast);
+                if (maternalLast !=null)
+                    intent.putExtra("maternalLast", maternalLast);
+                Log.i("dob", dob);
+                if (dob != null)
+                    intent.putExtra("dob", dob);
+
                 startActivity(intent);
             }
         });
