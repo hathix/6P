@@ -113,25 +113,26 @@ public class RegisterParticipantActivity extends BaseActivity {
     private AsyncTask<String, String, String> registrarParticipante;
     private  AsyncTask<String,String,String> getIdPaciente;
     String tip_doc= "2";
-    private Participant participant;
 
     static final int DATE_DIALOG_ID = 999;
+
+    private Participant participant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.register_participant_layout);
 
-        edt_dni_document = (EditText)findViewById(R.id.edt_dni_document);
-        edt_first_name = (EditText)findViewById(R.id.edt_first_name);
-        edt_maternal_name = (EditText)findViewById(R.id.edt_maternal_name);
-        edt_paternal_name = (EditText)findViewById(R.id.edt_paternal_name);
+        edt_dni_document = (EditText) findViewById(R.id.edt_dni_document);
+        edt_first_name = (EditText) findViewById(R.id.edt_first_name);
+        edt_maternal_name = (EditText) findViewById(R.id.edt_maternal_name);
+        edt_paternal_name = (EditText) findViewById(R.id.edt_paternal_name);
 
-        edt_dob = (TextView)findViewById(R.id.edt_dob);
+        edt_dob = (TextView) findViewById(R.id.edt_dob);
         setCurrentDateOnView();
         addListenerOntvwfecha_nacimiento();
 
-        rbg_gender = (RadioGroup)findViewById(R.id.rbg_gender);
+        rbg_gender = (RadioGroup) findViewById(R.id.rbg_gender);
         rbg_gender.clearCheck();
         rbg_gender.check(R.id.rbg_gender);
 
@@ -148,19 +149,19 @@ public class RegisterParticipantActivity extends BaseActivity {
                 }
         );
 
-        sp_department = (Spinner)findViewById(R.id.sp_department);
-        sp_province = (Spinner)findViewById(R.id.sp_province);
-        sp_district = (Spinner)findViewById(R.id.sp_district);
+        sp_department = (Spinner) findViewById(R.id.sp_department);
+        sp_province = (Spinner) findViewById(R.id.sp_province);
+        sp_district = (Spinner) findViewById(R.id.sp_district);
 
-        edt_domicilio = (EditText)findViewById(R.id.edt_domicilio);
-        edt_referencia = (EditText)findViewById(R.id.edt_referencia);
-        edt_telefono = (EditText)findViewById(R.id.edt_telefono);
-        edt_celular = (EditText)findViewById(R.id.edt_celular);
-        edt_localizac = (EditText)findViewById(R.id.edt_localizac);
-        btn_gps = (ImageButton)findViewById(R.id.btn_gps);
+        edt_domicilio = (EditText) findViewById(R.id.edt_domicilio);
+        edt_referencia = (EditText) findViewById(R.id.edt_referencia);
+        edt_telefono = (EditText) findViewById(R.id.edt_telefono);
+        edt_celular = (EditText) findViewById(R.id.edt_celular);
+        edt_localizac = (EditText) findViewById(R.id.edt_localizac);
+        btn_gps = (ImageButton) findViewById(R.id.btn_gps);
 
-        edt_long = (EditText)findViewById(R.id.edt_long);
-        edt_lat = (EditText)findViewById(R.id.edt_lat);
+        edt_long = (EditText) findViewById(R.id.edt_long);
+        edt_lat = (EditText) findViewById(R.id.edt_lat);
         edt_long.setEnabled(false);
         edt_lat.setEnabled(false);
         final Intent intent = getIntent();
@@ -169,8 +170,8 @@ public class RegisterParticipantActivity extends BaseActivity {
             pac_id = bundle.getString("id_pact");
         final String myurl = StringConexion.conexion;
 
-        btn_guardar = (Button)findViewById(R.id.btn_guardar);
-        btn_volver = (Button)findViewById(R.id.btn_volver);
+        btn_guardar = (Button) findViewById(R.id.btn_guardar);
+        btn_volver = (Button) findViewById(R.id.btn_volver);
 
         // load districts
         LoadaDepar(myurl);
@@ -210,7 +211,7 @@ public class RegisterParticipantActivity extends BaseActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-                int val = position+100;
+                int val = position + 100;
                 String cod = "00" + String.valueOf(val);
                 LoadProvincia(cod, StringConexion.conexion);
                 cod_Provincia = cod;
@@ -266,7 +267,7 @@ public class RegisterParticipantActivity extends BaseActivity {
         edt_dob.setText(new StringBuilder()
                 // Month is 0 based, just add 1
                 .append(day).append("/").append(month + 1).append("/")
-                .append(year));
+                .append(year).append(" "));
 
     }
 
@@ -614,20 +615,15 @@ public class RegisterParticipantActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 tarea_registrar = new RegistrarParticipanteTask();
-                registrarParticipante = tarea_registrar.execute(dni, tip_doc, nombres, ape_pat,
-                        ape_mat, fec_nacimiento, sexo, url);
+                registrarParticipante = tarea_registrar.execute(dni,tip_doc,nombres,ape_pat,
+                        ape_mat,fec_nacimiento,sexo,url);
 
                 RegistrarPacienteContacto registrarPacienteContactoTask = new RegistrarPacienteContacto();
 
-                domicilio = edt_domicilio.getText().toString();
-                referencia = edt_referencia.getText().toString();
-                telefono = edt_telefono.getText().toString();
-                celular = edt_celular.getText().toString();
-                longitude = edt_long.getText().toString();
-                latitude = edt_lat.getText().toString();
-
                 regPaciente = registrarPacienteContactoTask.execute(pac_id, var_Ubigeo,
-                        domicilio, referencia, telefono, celular, longitude, latitude,
+                        edt_domicilio.getText().toString(), edt_referencia.getText().toString(),
+                        edt_telefono.getText().toString(), edt_celular.getText().toString(),
+                        edt_long.getText().toString(), edt_lat.getText().toString(),
                         StringConexion.conexion);
 
                 try {
@@ -637,10 +633,8 @@ public class RegisterParticipantActivity extends BaseActivity {
                     String id_pac = getIdPaciente.get();
                     Toast.makeText(getApplicationContext(), "Datos Guardados Correctamente", Toast.LENGTH_LONG).show();
 
-                    Participant participant = new Participant(id_pac,nombres,ape_pat,ape_mat,
-                            Integer.parseInt(tip_doc),dni,fec_nacimiento,Integer.parseInt(sexo));
-                    Intent i = new Intent(context, FingerprintConfirmActivity.class);
-                    i.putExtra("Participant", participant);
+                    Intent i = new Intent(context, MainMenuActivity.class);
+
                     startActivity(i);
 
                 } catch (InterruptedException e) {
