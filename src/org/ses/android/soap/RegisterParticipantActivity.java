@@ -3,6 +3,7 @@ package org.ses.android.soap;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 
@@ -20,6 +21,7 @@ import android.widget.AdapterView;
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.utils.UrlUtils;
 import org.ses.android.soap.tasks.RegistrarParticipanteTask;
+import org.ses.android.soap.tasks.ParticipantLoadTask;
 import org.ses.android.soap.tasks.ObtenerIdPacienteTask;
 import org.ses.android.soap.database.Participant;
 
@@ -64,6 +66,7 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
+
 /**
  * Created by fanneyzhu on 1/12/16.
  */
@@ -80,6 +83,7 @@ public class RegisterParticipantActivity extends BaseActivity {
     private RadioGroup rbg_gender;
 
     String dni,nombres,ape_pat,ape_mat,fec_nacimiento,sexo,url;
+    String domicilio,referencia,telefono,celular,longitude,latitude;
 
     private Spinner sp_department;
     private Spinner sp_province;
@@ -112,10 +116,9 @@ public class RegisterParticipantActivity extends BaseActivity {
     private AsyncTask<String, String, String> registrarParticipante;
     private  AsyncTask<String,String,String> getIdPaciente;
     String tip_doc= "2";
+    private Participant participant;
 
     static final int DATE_DIALOG_ID = 999;
-
-    private Participant participant;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -266,7 +269,7 @@ public class RegisterParticipantActivity extends BaseActivity {
         edt_dob.setText(new StringBuilder()
                 // Month is 0 based, just add 1
                 .append(day).append("/").append(month + 1).append("/")
-                .append(year).append(" "));
+                .append(year));
 
     }
 
@@ -614,15 +617,20 @@ public class RegisterParticipantActivity extends BaseActivity {
             public void onClick(DialogInterface dialog, int which) {
 
                 tarea_registrar = new RegistrarParticipanteTask();
-                registrarParticipante = tarea_registrar.execute(dni,tip_doc,nombres,ape_pat,
-                        ape_mat,fec_nacimiento,sexo,url);
+                registrarParticipante = tarea_registrar.execute(dni, tip_doc, nombres, ape_pat,
+                        ape_mat, fec_nacimiento, sexo, url);
 
                 RegistrarPacienteContacto registrarPacienteContactoTask = new RegistrarPacienteContacto();
 
+                domicilio = edt_domicilio.getText().toString();
+                referencia = edt_referencia.getText().toString();
+                telefono = edt_telefono.getText().toString();
+                celular = edt_celular.getText().toString();
+                longitude = edt_long.getText().toString();
+                latitude = edt_lat.getText().toString();
+
                 regPaciente = registrarPacienteContactoTask.execute(pac_id, var_Ubigeo,
-                        edt_domicilio.getText().toString(), edt_referencia.getText().toString(),
-                        edt_telefono.getText().toString(), edt_celular.getText().toString(),
-                        edt_long.getText().toString(), edt_lat.getText().toString(),
+                        domicilio, referencia, telefono, celular, longitude, latitude,
                         StringConexion.conexion);
 
                 try {
@@ -631,9 +639,10 @@ public class RegisterParticipantActivity extends BaseActivity {
                     getIdPaciente= obtenerIdPacienteTask.execute(nombres,ape_pat,ape_mat,fec_nacimiento,url);
                     String id_pac = getIdPaciente.get();
                     Toast.makeText(getApplicationContext(), "Datos Guardados Correctamente", Toast.LENGTH_LONG).show();
-
-                    Intent i = new Intent(context, MainMenuActivity.class);
-
+                    Participant participant = new Participant(id_pac,nombres,ape_pat,ape_mat,
+                            Integer.parseInt(tip_doc),dni,fec_nacimiento,Integer.parseInt(sexo));
+                    Intent i = new Intent(context, FingerprintConfirmActivity.class);
+                    i.putExtra("Participant", participant);
                     startActivity(i);
 
                 } catch (InterruptedException e) {
