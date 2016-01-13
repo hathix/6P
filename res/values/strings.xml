@@ -216,6 +216,7 @@
     <string name="fetching_manifest">%s. Getting manifest </string>
     <string name="success">Success</string>
     <string name="no_forms_uploaded">Sorry, no form was uploaded.</string>
+    <string name="no_visit_history">No visits found for %s!</string>
     <string name="upload_results">Upload Results</string>
     <string name="xform_parse_error">XForm parse error. %1$s is missing element %2$s</string>
     <string name="choose_sound">Choose Sound</string>

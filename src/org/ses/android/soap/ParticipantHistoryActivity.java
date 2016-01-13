@@ -71,29 +71,40 @@ public class ParticipantHistoryActivity extends BaseActivity {
             TableRow tr;
             Visitas visit;
             TextView date, time, group, project, status;
-            for (int i=0; i < visits.length; i++)
-            {
-                visit = visits[i];
+
+            // add all the patient's visits as rows if they exist
+            if (visits != null && visits.length >= 1)
+                for (int i=0; i < visits.length; i++)
+                {
+                    visit = visits[i];
+                    tr = new TableRow(this);
+                    date = new TextView(this);
+                    date.setText(visit.FechaVisita);
+                    time = new TextView(this);
+                    time.setText(visit.HoraCita);
+                    group = new TextView(this);
+                    group.setText(visit.CodigoGrupoVisita);
+                    project = new TextView(this);
+                    project.setText(visit.Proyecto);
+                    status = new TextView(this);
+                    status.setText(visit.EstadoVisita);
+
+                    tr.addView(date);
+                    tr.addView(time);
+                    tr.addView(group);
+                    tr.addView(project);
+                    tr.addView(status);
+
+                    historyTable.addView(tr);
+                }
+            // otherwise, notify that there are no visits logged
+            else{
                 tr = new TableRow(this);
-                date = new TextView(this);
-                date.setText(visit.FechaVisita);
-                time = new TextView(this);
-                time.setText(visit.HoraCita);
-                group = new TextView(this);
-                group.setText(visit.CodigoGrupoVisita);
-                project = new TextView(this);
-                project.setText(visit.Proyecto);
-                status = new TextView(this);
-                status.setText(visit.EstadoVisita);
-
-                tr.addView(date);
-                tr.addView(time);
-                tr.addView(group);
-                tr.addView(project);
-                tr.addView(status);
-
+                TextView alert = new TextView(this);
+                alert.setText(String.format(getString(R.string.no_visit_history),
+                        participant.getNombresTitleCase()));
+                tr.addView(alert);
                 historyTable.addView(tr);
-
             }
         } catch (InterruptedException e) {
             // TODO do something?
