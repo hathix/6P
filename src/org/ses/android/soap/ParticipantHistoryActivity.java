@@ -27,7 +27,7 @@ import org.ses.android.soap.tasks.GenerarIdENRTask;
 import org.ses.android.soap.tasks.GenerarIdTAMTask;
 import org.ses.android.soap.tasks.MostrarTipoIDTask;
 import org.ses.android.soap.tasks.TienePermisosTask;
-import org.ses.android.soap.tasks.VisitaListTask;
+import org.ses.android.soap.tasks.VisitasListTask;
 
 import java.util.concurrent.ExecutionException;
 
@@ -64,7 +64,7 @@ public class ParticipantHistoryActivity extends BaseActivity {
         String codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         String codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
 
-        VisitaListTask tarea = new VisitaListTask();
+        VisitasListTask tarea = new VisitasListTask();
 
         // tasks all have extra url parameter at the end that's unused
         asyncTask = tarea.execute(participant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");

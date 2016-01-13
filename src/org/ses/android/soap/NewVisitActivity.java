@@ -232,7 +232,7 @@ public class NewVisitActivity extends Activity {
 
 
         String startDay = (String)(visits[firstvisit]).FechaVisita;  // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
-
+        
         proyectoLength = (int)(totalVisits - firstvisit) * visit_array[firstvisit].DiasVisitaProx; //access currentVisit or some visit
         // endDay = startDay + proyectoLength; */
 
