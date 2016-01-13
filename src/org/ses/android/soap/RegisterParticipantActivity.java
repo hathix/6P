@@ -3,7 +3,6 @@ package org.ses.android.soap;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 
@@ -21,7 +20,6 @@ import android.widget.AdapterView;
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.utils.UrlUtils;
 import org.ses.android.soap.tasks.RegistrarParticipanteTask;
-import org.ses.android.soap.tasks.ParticipantLoadTask;
 import org.ses.android.soap.tasks.ObtenerIdPacienteTask;
 import org.ses.android.soap.database.Participant;
 
@@ -65,7 +63,6 @@ import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
-
 
 /**
  * Created by fanneyzhu on 1/12/16.
@@ -639,6 +636,7 @@ public class RegisterParticipantActivity extends BaseActivity {
                     getIdPaciente= obtenerIdPacienteTask.execute(nombres,ape_pat,ape_mat,fec_nacimiento,url);
                     String id_pac = getIdPaciente.get();
                     Toast.makeText(getApplicationContext(), "Datos Guardados Correctamente", Toast.LENGTH_LONG).show();
+
                     Participant participant = new Participant(id_pac,nombres,ape_pat,ape_mat,
                             Integer.parseInt(tip_doc),dni,fec_nacimiento,Integer.parseInt(sexo));
                     Intent i = new Intent(context, FingerprintConfirmActivity.class);
