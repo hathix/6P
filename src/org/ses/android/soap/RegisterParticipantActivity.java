@@ -103,7 +103,6 @@ public class RegisterParticipantActivity extends BaseActivity {
     String pac_id = "";
     Context context = this;
 
-    private Button btn_volver;
     private Button btn_guardar;
 
     private AsyncTask<String, String, String> asyncTask;
@@ -124,6 +123,16 @@ public class RegisterParticipantActivity extends BaseActivity {
         setContentView(R.layout.register_participant_layout);
 
         edt_dni_document = (EditText)findViewById(R.id.edt_dni_document);
+        // if we can get a dni field from intent, set that as the default dni
+        try {
+            edt_dni_document.setText(getIntent().getStringExtra("dni"));
+        }
+        catch (Exception e)
+        {
+            // do nothing since no no dni was passed
+        }
+
+
         edt_first_name = (EditText)findViewById(R.id.edt_first_name);
         edt_maternal_name = (EditText)findViewById(R.id.edt_maternal_name);
         edt_paternal_name = (EditText)findViewById(R.id.edt_paternal_name);
@@ -171,7 +180,6 @@ public class RegisterParticipantActivity extends BaseActivity {
         final String myurl = StringConexion.conexion;
 
         btn_guardar = (Button)findViewById(R.id.btn_guardar);
-        btn_volver = (Button)findViewById(R.id.btn_volver);
 
         // load districts
         LoadaDepar(myurl);
@@ -243,15 +251,6 @@ public class RegisterParticipantActivity extends BaseActivity {
                 if (verifyDNI() == true)
                     if (verifyInfo() == true)
                         AlertaGuardar();
-            }
-        });
-
-        btn_volver.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent i = new Intent(getApplicationContext(), MainMenuActivity.class);
-                startActivity(i);
-
             }
         });
     }
@@ -477,7 +476,7 @@ public class RegisterParticipantActivity extends BaseActivity {
 
             if (doc_identidad.length() > 0){
                 if (!UrlUtils.validData(doc_identidad, "[0-9][0-9][0-9][0-9][0-9][0-9][0-9][0-9]")){
-                    Toast.makeText(getBaseContext(), "Nro. de DNI invalido!!",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getBaseContext(), getString(R.string.invalid_dni),Toast.LENGTH_SHORT).show();
                 }
                 else
                 {
@@ -487,7 +486,7 @@ public class RegisterParticipantActivity extends BaseActivity {
                     String existe = asyncTask.get();
                     Log.i("doc_identidad",doc_identidad );
                     if (existe.equals("si")){
-                        Toast.makeText(getBaseContext(), "Ya existe partipante con ese DNI!!",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), getString(R.string.dni_already_exists),Toast.LENGTH_SHORT).show();
                         return false;
                     }
                     else{
@@ -556,19 +555,19 @@ public class RegisterParticipantActivity extends BaseActivity {
         String regExp="^\\p{L}+[\\p{L}\\p{Z}\\p{P}]{0,}";
 
         if (!UrlUtils.validData(nombres, regExp)){
-            Toast.makeText(getBaseContext(), "Nombre invalido!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), getString(R.string.invalid_name),Toast.LENGTH_SHORT).show();
             return false;
         }
         if (!UrlUtils.validData(ape_pat, regExp)){
-            Toast.makeText(getBaseContext(), "Apellido Paterno invalido!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), getString(R.string.invalid_paternal_last),Toast.LENGTH_SHORT).show();
             return false;
         }
         if (!UrlUtils.validData(ape_mat, regExp)){
-            Toast.makeText(getBaseContext(), "Apellido Materno invalido!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), getString(R.string.invalid_maternal_last),Toast.LENGTH_SHORT).show();
             return false;
         }
         if (sexo.equals("")){
-            Toast.makeText(getBaseContext(), "Elija el sexo!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), getString(R.string.choose_gender),Toast.LENGTH_SHORT).show();
             return false;
         }
         final Calendar c = Calendar.getInstance();
@@ -590,12 +589,12 @@ public class RegisterParticipantActivity extends BaseActivity {
         };
 
         if (elapsedDays == 0  || elapsedDays > 10){
-            Toast.makeText(getBaseContext(), "Fecha de Nacimiento invalida!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), getString(R.string.invalid_dob),Toast.LENGTH_SHORT).show();
             return false;
         }
         if (hoy_ints[2] == birthdate_ints[2] && hoy_ints[1] <= birthdate_ints[1] &&
                         hoy_ints[0] <= birthdate_ints[0]) {
-            Toast.makeText(getBaseContext(), "Fecha de Nacimiento invalida!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(getBaseContext(), getString(R.string.invalid_dob),Toast.LENGTH_SHORT).show();
             return false;
         }
 
@@ -636,7 +635,7 @@ public class RegisterParticipantActivity extends BaseActivity {
                     ObtenerIdPacienteTask  obtenerIdPacienteTask = new ObtenerIdPacienteTask();
                     getIdPaciente= obtenerIdPacienteTask.execute(nombres,ape_pat,ape_mat,fec_nacimiento,url);
                     String id_pac = getIdPaciente.get();
-                    Toast.makeText(getApplicationContext(), "Datos Guardados Correctamente", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), getString(R.string.registration_success), Toast.LENGTH_LONG).show();
 
                     Participant participant = new Participant(id_pac,nombres,ape_pat,ape_mat,
                             Integer.parseInt(tip_doc),dni,fec_nacimiento,Integer.parseInt(sexo));
@@ -720,7 +719,7 @@ public class RegisterParticipantActivity extends BaseActivity {
         catch (Exception e){
 
             addressStr = "Error de localizacion ";
-            Toast.makeText(getApplicationContext(),"verificar que su GPS este activo",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),getString(R.string.check_gps),Toast.LENGTH_LONG).show();
 
         }
 

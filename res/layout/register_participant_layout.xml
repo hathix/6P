@@ -108,7 +108,7 @@
                 android:clickable="true"
                 android:spinnerMode="dialog"
                 android:dropDownWidth="fill_parent"
-                android:contentDescription="Departamento" />
+                android:contentDescription="@string/region" />
 
             <Spinner
                 android:layout_width="wrap_content"
@@ -118,7 +118,7 @@
                 android:spinnerMode="dialog"
                 android:clickable="true"
                 android:dropDownWidth="fill_parent"
-                android:contentDescription="Provincia"/>
+                android:contentDescription="@string/province"/>
 
             <Spinner
                 android:layout_width="wrap_content"
@@ -128,7 +128,7 @@
                 android:spinnerMode="dialog"
                 android:clickable="true"
                 android:dropDownWidth="fill_parent"
-                android:contentDescription="Distrito"/>
+                android:contentDescription="@string/district"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -136,7 +136,7 @@
                 android:id="@+id/edt_domicilio"
                 android:layout_weight="1"
                 android:inputType="textLongMessage"
-                android:hint="Domicilio"/>
+                android:hint="@string/address"/>
 
             <EditText
                 android:layout_width="match_parent"
@@ -144,7 +144,7 @@
                 android:id="@+id/edt_referencia"
                 android:layout_weight="1"
                 android:inputType="textLongMessage"
-                android:hint="Referencia" />
+                android:hint="@string/address_description" />
 
             <EditText
                 android:layout_width="113dp"
@@ -153,7 +153,7 @@
                 android:ems="10"
                 android:id="@+id/edt_telefono"
                 android:layout_weight="0.31"
-                android:hint="Telefono"/>
+                android:hint="@string/home_phone"/>
 
             <EditText
                 android:layout_width="113dp"
@@ -162,7 +162,7 @@
                 android:ems="10"
                 android:id="@+id/edt_celular"
                 android:layout_weight="0.31"
-                android:hint="Celular"/>
+                android:hint="@string/cell"/>
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -178,7 +178,7 @@
                     android:ems="10"
                     android:id="@+id/edt_localizac"
                     android:singleLine="false"
-                    android:hint="Localizac"/>
+                    android:hint="@string/localizer"/>
 
                 <ImageButton
                     android:layout_width="40dp"
@@ -197,7 +197,7 @@
                 android:singleLine="false"
                 android:enabled="false"
                 android:editable="false"
-                android:hint="Longitud"/>
+                android:hint="@string/longitude"/>
 
             <EditText
                 android:layout_width="183dp"
@@ -207,33 +207,22 @@
                 android:id="@+id/edt_lat"
                 android:singleLine="false"
                 android:editable="false"
-                android:hint="Latitud"/>
+                android:hint="@string/latitude"/>
 
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="50dp">
+                android:gravity="center_horizontal">
 
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Guardar"
-                    android:textColor="#ffffff"
-                    android:background="@drawable/botonrojo"
+                    android:background="@drawable/botonblanco"
                     android:id="@+id/btn_guardar"
-                    android:layout_marginLeft="30dp"
+                    android:gravity="center_horizontal"
                     android:layout_marginTop="10dp" />
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Volver "
-                    android:textColor="#ffffff"
-                    android:background="@drawable/botonrojo"
-                    android:layout_marginLeft="30dp"
-                    android:layout_marginTop="10dp"
-                    android:id="@+id/btn_volver" />
             </LinearLayout>
 
         </LinearLayout>
