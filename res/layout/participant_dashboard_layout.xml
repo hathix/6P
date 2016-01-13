@@ -11,12 +11,6 @@
     android:id="@+id/dash"
     android:weightSum="1">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/patient_dash"
-        android:id="@+id/patient_dashboard" />
-
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="266dp"
