@@ -202,4 +202,25 @@ public class Participant implements KvmSerializable, Parcelable {
 	        break;
         }
 	}
+
+    public String getNombresTitleCase() {
+        StringBuilder titleCase = new StringBuilder();
+        boolean nextTitleCase = true;
+
+        for (char c : Nombres.toCharArray()) {
+            if (Character.isSpaceChar(c)) {
+                nextTitleCase = true;
+            } else if (nextTitleCase) {
+                c = Character.toUpperCase(c);
+                nextTitleCase = false;
+            } else {
+                c = Character.toLowerCase(c);
+                nextTitleCase = false;
+            }
+
+            titleCase.append(c);
+        }
+
+        return titleCase.toString();
+    }
 }
