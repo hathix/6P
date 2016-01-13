@@ -3,6 +3,7 @@ package org.ses.android.soap;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -13,7 +14,6 @@ import org.ses.android.seispapp120.R;
 
 import org.ses.android.soap.database.Participant;
 // TODO import org.ses.android.soap.tasks.PutFingerprintTask;
-import org.ses.android.soap.tasks.RegistrarParticipanteTask;
 import org.ses.android.soap.utils.PreferencesManager;
 
 import SecuGen.FDxSDKPro.SGFDxErrorCode;
@@ -33,8 +33,6 @@ public class FingerprintConfirmActivity extends FingerprintBaseActivity {
 
     private byte[] storedTemplate;
 
-    RegistrarParticipanteTask registerPatientDetails;
-    private AsyncTask<String, String, String> registrarParticipante;
     // TODO PutFingerprintTask registerPatientFingerprint;
     private AsyncTask<String, String, String> putFingerprint;
 
@@ -99,23 +97,14 @@ public class FingerprintConfirmActivity extends FingerprintBaseActivity {
 
                     // Save everything
                     try {
+                        Log.v("register", "Try to register fingerprint.");
 
-
-                        registerPatientDetails = new RegistrarParticipanteTask();
                         // TODO registerPatientFingerprint = new PutFingerprintTask();
 
-                        registrarParticipante = registerPatientDetails.execute(
-                                (String) currParticipant.getProperty(5),
-                                currParticipant.getProperty(4).toString(),
-                                (String) currParticipant.getProperty(1),
-                                (String) currParticipant.getProperty(2),
-                                (String) currParticipant.getProperty(3),
-                                (String) currParticipant.getProperty(6),
-                                currParticipant.getProperty(7).toString(), url);
+                        // TODO putFingerprint = registerPatientFingerprint.execute(..., url);
+                        finish();
 
-                        putFingerprint = null; //TODO
-
-                        Toast.makeText(getBaseContext(), "Datos guardados!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "Huella guardada!!", Toast.LENGTH_SHORT).show();
 
                         // Continue to patient dashboard activity
                         Intent intent = new Intent(FingerprintConfirmActivity.this, ParticipantDashboardActivity.class);
