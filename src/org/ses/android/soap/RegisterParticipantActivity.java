@@ -123,6 +123,16 @@ public class RegisterParticipantActivity extends BaseActivity {
         setContentView(R.layout.register_participant_layout);
 
         edt_dni_document = (EditText)findViewById(R.id.edt_dni_document);
+        // if we can get a dni field from intent, set that as the default dni
+        try {
+            edt_dni_document.setText(getIntent().getStringExtra("dni"));
+        }
+        catch (Exception e)
+        {
+            // do nothing since no no dni was passed
+        }
+
+
         edt_first_name = (EditText)findViewById(R.id.edt_first_name);
         edt_maternal_name = (EditText)findViewById(R.id.edt_maternal_name);
         edt_paternal_name = (EditText)findViewById(R.id.edt_paternal_name);

@@ -382,6 +382,7 @@ public class FingerprintFindActivity extends BaseActivity {
 
                         if (participant == null) {
                             Intent intent = new Intent(getBaseContext(), NoMatchActivity.class);
+                            intent.putExtra("dni", dni);
                             startActivity(intent);
                         }
                         else {
