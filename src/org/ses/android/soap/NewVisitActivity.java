@@ -58,6 +58,9 @@ public class NewVisitActivity extends BaseActivity {
 
     private Participant currentParticipant;
     private SharedPreferences mPreferences;
+
+    private Proyecto currentProyecto;
+
     private Visitas[] visitas_array;
     private int num_visitas;
     private Visita[] visita_array;
@@ -83,6 +86,7 @@ public class NewVisitActivity extends BaseActivity {
 
     private String codigoUsuario;
     private String codigoProyecto;
+
     private String selLocal;
     String fec_visita  = "";
     String hora_visita = "";
@@ -447,6 +451,7 @@ public class NewVisitActivity extends BaseActivity {
         }
     };
 
+    //on Siguiente
     public  void  AlertaGuardar() {
 
         fec_visita = visit_date.getText().toString();
@@ -570,11 +575,12 @@ public class NewVisitActivity extends BaseActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
-
+    // every loadVisit used to be loadVisita
+    // currentParticipant.CodigoPaciente was just codigopaciente
     public void loadVisitaSpinner(String codigopaciente,String local,String proyecto){
         VisitaLoadTask tareaVisita = new VisitaLoadTask();
 
-        loadVisita = tareaVisita.execute(codigopaciente,local,proyecto,url);
+        loadVisita = tareaVisita.execute(codigopaciente,local,proyecto,"bogusurl");
         Visita[] objVisita;
         String[] wee,wee1,empty;
         empty = new String[0];
