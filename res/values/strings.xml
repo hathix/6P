@@ -15,7 +15,7 @@
     <string name="opc_reg_partipantes">Participant Registration</string>
     <string name="opc_gen_visitas">Generate Visit</string>
     <string name="opc_cerrar_sesion">Close Session</string>
-    <string name="login_usuario">User :</string>
+    <string name="login_usuario">User:</string>
     <string name="login_password">Password</string>
     <string name="login_logo">logo.jpg</string>
     <string name="login_ingresar">Login</string>
@@ -74,7 +74,7 @@
     <string name="change_password">Password</string>
     <string name="change_server_url">Server URL</string>
     <string name="change_username">SeisP Username</string>
-    <string name="check_gps">Check GPS is on.</string>
+    <string name="check_gps">Check that your GPS is on.</string>
     <string name="clearanswer_confirm">Remove the response to \"%s\"?</string>
     <string name="clear_answer">Remove response</string>
     <string name="clear_answer_ask">Remove This Response?</string>
@@ -245,7 +245,7 @@
     <string name="google_account">Select Google Account</string>
     <string name="selected_google_account_text">Google Account</string>
     <string name="google_submission_id_text">Google Collection Effort</string>
-    <string name="server_platform_odk_aggregate">Seis Project</string>
+    <string name="server_platform_odk_aggregate">SEIS Project</string>
     <string name="server_platform_google_forms">Google Forms</string>
     <string name="server_platform_other">Other</string>
     <string name="font_size_extra_large">Extra Large</string>
@@ -324,10 +324,10 @@
     <string name="answer_yes">Yes</string>
     <string name="answer_no">No</string>
     <string name="warning">Warning</string>
-    <string name="session_init_key">Gracias por Iniciar Sesion</string>
-    <string name="password_expired_key">Contraseña caducada</string>
+    <string name="session_init_key">Session started.</string>
+    <string name="password_expired_key">Password expired</string>
     <string name="province">Province</string>
-    <string name="select_local">Select a Local!!</string>
+    <string name="select_local">Select a location!</string>
     <string name="call_odk">Call to SeisD?</string>
     <string name="visit_seisd">SeisD</string>
     <string name="visit_done">Done</string>
@@ -362,11 +362,11 @@
     <string name="txtProjectName">Project Name</string>
     <string name="login_data_incorrect_invalid">Your username or password was incorrect or invalid</string>
     <string name="login_no_permission">Do not have permissions to local or project</string>
-    <string name="login_enter_user">Enter User Name !!</string>
-    <string name="login_enter_password">Enter Password !!</string>
-    <string name="title_activity_participante_datos_secund">ParticipanteDatosSecund</string>
-    <string name="title_activity_cambio_server">CambioServer</string>
-    <string name="cambio_server">Configuracion</string>
+    <string name="login_enter_user">Enter User Name!</string>
+    <string name="login_enter_password">Enter Password!</string>
+    <string name="title_activity_participante_datos_secund">ParticipantSecondaryInfo</string>
+    <string name="title_activity_cambio_server">ChangeServer</string>
+    <string name="cambio_server">Configuration</string>
 
     <string name="add_fingerprint_existing">Add Fingerprint to Existing Patient</string>
     <string name="add_fingerprint_existing_header">Search for Existing Patient Using the Following Optional Fields:</string>
@@ -374,7 +374,7 @@
     <string name="action_logout">Logout</string>
     <string name="confirm">Confirm</string>
     <string name="dob">Date of Birth (Tap to Change)</string>
-    <string name="fingerprint_saved">Huella guardada</string>
+    <string name="fingerprint_saved">Fingerprint Saved</string>
     <string name="first_name">First Name:</string>
     <string name="lista">View Missing Appointments</string>
     <string name="matches">Select Patient to Confirm</string>
@@ -387,6 +387,7 @@
     <string name="patient_not_listed">Patient Not Listed</string>
     <string name="project">Project</string>
     <string name="register_new_patient">Register New Patient</string>
+    <string name="register_patient_submit">Submit</string>
     <string name="save_visit">Save Visit</string>
     <string name="scan">Scan</string>
     <string name="scan1">Scan again to confirm fingerprint.</string>

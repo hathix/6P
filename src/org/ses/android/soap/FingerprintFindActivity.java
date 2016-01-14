@@ -47,7 +47,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
     private final int DATE_DIALOG_ID = 999;
 
     private Participant participant;
-    String dni, names, paternalLast, maternalLast;
+    String dni, firstName, paternalLast, maternalLast, dob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,9 +83,10 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
     public void ScanFingerPrint() {
         byte[] buffer = ScanFingerPrintBase();
         if (buffer != null) {
+            // scan successful
             imgFingerprint.setImageBitmap(this.toGrayscale(buffer));
+            PreferencesManager.setFingerprint(getBaseContext(), mTemplate);
         }
-        PreferencesManager.setFingerprint(getBaseContext(), mTemplate);
     }
 
     public void setCurrentDateOnView() {
@@ -167,9 +168,10 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
             public void onClick(View v) {
                 dni = edt_dni_document.getText().toString();
                 Log.i("DNI", dni);
-                names = edt_first_name.getText().toString();
+                firstName = edt_first_name.getText().toString();
                 maternalLast = edt_maternal_name.getText().toString();
                 paternalLast = edt_paternal_name.getText().toString();
+                dob = edt_dob.getText().toString();
 
                 // read in other stuff as well
 
@@ -200,6 +202,14 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                         if (participant == null) {
                             Intent intent = new Intent(getBaseContext(), NoMatchActivity.class);
                             intent.putExtra("dni", dni);
+                            if (firstName != null && !firstName.equals(""))
+                                intent.putExtra("firstName", firstName);
+                            if (maternalLast != null && !maternalLast.equals(""))
+                                intent.putExtra("maternalLast", maternalLast);
+                            if (paternalLast != null && !paternalLast.equals(""))
+                                intent.putExtra("paternalLast", paternalLast);
+                            if (dob != null && !dob.equals(""))
+                                intent.putExtra("dob", dob);
                             startActivity(intent);
                         } else {
                             Log.i("CodigoPaciente", participant.CodigoPaciente);
@@ -218,8 +228,8 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 }
 
                 // We have full name + DOB information
-                if (names != null && maternalLast != null && paternalLast != null &&
-                        names.length() > 0 && maternalLast.length() > 0 && paternalLast.length() > 0) {
+                if (firstName != null && maternalLast != null && paternalLast != null &&
+                        firstName.length() > 0 && maternalLast.length() > 0 && paternalLast.length() > 0) {
                     // search based off name
                 }
             }

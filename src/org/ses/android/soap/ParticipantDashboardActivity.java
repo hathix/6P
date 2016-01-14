@@ -82,10 +82,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
         participant = (Participant) getIntent().getParcelableExtra("Participant");
 
         tvw_nombres = (TextView) findViewById(R.id.tvw_nombres);
-        String fullName = participant.Nombres + " " +
-                            participant.ApellidoMaterno + " " +
-                            participant.ApellidoPaterno;
-        tvw_nombres.setText(getString(R.string.nombres) + " " + fullName);
+        tvw_nombres.setText(getString(R.string.nombres) + " " + participant.getFullNameTitleCase());
 
         tvwLocal = (TextView) findViewById(R.id.tvwLocal);
         tvwLocal.setText(getString(R.string.txtLocal) + " " + locale);

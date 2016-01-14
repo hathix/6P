@@ -46,7 +46,7 @@
 				                android:padding="20dp"
 				                android:textSize="21sp"
                 android:background="@drawable/botonblanco"
-		        android:text="Register New Patient" />
+		        android:text="@string/register_new_patient" />
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="5dp"
