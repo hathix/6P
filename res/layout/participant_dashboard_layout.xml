@@ -84,11 +84,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/txtstartdate" />
 
-            <TextView
+            <!-- <TextView
                 android:id="@+id/tvwEnd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/txtenddate" />
+                android:text="@string/txtenddate" /> -->
 
 
             <!-- 	    <EditText
@@ -102,11 +102,13 @@
     </ScrollView>
 
     <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/visits_table"
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="120dp"
         android:layout_marginTop="5dp"
-        android:stretchColumns="0,1,2,3">
-        <TableRow>
+        android:stretchColumns="0,1,2">
+        <TableRow
+            android:id="@+id/header_row">
             <TextView />
             <TextView
                 android:text="@string/missed"
@@ -116,12 +118,9 @@
                 android:text="@string/received"
                 android:gravity="center_horizontal"
                 android:padding="3dip" />
-            <TextView
-                android:text="@string/future"
-                android:gravity="center_horizontal"
-                android:padding="3dip" />
         </TableRow>
-        <TableRow>
+        <TableRow
+            android:id="@+id/week_row">
             <TextView
                 android:text="@string/past_week"
                 android:padding="3dip"/>
@@ -132,7 +131,8 @@
                 android:id="@+id/past_week_received"
                 android:gravity="center_horizontal"/>
         </TableRow>
-        <TableRow>
+        <TableRow
+            android:id="@+id/month_row">
             <TextView
                 android:text="@string/past_month"
                 android:padding="3dip"/>
@@ -143,7 +143,8 @@
                 android:id="@+id/past_month_received"
                 android:gravity="center_horizontal"/>
         </TableRow>
-        <TableRow>
+        <TableRow
+            android:id="@+id/total_row">
             <TextView
                 android:text="@string/total"
                 android:padding="3dip"/>
@@ -159,6 +160,12 @@
         </TableRow>
 
     </TableLayout>
+
+    <TextView
+        android:id="@+id/next_visit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/next_visit" />
 
     <Button
         android:id="@+id/log_in_other"
