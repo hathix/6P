@@ -67,7 +67,10 @@ public class NewVisitActivity extends BaseActivity {
     public int proyectoLength;
     private SharedPreferences mPreferences;
     private Proyecto currentProyecto;
-
+    String selLocal = "";
+    String selProyecto  = "";
+    String selGrupo  = "";
+    String selVisita  = "";
     EditText timePicker;
     private int participantVisits;
     private String startDay;
@@ -103,6 +106,7 @@ public class NewVisitActivity extends BaseActivity {
 
     private String codigoUsuario;
     private String codigoProyecto;
+    private TextView tvwProjectName;
 
     private String localeId;
 
@@ -138,6 +142,7 @@ public class NewVisitActivity extends BaseActivity {
         visita = (Spinner) findViewById(R.id.spnVisita);
         visit_date = (TextView) findViewById(R.id.visit_date);
         visit_time = (TextView) findViewById(R.id.visit_time);
+        tvwProjectName = (TextView) findViewById(R.id.tvwProjectName);
 
         btn_save_visit = (Button) findViewById(R.id.btn_save_visit);
 
@@ -173,6 +178,16 @@ public class NewVisitActivity extends BaseActivity {
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
+        String local_id = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
+        int intLocal = Integer.valueOf(local_id);
+        selLocal = Integer.toString(intLocal);
+
+        String project_name = mPreferences.getString(PreferencesActivity.KEY_PROJECT_NAME, "");
+        tvwProjectName.setText(project_name);
+        String project_id = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
+        int intProject = Integer.valueOf(project_id);
+        selProyecto = Integer.toString(intProject);
+
 
         // get project name
         ProjectLoadTask tareaProjects = new ProjectLoadTask();
@@ -278,7 +293,7 @@ public class NewVisitActivity extends BaseActivity {
                     }
                 });
 
-        spnVisita.setOnItemSelectedListener(
+        visita.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     @Override
                     public void onItemSelected(AdapterView<?> parent,
@@ -468,6 +483,7 @@ public class NewVisitActivity extends BaseActivity {
         }
     };
 
+    //on Siguiente
     public  void  AlertaGuardar() {
         String fec_visita = visit_date.getText().toString();
         String hora_visita = visit_time.getText().toString();
@@ -552,10 +568,10 @@ public class NewVisitActivity extends BaseActivity {
                                             Bundle extras = new Bundle();
                                             extras.putString("selLocal", selLocal);
                                             extras.putString("selProyecto", selProyecto);
-                                            extras.putString("codigopaciente",codigopaciente);
+                                            extras.putString("codigopaciente",currentParticipant.CodigoPaciente);
                                             extras.putString("selGrupo", selGrupo);
                                             extras.putString("selVisita",selVisita);
-                                            extras.putString("codigousuario",codigousuario);
+                                            extras.putString("codigousuario",codigoUsuario);
                                             extras.putString("url",url);
                                             extras.putString("estadoTAM",estadoTAM);
                                             extras.putString("estadoENR", estadoENR);
@@ -588,23 +604,24 @@ public class NewVisitActivity extends BaseActivity {
         alert.show();
 
     }
-
+    // every loadVisit used to be loadVisita
+    // currentParticipant.CodigoPaciente was just codigopaciente
     public void loadVisitaSpinner(String codigopaciente,String local,String proyecto){
         VisitaLoadTask tareaVisita = new VisitaLoadTask();
 
-        loadVisita = tareaVisita.execute(codigopaciente,local,proyecto,url);
+        loadVisit = tareaVisita.execute(codigopaciente,local,proyecto,"bogusurl");
         Visita[] objVisita;
         String[] wee,wee1,empty;
         empty = new String[0];
         ArrayAdapter<String> emptyArrayAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, empty);
         emptyArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-        spnGrupo.setAdapter(emptyArrayAdapter);
-        spnVisita.setAdapter(emptyArrayAdapter);
+        visit_grupo.setAdapter(emptyArrayAdapter);
+        visita.setAdapter(emptyArrayAdapter);
 
         try {
 
-            objVisita = loadVisita.get();
+            objVisita = loadVisit.get();
             if (objVisita != null){
                 wee = new String[objVisita.length];
                 wee1 = new String[objVisita.length];
@@ -615,11 +632,11 @@ public class NewVisitActivity extends BaseActivity {
                 ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
                         this, android.R.layout.simple_spinner_item, wee);
                 spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-                spnGrupo.setAdapter(spinnerArrayAdapter);
+                visit_grupo.setAdapter(spinnerArrayAdapter);
                 ArrayAdapter<String> spinnerArrayAdapter1 = new ArrayAdapter<String>(
                         this, android.R.layout.simple_spinner_item, wee1);
                 spinnerArrayAdapter1.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-                spnVisita.setAdapter(spinnerArrayAdapter1);
+                visita.setAdapter(spinnerArrayAdapter1);
 
                 Log.i("Visita","Visita Array");
             }
