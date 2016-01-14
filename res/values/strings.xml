@@ -15,7 +15,7 @@
     <string name="opc_reg_partipantes">Participant Registration</string>
     <string name="opc_gen_visitas">Generate Visit</string>
     <string name="opc_cerrar_sesion">Close Session</string>
-    <string name="login_usuario">User :</string>
+    <string name="login_usuario">User:</string>
     <string name="login_password">Password</string>
     <string name="login_logo">logo.jpg</string>
     <string name="login_ingresar">Login</string>
@@ -245,7 +245,7 @@
     <string name="google_account">Select Google Account</string>
     <string name="selected_google_account_text">Google Account</string>
     <string name="google_submission_id_text">Google Collection Effort</string>
-    <string name="server_platform_odk_aggregate">Seis Project</string>
+    <string name="server_platform_odk_aggregate">SEIS Project</string>
     <string name="server_platform_google_forms">Google Forms</string>
     <string name="server_platform_other">Other</string>
     <string name="font_size_extra_large">Extra Large</string>
@@ -324,8 +324,8 @@
     <string name="answer_yes">Yes</string>
     <string name="answer_no">No</string>
     <string name="warning">Warning</string>
-    <string name="session_init_key">Gracias por Iniciar Sesion</string>
-    <string name="password_expired_key">Contraseña caducada</string>
+    <string name="session_init_key">Session started.</string>
+    <string name="password_expired_key">Password expired</string>
     <string name="province">Province</string>
     <string name="select_local">Select a location!</string>
     <string name="call_odk">Call to SeisD?</string>
@@ -362,8 +362,8 @@
     <string name="txtProjectName">Project Name</string>
     <string name="login_data_incorrect_invalid">Your username or password was incorrect or invalid</string>
     <string name="login_no_permission">Do not have permissions to local or project</string>
-    <string name="login_enter_user">Enter User Name !!</string>
-    <string name="login_enter_password">Enter Password !!</string>
+    <string name="login_enter_user">Enter User Name!</string>
+    <string name="login_enter_password">Enter Password!</string>
     <string name="title_activity_participante_datos_secund">ParticipantSecondaryInfo</string>
     <string name="title_activity_cambio_server">ChangeServer</string>
     <string name="cambio_server">Configuration</string>
