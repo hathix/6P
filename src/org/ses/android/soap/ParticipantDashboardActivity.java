@@ -95,6 +95,8 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
         tvwStartDate = (TextView) findViewById(R.id.tvwStart);
 
+        // TODO Calculate next visit date.
+
         // Fill in table
         weekMissedView = (TextView) findViewById(R.id.past_week_missed);
         weekReceivedView = (TextView) findViewById(R.id.past_week_received);

@@ -84,11 +84,11 @@
                 android:layout_height="wrap_content"
                 android:text="@string/txtstartdate" />
 
-            <TextView
+            <!-- <TextView
                 android:id="@+id/tvwEnd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/txtenddate" />
+                android:text="@string/txtenddate" /> -->
 
 
             <!-- 	    <EditText
