@@ -158,6 +158,12 @@ public class NewVisitActivity extends Activity {
          *counts how many visits the Patient has already done
         */
 
+        /**
+         * Terminology note:
+         * - Visitas is a visit group (diagnosis "TAM", enrollment "ENR", actual treatment "SIG")
+         * - Visita is an actual visit
+         */
+
          VisitasListTask tarea = new VisitasListTask();
         // tasks all have extra url parameter at the end that's unused
         asyncTask = tarea.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
@@ -207,7 +213,6 @@ public class NewVisitActivity extends Activity {
         //possibly comment this out
         VisitasListTask tareaVisits = new VisitasListTask();
 
-        
         loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
             ArrayList<Visitas> visitasArray = new ArrayList<Visitas>();
@@ -237,9 +242,11 @@ public class NewVisitActivity extends Activity {
 
 
 
-        String startDay = (String)(visits[firstvisit]).FechaVisita;  // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
-        
-        proyectoLength = (int)(totalVisits - firstvisit) * visit_array[firstvisit].DiasVisitaProx; //access currentVisit or some visit
+        // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
+        String startDay = (String)(visits[firstvisit]).FechaVisita;
+
+        // access currentVisit or some visit
+        proyectoLength = (int)(totalVisits - firstvisit) * visit_array[firstvisit].DiasVisitaProx;
         // endDay = startDay + proyectoLength; */
 
 
