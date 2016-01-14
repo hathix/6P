@@ -295,18 +295,22 @@ public class RegisterParticipantActivity extends BaseActivity {
             day = Integer.parseInt(dobSplit[0]);
             month = Integer.parseInt((dobSplit[1]));
             year = Integer.parseInt(dobSplit[2]);
+
+            edt_dob.setText(new StringBuilder()
+                    .append(day).append("/").append(month).append("/")
+                    .append(year));
         }
         // if it couldn't, it sets it to today
         catch (Exception e) {
             final Calendar c = Calendar.getInstance();
             year = c.get(Calendar.YEAR);
-            month = c.get(Calendar.MONTH);
+            // month is zero based, hence adding one
+            month = c.get(Calendar.MONTH) + 1;
             day = c.get(Calendar.DAY_OF_MONTH);
         }
 
         // set current date into textview
         edt_dob.setText(new StringBuilder()
-                // Month is 0 based, just add 1
                 .append(day).append("/").append(month).append("/")
                 .append(year));
 
