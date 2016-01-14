@@ -185,6 +185,7 @@ public class NewVisitActivity extends Activity {
             visitas_array = loadVisitas.get();
             if (visitas_array != null) {
                 num_visitas = visitas_array.length;
+                Log.d("myactivity0", "number of visits already: " + num_visitas);
                 // find date of first treatment
                 // 77985806
                 if (num_visitas > 2) {
@@ -197,7 +198,7 @@ public class NewVisitActivity extends Activity {
                     }
                 }
             }
-
+            Log.d("myactivity1", "number of visits already: " + num_visitas);
         } catch (InterruptedException e1) {
             e1.printStackTrace();
 
@@ -215,7 +216,8 @@ public class NewVisitActivity extends Activity {
             if (visita_array != null) {
                 num_visita = visita_array.length; //total number of visits in a project
             }
-
+            Log.d("myactivit2", "number of visits total: " + num_visita);
+            Log.d("myactivity3", "number of visits already: " + num_visitas);
         } catch (InterruptedException e1) {
             e1.printStackTrace();
 
@@ -245,16 +247,21 @@ public class NewVisitActivity extends Activity {
         *
         *   Second spinner: Visits (V1, V2, V3)
         *   Set from current visit on. So if the patient has already been through 5 visits, start at 6.
+        *   num_visitas is the number of visits the patient has done already.
+        *   num_visita is the number of visits in a project
          */
+        Log.d("myactivity", "number of visits already: " + num_visitas);
+        Log.d("myactivity", "number of visits total: " + num_visita);
         ArrayList visitaSpnList = new ArrayList<String>();
         if (num_visitas < num_visita) {
             for (int i = num_visitas; i < num_visita; i++) {
                 visitaSpnList.add("V" + i);
-                Log.d("Debug", "number of visits already: " + num_visitas);
+
             }
 
         }
         else visitaSpnList.add("Done!");
+        Log.d("myactivity", "done");
 
         ArrayAdapter<String> visitaSpinnerAdapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, visitaSpnList);
