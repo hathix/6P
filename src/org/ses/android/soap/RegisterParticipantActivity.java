@@ -289,8 +289,9 @@ public class RegisterParticipantActivity extends BaseActivity {
     public void setCurrentDateOnView() {
         // will attempt to load date from bundle
         try{
-            String dob = getIntent().getStringExtra("dob");
+            String dob = getIntent().getStringExtra("dob").trim();
             String[] dobSplit = dob.split("/");
+
             day = Integer.parseInt(dobSplit[0]);
             month = Integer.parseInt((dobSplit[1]));
             year = Integer.parseInt(dobSplit[2]);
@@ -306,7 +307,7 @@ public class RegisterParticipantActivity extends BaseActivity {
         // set current date into textview
         edt_dob.setText(new StringBuilder()
                 // Month is 0 based, just add 1
-                .append(day).append("/").append(month + 1).append("/")
+                .append(day).append("/").append(month).append("/")
                 .append(year));
 
     }
