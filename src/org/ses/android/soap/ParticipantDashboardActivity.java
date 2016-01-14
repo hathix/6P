@@ -26,7 +26,7 @@ import org.ses.android.soap.tasks.GenerarIdENRTask;
 import org.ses.android.soap.tasks.GenerarIdTAMTask;
 import org.ses.android.soap.tasks.MostrarTipoIDTask;
 import org.ses.android.soap.tasks.TienePermisosTask;
-import org.ses.android.soap.tasks.VisitaListTask;
+import org.ses.android.soap.tasks.VisitasListTask;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -102,7 +102,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
         totalMissedView = (TextView) findViewById(R.id.total_missed);
         totalReceivedView = (TextView) findViewById(R.id.total_received);
 
-        VisitaListTask tarea = new VisitaListTask();
+        VisitasListTask tarea = new VisitasListTask();
         asyncTask = tarea.execute(participant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         int weekMissed = 0, monthMissed = 0, totalMissed = 0, weekReceived = 0,
                 monthReceived = 0, totalReceived = 0;
