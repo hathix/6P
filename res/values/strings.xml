@@ -74,7 +74,7 @@
     <string name="change_password">Password</string>
     <string name="change_server_url">Server URL</string>
     <string name="change_username">SeisP Username</string>
-    <string name="check_gps">Check GPS is on.</string>
+    <string name="check_gps">Check that your GPS is on.</string>
     <string name="clearanswer_confirm">Remove the response to \"%s\"?</string>
     <string name="clear_answer">Remove response</string>
     <string name="clear_answer_ask">Remove This Response?</string>
@@ -327,7 +327,7 @@
     <string name="session_init_key">Gracias por Iniciar Sesion</string>
     <string name="password_expired_key">Contraseña caducada</string>
     <string name="province">Province</string>
-    <string name="select_local">Select a Local!!</string>
+    <string name="select_local">Select a location!</string>
     <string name="call_odk">Call to SeisD?</string>
     <string name="visit_seisd">SeisD</string>
     <string name="visit_done">Done</string>
@@ -386,6 +386,7 @@
     <string name="patient_not_listed">Patient Not Listed</string>
     <string name="project">Project</string>
     <string name="register_new_patient">Register New Patient</string>
+    <string name="register_patient_submit">Submit</string>
     <string name="save_visit">Save Visit</string>
     <string name="scan">Scan</string>
     <string name="scan1">Scan again to confirm fingerprint.</string>

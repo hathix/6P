@@ -769,7 +769,7 @@ public class RegisterParticipantActivity extends BaseActivity {
 
         catch (Exception e){
 
-            addressStr = "Error de localizacion ";
+            addressStr = null;
             Toast.makeText(getApplicationContext(),getString(R.string.check_gps),Toast.LENGTH_LONG).show();
 
         }
