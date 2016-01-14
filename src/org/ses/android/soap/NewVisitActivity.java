@@ -23,6 +23,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
+import android.util.Log;
 
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Participant;
@@ -42,9 +43,7 @@ import org.ses.android.soap.tasks.VisitaLoadTask;
 //import org.ses.android.soap.tasks.NewVisitUploadTask;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.VisitasListTask;
-
-
-
+import org.ses.android.soap.utils.InternetConnection;
 
 
 //TODO: add scheduled days
@@ -161,16 +160,18 @@ public class NewVisitActivity extends Activity {
             if (visitas_array != null) {
                 num_visitas = visitas_array.length;
                 // find date of first treatment
+                // 77985806
                 if (num_visitas > 2) {
                     for (int i = 0; i < num_visitas; i++) {
                         Visitas temp = visitas_array[i];
-                        if (temp.CodigoGrupoVisita.equals(3) && temp.CodigoVisita.equals(1)) {
+                        String grupoVisita = temp.CodigoGrupoVisita;
+                        if (grupoVisita.charAt(grupoVisita.length()-1) == '3') {
                             first_visit = temp.FechaVisita;
                         }
+
                     }
                 }
             }
-
 
         } catch (InterruptedException e1) {
             e1.printStackTrace();
@@ -180,7 +181,7 @@ public class NewVisitActivity extends Activity {
         }
 
         start_date.setText(first_visit);
-
+        
         VisitaLoadTask tareaVisit = new VisitaLoadTask();
 
         loadVisit = tareaVisit.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
@@ -199,14 +200,14 @@ public class NewVisitActivity extends Activity {
 
 
         // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
-        if (visitas_array != null && visitas_array.length > FIRST_VISIT) {
+        /* if (visitas_array != null && visitas_array.length > FIRST_VISIT) {
             String startDay = (String) (visitas_array[FIRST_VISIT]).FechaVisita;
 
             // access currentVisit or some visit
 
             proyectoLength = (int) (num_visita - FIRST_VISIT) * visita_array[FIRST_VISIT].DiasVisitaProx;
             // endDay = startDay + proyectoLength; 
-        }
+        } */
 
 
 
