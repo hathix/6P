@@ -364,9 +364,9 @@
     <string name="login_no_permission">Do not have permissions to local or project</string>
     <string name="login_enter_user">Enter User Name !!</string>
     <string name="login_enter_password">Enter Password !!</string>
-    <string name="title_activity_participante_datos_secund">ParticipanteDatosSecund</string>
-    <string name="title_activity_cambio_server">CambioServer</string>
-    <string name="cambio_server">Configuracion</string>
+    <string name="title_activity_participante_datos_secund">ParticipantSecondaryInfo</string>
+    <string name="title_activity_cambio_server">ChangeServer</string>
+    <string name="cambio_server">Configuration</string>
 
     <string name="add_fingerprint_existing">Add Fingerprint to Existing Patient</string>
     <string name="add_fingerprint_existing_header">Search for Existing Patient Using the Following Optional Fields:</string>
@@ -374,7 +374,7 @@
     <string name="action_logout">Logout</string>
     <string name="confirm">Confirm</string>
     <string name="dob">Date of Birth (Tap to Change)</string>
-    <string name="fingerprint_saved">Huella guardada</string>
+    <string name="fingerprint_saved">Fingerprint Saved</string>
     <string name="first_name">First Name:</string>
     <string name="lista">View Missing Appointments</string>
     <string name="matches">Select Patient to Confirm</string>
