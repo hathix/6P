@@ -108,7 +108,6 @@ public class NewVisitActivity extends BaseActivity {
     private TextView local;
     private TextView project;
     private TextView start_date;
-    private TextView end_date;
     private Spinner spnGrupo;
     String selGrupo = "";
     private Spinner spnVisita;
@@ -136,7 +135,6 @@ public class NewVisitActivity extends BaseActivity {
         local = (TextView) findViewById(R.id.txt_local);
         project = (TextView) findViewById(R.id.txt_project);
         start_date = (TextView) findViewById(R.id.txt_start_date);
-        end_date = (TextView) findViewById(R.id.txt_end_date);
         spnGrupo = (Spinner) findViewById(R.id.spn_visit_Grupo);
         spnVisita = (Spinner) findViewById(R.id.spnVisita);
         visit_date = (TextView) findViewById(R.id.visit_date);
