@@ -151,14 +151,21 @@ public class FingerprintBaseActivity extends BaseActivity {
 
     public byte[] ScanFingerPrintBase() {
         byte[] buffer = new byte[imgWidth * imgHeight];
-        if (jsgfpLib.GetImage(buffer) == SGFDxErrorCode.SGFDX_ERROR_NONE) {
-            jsgfpLib.GetImage(buffer);
-            Log.d("Success!", "");
+        try {
+            if (jsgfpLib.GetImage(buffer) == SGFDxErrorCode.SGFDX_ERROR_NONE) {
+                jsgfpLib.GetImage(buffer);
+                Log.d("Success!", "");
 
-            SGFingerInfo fpInfo = new SGFingerInfo();
-            long result = jsgfpLib.CreateTemplate(fpInfo, buffer, mTemplate);
-            return buffer;
-        } else {
+                SGFingerInfo fpInfo = new SGFingerInfo();
+                long result = jsgfpLib.CreateTemplate(fpInfo, buffer, mTemplate);
+                return buffer;
+            } else {
+                return null;
+            }
+        }
+        catch (NullPointerException e) {
+            // if you try scanning without proper permission or proper fingerprint scanner
+            // connection, this may get thrown
             return null;
         }
     }
