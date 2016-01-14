@@ -305,6 +305,8 @@ public class RegisterParticipantActivity extends BaseActivity {
             day = c.get(Calendar.DAY_OF_MONTH);
         }
 
+        Log.v("Date1", String.valueOf(month));
+
         // set current date into textview
         edt_dob.setText(new StringBuilder()
                 .append(day).append("/").append(month).append("/")
@@ -357,6 +359,8 @@ public class RegisterParticipantActivity extends BaseActivity {
         @Override
         public void onDateSet(DatePicker view, int selectedYear,
                               int selectedMonth, int selectedDay) {
+            Log.v("Date2", String.valueOf(selectedMonth));
+
             year = selectedYear;
             month = selectedMonth;
             day = selectedDay;
