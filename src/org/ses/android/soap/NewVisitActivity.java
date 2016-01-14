@@ -5,10 +5,8 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import java.util.ArrayList;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import org.ses.android.soap.tasks.ProyectoVisitaListTask;
 
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,13 +15,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Spinner;
-
+import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
-import android.util.Log;
 
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Participant;
@@ -37,13 +35,15 @@ import java.util.Calendar;
 
 // import org.ses.android.soap.database.Schedule; // ??? Can't find Project length
 import org.ses.android.soap.database.Visitas;
+import org.ses.android.soap.models.Project;
+import org.ses.android.soap.tasks.ProjectLoadTask;
 import org.ses.android.soap.tasks.VisitaLoadTask;
 //import org.ses.android.soap.utils.DatePickerFragment;
 //import org.ses.android.soap.utils.TimePickerFragment;
 //import org.ses.android.soap.tasks.NewVisitUploadTask;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.VisitasListTask;
-import org.ses.android.soap.utils.InternetConnection;
+import org.ses.android.soap.tasks.ProjectLoadTask;
 
 
 //TODO: add scheduled days
@@ -69,6 +69,7 @@ public class NewVisitActivity extends Activity {
     private AsyncTask<String, String, Visitas[]> asyncTask;
     private AsyncTask<String, String, Visitas[]> loadVisitas;
     private AsyncTask<String, String, Visita[]> loadVisit;
+    private AsyncTask<String,String,ArrayList<Project>> loadProject;
     DateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     DateFormat displayTimeFormat = new SimpleDateFormat("HH:mm");
     DateFormat dbDateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00.0");
@@ -134,6 +135,27 @@ public class NewVisitActivity extends Activity {
         String codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         String codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
 
+        // get project name
+        ProjectLoadTask tareaProjects = new ProjectLoadTask();
+
+        loadProject = tareaProjects.execute(localeId, "bogusurl");
+        try {
+            ArrayList<Project> project_array = loadProject.get();
+            if (project_array != null) {
+                for (int i = 0; i < project_array.size(); i++) {
+                    Project temp = project_array.get(i);
+                    if (String.valueOf(temp.id).equals(codigoProyecto)) {
+                        project.setText(temp.name);
+                    }
+                }
+            }
+        }
+        catch (InterruptedException e1) {
+            e1.printStackTrace();
+
+        } catch (ExecutionException e1) {
+            e1.printStackTrace();
+        }
         /*
          *counts how many visits the Patient has already done
         */
