@@ -313,7 +313,7 @@
     <string name="no_ids">No hay Ids</string>
     <string name="login_try_again">Intente de nuevo</string>
     <string name="locale_filename">locale_data</string>
-    <string name="date">Date</string>
+    <string name="date">Fecha</string>
     <string name="locale"> Locale</string>
     <string name="button_promoter_login"> Login</string>
     <string name="key_userid">userid</string>
