@@ -137,7 +137,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
                     // Need to compare on the string level because Visitas has this field as
                     // a string, although in the db it is 1, 2, 3.
-                    if (status.equals(getString(R.string.visit_received))) {
+                    if (status.equals("Atendido")) {
                         totalReceived++;
                         if (date.after(weekAgo)) {
                             monthReceived++;
@@ -145,7 +145,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                         } else if (date.after(monthAgo)) {
                             monthReceived++;
                         }
-                    } else if (!status.equals(getString(R.string.visit_pending))) { // Must be missed
+                    } else if (!status.equals("Pendiente")) { // Must be missed
                         totalMissed++;
                         if (date.after(weekAgo)) {
                             monthMissed++;

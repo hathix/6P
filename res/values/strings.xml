@@ -406,7 +406,5 @@
     <string name="try_again">Try Again</string>
     <string name="textAddInfo">Enter Optional Additional Info</string>
     <string name="textFingerprintInstruction">Please place index finger on scanner.</string>
-    <string name="visit_pending">Pendiente</string>
-    <string name="visit_received">Atendido</string>
 
 </resources>
