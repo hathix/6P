@@ -18,6 +18,11 @@ public class PreferencesManager
      */
     public static void setFingerprint(Context context, byte[] fingerprint)
     {
+        // ensure that fingerprint template is valid
+        if (fingerprint == null) {
+            return;
+        }
+
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String savedFingerprint = Base64.encodeToString(fingerprint, Base64.DEFAULT);
         Log.i("fingerprint", savedFingerprint);

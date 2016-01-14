@@ -134,10 +134,41 @@ public class RegisterParticipantActivity extends BaseActivity {
 
 
         edt_first_name = (EditText)findViewById(R.id.edt_first_name);
+        try{
+            edt_first_name.setText(getIntent().getStringExtra("firstName"));
+        }
+        catch (Exception e)
+        {
+            // do nothing
+        }
+
         edt_maternal_name = (EditText)findViewById(R.id.edt_maternal_name);
+        try{
+            edt_maternal_name.setText(getIntent().getStringExtra("maternalLast"));
+        }
+        catch (Exception e)
+        {
+            // do nothing
+        }
+
         edt_paternal_name = (EditText)findViewById(R.id.edt_paternal_name);
+        try{
+            edt_paternal_name.setText(getIntent().getStringExtra("paternalLast"));
+        }
+        catch (Exception e)
+        {
+            // do nothing
+        }
 
         edt_dob = (TextView)findViewById(R.id.edt_dob);
+        try{
+            edt_dob.setText(getIntent().getStringExtra("dob"));
+        }
+        catch (Exception e)
+        {
+            // do nothing
+        }
+
         setCurrentDateOnView();
         addListenerOntvwfecha_nacimiento();
 
@@ -256,16 +287,27 @@ public class RegisterParticipantActivity extends BaseActivity {
     }
 
     public void setCurrentDateOnView() {
+        // will attempt to load date from bundle
+        try{
+            String dob = getIntent().getStringExtra("dob").trim();
+            String[] dobSplit = dob.split("/");
 
-        final Calendar c = Calendar.getInstance();
-        year = c.get(Calendar.YEAR);
-        month = c.get(Calendar.MONTH);
-        day = c.get(Calendar.DAY_OF_MONTH);
+            day = Integer.parseInt(dobSplit[0]);
+            month = Integer.parseInt((dobSplit[1]));
+            year = Integer.parseInt(dobSplit[2]);
+        }
+        // if it couldn't, it sets it to today
+        catch (Exception e) {
+            final Calendar c = Calendar.getInstance();
+            year = c.get(Calendar.YEAR);
+            // month is zero based, hence adding one
+            month = c.get(Calendar.MONTH) + 1;
+            day = c.get(Calendar.DAY_OF_MONTH);
+        }
 
         // set current date into textview
         edt_dob.setText(new StringBuilder()
-                // Month is 0 based, just add 1
-                .append(day).append("/").append(month + 1).append("/")
+                .append(day).append("/").append(month).append("/")
                 .append(year));
 
     }
@@ -727,7 +769,7 @@ public class RegisterParticipantActivity extends BaseActivity {
 
         catch (Exception e){
 
-            addressStr = "Error de localizacion ";
+            addressStr = null;
             Toast.makeText(getApplicationContext(),getString(R.string.check_gps),Toast.LENGTH_LONG).show();
 
         }
