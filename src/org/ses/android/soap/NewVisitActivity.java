@@ -55,17 +55,9 @@ import org.ses.android.soap.preferences.PreferencesActivity;
 //TODO: add scheduled days
 
 public class NewVisitActivity extends BaseActivity {
-    private Participant currentParticipant;
-    private Visita currentVisit;
-    private Visitas currentVisitas;
-    public int proyectoLength;
-    private SharedPreferences mPreferences;
-    private Proyecto currentProyecto;
 
-    EditText timePicker;
-    private int participantVisits;
-    private String startDay;
-    TextView visitLocaleEditor;
+    private Participant currentParticipant;
+    private SharedPreferences mPreferences;
     private Visitas[] visitas_array;
     private int num_visitas;
     private Visita[] visita_array;
@@ -81,12 +73,6 @@ public class NewVisitActivity extends BaseActivity {
     private AsyncTask<String, String, String> loadEstadoTAM;
     EstadoENRTask estadoENR;
     EstadoTAMTask estadoTAM;
-    DateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-    DateFormat displayTimeFormat = new SimpleDateFormat("HH:mm");
-    DateFormat dbDateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00.0");
-    DateFormat dbTimeFormat = new SimpleDateFormat("HH:mm:00.0000000");
-    Date visitDate = new Date();
-    Date visitTime = new Date();
 
     private int year;
     private int month;
@@ -97,6 +83,9 @@ public class NewVisitActivity extends BaseActivity {
 
     private String codigoUsuario;
     private String codigoProyecto;
+    private String selLocal;
+    String fec_visita  = "";
+    String hora_visita = "";
 
     private String localeId;
 
@@ -109,18 +98,17 @@ public class NewVisitActivity extends BaseActivity {
     private Spinner spnVisita;
     String selVisita = "";
     String selProyecto = "";
+    String codigopaciente = "";
+    String codigousuario = "";
 
     private TextView visit_date;
     private TextView visit_time;
     private Button btn_save_visit;
 
-    private static final int FIRST_VISIT = 2; // 3rd visit == first real visit
     static final int DATE_DIALOG_ID = 1;
     static final int TIME_DIALOG_ID = 2;
 
     String url = "";
-
-    GenerarVisitaTask tarea;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,13 +140,6 @@ public class NewVisitActivity extends BaseActivity {
 
         url = StringConexion.conexion;
 
-        // get localeId, localeName and promoterId from sharedPreferences
-        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
-        String localeName = prefs.getString((getString(R.string.login_locale_name)), null);
-        local.setText(localeName);
-        localeId = prefs.getString((getString(R.string.login_locale)), null);
-        String promoterId = prefs.getString((getString(R.string.key_userid)), null);
-
         /**
          * if a patient was passed in, pre-load that patient
          */
@@ -173,27 +154,23 @@ public class NewVisitActivity extends BaseActivity {
         codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
 
-        // get project name
-        ProjectLoadTask tareaProjects = new ProjectLoadTask();
+        //Locale
+        String local_name = mPreferences.getString(PreferencesActivity.KEY_LOCAL_NAME, "");
+        local.setText(local_name);
+        String local_id = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
+        int intLocal = Integer.valueOf(local_id);
+        selLocal = Integer.toString(intLocal);
+        Log.i("Visita",",selLocal:"+selLocal+",selProyecto:"+selProyecto);
+        //Project
+        String project_name = mPreferences.getString(PreferencesActivity.KEY_PROJECT_NAME, "");
+        project.setText(project_name);
+        String project_id = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
+        int intProject = Integer.valueOf(project_id);
+        selProyecto = Integer.toString(intProject);
+        Log.i("Visita",",selProyecto:"+selProyecto);
 
-        loadProject = tareaProjects.execute(localeId, "bogusurl");
-        try {
-            ArrayList<Project> project_array = loadProject.get();
-            if (project_array != null) {
-                for (int i = 0; i < project_array.size(); i++) {
-                    Project temp = project_array.get(i);
-                    if (String.valueOf(temp.id).equals(codigoProyecto)) {
-                        project.setText(temp.name);
-                    }
-                }
-            }
-        }
-        catch (InterruptedException e1) {
-            e1.printStackTrace();
+        codigopaciente = mPreferences.getString("CodigoPaciente", "");
 
-        } catch (ExecutionException e1) {
-            e1.printStackTrace();
-        }
         /*
          *counts how many visits the Patient has already done
         */
@@ -214,7 +191,7 @@ public class NewVisitActivity extends BaseActivity {
         /*
          * # of patient visits so far
          */
-        VisitasListTask tareaVisits = new VisitasListTask();
+        /* VisitasListTask tareaVisits = new VisitasListTask();
 
         loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
@@ -242,9 +219,9 @@ public class NewVisitActivity extends BaseActivity {
             e1.printStackTrace();
         }
 
-        start_date.setText(first_visit);
+        start_date.setText(first_visit); */
 
-        VisitaLoadTask tareaVisit = new VisitaLoadTask();
+        /* VisitaLoadTask tareaVisit = new VisitaLoadTask();
 
         loadVisita = tareaVisit.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
@@ -259,9 +236,10 @@ public class NewVisitActivity extends BaseActivity {
 
         } catch (ExecutionException e1) {
             e1.printStackTrace();
-        }
+        } */
 
-        loadVisitaSpinner(currentParticipant.CodigoPaciente, localeId, codigoProyecto);
+        loadVisitaSpinner(codigopaciente,selLocal,selProyecto);
+
         spnGrupo.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -343,8 +321,6 @@ public class NewVisitActivity extends BaseActivity {
         visitaSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spnVisita.setAdapter(visitaSpinnerAdapter); */
-
-
 
     }
 
@@ -472,10 +448,15 @@ public class NewVisitActivity extends BaseActivity {
     };
 
     public  void  AlertaGuardar() {
-        final String fec_visita = visit_date.getText().toString();
-        final String hora_visita = visit_time.getText().toString();
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        fec_visita = visit_date.getText().toString();
+        Log.i("fec_visita:",fec_visita);
+
+        hora_visita = visit_time.getText().toString();
+
+        codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(NewVisitActivity.this);
         builder.setMessage("Desea Generar Visita?")
                 .setTitle("Advertencia")
                 .setCancelable(false)
@@ -486,14 +467,14 @@ public class NewVisitActivity extends BaseActivity {
                                 GenerarVisitaTask tarea = new GenerarVisitaTask();
                                 //int CodigoLocal, int CodigoProyecto, int CodigoVisita, string CodigoPaciente, string FechaVisita, string HoraCita, int CodigoUsuario
                                 generarVisita = tarea.execute(
-                                        localeId,
-                                        codigoProyecto,
+                                        selLocal,
+                                        selProyecto,
                                         selGrupo,
                                         selVisita,
-                                        currentParticipant.CodigoPaciente,
+                                        codigopaciente,
                                         fec_visita,
                                         hora_visita,
-                                        codigoUsuario,
+                                        codigousuario,
                                         url);
 
                                 String guardado;
@@ -516,7 +497,7 @@ public class NewVisitActivity extends BaseActivity {
                                         //selGrupo=1 TAM, selGrupo=2  ENR
                                         Log.i("Visita", "estadoENR: " + estadoENR.toString() + "--- estadoTAM: " + estadoTAM.toString());
 //                                                                            if (estadoENR.equals("1") || estadoTAM.equals("1")){
-//                                                                                // Asignar IDs de acuerdo al tipo de spnVisita (TAM o ENR)
+//                                                                                // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
 //                                                                                if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
 //                                                                                    Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
 //                                                                                    Bundle extras = new Bundle();
@@ -548,19 +529,19 @@ public class NewVisitActivity extends BaseActivity {
                                             }
                                         }
                                         if (asignarID.equals(true)) {
-                                            // Asignar IDs de acuerdo al tipo de spnVisita (TAM o ENR)
+                                            // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
                                             //if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
                                             /* Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
                                             Bundle extras = new Bundle();
-                                            extras.putString("selLocal", localeId);
+                                            extras.putString("selLocal", selLocal);
                                             extras.putString("selProyecto", selProyecto);
-                                            extras.putString("codigopaciente",currentParticipant.CodigoPaciente);
+                                            extras.putString("codigopaciente",codigopaciente);
                                             extras.putString("selGrupo", selGrupo);
                                             extras.putString("selVisita",selVisita);
-                                            extras.putString("codigousuario",codigoUsuario);
+                                            extras.putString("codigousuario",codigousuario);
                                             extras.putString("url",url);
                                             extras.putString("estadoTAM",estadoTAM);
-                                            extras.putString("estadoENR", estadoENR);
+                                            extras.putString("estadoENR",estadoENR);
                                             extras.putInt("validar_emr",0);
 
                                             pass.putExtras(extras);
@@ -588,7 +569,6 @@ public class NewVisitActivity extends BaseActivity {
                         });
         AlertDialog alert = builder.create();
         alert.show();
-
     }
 
     public void loadVisitaSpinner(String codigopaciente,String local,String proyecto){
