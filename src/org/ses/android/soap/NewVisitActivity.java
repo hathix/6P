@@ -65,6 +65,7 @@ public class NewVisitActivity extends Activity {
     private int num_visitas;
     private Visita[] visita_array;
     private int num_visita;
+    private String first_visit = "Does Not Exist";
     private int totalVisits;
     private AsyncTask<String, String, Visitas[]> asyncTask;
     private AsyncTask<String, String, Visitas[]> loadVisitas;
@@ -140,8 +141,8 @@ public class NewVisitActivity extends Activity {
 
         /**
          * Terminology note:
-         * - Visitas is a visit group (diagnosis "TAM", enrollment "ENR", actual treatment "SIG")
-         * - Visita is an actual visit
+         * - Visita is a visit group (diagnosis "TAM", enrollment "ENR", actual treatment "SIG")
+         * - Visitas is an actual visit
          */
 
 
@@ -159,6 +160,15 @@ public class NewVisitActivity extends Activity {
             visitas_array = loadVisitas.get(); //Visitas
             if (visitas_array != null) {
                 num_visitas = visitas_array.length;
+                // find date of first treatment
+                if (num_visitas > 2) {
+                    for (int i = 0; i < num_visitas; i++) {
+                        Visitas temp = visitas_array[i];
+                        if (temp.CodigoGrupoVisita.equals(3) && temp.CodigoVisita.equals(1)) {
+                            first_visit = temp.FechaVisita;
+                        }
+                    }
+                }
             }
 
 
@@ -169,6 +179,7 @@ public class NewVisitActivity extends Activity {
             e1.printStackTrace();
         }
 
+        start_date.setText(first_visit);
 
         VisitaLoadTask tareaVisit = new VisitaLoadTask();
 
@@ -186,13 +197,14 @@ public class NewVisitActivity extends Activity {
             e1.printStackTrace();
         }
 
+
         // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
         /* if (visits != null && visits.length > FIRST_VISIT) {
             String startDay = (String) (visits[FIRST_VISIT]).FechaVisita;
 
             // access currentVisit or some visit
             proyectoLength = (int) (totalVisits - FIRST_VISIT) * visit_array[FIRST_VISIT].DiasVisitaProx;
-            // endDay = startDay + proyectoLength; 
+            // endDay = startDay + proyectoLength;
         } */
 
 
