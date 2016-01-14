@@ -4,12 +4,14 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.app.AlertDialog;
 import android.content.SharedPreferences;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.ArrayAdapter;
-
 
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +21,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
+import android.widget.AdapterView;
 import android.util.Log;
 
 import java.text.DateFormat;
@@ -41,7 +45,11 @@ import java.util.Calendar;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.models.Project;
 import org.ses.android.soap.tasks.ProjectLoadTask;
+import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.tasks.VisitaLoadTask;
+import org.ses.android.soap.tasks.GenerarVisitaTask;
+import org.ses.android.soap.tasks.EstadoENRTask;
+import org.ses.android.soap.tasks.EstadoTAMTask;
 //import org.ses.android.soap.utils.DatePickerFragment;
 //import org.ses.android.soap.utils.TimePickerFragment;
 //import org.ses.android.soap.tasks.NewVisitUploadTask;
@@ -74,6 +82,11 @@ public class NewVisitActivity extends BaseActivity {
     private AsyncTask<String, String, Visitas[]> loadVisitas;
     private AsyncTask<String, String, Visita[]> loadVisit;
     private AsyncTask<String,String,ArrayList<Project>> loadProject;
+    private AsyncTask<String, String, String> generarVisita;
+    private AsyncTask<String, String, String> loadEstadoENR;
+    private AsyncTask<String, String, String> loadEstadoTAM;
+    EstadoENRTask estadoENR;
+    EstadoTAMTask estadoTAM;
     DateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     DateFormat displayTimeFormat = new SimpleDateFormat("HH:mm");
     DateFormat dbDateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00.0");
@@ -86,8 +99,12 @@ public class NewVisitActivity extends BaseActivity {
     private int day;
     private int hour;
     private int minute;
-    private String AM_PM;
     boolean mIs24HourView;
+
+    private String codigoUsuario;
+    private String codigoProyecto;
+
+    private String localeId;
 
     private TextView names;
     private TextView local;
@@ -104,6 +121,8 @@ public class NewVisitActivity extends BaseActivity {
     private static final int FIRST_VISIT = 2; // 3rd visit == first real visit
     static final int DATE_DIALOG_ID = 999;
     static final int TIME_DIALOG_ID = 111;
+
+    GenerarVisitaTask tarea;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -127,11 +146,18 @@ public class NewVisitActivity extends BaseActivity {
         setCurrentTimeOnView();
         addListenerOnVisitTime();
 
+        btn_save_visit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
         // get localeId, localeName and promoterId from sharedPreferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String localeName = prefs.getString((getString(R.string.login_locale_name)), null);
         local.setText(localeName);
-        String localeId = prefs.getString((getString(R.string.login_locale)), null);
+        localeId = prefs.getString((getString(R.string.login_locale)), null);
         String promoterId = prefs.getString((getString(R.string.key_userid)), null);
 
         /**
@@ -145,8 +171,8 @@ public class NewVisitActivity extends BaseActivity {
         names.setText(fullName);
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-        String codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
-        String codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
+        codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
+        codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
 
         // get project name
         ProjectLoadTask tareaProjects = new ProjectLoadTask();
@@ -235,6 +261,42 @@ public class NewVisitActivity extends BaseActivity {
         } catch (ExecutionException e1) {
             e1.printStackTrace();
         }
+
+        visit_grupo.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent,
+                                               android.view.View v, int position, long id) {
+                        selGrupo = parent.getItemAtPosition(position).toString().substring(0, 1);
+//					if (!selGrupo.equals("0")) loadProyectoSpinner(selGrupo);
+                        Log.i("Visita", "Grupo: pos: " + selGrupo + " valor:" + parent.getItemAtPosition(position));
+                    }
+
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        Toast.makeText(getBaseContext(), "Seleccione un Local!!", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        spnVisita.setOnItemSelectedListener(
+                new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> parent,
+                                               android.view.View v, int position, long id) {
+                        // JT:20150817
+                        //selVisita = parent.getItemAtPosition(position).toString().substring(0,1);
+                        selVisita = parent.getItemAtPosition(position).toString();
+                        selVisita = selVisita.substring(0,selVisita.indexOf("-",0)-1).trim();
+
+//					if (!selVisita.equals("0")) loadProyectoSpinner(selVisita);
+                        Log.i("Visita","Visita: pos: "+ selVisita + " valor:" + parent.getItemAtPosition(position));
+                    }
+                    @Override
+                    public void onNothingSelected(AdapterView<?> parent) {
+                        Toast.makeText(getBaseContext(), "Seleccione un Local!!",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
 
         /*
         *   populate the spinners
@@ -405,6 +467,173 @@ public class NewVisitActivity extends BaseActivity {
 
         }
     };
+
+    public  void  AlertaGuardar() {
+        String fec_visita = visit_date.getText().toString();
+        String hora_visita = visit_time.getText().toString();
+        String url = StringConexion.conexion;
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("Desea Generar Visita?")
+                .setTitle("Advertencia")
+                .setCancelable(false)
+                .setPositiveButton("Si",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                GenerarVisitaTask tarea = new GenerarVisitaTask();
+                                //int CodigoLocal, int CodigoProyecto, int CodigoVisita, string CodigoPaciente, string FechaVisita, string HoraCita, int CodigoUsuario
+                                generarVisita = tarea.execute(
+                                        localeId,
+                                        codigoProyecto,
+                                        selGrupo,
+                                        selVisita,
+                                        currentParticipant.CodigoPaciente,
+                                        fec_visita,
+                                        hora_visita,
+                                        codigoUsuario,
+                                        url);
+
+                                String guardado;
+                                String estadoENR;
+                                String estadoTAM;
+                                try {
+
+
+                                    guardado = generarVisita.get();
+                                    if (!guardado.equals("OK")){
+                                        Toast.makeText(getBaseContext(), "No se creo visita!!",Toast.LENGTH_SHORT).show();
+                                    }else{
+                                        Toast.makeText(getBaseContext(), "Datos guardados!!",Toast.LENGTH_SHORT).show();
+                                        EstadoENRTask tareaEstadoENR = new EstadoENRTask();
+                                        EstadoTAMTask tareaEstadoTAM = new EstadoTAMTask();
+                                        loadEstadoENR = tareaEstadoENR.execute("ENR",selProyecto,url);
+                                        estadoENR = loadEstadoENR.get();
+                                        loadEstadoTAM = tareaEstadoTAM.execute("TAM",selProyecto,url);
+                                        estadoTAM = loadEstadoTAM.get();
+                                        //selGrupo=1 TAM, selGrupo=2  ENR
+                                        Log.i("Visita","estadoENR: "+ estadoENR.toString() + "--- estadoTAM: "+ estadoTAM.toString());
+//                                                                            if (estadoENR.equals("1") || estadoTAM.equals("1")){
+//                                                                                // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
+//                                                                                if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
+//                                                                                    Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
+//                                                                                    Bundle extras = new Bundle();
+//                                                                                    extras.putString("selLocal", selLocal);
+//                                                                                    extras.putString("selProyecto", selProyecto);
+//                                                                                    extras.putString("codigopaciente",codigopaciente);
+//                                                                                    extras.putString("selGrupo", selGrupo);
+//                                                                                    extras.putString("selVisita",selVisita);
+//                                                                                    extras.putString("codigousuario",codigousuario);
+//                                                                                    extras.putString("url",url);
+//                                                                                    pass.putExtras(extras);
+//                                                                                    startActivity(pass);
+//                                                                                }
+//                                                                            }
+                                        Boolean asignarID = false;
+                                        if (estadoTAM.equals("1") && estadoENR.equals("1")){
+                                            if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
+                                                asignarID = true;
+                                            }
+                                        }
+                                        //   if (estadoTAM.equals("0") && estadoENR.equals("1")){
+                                        //     if ((selGrupo.equals("2"))  && selVisita.equals("1")) {
+                                        //            asignarID = true;
+                                        //     }
+                                        // }
+                                        if (estadoTAM.equals("1") && estadoENR.equals("0")){
+                                            if ((selGrupo.equals("1") ||  selGrupo.equals("2"))&& selVisita.equals("1")) {
+                                                asignarID = true;
+                                            }
+                                        }
+                                        if (asignarID.equals(true)){
+                                            // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
+                                            //if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
+                                            Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
+                                            Bundle extras = new Bundle();
+                                            extras.putString("selLocal", selLocal);
+                                            extras.putString("selProyecto", selProyecto);
+                                            extras.putString("codigopaciente",codigopaciente);
+                                            extras.putString("selGrupo", selGrupo);
+                                            extras.putString("selVisita",selVisita);
+                                            extras.putString("codigousuario",codigousuario);
+                                            extras.putString("url",url);
+                                            extras.putString("estadoTAM",estadoTAM);
+                                            extras.putString("estadoENR", estadoENR);
+                                            extras.putInt("validar_emr",0);
+
+                                            pass.putExtras(extras);
+                                            startActivity(pass);
+                                            //}
+                                        }
+                                    }
+                                    finish();
+                                } catch (InterruptedException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                } catch (ExecutionException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        })
+                .setNegativeButton("No",
+                        new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int id) {
+                                dialog.cancel();
+                            }
+                        });
+        AlertDialog alert = builder.create();
+        alert.show();
+
+    }
+
+    public void loadVisitaSpinner(String codigopaciente,String local,String proyecto){
+        VisitaLoadTask tareaVisita = new VisitaLoadTask();
+
+        loadVisita = tareaVisita.execute(codigopaciente,local,proyecto,url);
+        Visita[] objVisita;
+        String[] wee,wee1,empty;
+        empty = new String[0];
+        ArrayAdapter<String> emptyArrayAdapter = new ArrayAdapter<String>(
+                this, android.R.layout.simple_spinner_item, empty);
+        emptyArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        spnGrupo.setAdapter(emptyArrayAdapter);
+        spnVisita.setAdapter(emptyArrayAdapter);
+
+        try {
+
+            objVisita = loadVisita.get();
+            if (objVisita != null){
+                wee = new String[objVisita.length];
+                wee1 = new String[objVisita.length];
+                for(int i = 0;i < objVisita.length; i++){
+                    wee[i]= String.valueOf(objVisita[i].CodigoGrupoVisita) +" - "+objVisita[i].NombreGrupoVisita;
+                    wee1[i]= String.valueOf(objVisita[i].CodigoVisita) +" - "+objVisita[i].DescripcionVisita;
+                }
+                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
+                        this, android.R.layout.simple_spinner_item, wee);
+                spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+                spnGrupo.setAdapter(spinnerArrayAdapter);
+                ArrayAdapter<String> spinnerArrayAdapter1 = new ArrayAdapter<String>(
+                        this, android.R.layout.simple_spinner_item, wee1);
+                spinnerArrayAdapter1.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+                spnVisita.setAdapter(spinnerArrayAdapter1);
+
+                Log.i("Visita","Visita Array");
+            }
+
+
+        } catch (InterruptedException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        } catch (ExecutionException e1) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace();
+        }
+
+    }
 
 }
 
