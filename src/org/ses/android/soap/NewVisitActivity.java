@@ -164,9 +164,7 @@ public class NewVisitActivity extends Activity {
                 if (num_visitas > 2) {
                     for (int i = 0; i < num_visitas; i++) {
                         Visitas temp = visitas_array[i];
-                        String grupoVisita = temp.CodigoGrupoVisita;
-                        Log.d("DEBUG", "grupo " + temp.CodigoGrupoVisita + " visita " + temp.CodigoVisita);
-                        if (temp.CodigoGrupoVisita.charAt(0) == '3' && temp.CodigoVisita.charAt(0) == '1') {
+                        if (temp.CodigoGrupoVisita.equals("3") && temp.CodigoVisita.equals("1")) {
                             first_visit = temp.FechaVisita;
                         }
 
