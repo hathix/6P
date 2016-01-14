@@ -613,19 +613,19 @@ public class NewVisitActivity extends BaseActivity {
     public void loadVisitaSpinner(String codigopaciente,String local,String proyecto){
         VisitaLoadTask tareaVisita = new VisitaLoadTask();
 
-        loadVisit = tareaVisita.execute(codigopaciente,local,proyecto,"bogusurl");
+        loadVisita = tareaVisita.execute(codigopaciente,local,proyecto,"bogusurl");
         Visita[] objVisita;
         String[] wee,wee1,empty;
         empty = new String[0];
         ArrayAdapter<String> emptyArrayAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, empty);
         emptyArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-        visit_grupo.setAdapter(emptyArrayAdapter);
-        visita.setAdapter(emptyArrayAdapter);
+        spnGrupo.setAdapter(emptyArrayAdapter);
+        spnVisita.setAdapter(emptyArrayAdapter);
 
         try {
 
-            objVisita = loadVisit.get();
+            objVisita = loadVisita.get();
             if (objVisita != null){
                 wee = new String[objVisita.length];
                 wee1 = new String[objVisita.length];
@@ -636,11 +636,11 @@ public class NewVisitActivity extends BaseActivity {
                 ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
                         this, android.R.layout.simple_spinner_item, wee);
                 spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-                visit_grupo.setAdapter(spinnerArrayAdapter);
+                spnGrupo.setAdapter(spinnerArrayAdapter);
                 ArrayAdapter<String> spinnerArrayAdapter1 = new ArrayAdapter<String>(
                         this, android.R.layout.simple_spinner_item, wee1);
                 spinnerArrayAdapter1.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-                visita.setAdapter(spinnerArrayAdapter1);
+                spnVisita.setAdapter(spinnerArrayAdapter1);
 
                 Log.i("Visita","Visita Array");
             }
