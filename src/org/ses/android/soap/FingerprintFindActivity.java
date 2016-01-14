@@ -83,9 +83,10 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
     public void ScanFingerPrint() {
         byte[] buffer = ScanFingerPrintBase();
         if (buffer != null) {
+            // scan successful
             imgFingerprint.setImageBitmap(this.toGrayscale(buffer));
+            PreferencesManager.setFingerprint(getBaseContext(), mTemplate);
         }
-        PreferencesManager.setFingerprint(getBaseContext(), mTemplate);
     }
 
     public void setCurrentDateOnView() {
