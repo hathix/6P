@@ -45,7 +45,7 @@ public class VisitaLoadTask extends AsyncTask<String,String,Visita[]> {
 			for (int i = 0; i < lstVisita.length; i++) 
 			{
 		           SoapObject ic = (SoapObject)resSoap.getProperty(i);
-		            
+
 		           Visita vis = new Visita();
 
 		           vis.CodigoProyecto = Integer.parseInt(ic.getProperty(0).toString());
@@ -55,6 +55,7 @@ public class VisitaLoadTask extends AsyncTask<String,String,Visita[]> {
 		           vis.DescripcionVisita = ic.getProperty(4).toString();
 		           vis.GenerarAuto = Boolean.valueOf(ic.getProperty(5).toString());
 		           vis.Dependiente = Integer.parseInt(ic.getProperty(6).toString());
+				   vis.DiasVisitaProx = Integer.parseInt(ic.getProperty(7).toString());
 		           lstVisita[i] = vis;
 		    }
 			if (resSoap.getPropertyCount()>0){

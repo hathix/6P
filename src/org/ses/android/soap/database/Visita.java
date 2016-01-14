@@ -79,7 +79,7 @@ public class Visita implements KvmSerializable {
 	
 	@Override
 	public int getPropertyCount() {
-		return 7;
+		return 8;
 	}
 	
 	@SuppressWarnings("rawtypes")

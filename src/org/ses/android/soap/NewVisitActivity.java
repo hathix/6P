@@ -61,8 +61,10 @@ public class NewVisitActivity extends Activity {
     private int participantVisits;
     private String startDay;
     TextView visitLocaleEditor;
-    private Visitas[] visits;
-    private Visita[] visit_array;
+    private Visitas[] visitas_array;
+    private int num_visitas;
+    private Visita[] visita_array;
+    private int num_visita;
     private int totalVisits;
     private AsyncTask<String, String, Visitas[]> asyncTask;
     private AsyncTask<String, String, Visitas[]> loadVisitas;
@@ -154,8 +156,11 @@ public class NewVisitActivity extends Activity {
 
         loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
-            ArrayList<Visitas> visitasArray = new ArrayList<Visitas>();
-            visits = loadVisitas.get(); //Visitas
+            visitas_array = loadVisitas.get(); //Visitas
+            if (visitas_array != null) {
+                num_visitas = visitas_array.length;
+            }
+
 
         } catch (InterruptedException e1) {
             e1.printStackTrace();
@@ -169,9 +174,10 @@ public class NewVisitActivity extends Activity {
 
         loadVisit = tareaVisit.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
-            ArrayList<Visita> visitArray = new ArrayList<Visita>();
-            visit_array = loadVisit.get(); //Visit
-            //totalVisits = visit_array.length;
+            visita_array = loadVisit.get(); //Visit
+            if (visita_array != null) {
+                num_visita = visita_array.length;
+            }
 
         } catch (InterruptedException e1) {
             e1.printStackTrace();
@@ -180,16 +186,14 @@ public class NewVisitActivity extends Activity {
             e1.printStackTrace();
         }
 
-
-
         // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
-        if (visits != null && visits.length > FIRST_VISIT) {
+        /* if (visits != null && visits.length > FIRST_VISIT) {
             String startDay = (String) (visits[FIRST_VISIT]).FechaVisita;
 
             // access currentVisit or some visit
             proyectoLength = (int) (totalVisits - FIRST_VISIT) * visit_array[FIRST_VISIT].DiasVisitaProx;
-            // endDay = startDay + proyectoLength; */
-        }
+            // endDay = startDay + proyectoLength; 
+        } */
 
 
 
