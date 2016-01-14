@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import java.util.ArrayList;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.widget.ArrayAdapter;
 import org.ses.android.soap.tasks.ProyectoVisitaListTask;
 
 import android.view.MotionEvent;
@@ -151,12 +152,14 @@ public class NewVisitActivity extends Activity {
         *
          */
 
-        //possibly comment this out
+        /*
+         * # of patient visits so far
+         */
         VisitasListTask tareaVisits = new VisitasListTask();
 
         loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
-            visitas_array = loadVisitas.get(); //Visitas
+            visitas_array = loadVisitas.get();
             if (visitas_array != null) {
                 num_visitas = visitas_array.length;
                 // find date of first treatment
@@ -197,20 +200,48 @@ public class NewVisitActivity extends Activity {
             e1.printStackTrace();
         }
 
+        /*
+        *   populate the spinners
+        *   First spinner: Visit Grupo (TAM, ENR, SIG)
+         */
+        ArrayList visitgrupoSpnList = new ArrayList<String>();
+        visitgrupoSpnList.add("Tamizaje"); // 1
+        visitgrupoSpnList.add("Enrolamiento"); // 2
+        visitgrupoSpnList.add("Siguiente"); // 3
+        visitgrupoSpnList.add("Visita No Programada 1"); //not sure what this is, but I'm keeping it. 0
 
-        // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
-        /* if (visitas_array != null && visitas_array.length > FIRST_VISIT) {
-            String startDay = (String) (visitas_array[FIRST_VISIT]).FechaVisita;
+        ArrayAdapter<String> visitasSpinnerAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, visitgrupoSpnList);
 
-            // access currentVisit or some visit
+        visitasSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
-            proyectoLength = (int) (num_visita - FIRST_VISIT) * visita_array[FIRST_VISIT].DiasVisitaProx;
-            // endDay = startDay + proyectoLength; 
-        } */
+        visit_grupo.setAdapter(visitasSpinnerAdapter);
 
 
+        /*
+        *
+        *   Second spinner: Visits (V1, V2, V3)
+        *   Set from current visit on. So if the patient has already been through 5 visits, start at 6.
+         */
+        ArrayList visitaSpnList = new ArrayList<String>();
+        if (num_visitas < num_visita) {
+            for (int i = num_visitas; i < num_visita; i++) {
+                visitaSpnList.add("V" + i);
+                Log.d("Debug", "number of visits already: " + num_visitas);
+            }
 
-        //78163118
+        }
+        else visitaSpnList.add("Done!");
+
+        ArrayAdapter<String> visitaSpinnerAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, visitaSpnList);
+
+        visitaSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        visita.setAdapter(visitaSpinnerAdapter);
+
+
+
     }
 
     public void setCurrentDateOnView() {
