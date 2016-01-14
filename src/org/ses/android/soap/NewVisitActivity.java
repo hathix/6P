@@ -50,7 +50,7 @@ import org.ses.android.soap.tasks.ProjectLoadTask;
 
 //TODO: add scheduled days
 
-public class NewVisitActivity extends Activity {
+public class NewVisitActivity extends BaseActivity {
     private Participant currentParticipant;
     private Visita currentVisit;
     private Visitas currentVisitas;
