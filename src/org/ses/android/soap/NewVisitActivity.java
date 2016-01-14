@@ -3,6 +3,7 @@ package org.ses.android.soap;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
+import android.widget.TimePicker;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Button;
@@ -84,7 +86,8 @@ public class NewVisitActivity extends Activity {
     private int day;
     private int hour;
     private int minute;
-
+    private String AM_PM;
+    boolean mIs24HourView;
 
     private TextView names;
     private TextView local;
@@ -95,10 +98,12 @@ public class NewVisitActivity extends Activity {
     private Spinner visita;
 
     private TextView visit_date;
+    private TextView visit_time;
     private Button btn_save_visit;
 
     private static final int FIRST_VISIT = 2; // 3rd visit == first real visit
     static final int DATE_DIALOG_ID = 999;
+    static final int TIME_DIALOG_ID = 111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -113,11 +118,14 @@ public class NewVisitActivity extends Activity {
         visit_grupo = (Spinner) findViewById(R.id.spn_visit_Grupo);
         visita = (Spinner) findViewById(R.id.spnVisita);
         visit_date = (TextView) findViewById(R.id.visit_date);
+        visit_time = (TextView) findViewById(R.id.visit_time);
 
         btn_save_visit = (Button) findViewById(R.id.btn_save_visit);
 
         setCurrentDateOnView();
         addListenerOnVisitDate();
+        setCurrentTimeOnView();
+        addListenerOnVisitTime();
 
         // get localeId, localeName and promoterId from sharedPreferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -290,11 +298,15 @@ public class NewVisitActivity extends Activity {
                 .append(day).append("/").append(month + 1).append("/")
                 .append(year));
 
-        hour = c.get(Calendar.HOUR);
+        hour = c.get(Calendar.HOUR_OF_DAY);
         minute = c.get(Calendar.MINUTE);
 
+        // set current time into textview
+        visit_time.setText(hour + ":" + minute);
 
     }
+
+    public void setCurrentTimeOnView() {}
 
     public void addListenerOnVisitDate() {
 
@@ -323,6 +335,31 @@ public class NewVisitActivity extends Activity {
 
     }
 
+    public void addListenerOnVisitTime() {
+        visit_time.setOnTouchListener(new View.OnTouchListener() {
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                showDialog(TIME_DIALOG_ID);
+                return true;
+            }
+
+
+        });
+        visit_time.setOnClickListener(new View.OnClickListener() {
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onClick(View v) {
+
+                showDialog(TIME_DIALOG_ID);
+
+            }
+
+        });
+    }
+
     @Override
     protected Dialog onCreateDialog(int id) {
         switch (id) {
@@ -330,6 +367,8 @@ public class NewVisitActivity extends Activity {
                 // set date picker as current date
                 return new DatePickerDialog(this, datePickerListener,
                         year, month,day);
+            case TIME_DIALOG_ID:
+                return new TimePickerDialog(this, timePickerListener, hour, minute, mIs24HourView);
         }
         return null;
     }
@@ -347,6 +386,22 @@ public class NewVisitActivity extends Activity {
 
             // set selected date into textview
             visit_date.setText(day + "/" + (month + 1) + ("/") + (year));
+
+        }
+    };
+
+    private TimePickerDialog.OnTimeSetListener timePickerListener
+            = new TimePickerDialog.OnTimeSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        @Override
+        public void onTimeSet(TimePicker view, int selectedHour,
+                              int selectedMinute) {
+            hour = selectedHour;
+            minute = selectedMinute;
+
+            // set selected date into textview
+            visit_time.setText(hour + ":" + minute);
 
         }
     };
