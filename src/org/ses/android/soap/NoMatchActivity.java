@@ -88,12 +88,9 @@ public class NoMatchActivity extends BaseActivity {
 
 
         // "Register Patient" button should open RegisterParticipantActivity
-<<<<<<< HEAD
-        // Should carry fingerprint data on
-        Button buttonRegisterNewParticipant = (Button) findViewById(R.id.btnRegisterNewUser);
-=======
+
         Button buttonRegisterNewParticipant = (Button) findViewById(R.id.btnRegisterNewParticipant);
->>>>>>> 837a859fe9fc95e4514ec0ef38e98331d57ac4f5
+
         buttonRegisterNewParticipant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -115,11 +112,7 @@ public class NoMatchActivity extends BaseActivity {
         });
 
         // "Add Fingerprint to Existing Patient" button should open AddFingerprintExistingActivity
-<<<<<<< HEAD
-        // Should carry fingerprint data on
-=======
-        // if there's a fingerprint, otherwise, get rid of the button
->>>>>>> 33b73cb26e4b6438527af2c431739f72c7153346
+
         Button buttonAddFingerprintExisting = (Button) findViewById(R.id.btnAddFingerprintExisting);
 
         if (mPreferences.getString("Fingerprint", "notFound").equals("notFound"))
