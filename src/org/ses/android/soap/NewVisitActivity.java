@@ -82,6 +82,9 @@ public class NewVisitActivity extends Activity {
     private int year;
     private int month;
     private int day;
+    private int hour;
+    private int minute;
+
 
     private TextView names;
     private TextView local;
@@ -279,6 +282,10 @@ public class NewVisitActivity extends Activity {
                 // Month is 0 based, just add 1
                 .append(day).append("/").append(month + 1).append("/")
                 .append(year));
+
+        hour = c.get(Calendar.HOUR);
+        minute = c.get(Calendar.MINUTE);
+
 
     }
 
