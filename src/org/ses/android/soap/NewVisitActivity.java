@@ -1,28 +1,20 @@
 package org.ses.android.soap;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import java.util.ArrayList;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import org.ses.android.soap.tasks.ProyectoVisitaListTask;
-import org.ses.android.soap.tasks.StringConexion;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Button;
 import android.widget.Spinner;
 
@@ -33,31 +25,16 @@ import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import org.ses.android.seispapp120.R;
-import org.ses.android.soap.database.Idreg;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Proyecto;
 import org.ses.android.soap.database.Visita;
-import org.ses.android.soap.models.Locale;
+
 import java.util.Calendar;
-import java.util.Date;
-import org.ses.android.soap.MainMenuActivity;
-import org.ses.android.soap.tasks.GenerarIdENRTask;
-import org.ses.android.soap.tasks.GenerarIdTAMTask;
-import org.ses.android.soap.tasks.MostrarTipoIDTask;
-import org.ses.android.soap.tasks.TienePermisosTask;
 //import org.ses.android.soap.utils.DatePickerFragment;
 //import org.ses.android.soap.utils.TimePickerFragment;
 // TimePicker.class and TimePickerDialog.class
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.ExecutionException;
-
-import org.ses.android.soap.database.Participant;
 // import org.ses.android.soap.database.Schedule; // ??? Can't find Project length
-import org.ses.android.soap.models.Project;
-import org.ses.android.soap.database.Visita;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.tasks.VisitaLoadTask;
 //import org.ses.android.soap.utils.DatePickerFragment;
@@ -79,7 +56,7 @@ public class NewVisitActivity extends Activity {
     public int proyectoLength;
     private SharedPreferences mPreferences;
     private Proyecto currentProyecto;
-    int firstvisit = 2; // 3rd visit == first real visit
+
     EditText timePicker;
     private int participantVisits;
     private String startDay;
@@ -112,6 +89,7 @@ public class NewVisitActivity extends Activity {
     private TextView visit_date;
     private Button btn_save_visit;
 
+    private static final int FIRST_VISIT = 2; // 3rd visit == first real visit
     static final int DATE_DIALOG_ID = 999;
 
     @Override
@@ -243,11 +221,13 @@ public class NewVisitActivity extends Activity {
 
 
         // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
-        String startDay = (String)(visits[firstvisit]).FechaVisita;
+        if (visits != null && visits.length > FIRST_VISIT) {
+            String startDay = (String) (visits[FIRST_VISIT]).FechaVisita;
 
-        // access currentVisit or some visit
-        proyectoLength = (int)(totalVisits - firstvisit) * visit_array[firstvisit].DiasVisitaProx;
-        // endDay = startDay + proyectoLength; */
+            // access currentVisit or some visit
+            proyectoLength = (int) (totalVisits - FIRST_VISIT) * visit_array[FIRST_VISIT].DiasVisitaProx;
+            // endDay = startDay + proyectoLength; */
+        }
 
 
 
