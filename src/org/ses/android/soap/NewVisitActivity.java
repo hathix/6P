@@ -162,7 +162,10 @@ public class NewVisitActivity extends Activity {
         // tasks all have extra url parameter at the end that's unused
         asyncTask = tarea.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
-            participantVisits = asyncTask.get().length;
+            Visitas[] participantVisitList = asyncTask.get();
+            if (participantVisitList != null) {
+                participantVisits = participantVisitList.length;
+            }
             //number of visits Patient has done already
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -178,7 +181,10 @@ public class NewVisitActivity extends Activity {
         // tasks all have extra url parameter at the end that's unused
         asyncTask = tarea2.execute(codigoProyecto);
         try {
-            totalVisits = asyncTask.get().length;
+            Visitas[] visitList = asyncTask.get();
+            if (visitList != null) {
+                totalVisits = visitList.length;
+            }
             //number of visits project must do
         } catch (InterruptedException ex)
 
@@ -201,7 +207,7 @@ public class NewVisitActivity extends Activity {
         //possibly comment this out
         VisitasListTask tareaVisits = new VisitasListTask();
 
-
+        
         loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
             ArrayList<Visitas> visitasArray = new ArrayList<Visitas>();

@@ -22,7 +22,7 @@ public class ProyectoVisitaListTask extends AsyncTask<String,String,Visitas[]>{
 
         Visitas[] resul= null;
 
-        String urlserver = params[1];
+//        String urlserver = params[1];
         final String NAMESPACE = StringConexion.conexion;
         final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
 //		final String METHOD_NAME = "ListadoVisitas";
@@ -75,6 +75,7 @@ public class ProyectoVisitaListTask extends AsyncTask<String,String,Visitas[]>{
         }
         catch (Exception e)
         {
+            e.printStackTrace();
             resul = null;
         }
 
