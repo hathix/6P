@@ -338,7 +338,6 @@
 	<string name="historia">Historia</string>
 	<string name="lista">Ver Visitas Perdidas</string>
 	<string name="visit_history">El Historial de %s</string>
-	<string name="addres_description">Referencia</string>
 	<string name="home_phone">Telefono</string>
 	<string name="cell">Celular</string>
 	<string name="localizer">Localizac</string>
@@ -402,7 +401,7 @@
 	<string name="fingerprint_saved">Huella guardada</string>
 	<string name="confirm">Confirmar</string>
 	<string name="cambio_server">Configuracion</string>
-	<string name="address_description">descripción</string>
+	<string name="address_description">Referencia</string>
 	<string name="add_fingerprint_existing_header">Buscar Pacientes Existentes Usando Los Siguientes Campos Opcionales</string>
 	<string name="add_fingerprint_existing">Agregar Huella a Paciente Existente</string>
 	<string name="action_logout">Cerrar Sesión</string>
