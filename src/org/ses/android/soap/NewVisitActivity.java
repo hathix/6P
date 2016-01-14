@@ -165,7 +165,8 @@ public class NewVisitActivity extends Activity {
                     for (int i = 0; i < num_visitas; i++) {
                         Visitas temp = visitas_array[i];
                         String grupoVisita = temp.CodigoGrupoVisita;
-                        if (grupoVisita.charAt(grupoVisita.length()-1) == '3') {
+                        Log.d("DEBUG", "grupo " + temp.CodigoGrupoVisita + " visita " + temp.CodigoVisita);
+                        if (temp.CodigoGrupoVisita.charAt(0) == '3' && temp.CodigoVisita.charAt(0) == '1') {
                             first_visit = temp.FechaVisita;
                         }
 
@@ -181,7 +182,7 @@ public class NewVisitActivity extends Activity {
         }
 
         start_date.setText(first_visit);
-        
+
         VisitaLoadTask tareaVisit = new VisitaLoadTask();
 
         loadVisit = tareaVisit.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
