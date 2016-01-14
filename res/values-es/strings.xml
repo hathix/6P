@@ -352,7 +352,8 @@
 	<string name="invalid_dob">Fecha de Nacimiento invalida!!</string>
 	<string name="invalid_dni">Nro. de DNI invalido!!</string>
 	<string name="registration_success">Datos Guardados Correctamente</string>
-	<string name="check_gps">verificar que su GPS este activo</string>
+	<string name="check_gps">Verificar que su GPS este activo</string>
+	<string name="register_patient_submit">Guardar</string>
 
 
 </resources>
