@@ -142,26 +142,6 @@ public class NewVisitActivity extends Activity {
          * - Visita is an actual visit
          */
 
-         VisitasListTask tarea = new VisitasListTask();
-        // tasks all have extra url parameter at the end that's unused
-        asyncTask = tarea.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
-        try {
-            Visitas[] participantVisitList = asyncTask.get();
-            if (participantVisitList != null) {
-                participantVisits = participantVisitList.length;
-            }
-            //number of visits Patient has done already
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e)
-
-        {
-            e.printStackTrace();
-        }
-
-
-
-
 
         /*
         *start day of the treatment + total time of treatment = end day
@@ -191,7 +171,7 @@ public class NewVisitActivity extends Activity {
         try {
             ArrayList<Visita> visitArray = new ArrayList<Visita>();
             visit_array = loadVisit.get(); //Visit
-            totalVisits = visit_array.length;
+            //totalVisits = visit_array.length;
 
         } catch (InterruptedException e1) {
             e1.printStackTrace();
