@@ -31,7 +31,7 @@ import java.util.concurrent.ExecutionException;
 public class NoMatchActivity extends BaseActivity {
 
     private String dni;
-    private String names;
+    private String firstName;
     private String maternalLast;
     private String paternalLast;
     private String dob;
@@ -54,11 +54,11 @@ public class NoMatchActivity extends BaseActivity {
         }
 
         try{
-            names = getIntent().getStringExtra("names");
+            firstName = getIntent().getStringExtra("firstName");
         }
         catch(Exception e)
         {
-            names = null;
+            firstName = null;
         }
 
         try{
@@ -95,8 +95,8 @@ public class NoMatchActivity extends BaseActivity {
                 Intent intent = new Intent(NoMatchActivity.this, RegisterParticipantActivity.class);
                 if (dni != null)
                     intent.putExtra("dni", dni);
-                if (names != null)
-                    intent.putExtra("names", names);
+                if (firstName != null)
+                    intent.putExtra("firstName", firstName);
                 if (paternalLast != null)
                     intent.putExtra("paternalLast", paternalLast);
                 if (maternalLast !=null)

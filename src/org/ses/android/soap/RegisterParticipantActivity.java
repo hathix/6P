@@ -135,7 +135,7 @@ public class RegisterParticipantActivity extends BaseActivity {
 
         edt_first_name = (EditText)findViewById(R.id.edt_first_name);
         try{
-            edt_first_name.setText(getIntent().getStringExtra("names"));
+            edt_first_name.setText(getIntent().getStringExtra("firstName"));
         }
         catch (Exception e)
         {
@@ -295,10 +295,6 @@ public class RegisterParticipantActivity extends BaseActivity {
             day = Integer.parseInt(dobSplit[0]);
             month = Integer.parseInt((dobSplit[1]));
             year = Integer.parseInt(dobSplit[2]);
-
-            edt_dob.setText(new StringBuilder()
-                    .append(day).append("/").append(month).append("/")
-                    .append(year));
         }
         // if it couldn't, it sets it to today
         catch (Exception e) {

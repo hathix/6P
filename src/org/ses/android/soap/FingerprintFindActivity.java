@@ -47,7 +47,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
     private final int DATE_DIALOG_ID = 999;
 
     private Participant participant;
-    String dni, names, paternalLast, maternalLast, dob;
+    String dni, firstName, paternalLast, maternalLast, dob;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -167,7 +167,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
             public void onClick(View v) {
                 dni = edt_dni_document.getText().toString();
                 Log.i("DNI", dni);
-                names = edt_first_name.getText().toString();
+                firstName = edt_first_name.getText().toString();
                 maternalLast = edt_maternal_name.getText().toString();
                 paternalLast = edt_paternal_name.getText().toString();
                 dob = edt_dob.getText().toString();
@@ -201,8 +201,8 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                         if (participant == null) {
                             Intent intent = new Intent(getBaseContext(), NoMatchActivity.class);
                             intent.putExtra("dni", dni);
-                            if (names != null && !names.equals(""))
-                                intent.putExtra("names", names);
+                            if (firstName != null && !firstName.equals(""))
+                                intent.putExtra("firstName", firstName);
                             if (maternalLast != null && !maternalLast.equals(""))
                                 intent.putExtra("maternalLast", maternalLast);
                             if (paternalLast != null && !paternalLast.equals(""))
@@ -227,8 +227,8 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 }
 
                 // We have full name + DOB information
-                if (names != null && maternalLast != null && paternalLast != null &&
-                        names.length() > 0 && maternalLast.length() > 0 && paternalLast.length() > 0) {
+                if (firstName != null && maternalLast != null && paternalLast != null &&
+                        firstName.length() > 0 && maternalLast.length() > 0 && paternalLast.length() > 0) {
                     // search based off name
                 }
             }
