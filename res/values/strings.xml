@@ -309,7 +309,7 @@
     <string name="opc_visit">Visit</string>
     <string name="time">Time</string>
     <string name="txtfecha_visita">Visit Date(dd/mm/yyyy):</string>
-    <string name="txthora_visita">Visit Time(hh:mm)</string>
+    <string name="txthora_visita">Visit Time(hh:mm):</string>
     <string name="txtproject">Project:</string>
     <string name="txtvisitgroup">Visit Group:</string>
     <string name="txtenddate">End Date:</string>

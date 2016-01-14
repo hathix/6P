@@ -179,6 +179,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(ParticipantDashboardActivity.this, NewVisitActivity.class);
+                intent.putExtra("Participant", participant);
                 startActivity(intent);
             }
         });

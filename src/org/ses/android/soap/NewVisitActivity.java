@@ -1,94 +1,93 @@
 package org.ses.android.soap;
 
 import android.app.Activity;
-import android.app.AlertDialog;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
-import android.content.Intent;
+import android.app.TimePickerDialog;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
-import java.util.ArrayList;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import org.ses.android.soap.tasks.ProyectoVisitaListTask;
-import org.ses.android.soap.tasks.StringConexion;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+
+
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.DatePicker;
+import android.widget.TimePicker;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.Button;
 import android.widget.Spinner;
-import org.ses.android.soap.tasks.VisitaListTask;
+import android.util.Log;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.ExecutionException;
 
 import org.ses.android.seispapp120.R;
-import org.ses.android.soap.database.Idreg;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Proyecto;
 import org.ses.android.soap.database.Visita;
-import org.ses.android.soap.models.Locale;
+
 import java.util.Calendar;
-import java.util.Date;
-import org.ses.android.soap.MainMenuActivity;
-import org.ses.android.soap.tasks.GenerarIdENRTask;
-import org.ses.android.soap.tasks.GenerarIdTAMTask;
-import org.ses.android.soap.tasks.MostrarTipoIDTask;
-import org.ses.android.soap.tasks.TienePermisosTask;
 //import org.ses.android.soap.utils.DatePickerFragment;
 //import org.ses.android.soap.utils.TimePickerFragment;
 // TimePicker.class and TimePickerDialog.class
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.concurrent.ExecutionException;
-
-import org.ses.android.soap.database.Participant;
 // import org.ses.android.soap.database.Schedule; // ??? Can't find Project length
-import org.ses.android.soap.models.Project;
-import org.ses.android.soap.database.Visita;
 import org.ses.android.soap.database.Visitas;
+import org.ses.android.soap.models.Project;
+import org.ses.android.soap.tasks.ProjectLoadTask;
 import org.ses.android.soap.tasks.VisitaLoadTask;
 //import org.ses.android.soap.utils.DatePickerFragment;
 //import org.ses.android.soap.utils.TimePickerFragment;
 //import org.ses.android.soap.tasks.NewVisitUploadTask;
 import org.ses.android.soap.preferences.PreferencesActivity;
-
-
+import org.ses.android.soap.tasks.VisitasListTask;
+import org.ses.android.soap.tasks.ProjectLoadTask;
 
 
 //TODO: add scheduled days
 
-public class NewVisitActivity extends Activity {
+public class NewVisitActivity extends BaseActivity {
     private Participant currentParticipant;
     private Visita currentVisit;
     private Visitas currentVisitas;
     public int proyectoLength;
     private SharedPreferences mPreferences;
     private Proyecto currentProyecto;
-    int firstvisit = 2; // 3rd visit == first real visit
+
     EditText timePicker;
     private int participantVisits;
-    private Date startDay;
+    private String startDay;
     TextView visitLocaleEditor;
-    private Visitas[] visits;
+    private Visitas[] visitas_array;
+    private int num_visitas;
+    private Visita[] visita_array;
+    private int num_visita;
+    private String first_visit = "Does Not Exist";
     private int totalVisits;
     private AsyncTask<String, String, Visitas[]> asyncTask;
     private AsyncTask<String, String, Visitas[]> loadVisitas;
+    private AsyncTask<String, String, Visita[]> loadVisit;
+    private AsyncTask<String,String,ArrayList<Project>> loadProject;
     DateFormat displayDateFormat = new SimpleDateFormat("dd/MM/yyyy");
     DateFormat displayTimeFormat = new SimpleDateFormat("HH:mm");
     DateFormat dbDateFormat = new SimpleDateFormat("yyyy-MM-dd 00:00:00.0");
     DateFormat dbTimeFormat = new SimpleDateFormat("HH:mm:00.0000000");
     Date visitDate = new Date();
     Date visitTime = new Date();
+
+    private int year;
+    private int month;
+    private int day;
+    private int hour;
+    private int minute;
+    private String AM_PM;
+    boolean mIs24HourView;
 
     private TextView names;
     private TextView local;
@@ -99,7 +98,12 @@ public class NewVisitActivity extends Activity {
     private Spinner visita;
 
     private TextView visit_date;
+    private TextView visit_time;
     private Button btn_save_visit;
+
+    private static final int FIRST_VISIT = 2; // 3rd visit == first real visit
+    static final int DATE_DIALOG_ID = 999;
+    static final int TIME_DIALOG_ID = 111;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +118,14 @@ public class NewVisitActivity extends Activity {
         visit_grupo = (Spinner) findViewById(R.id.spn_visit_Grupo);
         visita = (Spinner) findViewById(R.id.spnVisita);
         visit_date = (TextView) findViewById(R.id.visit_date);
+        visit_time = (TextView) findViewById(R.id.visit_time);
 
         btn_save_visit = (Button) findViewById(R.id.btn_save_visit);
+
+        setCurrentDateOnView();
+        addListenerOnVisitDate();
+        setCurrentTimeOnView();
+        addListenerOnVisitTime();
 
         // get localeId, localeName and promoterId from sharedPreferences
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
@@ -129,46 +139,45 @@ public class NewVisitActivity extends Activity {
          */
         currentParticipant = (Participant) getIntent().getParcelableExtra("Participant");
 
+        String fullName = currentParticipant.Nombres + " " +
+                currentParticipant.ApellidoMaterno + " " +
+                currentParticipant.ApellidoPaterno;
+        names.setText(fullName);
+
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         String codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         String codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
 
+        // get project name
+        ProjectLoadTask tareaProjects = new ProjectLoadTask();
+
+        loadProject = tareaProjects.execute(localeId, "bogusurl");
+        try {
+            ArrayList<Project> project_array = loadProject.get();
+            if (project_array != null) {
+                for (int i = 0; i < project_array.size(); i++) {
+                    Project temp = project_array.get(i);
+                    if (String.valueOf(temp.id).equals(codigoProyecto)) {
+                        project.setText(temp.name);
+                    }
+                }
+            }
+        }
+        catch (InterruptedException e1) {
+            e1.printStackTrace();
+
+        } catch (ExecutionException e1) {
+            e1.printStackTrace();
+        }
         /*
          *counts how many visits the Patient has already done
         */
 
-        VisitaListTask tarea = new VisitaListTask();
-        // tasks all have extra url parameter at the end that's unused
-        asyncTask = tarea.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
-        try {
-            participantVisits = asyncTask.get().length;
-            //number of visits Patient has done already
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e)
-
-        {
-            e.printStackTrace();
-        }
-
-
-        //find the length of the project by counting # of total visits in each project
-        ProyectoVisitaListTask tarea2 = new ProyectoVisitaListTask();
-        // tasks all have extra url parameter at the end that's unused
-        asyncTask = tarea2.execute(codigoProyecto);
-        try {
-            totalVisits = asyncTask.get().length;
-            //number of visits project must do
-        } catch (InterruptedException ex)
-
-        {
-            ex.printStackTrace();
-        } catch (ExecutionException ex)
-
-        {
-            ex.printStackTrace();
-        }
-
+        /**
+         * Terminology note:
+         * - Visita is a visit group (diagnosis "TAM", enrollment "ENR", actual treatment "SIG")
+         * - Visitas is an actual visit
+         */
 
 
         /*
@@ -177,44 +186,225 @@ public class NewVisitActivity extends Activity {
         *
          */
 
-        /* public void loadVisitsList(){
-            VisitaListTask tareaVisits = new VisitaListTask();
-
-            loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
-            try {
-                ArrayList<Visitas> visitasArray = new ArrayList<Visitas>();
-                visits = loadVisitas.get();
-
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-
-            } catch (ExecutionException e1) {
-                e1.printStackTrace();
-            }
-        } */
-
-        /* //call loadVisitsList()
-        startDay = (Date)(visits[firstvisit]).FechaVisita;  // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
-
-        proyectoLength = (int)(totalVisits - firstvisit) * (int)currentVisit.DiasVisitaProx;
-        // endDay = startDay + proyectoLength; */
-
-
-
-        //the Time picker automatically set to current time
-        final Calendar c = Calendar.getInstance();
-        int hour = c.get(Calendar.HOUR_OF_DAY);
-        int minute = c.get(Calendar.MINUTE);
-
-        /**
-         * set the text field as the selected date
+        /*
+         * # of patient visits so far
          */
-        /* @Override
-        public void returnDate (Date date){
-            datePicker.setText(displayDateFormat.format(date));
-            visitDate = date;
-        } */
+        VisitasListTask tareaVisits = new VisitasListTask();
+
+        loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
+        try {
+            visitas_array = loadVisitas.get();
+            if (visitas_array != null) {
+                num_visitas = visitas_array.length;
+                Log.d("myactivity0", "number of visits already: " + num_visitas);
+                // find date of first treatment
+                // 77985806
+                if (num_visitas > 2) {
+                    for (int i = 0; i < num_visitas; i++) {
+                        Visitas temp = visitas_array[i];
+                        if (temp.CodigoGrupoVisita.equals("3") && temp.CodigoVisita.equals("1")) {
+                            first_visit = temp.FechaVisita;
+                        }
+
+                    }
+                }
+            }
+            Log.d("myactivity1", "number of visits already: " + num_visitas);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+
+        } catch (ExecutionException e1) {
+            e1.printStackTrace();
+        }
+
+        start_date.setText(first_visit);
+
+        VisitaLoadTask tareaVisit = new VisitaLoadTask();
+
+        loadVisit = tareaVisit.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
+        try {
+            visita_array = loadVisit.get(); //Visit
+            if (visita_array != null) {
+                num_visita = visita_array.length; //total number of visits in a project
+            }
+            Log.d("myactivit2", "number of visits total: " + num_visita);
+            Log.d("myactivity3", "number of visits already: " + num_visitas);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+
+        } catch (ExecutionException e1) {
+            e1.printStackTrace();
+        }
+
+        /*
+        *   populate the spinners
+        *   First spinner: Visit Grupo (TAM, ENR, SIG)
+         */
+        ArrayList visitgrupoSpnList = new ArrayList<String>();
+        visitgrupoSpnList.add("Tamizaje"); // 1
+        visitgrupoSpnList.add("Enrolamiento"); // 2
+        visitgrupoSpnList.add("Siguiente"); // 3
+        visitgrupoSpnList.add("Visita No Programada 1"); //not sure what this is, but I'm keeping it. 0
+
+        ArrayAdapter<String> visitasSpinnerAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, visitgrupoSpnList);
+
+        visitasSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        visit_grupo.setAdapter(visitasSpinnerAdapter);
+
+
+        /*
+        *
+        *   Second spinner: Visits (V1, V2, V3)
+        *   Set from current visit on. So if the patient has already been through 5 visits, start at 6.
+        *   num_visitas is the number of visits the patient has done already.
+        *   num_visita is the number of visits in a project
+         */
+        Log.d("myactivity", "number of visits already: " + num_visitas);
+        Log.d("myactivity", "number of visits total: " + num_visita);
+        ArrayList visitaSpnList = new ArrayList<String>();
+        if (num_visitas < num_visita) {
+            for (int i = num_visitas; i < num_visita; i++) {
+                visitaSpnList.add("V" + i);
+
+            }
+
+        }
+        else visitaSpnList.add("Done!");
+        Log.d("myactivity", "done");
+
+        ArrayAdapter<String> visitaSpinnerAdapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, visitaSpnList);
+
+        visitaSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+        visita.setAdapter(visitaSpinnerAdapter);
+
+
+
     }
+
+    public void setCurrentDateOnView() {
+
+        final Calendar c = Calendar.getInstance();
+        year = c.get(Calendar.YEAR);
+        month = c.get(Calendar.MONTH);
+        day = c.get(Calendar.DAY_OF_MONTH);
+
+        // set current date into textview
+        visit_date.setText(new StringBuilder()
+                // Month is 0 based, just add 1
+                .append(day).append("/").append(month + 1).append("/")
+                .append(year));
+
+        hour = c.get(Calendar.HOUR_OF_DAY);
+        minute = c.get(Calendar.MINUTE);
+
+        // set current time into textview
+        visit_time.setText(hour + ":" + minute);
+
+    }
+
+    public void setCurrentTimeOnView() {}
+
+    public void addListenerOnVisitDate() {
+
+        visit_date.setOnTouchListener(new View.OnTouchListener() {
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                showDialog(DATE_DIALOG_ID);
+                return true;
+            }
+
+
+        });
+        visit_date.setOnClickListener(new View.OnClickListener() {
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onClick(View v) {
+
+                showDialog(DATE_DIALOG_ID);
+
+            }
+
+        });
+
+    }
+
+    public void addListenerOnVisitTime() {
+        visit_time.setOnTouchListener(new View.OnTouchListener() {
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                showDialog(TIME_DIALOG_ID);
+                return true;
+            }
+
+
+        });
+        visit_time.setOnClickListener(new View.OnClickListener() {
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onClick(View v) {
+
+                showDialog(TIME_DIALOG_ID);
+
+            }
+
+        });
+    }
+
+    @Override
+    protected Dialog onCreateDialog(int id) {
+        switch (id) {
+            case DATE_DIALOG_ID:
+                // set date picker as current date
+                return new DatePickerDialog(this, datePickerListener,
+                        year, month,day);
+            case TIME_DIALOG_ID:
+                return new TimePickerDialog(this, timePickerListener, hour, minute, mIs24HourView);
+        }
+        return null;
+    }
+
+    private DatePickerDialog.OnDateSetListener datePickerListener
+            = new DatePickerDialog.OnDateSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        @Override
+        public void onDateSet(DatePicker view, int selectedYear,
+                              int selectedMonth, int selectedDay) {
+            year = selectedYear;
+            month = selectedMonth;
+            day = selectedDay;
+
+            // set selected date into textview
+            visit_date.setText(day + "/" + (month + 1) + ("/") + (year));
+
+        }
+    };
+
+    private TimePickerDialog.OnTimeSetListener timePickerListener
+            = new TimePickerDialog.OnTimeSetListener() {
+
+        // when dialog box is closed, below method will be called.
+        @Override
+        public void onTimeSet(TimePicker view, int selectedHour,
+                              int selectedMinute) {
+            hour = selectedHour;
+            minute = selectedMinute;
+
+            // set selected date into textview
+            visit_time.setText(hour + ":" + minute);
+
+        }
+    };
 
 }
 
