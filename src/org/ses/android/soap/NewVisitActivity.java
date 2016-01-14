@@ -176,7 +176,7 @@ public class NewVisitActivity extends Activity {
         try {
             visita_array = loadVisit.get(); //Visit
             if (visita_array != null) {
-                num_visita = visita_array.length;
+                num_visita = visita_array.length; //total number of visits in a project
             }
 
         } catch (InterruptedException e1) {
@@ -187,16 +187,16 @@ public class NewVisitActivity extends Activity {
         }
 
         // returns the 3rd visit, which is the 1st real visit (TAM, ENR , SIG V1)
-        /* if (visits != null && visits.length > FIRST_VISIT) {
-            String startDay = (String) (visits[FIRST_VISIT]).FechaVisita;
+        if (visitas_array != null && visitas_array.length > FIRST_VISIT) {
+            String startDay = (String) (visitas_array[FIRST_VISIT]).FechaVisita;
 
             // access currentVisit or some visit
-            proyectoLength = (int) (totalVisits - FIRST_VISIT) * visit_array[FIRST_VISIT].DiasVisitaProx;
+            proyectoLength = (int) (num_visita - FIRST_VISIT) * visita_array[FIRST_VISIT].DiasVisitaProx;
             // endDay = startDay + proyectoLength; 
-        } */
+        }
 
 
-
+        //78163118
     }
 
     public void setCurrentDateOnView() {
