@@ -160,25 +160,6 @@ public class NewVisitActivity extends Activity {
         }
 
 
-        //find the length of the project by counting # of total visits in each project
-        ProyectoVisitaListTask tarea2 = new ProyectoVisitaListTask();
-        // tasks all have extra url parameter at the end that's unused
-        asyncTask = tarea2.execute(codigoProyecto);
-        try {
-            Visitas[] visitList = asyncTask.get();
-            if (visitList != null) {
-                totalVisits = visitList.length;
-            }
-            //number of visits project must do
-        } catch (InterruptedException ex)
-
-        {
-            ex.printStackTrace();
-        } catch (ExecutionException ex)
-
-        {
-            ex.printStackTrace();
-        }
 
 
 
@@ -210,6 +191,7 @@ public class NewVisitActivity extends Activity {
         try {
             ArrayList<Visita> visitArray = new ArrayList<Visita>();
             visit_array = loadVisit.get(); //Visit
+            totalVisits = visit_array.length;
 
         } catch (InterruptedException e1) {
             e1.printStackTrace();
