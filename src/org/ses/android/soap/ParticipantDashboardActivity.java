@@ -61,7 +61,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
     private SharedPreferences mPreferences;
 
-    DateFormat dbDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+    DateFormat visitDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     private Visitas[] visits;
     private AsyncTask<String, String, Visitas[]> asyncTask;
@@ -127,7 +127,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 {
                     visit = visits[i];
                     try {
-                        date = dbDateFormat.parse(visit.FechaVisita);
+                        date = visitDateFormat.parse(visit.FechaVisita.split("\\s+")[1]);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
