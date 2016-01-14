@@ -51,7 +51,7 @@
 	<string name="cancel_loading_form">Cancelar</string>
 	<string name="cancel_location">Cancelar</string>
 	<string name="cancel_saving_form">Cancelar</string>
-	<string name="cannot_edit_completed_form">Este formulario no puede ser editado despues que se marco como terminado. Puede que este encriptado</string>
+	<string name="cannot_edit_completed_form">Este formulario no puede ser editado después que se marco como terminado. Puede que este encriptado</string>
 	<string name="capture_audio">Grabar el Sonido</string>
 	<string name="capture_image">Tomar la Foto</string>
 	<string name="capture_video">Grabar el Video</string>
@@ -104,7 +104,7 @@
 	<string name="get_barcode">Obtener Codigo de Barra</string>
 	<string name="get_forms">Obtener el Formulario en Blanco</string>
 	<string name="get_location">Obtener localización</string>
-	<string name="provider_disabled_error">Los proveedores de ubicación estan deshabilitados!</string>
+	<string name="provider_disabled_error">Los proveedores de ubicación están deshabilitados!</string>
 	<string name="invalid_answer_error">Respuesta invalida!</string>
 	<string name="jump_to_beginning">Ir al Inicio</string>
 	<string name="jump_to_end">Ir al Final</string>
@@ -388,7 +388,7 @@
 	<string name="patient_dash">Paciente Dashboard</string>
 	<string name="paternal_name">Apellido Paterno</string>
 	<string name="past_week">Ultima Semana</string>
-	<string name="past_month">Ultimo Mes</string>
+	<string name="past_month">Último Mes</string>
 	<string name="participante_optiones">Marcar Visita / Registrar o Actualizar Paciente</string>
 	<string name="participant_name">Participante:</string>
 	<string name="participant_id">ID de Participante</string>
