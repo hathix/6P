@@ -347,7 +347,7 @@ public class RegisterParticipantActivity extends BaseActivity {
             case DATE_DIALOG_ID:
                 // set date picker as current date
                 return new DatePickerDialog(this, datePickerListener,
-                        year, month,day);
+                        year, month - 1, day);
         }
         return null;
     }
