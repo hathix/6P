@@ -373,12 +373,16 @@
     <string name="action_logout">Logout</string>
     <string name="confirm">Confirm</string>
     <string name="dob">Date of Birth (Tap to Change)</string>
+    <string name="dni_found">DNI Found</string>
+    <string name="dni_found_save">Found patient %1$s with this DNI. Save fingerprint to this patient?</string>
+    <string name="dni_not_found">Could not find patient with this DNI.</string>
     <string name="fingerprint_saved">Fingerprint Saved</string>
     <string name="first_name">First Name:</string>
     <string name="lista">View Missing Appointments</string>
     <string name="matches">Select Patient to Confirm</string>
     <string name="maternal_name">Maternal Name:</string>
     <string name="next_visit">Next Visit: </string>
+    <string name="no">No</string>
     <string name="no_patient_found">No Patient Found</string>
     <string name="not_found">Not Found</string>
     <string name="participante_optiones">Check In/Register/Update Patient</string>
@@ -406,5 +410,6 @@
     <string name="try_again">Try Again</string>
     <string name="textAddInfo">Enter Optional Additional Info</string>
     <string name="textFingerprintInstruction">Please place index finger on scanner.</string>
+    <string name="yes">Yes</string>
 
 </resources>
