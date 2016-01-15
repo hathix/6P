@@ -16,6 +16,8 @@ import android.preference.PreferenceManager;
 
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
@@ -131,9 +133,9 @@ public class NewVisitActivity extends BaseActivity {
         btn_save_visit = (Button) findViewById(R.id.btn_save_visit);
 
         setCurrentDateOnView();
-        addListenerOnVisitDate();
+        addListenerOntvwfecha_visita();
         setCurrentTimeOnView();
-        addListenerOnVisitTime();
+        addListenerOntvwhora_visita();
 
         btn_save_visit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -183,22 +185,15 @@ public class NewVisitActivity extends BaseActivity {
 
 
         /*
-        *start day of the treatment + total time of treatment = end day
-        * Use patient's current day to determine how many days left
-        *
-         */
-
-        /*
          * # of patient visits so far
          */
-        /* VisitasListTask tareaVisits = new VisitasListTask();
+        VisitasListTask tareaVisits = new VisitasListTask();
 
         loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
         try {
             visitas_array = loadVisitas.get();
             if (visitas_array != null) {
                 num_visitas = visitas_array.length;
-                Log.d("myactivity0", "number of visits already: " + num_visitas);
                 // find date of first treatment
                 // 77985806
                 if (num_visitas > 2) {
@@ -211,7 +206,6 @@ public class NewVisitActivity extends BaseActivity {
                     }
                 }
             }
-            Log.d("myactivity1", "number of visits already: " + num_visitas);
         } catch (InterruptedException e1) {
             e1.printStackTrace();
 
@@ -219,24 +213,7 @@ public class NewVisitActivity extends BaseActivity {
             e1.printStackTrace();
         }
 
-        start_date.setText(first_visit); */
-
-        /* VisitaLoadTask tareaVisit = new VisitaLoadTask();
-
-        loadVisita = tareaVisit.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
-        try {
-            visita_array = loadVisita.get(); //Visit
-            if (visita_array != null) {
-                num_visita = visita_array.length; //total number of visits in a project
-            }
-            Log.d("myactivit2", "number of visits total: " + num_visita);
-            Log.d("myactivity3", "number of visits already: " + num_visitas);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-
-        } catch (ExecutionException e1) {
-            e1.printStackTrace();
-        } */
+        start_date.setText(first_visit);
 
         loadGrupoAndVisitaSpinners(codigopaciente, selLocal, selProyecto);
 
@@ -277,54 +254,9 @@ public class NewVisitActivity extends BaseActivity {
                     }
                 });
 
-
-        /*
-        *   populate the spinners
-        *   First spinner: Visit Grupo (TAM, ENR, SIG)
-         */
-        /* ArrayList visitgrupoSpnList = new ArrayList<String>();
-        visitgrupoSpnList.add("Tamizaje"); // 1
-        visitgrupoSpnList.add("Enrolamiento"); // 2
-        visitgrupoSpnList.add("Siguiente"); // 3
-        visitgrupoSpnList.add("Visita No Programada 1"); //not sure what this is, but I'm keeping it. 0
-
-        ArrayAdapter<String> visitasSpinnerAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, visitgrupoSpnList);
-
-        visitasSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spnGrupo.setAdapter(visitasSpinnerAdapter); */
-
-
-        /*
-        *
-        *   Second spinner: Visits (V1, V2, V3)
-        *   Set from current visit on. So if the patient has already been through 5 visits, start at 6.
-        *   num_visitas is the number of visits the patient has done already.
-        *   num_visita is the number of visits in a project
-         */
-        /* Log.d("myactivity", "number of visits already: " + num_visitas);
-        Log.d("myactivity", "number of visits total: " + num_visita);
-        ArrayList visitaSpnList = new ArrayList<String>();
-        if (num_visitas < num_visita) {
-            for (int i = num_visitas; i < num_visita; i++) {
-                visitaSpnList.add("V" + i);
-
-            }
-
-        }
-        else visitaSpnList.add("Done!");
-        Log.d("myactivity", "done");
-
-        ArrayAdapter<String> visitaSpinnerAdapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, visitaSpnList);
-
-        visitaSpinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spnVisita.setAdapter(visitaSpinnerAdapter); */
-
     }
 
+    // display current date
     public void setCurrentDateOnView() {
 
         final Calendar c = Calendar.getInstance();
@@ -332,7 +264,6 @@ public class NewVisitActivity extends BaseActivity {
         month = c.get(Calendar.MONTH);
         day = c.get(Calendar.DAY_OF_MONTH);
 
-        // set current date into textview
         visit_date.setText(new StringBuilder()
                 // Month is 0 based, just add 1
                 .append(day).append("/").append(month + 1).append("/")
@@ -340,45 +271,50 @@ public class NewVisitActivity extends BaseActivity {
 
     }
 
+    public void addListenerOntvwfecha_visita() {
+        visit_date.setOnTouchListener(new OnTouchListener(){
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                showDialog(DATE_DIALOG_ID);
+                return true;
+            }
+
+
+        });
+
+
+        visit_date.setOnClickListener(new OnClickListener() {
+
+            @SuppressWarnings("deprecation")
+            @Override
+            public void onClick(View v) {
+
+                showDialog(DATE_DIALOG_ID);
+
+            }
+
+        });
+
+    }
+
+    // display current date
     public void setCurrentTimeOnView() {
+
+
         final Calendar c = Calendar.getInstance();
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
 
-        hour = c.get(Calendar.HOUR_OF_DAY);
-        minute = c.get(Calendar.MINUTE);
-
-        // set current time into textview
-        visit_time.setText(hour + ":" + minute);
-    }
-
-    public void addListenerOnVisitDate() {
-
-        visit_date.setOnTouchListener(new View.OnTouchListener() {
-
-            @SuppressWarnings("deprecation")
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                showDialog(DATE_DIALOG_ID);
-                return true;
-            }
-
-
-        });
-        visit_date.setOnClickListener(new View.OnClickListener() {
-
-            @SuppressWarnings("deprecation")
-            @Override
-            public void onClick(View v) {
-
-                showDialog(DATE_DIALOG_ID);
-
-            }
-
-        });
+        visit_time.setText(
+                new StringBuilder().append(pad(hour))
+                        .append(":").append(pad(minute)));
 
     }
 
-    public void addListenerOnVisitTime() {
-        visit_time.setOnTouchListener(new View.OnTouchListener() {
+    public void addListenerOntvwhora_visita() {
+        visit_time.setOnTouchListener(new OnTouchListener(){
 
             @SuppressWarnings("deprecation")
             @Override
@@ -389,7 +325,9 @@ public class NewVisitActivity extends BaseActivity {
 
 
         });
-        visit_time.setOnClickListener(new View.OnClickListener() {
+
+
+        visit_time.setOnClickListener(new OnClickListener() {
 
             @SuppressWarnings("deprecation")
             @Override
@@ -400,6 +338,7 @@ public class NewVisitActivity extends BaseActivity {
             }
 
         });
+
     }
 
     @Override
@@ -410,7 +349,9 @@ public class NewVisitActivity extends BaseActivity {
                 return new DatePickerDialog(this, datePickerListener,
                         year, month,day);
             case TIME_DIALOG_ID:
-                return new TimePickerDialog(this, timePickerListener, hour, minute, mIs24HourView);
+                // set date picker as current date
+                return new TimePickerDialog(this, timePickerListener,
+                        hour, minute,true);
         }
         return null;
     }
@@ -427,7 +368,12 @@ public class NewVisitActivity extends BaseActivity {
             day = selectedDay;
 
             // set selected date into textview
-            visit_date.setText(day + "/" + (month + 1) + ("/") + (year));
+//			tvDisplayDate.setText(new StringBuilder().append(day)
+//			   .append("/").append(month + 1).append("/").append(year)
+//			   .append(" "));
+
+            visit_date.setText(new StringBuilder().append(day)
+                    .append("/").append(month + 1).append("/").append(year));
 
         }
     };
@@ -437,16 +383,37 @@ public class NewVisitActivity extends BaseActivity {
 
         // when dialog box is closed, below method will be called.
         @Override
-        public void onTimeSet(TimePicker view, int selectedHour,
-                              int selectedMinute) {
+        public void onTimeSet(TimePicker timePicker, int selectedHour, int selectedMinute) {
+//			String sHour = "0"+String.valueOf(selectedHour);
+//			String sMinute = "0"+String.valueOf(selectedMinute);
+//			if (sHour.length() > 2) sHour = sHour.substring(1, 2);
+////			sHour = sHour.substring(1, 2);
+//			if (sMinute.length() > 2) sMinute = sMinute.substring(1, 2);
+////			sMinute = sMinute.substring(1, 2);
+//
+//			tvwhora_visita.setText( sHour + ":" + sMinute);
+
             hour = selectedHour;
             minute = selectedMinute;
 
-            // set selected date into textview
-            visit_time.setText(hour + ":" + minute);
+            // set current time into textview
+            visit_time.setText(new StringBuilder().append(pad(hour))
+                    .append(":").append(pad(minute)));
+
+            // set current time into timepicker
+//			timePicker1.setCurrentHour(hour);
+//			timePicker1.setCurrentMinute(minute);
 
         }
+
     };
+
+    private static String pad(int c) {
+        if (c >= 10)
+            return String.valueOf(c);
+        else
+            return "0" + String.valueOf(c);
+    }
 
     /**
      * Called when the save button is hit.
@@ -591,53 +558,6 @@ public class NewVisitActivity extends BaseActivity {
      */
     public void loadGrupoAndVisitaSpinners(String codigopaciente,String local,String proyecto){
         VisitaLoadTask tareaVisita = new VisitaLoadTask();
-
-        /* VisitasListTask tareaVisits = new VisitasListTask();
-
-        loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
-        try {
-            visitas_array = loadVisitas.get();
-            if (visitas_array != null) {
-                num_visitas = visitas_array.length;
-                Log.d("myactivity0", "number of visits already: " + num_visitas);
-                // find date of first treatment
-                // 77985806
-                if (num_visitas > 2) {
-                    for (int i = 0; i < num_visitas; i++) {
-                        Visitas temp = visitas_array[i];
-                        if (temp.CodigoGrupoVisita.equals("3") && temp.CodigoVisita.equals("1")) {
-                            first_visit = temp.FechaVisita;
-                        }
-
-                    }
-                }
-            }
-            Log.d("myactivity1", "number of visits already: " + num_visitas);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-
-        } catch (ExecutionException e1) {
-            e1.printStackTrace();
-        }
-
-
-         VisitaLoadTask tareaVisit = new VisitaLoadTask();
-
-        loadVisita = tareaVisit.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
-        try {
-            visita_array = loadVisita.get(); //Visit
-            if (visita_array != null) {
-                num_visita = visita_array.length; //total number of visits in a project
-            }
-            Log.d("myactivit2", "number of visits total: " + num_visita);
-            Log.d("myactivity3", "number of visits already: " + num_visitas);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-
-        } catch (ExecutionException e1) {
-            e1.printStackTrace();
-        } */
-
 
         loadVisita = tareaVisita.execute(codigopaciente, local, proyecto,"bogusurl");
         Visita[] objVisita;
