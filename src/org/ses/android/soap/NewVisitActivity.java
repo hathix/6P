@@ -582,7 +582,7 @@ public class NewVisitActivity extends BaseActivity {
 
         loadVisita = tareaVisita.execute(codigopaciente,local,proyecto,"bogusurl");
         Visita[] objVisita;
-        String[] wee,wee1,empty;
+        String[] grupoList, visitaList, empty;
         empty = new String[0];
         ArrayAdapter<String> emptyArrayAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, empty);
@@ -594,20 +594,22 @@ public class NewVisitActivity extends BaseActivity {
 
             objVisita = loadVisita.get();
             if (objVisita != null){
-                wee = new String[objVisita.length];
-                wee1 = new String[objVisita.length];
+                grupoList = new String[objVisita.length];
+                visitaList = new String[objVisita.length];
+                
                 for(int i = 0;i < objVisita.length; i++){
-                    wee[i]= String.valueOf(objVisita[i].CodigoGrupoVisita) +" - "+objVisita[i].NombreGrupoVisita;
-                    wee1[i]= String.valueOf(objVisita[i].CodigoVisita) +" - "+objVisita[i].DescripcionVisita;
+                    grupoList[i]= String.valueOf(objVisita[i].CodigoGrupoVisita) +" - "+objVisita[i].NombreGrupoVisita;
+                     visitaList[i]= String.valueOf(objVisita[i].CodigoVisita) +" - "+objVisita[i].DescripcionVisita;
                 }
-                ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(
-                        this, android.R.layout.simple_spinner_item, wee);
-                spinnerArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-                spnGrupo.setAdapter(spinnerArrayAdapter);
-                ArrayAdapter<String> spinnerArrayAdapter1 = new ArrayAdapter<String>(
-                        this, android.R.layout.simple_spinner_item, wee1);
-                spinnerArrayAdapter1.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
-                spnVisita.setAdapter(spinnerArrayAdapter1);
+                
+                ArrayAdapter<String> grupoAdapter = new ArrayAdapter<String>(
+                        this, android.R.layout.simple_spinner_item, grupoList);
+                grupoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spnGrupo.setAdapter(grupoAdapter);
+                ArrayAdapter<String> visitaAdapter = new ArrayAdapter<String>(
+                        this, android.R.layout.simple_spinner_item,  visitaList);
+                visitaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spnVisita.setAdapter(visitaAdapter);
 
                 Log.i("Visita","Visita Array");
             }
