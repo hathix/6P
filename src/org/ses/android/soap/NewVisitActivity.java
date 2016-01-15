@@ -240,6 +240,7 @@ public class NewVisitActivity extends BaseActivity {
 
         loadGrupoAndVisitaSpinners(codigopaciente, selLocal, selProyecto);
 
+        // TODO consider moving these to the load...() method
         spnGrupo.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -591,7 +592,54 @@ public class NewVisitActivity extends BaseActivity {
     public void loadGrupoAndVisitaSpinners(String codigopaciente,String local,String proyecto){
         VisitaLoadTask tareaVisita = new VisitaLoadTask();
 
-        loadVisita = tareaVisita.execute(codigopaciente,local,proyecto,"bogusurl");
+        /* VisitasListTask tareaVisits = new VisitasListTask();
+
+        loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
+        try {
+            visitas_array = loadVisitas.get();
+            if (visitas_array != null) {
+                num_visitas = visitas_array.length;
+                Log.d("myactivity0", "number of visits already: " + num_visitas);
+                // find date of first treatment
+                // 77985806
+                if (num_visitas > 2) {
+                    for (int i = 0; i < num_visitas; i++) {
+                        Visitas temp = visitas_array[i];
+                        if (temp.CodigoGrupoVisita.equals("3") && temp.CodigoVisita.equals("1")) {
+                            first_visit = temp.FechaVisita;
+                        }
+
+                    }
+                }
+            }
+            Log.d("myactivity1", "number of visits already: " + num_visitas);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+
+        } catch (ExecutionException e1) {
+            e1.printStackTrace();
+        }
+
+
+         VisitaLoadTask tareaVisit = new VisitaLoadTask();
+
+        loadVisita = tareaVisit.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
+        try {
+            visita_array = loadVisita.get(); //Visit
+            if (visita_array != null) {
+                num_visita = visita_array.length; //total number of visits in a project
+            }
+            Log.d("myactivit2", "number of visits total: " + num_visita);
+            Log.d("myactivity3", "number of visits already: " + num_visitas);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+
+        } catch (ExecutionException e1) {
+            e1.printStackTrace();
+        } */
+
+
+        loadVisita = tareaVisita.execute(codigopaciente, local, proyecto,"bogusurl");
         Visita[] objVisita;
         String[] grupoList, visitaList;
 
