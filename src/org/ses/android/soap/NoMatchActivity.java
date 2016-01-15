@@ -26,7 +26,7 @@ import org.ses.android.soap.tasks.TienePermisosTask;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Created by saranya on 1/12/16.
+ * Created by svijayakumar2 on 1/12/16.
  */
 public class NoMatchActivity extends BaseActivity {
 
@@ -88,7 +88,9 @@ public class NoMatchActivity extends BaseActivity {
 
 
         // "Register Patient" button should open RegisterParticipantActivity
+
         Button buttonRegisterNewParticipant = (Button) findViewById(R.id.btnRegisterNewParticipant);
+
         buttonRegisterNewParticipant.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -110,7 +112,7 @@ public class NoMatchActivity extends BaseActivity {
         });
 
         // "Add Fingerprint to Existing Patient" button should open AddFingerprintExistingActivity
-        // if there's a fingerprint, otherwise, get rid of the button
+
         Button buttonAddFingerprintExisting = (Button) findViewById(R.id.btnAddFingerprintExisting);
 
         if (mPreferences.getString("Fingerprint", "notFound").equals("notFound"))
