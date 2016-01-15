@@ -145,7 +145,7 @@ public class NewVisitActivity extends BaseActivity {
         url = StringConexion.conexion;
 
         /**
-         * if a patient was passed in, pre-load that patient
+         * pre-load patient that was passed in
          */
         currentParticipant = getIntent().getParcelableExtra("Participant");
         names.setText(currentParticipant.getFullNameTitleCase());
@@ -154,14 +154,15 @@ public class NewVisitActivity extends BaseActivity {
         codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
 
-        //Locale
+        // load locale
         String local_name = mPreferences.getString(PreferencesActivity.KEY_LOCAL_NAME, "");
         local.setText(local_name);
         String local_id = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
         int intLocal = Integer.valueOf(local_id);
         selLocal = Integer.toString(intLocal);
         Log.i("Visita", ",selLocal:" + selLocal + ",selProyecto:" + selProyecto);
-        //Project
+
+        // load project
         String project_name = mPreferences.getString(PreferencesActivity.KEY_PROJECT_NAME, "");
         project.setText(project_name);
         String project_id = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
@@ -182,63 +183,8 @@ public class NewVisitActivity extends BaseActivity {
          */
 
 
-        /*
-        *start day of the treatment + total time of treatment = end day
-        * Use patient's current day to determine how many days left
-        *
-         */
-
-        /*
-         * # of patient visits so far
-         */
-        /* VisitasListTask tareaVisits = new VisitasListTask();
-
-        loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
-        try {
-            visitas_array = loadVisitas.get();
-            if (visitas_array != null) {
-                num_visitas = visitas_array.length;
-                Log.d("myactivity0", "number of visits already: " + num_visitas);
-                // find date of first treatment
-                // 77985806
-                if (num_visitas > 2) {
-                    for (int i = 0; i < num_visitas; i++) {
-                        Visitas temp = visitas_array[i];
-                        if (temp.CodigoGrupoVisita.equals("3") && temp.CodigoVisita.equals("1")) {
-                            first_visit = temp.FechaVisita;
-                        }
-
-                    }
-                }
-            }
-            Log.d("myactivity1", "number of visits already: " + num_visitas);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-
-        } catch (ExecutionException e1) {
-            e1.printStackTrace();
-        }
-
-        start_date.setText(first_visit); */
-
-        /* VisitaLoadTask tareaVisit = new VisitaLoadTask();
-
-        loadVisita = tareaVisit.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
-        try {
-            visita_array = loadVisita.get(); //Visit
-            if (visita_array != null) {
-                num_visita = visita_array.length; //total number of visits in a project
-            }
-            Log.d("myactivit2", "number of visits total: " + num_visita);
-            Log.d("myactivity3", "number of visits already: " + num_visitas);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-
-        } catch (ExecutionException e1) {
-            e1.printStackTrace();
-        } */
-
         loadGrupoAndVisitaSpinners(codigopaciente, selLocal, selProyecto);
+//        loadGrupoAndVisitaSpinners(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto);
 
         // TODO consider moving these to the load...() method
         spnGrupo.setOnItemSelectedListener(
@@ -323,6 +269,43 @@ public class NewVisitActivity extends BaseActivity {
 
         spnVisita.setAdapter(visitaSpinnerAdapter); */
 
+
+        // START DATE CALCULATIONS
+        /*
+        *start day of the treatment + total time of treatment = end day
+        * Use patient's current day to determine how many days left
+        *
+         */
+        /* VisitasListTask tareaVisits = new VisitasListTask();
+
+        loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
+        try {
+            visitas_array = loadVisitas.get();
+            if (visitas_array != null) {
+                num_visitas = visitas_array.length;
+                Log.d("myactivity0", "number of visits already: " + num_visitas);
+                // find date of first treatment
+                // 77985806
+                if (num_visitas > 2) {
+                    for (int i = 0; i < num_visitas; i++) {
+                        Visitas temp = visitas_array[i];
+                        if (temp.CodigoGrupoVisita.equals("3") && temp.CodigoVisita.equals("1")) {
+                            first_visit = temp.FechaVisita;
+                        }
+
+                    }
+                }
+            }
+            Log.d("myactivity1", "number of visits already: " + num_visitas);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+
+        } catch (ExecutionException e1) {
+            e1.printStackTrace();
+        }
+
+        start_date.setText(first_visit);
+        */
     }
 
     public void setCurrentDateOnView() {
@@ -589,38 +572,10 @@ public class NewVisitActivity extends BaseActivity {
      * @param local
      * @param proyecto
      */
-    public void loadGrupoAndVisitaSpinners(String codigopaciente,String local,String proyecto){
+    public void loadGrupoAndVisitaSpinners(String codigopaciente, String local, String proyecto){
         VisitaLoadTask tareaVisita = new VisitaLoadTask();
 
-        /* VisitasListTask tareaVisits = new VisitasListTask();
-
-        loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
-        try {
-            visitas_array = loadVisitas.get();
-            if (visitas_array != null) {
-                num_visitas = visitas_array.length;
-                Log.d("myactivity0", "number of visits already: " + num_visitas);
-                // find date of first treatment
-                // 77985806
-                if (num_visitas > 2) {
-                    for (int i = 0; i < num_visitas; i++) {
-                        Visitas temp = visitas_array[i];
-                        if (temp.CodigoGrupoVisita.equals("3") && temp.CodigoVisita.equals("1")) {
-                            first_visit = temp.FechaVisita;
-                        }
-
-                    }
-                }
-            }
-            Log.d("myactivity1", "number of visits already: " + num_visitas);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-
-        } catch (ExecutionException e1) {
-            e1.printStackTrace();
-        }
-
-
+        /*
          VisitaLoadTask tareaVisit = new VisitaLoadTask();
 
         loadVisita = tareaVisit.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
@@ -631,12 +586,8 @@ public class NewVisitActivity extends BaseActivity {
             }
             Log.d("myactivit2", "number of visits total: " + num_visita);
             Log.d("myactivity3", "number of visits already: " + num_visitas);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-
-        } catch (ExecutionException e1) {
-            e1.printStackTrace();
-        } */
+        }
+        */
 
 
         loadVisita = tareaVisita.execute(codigopaciente, local, proyecto,"bogusurl");
@@ -653,7 +604,6 @@ public class NewVisitActivity extends BaseActivity {
         spnVisita.setAdapter(emptyArrayAdapter);
 
         try {
-
             objVisita = loadVisita.get();
             if (objVisita != null){
                 grupoList = new String[objVisita.length];
@@ -663,20 +613,19 @@ public class NewVisitActivity extends BaseActivity {
                     grupoList[i] = String.valueOf(objVisita[i].CodigoGrupoVisita) + " - " + objVisita[i].NombreGrupoVisita;
                     visitaList[i] = String.valueOf(objVisita[i].CodigoVisita) + " - " + objVisita[i].DescripcionVisita;
                 }
-                
+
+                // create a new adapter for the visit group spinner
                 ArrayAdapter<String> grupoAdapter = new ArrayAdapter<String>(
                         this, android.R.layout.simple_spinner_item, grupoList);
                 grupoAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spnGrupo.setAdapter(grupoAdapter);
+
+                // create a new adapter for the visit spinner
                 ArrayAdapter<String> visitaAdapter = new ArrayAdapter<String>(
                         this, android.R.layout.simple_spinner_item,  visitaList);
                 visitaAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spnVisita.setAdapter(visitaAdapter);
-
-                Log.i("Visita","Visita Array");
             }
-
-
         } catch (InterruptedException e1) {
             // TODO Auto-generated catch block
             e1.printStackTrace();
