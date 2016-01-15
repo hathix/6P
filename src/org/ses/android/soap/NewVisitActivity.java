@@ -160,14 +160,14 @@ public class NewVisitActivity extends BaseActivity {
         String local_id = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
         int intLocal = Integer.valueOf(local_id);
         selLocal = Integer.toString(intLocal);
-        Log.i("Visita",",selLocal:"+selLocal+",selProyecto:"+selProyecto);
+        Log.i("Visita", ",selLocal:" + selLocal + ",selProyecto:" + selProyecto);
         //Project
         String project_name = mPreferences.getString(PreferencesActivity.KEY_PROJECT_NAME, "");
         project.setText(project_name);
         String project_id = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
         int intProject = Integer.valueOf(project_id);
         selProyecto = Integer.toString(intProject);
-        Log.i("Visita",",selProyecto:"+selProyecto);
+        Log.i("Visita", ",selProyecto:" + selProyecto);
 
         codigopaciente = mPreferences.getString("CodigoPaciente", "");
 
@@ -238,7 +238,7 @@ public class NewVisitActivity extends BaseActivity {
             e1.printStackTrace();
         } */
 
-        loadVisitaSpinner(codigopaciente,selLocal,selProyecto);
+        loadVisitaSpinner(codigopaciente, selLocal, selProyecto);
 
         spnGrupo.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
