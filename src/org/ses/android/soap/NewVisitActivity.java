@@ -238,7 +238,7 @@ public class NewVisitActivity extends BaseActivity {
             e1.printStackTrace();
         } */
 
-        loadVisitaSpinner(codigopaciente,selLocal,selProyecto);
+        loadGrupoAndVisitaSpinners(codigopaciente, selLocal, selProyecto);
 
         spnGrupo.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
@@ -580,13 +580,24 @@ public class NewVisitActivity extends BaseActivity {
 
     // every loadVisit used to be loadVisita
     // currentParticipant.CodigoPaciente was just codigopaciente
-    public void loadVisitaSpinner(String codigopaciente,String local,String proyecto){
+
+    /**
+     * Loads the spinners for the visit groups and visits, populating them with data grabbed
+     * from the `VisitaLoadTask`.
+     * @param codigopaciente
+     * @param local
+     * @param proyecto
+     */
+    public void loadGrupoAndVisitaSpinners(String codigopaciente,String local,String proyecto){
         VisitaLoadTask tareaVisita = new VisitaLoadTask();
 
         loadVisita = tareaVisita.execute(codigopaciente,local,proyecto,"bogusurl");
         Visita[] objVisita;
-        String[] grupoList, visitaList, empty;
-        empty = new String[0];
+        String[] grupoList, visitaList;
+
+        // start off our spinners empty, then populate later
+        // TODO is there a problem with changing the adapter like this??
+        String[] empty = new String[0];
         ArrayAdapter<String> emptyArrayAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, empty);
         emptyArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
@@ -601,8 +612,8 @@ public class NewVisitActivity extends BaseActivity {
                 visitaList = new String[objVisita.length];
                 
                 for(int i = 0; i < objVisita.length; i++){
-                    grupoList[i]= String.valueOf(objVisita[i].CodigoGrupoVisita) +" - "+objVisita[i].NombreGrupoVisita;
-                    visitaList[i]= String.valueOf(objVisita[i].CodigoVisita) +" - "+objVisita[i].DescripcionVisita;
+                    grupoList[i] = String.valueOf(objVisita[i].CodigoGrupoVisita) + " - " + objVisita[i].NombreGrupoVisita;
+                    visitaList[i] = String.valueOf(objVisita[i].CodigoVisita) + " - " + objVisita[i].DescripcionVisita;
                 }
                 
                 ArrayAdapter<String> grupoAdapter = new ArrayAdapter<String>(
