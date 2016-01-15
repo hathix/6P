@@ -92,14 +92,14 @@ public class AddFingerprintExistingActivity extends BaseActivity {
                                                 + " " + participant.ApellidoPaterno))
                                     .setTitle(getString(R.string.dni_found))
                                     .setCancelable(false)
-                                    .setPositiveButton(getString(R.string.yes),
+                                    .setPositiveButton(getString(R.string.answer_yes),
                                             new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
                                                     // TODO Call PutFingerprintTask
                                                 }
                                             })
-                                    .setNegativeButton(getString(R.string.no),
+                                    .setNegativeButton(getString(R.string.answer_no),
                                             new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
