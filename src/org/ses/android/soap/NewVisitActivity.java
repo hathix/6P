@@ -147,7 +147,7 @@ public class NewVisitActivity extends BaseActivity {
         /**
          * if a patient was passed in, pre-load that patient
          */
-        currentParticipant = (Participant) getIntent().getParcelableExtra("Participant");
+        currentParticipant = getIntent().getParcelableExtra("Participant");
         names.setText(currentParticipant.getFullNameTitleCase());
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -238,8 +238,9 @@ public class NewVisitActivity extends BaseActivity {
             e1.printStackTrace();
         } */
 
-        loadVisitaSpinner(codigopaciente, selLocal, selProyecto);
+        loadGrupoAndVisitaSpinners(codigopaciente, selLocal, selProyecto);
 
+        // TODO consider moving these to the load...() method
         spnGrupo.setOnItemSelectedListener(
                 new AdapterView.OnItemSelectedListener() {
                     @Override
@@ -447,8 +448,10 @@ public class NewVisitActivity extends BaseActivity {
         }
     };
 
-    //on Siguiente
-    public  void  AlertaGuardar() {
+    /**
+     * Called when the save button is hit.
+     */
+    public void AlertaGuardar() {
 
         fec_visita = visit_date.getText().toString();
         Log.i("fec_visita:",fec_visita);
@@ -465,100 +468,7 @@ public class NewVisitActivity extends BaseActivity {
                         new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
-                                GenerarVisitaTask tarea = new GenerarVisitaTask();
-                                //int CodigoLocal, int CodigoProyecto, int CodigoVisita, string CodigoPaciente, string FechaVisita, string HoraCita, int CodigoUsuario
-                                generarVisita = tarea.execute(
-                                        selLocal,
-                                        selProyecto,
-                                        selGrupo,
-                                        selVisita,
-                                        codigopaciente,
-                                        fec_visita,
-                                        hora_visita,
-                                        codigousuario,
-                                        url);
-
-                                String guardado;
-                                String estadoENR;
-                                String estadoTAM;
-                                try {
-
-
-                                    guardado = generarVisita.get();
-                                    if (!guardado.equals("OK")) {
-                                        Toast.makeText(getBaseContext(), "No se creo visita!!", Toast.LENGTH_SHORT).show();
-                                    } else {
-                                        Toast.makeText(getBaseContext(), "Datos guardados!!", Toast.LENGTH_SHORT).show();
-                                        EstadoENRTask tareaEstadoENR = new EstadoENRTask();
-                                        EstadoTAMTask tareaEstadoTAM = new EstadoTAMTask();
-                                        loadEstadoENR = tareaEstadoENR.execute("ENR", selProyecto, url);
-                                        estadoENR = loadEstadoENR.get();
-                                        loadEstadoTAM = tareaEstadoTAM.execute("TAM", selProyecto, url);
-                                        estadoTAM = loadEstadoTAM.get();
-                                        //selGrupo=1 TAM, selGrupo=2  ENR
-                                        Log.i("Visita", "estadoENR: " + estadoENR.toString() + "--- estadoTAM: " + estadoTAM.toString());
-//                                                                            if (estadoENR.equals("1") || estadoTAM.equals("1")){
-//                                                                                // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
-//                                                                                if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
-//                                                                                    Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
-//                                                                                    Bundle extras = new Bundle();
-//                                                                                    extras.putString("selLocal", selLocal);
-//                                                                                    extras.putString("selProyecto", selProyecto);
-//                                                                                    extras.putString("codigopaciente",codigopaciente);
-//                                                                                    extras.putString("selGrupo", selGrupo);
-//                                                                                    extras.putString("selVisita",selVisita);
-//                                                                                    extras.putString("codigousuario",codigousuario);
-//                                                                                    extras.putString("url",url);
-//                                                                                    pass.putExtras(extras);
-//                                                                                    startActivity(pass);
-//                                                                                }
-//                                                                            }
-                                        Boolean asignarID = false;
-                                        if (estadoTAM.equals("1") && estadoENR.equals("1")) {
-                                            if ((selGrupo.equals("1") || selGrupo.equals("2")) && selVisita.equals("1")) {
-                                                asignarID = true;
-                                            }
-                                        }
-                                        //   if (estadoTAM.equals("0") && estadoENR.equals("1")){
-                                        //     if ((selGrupo.equals("2"))  && selVisita.equals("1")) {
-                                        //            asignarID = true;
-                                        //     }
-                                        // }
-                                        if (estadoTAM.equals("1") && estadoENR.equals("0")) {
-                                            if ((selGrupo.equals("1") || selGrupo.equals("2")) && selVisita.equals("1")) {
-                                                asignarID = true;
-                                            }
-                                        }
-                                        if (asignarID.equals(true)) {
-                                            // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
-                                            //if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
-                                            /* Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
-                                            Bundle extras = new Bundle();
-                                            extras.putString("selLocal", selLocal);
-                                            extras.putString("selProyecto", selProyecto);
-                                            extras.putString("codigopaciente",codigopaciente);
-                                            extras.putString("selGrupo", selGrupo);
-                                            extras.putString("selVisita",selVisita);
-                                            extras.putString("codigousuario",codigousuario);
-                                            extras.putString("url",url);
-                                            extras.putString("estadoTAM",estadoTAM);
-                                            extras.putString("estadoENR",estadoENR);
-                                            extras.putInt("validar_emr",0);
-
-                                            pass.putExtras(extras);
-                                            startActivity(pass); */
-                                            //}
-                                        }
-                                    }
-                                    finish();
-                                } catch (InterruptedException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                } catch (ExecutionException e) {
-                                    // TODO Auto-generated catch block
-                                    e.printStackTrace();
-                                }
-
+                                generateVisit();
                             }
                         })
                 .setNegativeButton("No",
@@ -571,15 +481,171 @@ public class NewVisitActivity extends BaseActivity {
         AlertDialog alert = builder.create();
         alert.show();
     }
+
+    /**
+     * Commits a new visit to the database.
+     */
+    private void generateVisit() {
+        GenerarVisitaTask tarea = new GenerarVisitaTask();
+        //int CodigoLocal, int CodigoProyecto, int CodigoVisita, string CodigoPaciente, string FechaVisita, string HoraCita, int CodigoUsuario
+        generarVisita = tarea.execute(
+                selLocal,
+                selProyecto,
+                selGrupo,
+                selVisita,
+                codigopaciente,
+                fec_visita,
+                hora_visita,
+                codigousuario,
+                url);
+
+        String guardado;
+        String estadoENR;
+        String estadoTAM;
+        try {
+            guardado = generarVisita.get();
+            if (!guardado.equals("OK")) {
+                Toast.makeText(getBaseContext(), "No se creo visita!!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getBaseContext(), "Datos guardados!!", Toast.LENGTH_SHORT).show();
+                EstadoENRTask tareaEstadoENR = new EstadoENRTask();
+                EstadoTAMTask tareaEstadoTAM = new EstadoTAMTask();
+                loadEstadoENR = tareaEstadoENR.execute("ENR", selProyecto, url);
+                estadoENR = loadEstadoENR.get();
+                loadEstadoTAM = tareaEstadoTAM.execute("TAM", selProyecto, url);
+                estadoTAM = loadEstadoTAM.get();
+                //selGrupo=1 TAM, selGrupo=2  ENR
+                Log.i("Visita", "estadoENR: " + estadoENR.toString() + "--- estadoTAM: " + estadoTAM.toString());
+//                if (estadoENR.equals("1") || estadoTAM.equals("1")){
+//                    // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
+//                    if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
+//                        Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
+//                        Bundle extras = new Bundle();
+//                        extras.putString("selLocal", selLocal);
+//                        extras.putString("selProyecto", selProyecto);
+//                        extras.putString("codigopaciente",codigopaciente);
+//                        extras.putString("selGrupo", selGrupo);
+//                        extras.putString("selVisita",selVisita);
+//                        extras.putString("codigousuario",codigousuario);
+//                        extras.putString("url",url);
+//                        pass.putExtras(extras);
+//                        startActivity(pass);
+//                    }
+//                }
+                Boolean asignarID = false;
+                if (estadoTAM.equals("1") && estadoENR.equals("1")) {
+                    if ((selGrupo.equals("1") || selGrupo.equals("2")) && selVisita.equals("1")) {
+                        asignarID = true;
+                    }
+                }
+                //   if (estadoTAM.equals("0") && estadoENR.equals("1")){
+                //     if ((selGrupo.equals("2"))  && selVisita.equals("1")) {
+                //            asignarID = true;
+                //     }
+                // }
+                if (estadoTAM.equals("1") && estadoENR.equals("0")) {
+                    if ((selGrupo.equals("1") || selGrupo.equals("2")) && selVisita.equals("1")) {
+                        asignarID = true;
+                    }
+                }
+                if (asignarID.equals(true)) {
+                    // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
+                    //if ((selGrupo.equals("1") || selGrupo.equals("2"))  && selVisita.equals("1")) {
+                    /* Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
+                    Bundle extras = new Bundle();
+                    extras.putString("selLocal", selLocal);
+                    extras.putString("selProyecto", selProyecto);
+                    extras.putString("codigopaciente",codigopaciente);
+                    extras.putString("selGrupo", selGrupo);
+                    extras.putString("selVisita",selVisita);
+                    extras.putString("codigousuario",codigousuario);
+                    extras.putString("url",url);
+                    extras.putString("estadoTAM",estadoTAM);
+                    extras.putString("estadoENR",estadoENR);
+                    extras.putInt("validar_emr",0);
+
+                    pass.putExtras(extras);
+                    startActivity(pass); */
+                    //}
+                }
+            }
+            finish();
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
     // every loadVisit used to be loadVisita
     // currentParticipant.CodigoPaciente was just codigopaciente
-    public void loadVisitaSpinner(String codigopaciente,String local,String proyecto){
+
+    /**
+     * Loads the spinners for the visit groups and visits, populating them with data grabbed
+     * from the `VisitaLoadTask`.
+     * @param codigopaciente
+     * @param local
+     * @param proyecto
+     */
+    public void loadGrupoAndVisitaSpinners(String codigopaciente,String local,String proyecto){
         VisitaLoadTask tareaVisita = new VisitaLoadTask();
 
-        loadVisita = tareaVisita.execute(codigopaciente,local,proyecto,"bogusurl");
+        /* VisitasListTask tareaVisits = new VisitasListTask();
+
+        loadVisitas = tareaVisits.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
+        try {
+            visitas_array = loadVisitas.get();
+            if (visitas_array != null) {
+                num_visitas = visitas_array.length;
+                Log.d("myactivity0", "number of visits already: " + num_visitas);
+                // find date of first treatment
+                // 77985806
+                if (num_visitas > 2) {
+                    for (int i = 0; i < num_visitas; i++) {
+                        Visitas temp = visitas_array[i];
+                        if (temp.CodigoGrupoVisita.equals("3") && temp.CodigoVisita.equals("1")) {
+                            first_visit = temp.FechaVisita;
+                        }
+
+                    }
+                }
+            }
+            Log.d("myactivity1", "number of visits already: " + num_visitas);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+
+        } catch (ExecutionException e1) {
+            e1.printStackTrace();
+        }
+
+
+         VisitaLoadTask tareaVisit = new VisitaLoadTask();
+
+        loadVisita = tareaVisit.execute(currentParticipant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
+        try {
+            visita_array = loadVisita.get(); //Visit
+            if (visita_array != null) {
+                num_visita = visita_array.length; //total number of visits in a project
+            }
+            Log.d("myactivit2", "number of visits total: " + num_visita);
+            Log.d("myactivity3", "number of visits already: " + num_visitas);
+        } catch (InterruptedException e1) {
+            e1.printStackTrace();
+
+        } catch (ExecutionException e1) {
+            e1.printStackTrace();
+        } */
+
+
+        loadVisita = tareaVisita.execute(codigopaciente, local, proyecto,"bogusurl");
         Visita[] objVisita;
-        String[] grupoList, visitaList, empty;
-        empty = new String[0];
+        String[] grupoList, visitaList;
+
+        // start off our spinners empty, then populate later
+        // TODO is there a problem with changing the adapter like this??
+        String[] empty = new String[0];
         ArrayAdapter<String> emptyArrayAdapter = new ArrayAdapter<String>(
                 this, android.R.layout.simple_spinner_item, empty);
         emptyArrayAdapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
@@ -593,9 +659,9 @@ public class NewVisitActivity extends BaseActivity {
                 grupoList = new String[objVisita.length];
                 visitaList = new String[objVisita.length];
                 
-                for(int i = 0;i < objVisita.length; i++){
-                    grupoList[i]= String.valueOf(objVisita[i].CodigoGrupoVisita) +" - "+objVisita[i].NombreGrupoVisita;
-                     visitaList[i]= String.valueOf(objVisita[i].CodigoVisita) +" - "+objVisita[i].DescripcionVisita;
+                for(int i = 0; i < objVisita.length; i++){
+                    grupoList[i] = String.valueOf(objVisita[i].CodigoGrupoVisita) + " - " + objVisita[i].NombreGrupoVisita;
+                    visitaList[i] = String.valueOf(objVisita[i].CodigoVisita) + " - " + objVisita[i].DescripcionVisita;
                 }
                 
                 ArrayAdapter<String> grupoAdapter = new ArrayAdapter<String>(
