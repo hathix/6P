@@ -373,6 +373,9 @@
     <string name="action_logout">Logout</string>
     <string name="confirm">Confirm</string>
     <string name="dob">Date of Birth (Tap to Change)</string>
+    <string name="dni_found">DNI Found</string>
+    <string name="dni_found_save">Found patient %1$s with this DNI. Save fingerprint to this patient?</string>
+    <string name="dni_not_found">Could not find patient with this DNI.</string>
     <string name="fingerprint_saved">Fingerprint Saved</string>
     <string name="first_name">First Name:</string>
     <string name="lista">View Missing Appointments</string>

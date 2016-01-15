@@ -93,8 +93,7 @@ public class Participant implements KvmSerializable, Parcelable {
 
     @Override
     public String toString() {
-        return "Nombres: " + this.Nombres + "\nApellido Paterno: " + this.ApellidoPaterno +
-                "\nApellido Materno: " + this.ApellidoMaterno;
+        return getFullNameTitleCase();
     }
 
     @Override
