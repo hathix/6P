@@ -436,6 +436,9 @@ public class NewVisitActivity extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 generateVisit();
+                                Intent intent = new Intent(NewVisitActivity.this,ParticipantDashboardActivity.class);
+                                intent.putExtra("Participant", currentParticipant);
+                                startActivity(intent);
                             }
                         })
                 .setNegativeButton("No",
