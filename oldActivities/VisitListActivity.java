@@ -24,10 +24,8 @@ import org.ses.android.soap.database.Idreg;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.EstadoVisitaTask;
-import org.ses.android.soap.tasks.FormList1Task;
 import org.ses.android.soap.tasks.FormListTask;
 import org.ses.android.soap.tasks.MostrarTipoIDTask;
-import org.ses.android.soap.tasks.RegistrarParticipanteTask;
 import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.tasks.VisitaListTask;
 
@@ -55,7 +53,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -463,7 +460,7 @@ public class VisitListActivity extends Activity {
 
         Editor editor = mPreferences.edit();
 
-        FormList1Task formList1=new FormList1Task();
+        FormListTask formList1=new FormListTask();
         Log.i("call1SeisD", ".userid:"+userid );
         Log.i("call1SeisD", ".local_id:"+local_id );
         Log.i("call1SeisD", ".project_id:"+project_id );
