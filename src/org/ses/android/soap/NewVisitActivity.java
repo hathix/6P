@@ -147,7 +147,7 @@ public class NewVisitActivity extends BaseActivity {
         /**
          * if a patient was passed in, pre-load that patient
          */
-        currentParticipant = (Participant) getIntent().getParcelableExtra("Participant");
+        currentParticipant = getIntent().getParcelableExtra("Participant");
         names.setText(currentParticipant.getFullNameTitleCase());
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
@@ -600,9 +600,9 @@ public class NewVisitActivity extends BaseActivity {
                 grupoList = new String[objVisita.length];
                 visitaList = new String[objVisita.length];
                 
-                for(int i = 0;i < objVisita.length; i++){
+                for(int i = 0; i < objVisita.length; i++){
                     grupoList[i]= String.valueOf(objVisita[i].CodigoGrupoVisita) +" - "+objVisita[i].NombreGrupoVisita;
-                     visitaList[i]= String.valueOf(objVisita[i].CodigoVisita) +" - "+objVisita[i].DescripcionVisita;
+                    visitaList[i]= String.valueOf(objVisita[i].CodigoVisita) +" - "+objVisita[i].DescripcionVisita;
                 }
                 
                 ArrayAdapter<String> grupoAdapter = new ArrayAdapter<String>(
