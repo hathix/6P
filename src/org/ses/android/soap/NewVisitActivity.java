@@ -435,34 +435,33 @@ public class NewVisitActivity extends BaseActivity {
      * Called when the save button is hit.
      */
     public void AlertaGuardar() {
-
+        // update some global fields
         fec_visita = visit_date.getText().toString();
-        Log.i("fec_visita:",fec_visita);
-
         hora_visita = visit_time.getText().toString();
-
         codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(NewVisitActivity.this);
-        builder.setMessage("Desea Generar Visita?")
-                .setTitle("Advertencia")
-                .setCancelable(false)
-                .setPositiveButton("Si",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                generateVisit();
-                            }
-                        })
-                .setNegativeButton("No",
-                        new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int id) {
-                                dialog.cancel();
-                            }
-                        });
-        AlertDialog alert = builder.create();
-        alert.show();
+        generateVisit();
+
+//        AlertDialog.Builder builder = new AlertDialog.Builder(NewVisitActivity.this);
+//        builder.setMessage("Desea Generar Visita?")
+//                .setTitle("Advertencia")
+//                .setCancelable(false)
+//                .setPositiveButton(getString(R.string.answer_yes),
+//                        new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                generateVisit();
+//                            }
+//                        })
+//                .setNegativeButton(getString(R.string.answer_no),
+//                        new DialogInterface.OnClickListener() {
+//                            @Override
+//                            public void onClick(DialogInterface dialog, int id) {
+//                                dialog.cancel();
+//                            }
+//                        });
+//        AlertDialog alert = builder.create();
+//        alert.show();
     }
 
     /**
