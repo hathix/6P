@@ -1,6 +1,7 @@
 package org.ses.android.soap.tasks;
 
-import java.net.SocketException;
+import android.os.AsyncTask;
+import android.util.Log;
 
 import org.ksoap2.SoapEnvelope;
 import org.ksoap2.serialization.SoapObject;
@@ -8,28 +9,25 @@ import org.ksoap2.serialization.SoapPrimitive;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
 
-import android.os.AsyncTask;
-import android.util.Log;
+import java.net.SocketException;
 
 public class FormListTask extends AsyncTask<String,String,String> {
-	
-     @Override
+
+    @Override
     protected String doInBackground(String... params) {
 
         String resul= "";
 
-        String urlserver = params[5];
-        final String NAMESPACE =StringConexion.conexion;
+        String urlserver = params[3];
+        final String NAMESPACE = StringConexion.conexion;
         final String URL=NAMESPACE+"WSSEIS/WSParticipante.asmx";
-        final String METHOD_NAME = "ListadoFormatos";
+        final String METHOD_NAME = "ListadoFormatos1";
         final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
 
         request.addProperty("CodigoUsuario", params[0]);
         request.addProperty("CodigoLocal", params[1]);
         request.addProperty("CodigoProyecto", params[2]);
-        request.addProperty("CodigoGrupoVisita", params[3]);
-        request.addProperty("CodigoVisita", params[4]);
 
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.dotNet = true;
@@ -61,5 +59,4 @@ public class FormListTask extends AsyncTask<String,String,String> {
 
         return resul;
     }
-    
 }
