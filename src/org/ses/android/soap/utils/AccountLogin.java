@@ -27,6 +27,16 @@ public class AccountLogin {
 
     // TODO: refactor dialog back into promoter login activity
 
+    /**
+     * Sent from server if the login is successful.
+     */
+    private static final String SUCCESSFUL_LOGIN_MESSAGE = "Gracias por Iniciar Sesion";
+
+    /**
+     * Sent from server if the user's password is expired.
+     */
+    private static final String PASSWORD_EXPIRED_MESSAGE = "Contraseña caducada";
+
     public static String login( Context c, String username, String password,
                                 String locale_id, String locale_name, String project_id, String project_name) {
         // TODO: check internet connection
@@ -56,7 +66,8 @@ public class AccountLogin {
             editor.putString(c.getString(R.string.login_project), project_id);
             editor.putString(c.getApplicationContext().getString(R.string.login_project_name), project_name);
             Log.i("AccountLogin", "OnClick_response:" + response);
-            if (response.equals(c.getString(R.string.session_init_key)) || response.equals(c.getString(R.string.password_expired_key))) {
+            if (response.equals(SUCCESSFUL_LOGIN_MESSAGE)
+                    || response.equals(PASSWORD_EXPIRED_MESSAGE)) {
                 editor.commit();
             }
         } catch (InterruptedException e1) {
@@ -103,10 +114,11 @@ public class AccountLogin {
             if (message == null) {
                 return false;
             }
-            if (message.equals(context.getString(R.string.session_init_key)) || message.equals(context.getString(R.string.password_expired_key))) {
+            if (message.equals(SUCCESSFUL_LOGIN_MESSAGE) ||
+                    message.equals(PASSWORD_EXPIRED_MESSAGE)) {
                 return true;
-
             } else {
+                Log.w("login", message);
                 Log.i("login", "Datos incorrectos");
             }
             return false;

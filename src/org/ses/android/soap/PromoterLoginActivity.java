@@ -111,8 +111,8 @@ public class PromoterLoginActivity extends Activity {
             loadLocaleSpinner(myurl);
         }
         // Progress bar set to gone on page load
-        ProgressBar p_d = (ProgressBar) findViewById(R.id.marker_progress);
-        p_d.setVisibility(View.GONE);
+        ProgressBar progressBar = (ProgressBar) findViewById(R.id.marker_progress);
+        progressBar.setVisibility(View.GONE);
 
         spnLocale.setOnTouchListener(new View.OnTouchListener() {
             @Override
@@ -141,7 +141,8 @@ public class PromoterLoginActivity extends Activity {
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-                        Toast.makeText(getBaseContext(), "Seleccione un Local!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), getString(R.string.select_local),
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
         spnProject.setOnTouchListener(new View.OnTouchListener() {
@@ -163,7 +164,8 @@ public class PromoterLoginActivity extends Activity {
                     }
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
-                        Toast.makeText(getBaseContext(), "Seleccione un Proyecto!!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), getString(R.string.select_project),
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -207,11 +209,11 @@ public class PromoterLoginActivity extends Activity {
     public void switchPatientType(View view) throws ExecutionException, InterruptedException {
 
         // Progress Dialog starts
-        final ProgressBar p_d = (ProgressBar) findViewById(R.id.marker_progress);
-        p_d.getHandler().post(new Runnable() {
+        final ProgressBar progressBar = (ProgressBar) findViewById(R.id.marker_progress);
+        progressBar.getHandler().post(new Runnable() {
             @Override
             public void run() {
-                p_d.setVisibility(View.VISIBLE);
+                progressBar.setVisibility(View.VISIBLE);
             }
         });
 
@@ -240,9 +242,9 @@ public class PromoterLoginActivity extends Activity {
 
             Toast.makeText(this,alertMsg , Toast.LENGTH_SHORT).show();
 
-            p_d.getHandler().post(new Runnable() {
+            progressBar.getHandler().post(new Runnable() {
                 public void run() {
-                    p_d.setVisibility(View.GONE);
+                    progressBar.setVisibility(View.GONE);
                 }
             });
         }else{
@@ -268,17 +270,17 @@ public class PromoterLoginActivity extends Activity {
                         Intent intent=new Intent(PromoterLoginActivity.this,MainMenuActivity.class);
                         startActivity(intent);
                         finish();
-                        p_d.getHandler().post(new Runnable() {
+                        progressBar.getHandler().post(new Runnable() {
                             public void run() {
-                                p_d.setVisibility(View.GONE);
+                                progressBar.setVisibility(View.GONE);
                             }
                         });
 
                     }else{
                         AlertError("Login Error", getString(R.string.login_no_permission));
-                        p_d.getHandler().post(new Runnable() {
+                        progressBar.getHandler().post(new Runnable() {
                             public void run() {
-                                p_d.setVisibility(View.GONE);
+                                progressBar.setVisibility(View.GONE);
                             }
                         });
 
@@ -291,9 +293,9 @@ public class PromoterLoginActivity extends Activity {
 
             } else {
                 AlertError("Login Error", getString(R.string.login_data_incorrect_invalid));
-                p_d.getHandler().post(new Runnable() {
+                progressBar.getHandler().post(new Runnable() {
                     public void run() {
-                        p_d.setVisibility(View.GONE);
+                        progressBar.setVisibility(View.GONE);
                     }
                 });
             }

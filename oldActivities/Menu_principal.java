@@ -6,7 +6,7 @@ import java.util.concurrent.ExecutionException;
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.preferences.AdminPreferencesActivity;
 import org.ses.android.soap.preferences.PreferencesActivity;
-import org.ses.android.soap.tasks.FormList1Task;
+import org.ses.android.soap.tasks.FormListTask;
 import org.ses.android.soap.utils.AppStatus;
 import org.ses.android.soap.widgets.CambioServer;
 
@@ -129,7 +129,7 @@ public class Menu_principal extends Activity {
                 Log.i("menu", ".codigoproyecto:"+codigoproyecto );
 		        //Editor editor = mPreferences.edit();
 
-				FormList1Task formList1=new FormList1Task();
+				FormListTask formList1=new FormListTask();
 				formList1Task=formList1.execute(codigousuario,codigolocal,codigoproyecto,url);
 
 				try {

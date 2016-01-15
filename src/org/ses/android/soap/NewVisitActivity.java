@@ -148,11 +148,7 @@ public class NewVisitActivity extends BaseActivity {
          * if a patient was passed in, pre-load that patient
          */
         currentParticipant = (Participant) getIntent().getParcelableExtra("Participant");
-
-        String fullName = currentParticipant.Nombres + " " +
-                currentParticipant.ApellidoMaterno + " " +
-                currentParticipant.ApellidoPaterno;
-        names.setText(fullName);
+        names.setText(currentParticipant.getFullNameTitleCase());
 
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");

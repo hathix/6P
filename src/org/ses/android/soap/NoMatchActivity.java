@@ -127,15 +127,16 @@ public class NoMatchActivity extends BaseActivity {
                     startActivity(intent);
                 }
             });
-            // "Try Again" button should return to FingerprintFindActivity (Fingerprint search layout)
-            Button buttonTryAgain = (Button) findViewById(R.id.btnTryAgain);
-            buttonTryAgain.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent intent = new Intent(NoMatchActivity.this, FingerprintFindActivity.class);
-                    startActivity(intent);
-                }
-            });
         }
+        
+        // "Try Again" button should return to FingerprintFindActivity (Fingerprint search layout)
+        Button buttonTryAgain = (Button) findViewById(R.id.btnTryAgain);
+        buttonTryAgain.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(NoMatchActivity.this, FingerprintFindActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 }
