@@ -6,7 +6,7 @@ Part of Harvard's [Tech in the World](http://techintheworld.org/) program, a win
 Based in part off [ankitvgupta/eDOTS](https://github.com/ankitvgupta/eDOTS), which the Tech in the World team developed in January 2015, and [jtomaylla/SeisP120](https://github.com/jtomaylla/SeisP120), which Juan Tomaylla (formerly of Socios en Salud) created in 2014 and 2015.
 
 ## Tech in the World team
-We're a team of 5 computer science students at Harvard who are part of [Harvard's Developers 4 Development](http://www.harvardd4d.com/), a computer science and interntional development club. Follow along with our progress at [blog.techintheworld.org](http://blog.techintheworld.org/)!
+We're a team of 5 computer science students at Harvard who are part of [Harvard's Developers 4 Development](http://www.harvardd4d.com/), a computer science and international development club. Follow along with our progress at [blog.techintheworld.org](http://blog.techintheworld.org/)!
 - [Neel Mehta](https://github.com/hathix)
 - [Saranya Vijayakumar](https://github.com/svijayakumar2)
 - [Annie Wei](https://github.com/anway)
