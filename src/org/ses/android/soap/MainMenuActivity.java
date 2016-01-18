@@ -26,6 +26,7 @@ import java.util.concurrent.ExecutionException;
 public class MainMenuActivity extends BaseActivity {
 
     private Button btnCheckInRegisterUpdatePatient;
+    private Button btnQuickCheckIn;
     private Button btnViewMissingAppts;
     private Button btnCerrarSesion;
     private Button btnRunODK;
@@ -54,7 +55,9 @@ public class MainMenuActivity extends BaseActivity {
 
             Toast.makeText(this,R.string.no_connection,Toast.LENGTH_SHORT).show();
         }
+
         btnCheckInRegisterUpdatePatient = (Button)findViewById(R.id.btnParticipanteOpciones);
+        btnQuickCheckIn = (Button)findViewById(R.id.btnQuickCheckIn);
         btnViewMissingAppts = (Button)findViewById(R.id.btnLista);
         btnCerrarSesion = (Button)findViewById(R.id.btnCerrarSesion_new);
         btnRunODK = (Button)findViewById(R.id.btnRunODK_new);
@@ -65,6 +68,15 @@ public class MainMenuActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainMenuActivity.this, FingerprintFindActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        btnQuickCheckIn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainMenuActivity.this, QuickVisitActivity.class);
                 startActivity(intent);
             }
         });

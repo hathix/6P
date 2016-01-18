@@ -53,6 +53,15 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="org.ses.android.soap.QuickVisitActivity"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:label="@string/title_quick_visit" >
+            <intent-filter>
+                <action android:name="android.intent.action.ViewMissedVisitsActivity" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name="org.ses.android.soap.ParticipantDashboardActivity"
             android:theme="@android:style/Theme.Holo.Light"
             android:label="@string/patient_dash" >

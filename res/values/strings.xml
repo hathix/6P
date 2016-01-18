@@ -388,6 +388,7 @@
     <string name="paternal_name">Paternal Name:</string>
     <string name="patient_not_listed">Patient Not Listed</string>
     <string name="project">Project</string>
+    <string name="quick_check_in">Quick Check In</string>
     <string name="register_new_patient">Register New Patient</string>
     <string name="register_patient_submit">Submit</string>
     <string name="save_visit">Save Visit</string>
@@ -395,6 +396,7 @@
     <string name="scan1">Scan again to confirm fingerprint.</string>
     <string name="scan2">Not confirmed. Please try again.</string>
     <string name="scan_again">Does not match previous scan; please scan again.</string>
+    <string name="scan_first">Scan first before searching.</string>
     <string name="search_patient">Search for Patient</string>
     <string name="sexo">Gender:</string>
     <string name="title_add_fingerprint">Add Fingerprint to Patient</string>
@@ -403,6 +405,7 @@
     <string name="title_fingerprint_not_found">New Fingerprint</string>
     <string name="title_log_new_visit">Log New Visit</string>
     <string name="title_participant_history">Patient History</string>
+    <string name="title_quick_visit">Quick Check In</string>
     <string name="title_register_patient">Register New Patient</string>
     <string name="title_scan_fingerprint">Scan Fingerprint</string>
     <string name="title_view_missed_visits">View Missed Visits</string>

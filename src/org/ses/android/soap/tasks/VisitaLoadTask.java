@@ -55,7 +55,8 @@ public class VisitaLoadTask extends AsyncTask<String,String,Visita[]> {
 		           vis.DescripcionVisita = ic.getProperty(4).toString();
 		           vis.GenerarAuto = Boolean.valueOf(ic.getProperty(5).toString());
 		           vis.Dependiente = Integer.parseInt(ic.getProperty(6).toString());
-				   vis.DiasVisitaProx = Integer.parseInt(ic.getProperty(7).toString());
+				   // Possible TODO to calculate dates
+				   //vis.DiasVisitaProx = Integer.parseInt(ic.getProperty(7).toString());
 		           lstVisita[i] = vis;
 		    }
 			if (resSoap.getPropertyCount()>0){
