@@ -78,7 +78,7 @@ public class OfflineStorageManager {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
+        return null
     }
 
      public <T extends Saveable> void SaveArrayListToLocal(ArrayList<T> a, String filename) {
