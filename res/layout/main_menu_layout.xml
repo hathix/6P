@@ -50,6 +50,20 @@
                 android:layout_width="fill_parent"
                 android:layout_height="5dp"
                 android:id="@+id/review_spacer_new" />
+
+            <Button
+                android:id="@+id/btnQuickCheckIn"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:textSize="21sp"
+                android:background="@drawable/botonblanco"
+                android:text="@string/quick_check_in" />
+
+            <View
+                android:layout_width="fill_parent"
+                android:layout_height="5dp" />
+
 		    <Button
 		        android:id="@+id/btnLista"
 				                android:layout_width="fill_parent"
