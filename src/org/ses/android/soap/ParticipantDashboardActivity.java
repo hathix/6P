@@ -57,6 +57,8 @@ public class ParticipantDashboardActivity extends BaseActivity {
     private TextView monthReceivedView;
     private TextView totalReceivedView;
     private Visitas pending_visitas;
+    Button btnScheduleVisit = (Button) findViewById(R.id.sched_visit);
+    Button btnLogVisit = (Button) findViewById(R.id.log_visit);
     private String stringified_pending_visitas;
     private static final String TAG = "MyActivity";
 
@@ -171,7 +173,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
             }
 
-            Button btnScheduleVisit = (Button) findViewById(R.id.sched_visit);
+
 
             if (pending_visitas == null) {
 
@@ -215,12 +217,18 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 //if past window ended, create missed visit
                 // if not, log visit
 
-                //TODO: add a button to take you to log visit activity
-                Intent visitas_intent = new Intent(ParticipantDashboardActivity.this, LogVisitActivity.class);
-                visitas_intent.putExtra("Visitas", pending_visitas);
-                startActivity(visitas_intent);
+                /*
+                 * button to take you to log visit activity
+                 */
 
-
+                btnLogVisit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent visitas_intent = new Intent(ParticipantDashboardActivity.this, LogVisitActivity.class);
+                        visitas_intent.putExtra("Visitas", pending_visitas);
+                        startActivity(visitas_intent);
+                    }
+                });
 
             }
             weekMissedView.setText(Integer.toString(weekMissed));

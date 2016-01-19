@@ -54,7 +54,7 @@ public class LogVisitActivity extends BaseActivity {
 
 
     /*
-     * when log button hit, call EstadoVisitaTask
+     * when log button hit, call EstadoVisitaTask, TODO change FechaUpdVisita
      */
         Button logButton = (Button) findViewById(R.id.log_visit);
         logButton.setOnClickListener(new View.OnClickListener() {
