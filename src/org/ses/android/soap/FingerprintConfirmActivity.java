@@ -108,12 +108,13 @@ public class FingerprintConfirmActivity extends FingerprintBaseActivity {
                         try {
                             String msg = agregarHuella.get();
                             Log.e("agregarHuellaTask", msg);
+                            Toast.makeText(getApplicationContext(), getString(R.string.fingerprint_saved), Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {
                             e.printStackTrace();
                             Log.e("agregarHuellaTask", "failed");
+                            Toast.makeText(getApplicationContext(), getString(R.string.fingerprint_save_failed), Toast.LENGTH_SHORT).show();
                         }
 
-                        Toast.makeText(getApplicationContext(), getString(R.string.fingerprint_saved), Toast.LENGTH_SHORT).show();
 
                         // Continue to patient dashboard activity
                         Intent intent = new Intent(FingerprintConfirmActivity.this, ParticipantDashboardActivity.class);
