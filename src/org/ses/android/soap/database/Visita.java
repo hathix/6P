@@ -28,7 +28,7 @@ public class Visita extends Cacheable implements KvmSerializable {
 			this.NombreGrupoVisita = jsonObject.getString("NombreGrupoVisita");
 			this.CodigoVisita = jsonObject.getInt("CodigoVisita");
 			this.DescripcionVisita = jsonObject.getString("DescripcionVisita");
-			this.GenerarAuto = jsonObject.getBoolean("jsonObject.get");
+			this.GenerarAuto = jsonObject.getBoolean("GenerarAuto");
 			this.Dependiente = jsonObject.getInt("Dependiente");
 			this.DiasVisitaProx = jsonObject.getInt("DiasVisitaProx");
 		} catch (JSONException e) {
