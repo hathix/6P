@@ -154,38 +154,45 @@ public class ParticipantDashboardActivity extends BaseActivity {
                         }
                     } else if (!status.equals("Pendiente")) { // Must be missed
                         totalMissed++;
-                        pending_visitas = visit;
+
                         if (date.after(weekAgo)) {
                             monthMissed++;
                             weekMissed++;
                         } else if (date.after(monthAgo)) {
                             monthMissed++;
                         }
+                    } else {
+                        pending_visitas = visit;
+                        Log.v(TAG, "adding pending visit");
                     }
+
 
                     if (visit.CodigoGrupoVisita.equals("3") && visit.CodigoVisita.equals("1")) {
                         first_visit = visit.FechaVisita;
                     }
-                    if (pending_visitas == null) {
-                        Log.v(TAG, "No pending visit");
-                        // "Schedule visit" button should open ScheduleVisitActivity
-                        Button btnLogVisit = (Button) findViewById(R.id.log_visit);
-                        btnLogVisit.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Intent intent = new Intent(ParticipantDashboardActivity.this, ScheduleVisitActivity.class);
-                                intent.putExtra("Participant", participant);
-                                startActivity(intent);
-                            }
-                        });
-                    }
-                    else {
-                        Log.v(TAG, "Put pending visit info here");
-                        //if past window ended, create missed visit
-                        // if not, log visit
 
-                    }
                 }
+            if (pending_visitas != null) {
+                Log.v(TAG, "Put pending visit info here");
+                //if past window ended, create missed visit
+                // if not, log visit
+            }
+            else {
+
+                Log.v(TAG, "No pending visit");
+                // "Schedule visit" button should open ScheduleVisitActivity
+                Button btnLogVisit = (Button) findViewById(R.id.log_visit);
+                btnLogVisit.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(ParticipantDashboardActivity.this, ScheduleVisitActivity.class);
+                        intent.putExtra("Participant", participant);
+                        startActivity(intent);
+                    }
+                });
+
+
+            }
             weekMissedView.setText(Integer.toString(weekMissed));
             monthMissedView.setText(Integer.toString(monthMissed));
             totalMissedView.setText(Integer.toString(totalMissed));
