@@ -2,10 +2,14 @@ package org.ses.android.soap.database;
 
 import java.util.Hashtable;
 
+import org.ses.android.soap.models.Cacheable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
 
-public class Visitas implements KvmSerializable {
+public class Visitas extends Cacheable implements KvmSerializable {
 
 	public String Proyecto;
 	public String Visita;
@@ -18,6 +22,45 @@ public class Visitas implements KvmSerializable {
 	public String CodigoVisitas;
 	public String CodigoEstatusPaciente;
 	public String CodigoUsuario;
+
+    public Visitas(JSONObject jsonObject) {
+        try {
+            this.Proyecto = jsonObject.getString("Proyecto");
+            this.Visita = jsonObject.getString("Visita");
+            this.FechaVisita = jsonObject.getString("FechaVisita");
+            this.HoraCita = jsonObject.getString("HoraCita");
+            this.EstadoVisita = jsonObject.getString("EstadoVisita");
+            this.CodigoProyecto = jsonObject.getString("CodigoProyecto");
+            this.CodigoGrupoVisita = jsonObject.getString("CodigoGrupoVisita");
+            this.CodigoVisita = jsonObject.getString("CodigoVisita");
+            this.CodigoVisitas = jsonObject.getString("CodigoVisitas");
+            this.CodigoEstatusPaciente = jsonObject.getString("CodigoEstatusPaciente");
+            this.CodigoUsuario = jsonObject.getString("CodigoUsuario");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public JSONObject toJSON() {
+        JSONObject temp = new JSONObject();
+        try {
+            temp.put("Proyecto", this.Proyecto);
+            temp.put("Visita", this.Visita);
+            temp.put("FechaVisita", this.FechaVisita);
+            temp.put("HoraCita", this.HoraCita);
+            temp.put("EstadoVisita", this.EstadoVisita);
+            temp.put("CodigoProyecto", this.CodigoProyecto);
+            temp.put("CodigoGrupoVisita", this.CodigoGrupoVisita);
+            temp.put("CodigoVisita", this.CodigoVisita);
+            temp.put("CodigoVisitas", this.CodigoVisitas);
+            temp.put("CodigoEstatusPaciente", this.CodigoEstatusPaciente);
+            temp.put("CodigoUsuario", this.CodigoUsuario);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return temp;
+    }
 	
 	public Visitas()
 	{
