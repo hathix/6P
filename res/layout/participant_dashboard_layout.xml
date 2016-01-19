@@ -13,7 +13,7 @@
 
     <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="266dp"
+        android:layout_height="match_parent"
         android:orientation="vertical" >
 
         <LinearLayout
@@ -98,84 +98,85 @@
                         android:layout_weight="1"
                         android:inputType="text" />	     -->
 
+
+
+        <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            android:id="@+id/visits_table"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:layout_marginTop="5dp"
+            android:stretchColumns="0,1,2">
+            <TableRow
+                android:id="@+id/header_row">
+                <TextView />
+                <TextView
+                    android:text="@string/missed"
+                    android:gravity="center_horizontal"
+                    android:padding="3dip" />
+                <TextView
+                    android:text="@string/received"
+                    android:gravity="center_horizontal"
+                    android:padding="3dip" />
+            </TableRow>
+            <TableRow
+                android:id="@+id/week_row">
+                <TextView
+                    android:text="@string/past_week"
+                    android:padding="3dip"/>
+                <TextView
+                    android:id="@+id/past_week_missed"
+                    android:gravity="center_horizontal"/>
+                <TextView
+                    android:id="@+id/past_week_received"
+                    android:gravity="center_horizontal"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/month_row">
+                <TextView
+                    android:text="@string/past_month"
+                    android:padding="3dip"/>
+                <TextView
+                    android:id="@+id/past_month_missed"
+                    android:gravity="center_horizontal"/>
+                <TextView
+                    android:id="@+id/past_month_received"
+                    android:gravity="center_horizontal"/>
+            </TableRow>
+            <TableRow
+                android:id="@+id/total_row">
+                <TextView
+                    android:text="@string/total"
+                    android:padding="3dip"/>
+                <TextView
+                    android:id="@+id/total_missed"
+                    android:gravity="center_horizontal"/>
+                <TextView
+                    android:id="@+id/total_received"
+                    android:gravity="center_horizontal"/>
+                <TextView
+                    android:id="@+id/total_future"
+                    android:gravity="center_horizontal"/>
+            </TableRow>
+
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/next_visit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/next_visit" />
+
+        <Button
+            android:id="@+id/log_in_other"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="20dp"
+            android:textSize="21sp"
+            android:background="@drawable/botonblanco"
+            android:text="@string/log_in_other"
+            android:layout_gravity="center_horizontal" />
+
         </LinearLayout>
     </ScrollView>
-
-    <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/visits_table"
-        android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:layout_marginTop="5dp"
-        android:stretchColumns="0,1,2">
-        <TableRow
-            android:id="@+id/header_row">
-            <TextView />
-            <TextView
-                android:text="@string/missed"
-                android:gravity="center_horizontal"
-                android:padding="3dip" />
-            <TextView
-                android:text="@string/received"
-                android:gravity="center_horizontal"
-                android:padding="3dip" />
-        </TableRow>
-        <TableRow
-            android:id="@+id/week_row">
-            <TextView
-                android:text="@string/past_week"
-                android:padding="3dip"/>
-            <TextView
-                android:id="@+id/past_week_missed"
-                android:gravity="center_horizontal"/>
-            <TextView
-                android:id="@+id/past_week_received"
-                android:gravity="center_horizontal"/>
-        </TableRow>
-        <TableRow
-            android:id="@+id/month_row">
-            <TextView
-                android:text="@string/past_month"
-                android:padding="3dip"/>
-            <TextView
-                android:id="@+id/past_month_missed"
-                android:gravity="center_horizontal"/>
-            <TextView
-                android:id="@+id/past_month_received"
-                android:gravity="center_horizontal"/>
-        </TableRow>
-        <TableRow
-            android:id="@+id/total_row">
-            <TextView
-                android:text="@string/total"
-                android:padding="3dip"/>
-            <TextView
-                android:id="@+id/total_missed"
-                android:gravity="center_horizontal"/>
-            <TextView
-                android:id="@+id/total_received"
-                android:gravity="center_horizontal"/>
-            <TextView
-                android:id="@+id/total_future"
-                android:gravity="center_horizontal"/>
-        </TableRow>
-
-    </TableLayout>
-
-    <TextView
-        android:id="@+id/next_visit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/next_visit" />
-
-    <Button
-        android:id="@+id/log_in_other"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:padding="20dp"
-        android:textSize="21sp"
-        android:background="@drawable/botonblanco"
-        android:text="@string/log_in_other"
-        android:layout_gravity="center_horizontal" />
-
 
 </LinearLayout>
