@@ -115,6 +115,7 @@ public class PreferencesManager
         try {
             objectJSONArray = new JSONArray(objectString);
         } catch (JSONException e) {
+            e.printStackTrace();
             return null;
         }
 
@@ -124,6 +125,7 @@ public class PreferencesManager
                 objectList.add(object);
             } catch (JSONException e) {
                 // Move on to the next one
+                e.printStackTrace();
             }
         }
 
