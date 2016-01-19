@@ -97,9 +97,6 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
 
 
-
-
-
         // TODO Calculate next visit date.
 
         // Fill in table
@@ -193,7 +190,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
             else {
 
                 Log.v(TAG, "Put pending visit info here");
-                /*
+                /* window stuff
                 Calendar calendar = Calendar.getInstance();//shouldnt start at getInstance but at FechUpdest
                 Date window = visitDateFormat.parse(pending_visitas.FechaUpdEstado.split("\\s+")[1]);
 
@@ -204,7 +201,8 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     //log missed visit
                 }
 
-                // if not, log visit & create pending
+                // if not, log visit & create pending -- send pending_visitas via bundle to LogVisitActivity
+
                 */
 
                 Log.v(TAG, "There is a pending visit");
@@ -216,6 +214,10 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 // TODO check if past window
                 //if past window ended, create missed visit
                 // if not, log visit
+                Intent visitas_intent = new Intent(ParticipantDashboardActivity.this, LogVisitActivity.class);
+                visitas_intent.putExtra("Visitas", pending_visitas);
+                startActivity(visitas_intent);
+
 
 
             }

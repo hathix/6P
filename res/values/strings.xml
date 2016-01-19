@@ -31,7 +31,8 @@
     <string name="ape_pat">1st Family name:</string>
     <string name="ape_mat">2nd Family name:</string>
     <string name="masculino">Male</string>
-    <string name="sched_visit">Schedule Visit</string>
+    <string name="sched_visit">Schedule Visit</string> <!-- creates pending visit -->
+    <string name="log_visit">Log Visit</string> <!-- switches pending to attended -->
     <string name="historia">History</string>
     <string name="femenino">Female</string>
     <string name="fecha_nacimiento">Birth Date:</string>

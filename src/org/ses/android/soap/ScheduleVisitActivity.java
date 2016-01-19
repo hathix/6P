@@ -54,7 +54,6 @@ import org.ses.android.soap.tasks.EstadoENRTask;
 import org.ses.android.soap.tasks.EstadoTAMTask;
 import org.ses.android.soap.preferences.PreferencesActivity;
 
-//TODO: add scheduled days
 
 public class ScheduleVisitActivity extends BaseActivity {
 
@@ -150,8 +149,9 @@ public class ScheduleVisitActivity extends BaseActivity {
          * if a patient was passed in, pre-load that patient
          */
         currentParticipant = getIntent().getParcelableExtra("Participant");
-        names.setText(currentParticipant.getFullNameTitleCase());
 
+        names.setText(currentParticipant.getFullNameTitleCase());
+        Log.v("my activity", "null");
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
