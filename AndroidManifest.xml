@@ -75,7 +75,16 @@
             android:theme="@android:style/Theme.Holo.Light"
             android:label="@string/title_log_new_visit" >
             <intent-filter>
-                <action android:name="android.intent.action.NewVisitActivity" />
+                <action android:name="android.intent.action.ScheduleVisitActivity" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name="org.ses.android.soap.LogVisitActivity"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:label="@string/title_log_new_visit" >
+            <intent-filter>
+                <action android:name="android.intent.action.LogVisitActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
