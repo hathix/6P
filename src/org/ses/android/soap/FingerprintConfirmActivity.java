@@ -15,6 +15,7 @@ import org.ses.android.seispapp120.R;
 
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.tasks.AgregarHuellaTask;
+import org.ses.android.soap.tasks.ObtenerIdPacienteTask;
 import org.ses.android.soap.utils.PreferencesManager;
 
 import SecuGen.FDxSDKPro.SGFDxErrorCode;
@@ -36,6 +37,9 @@ public class FingerprintConfirmActivity extends FingerprintBaseActivity {
 
     AgregarHuellaTask agregarHuellaTask;
     private AsyncTask<String, String, String> agregarHuella;
+
+    ObtenerIdPacienteTask obtenerIdPacienteTask;
+    private AsyncTask<String, String, String> obtenerIdPaciente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,12 +102,18 @@ public class FingerprintConfirmActivity extends FingerprintBaseActivity {
 
                     // Save everything
                     try {
+                        String codigoPaciente = null;
+
                         Log.v("register", "Try to register fingerprint.");
+                        if (patientInfo != null) { // it shouldn't be null
+                            codigoPaciente = patientInfo.getString("codigoPaciente");
+                        }
 
                         String huella = Base64.encodeToString(storedTemplate, Base64.DEFAULT);
                         agregarHuellaTask = new AgregarHuellaTask();
-                        agregarHuella = agregarHuellaTask.execute(currParticipant.CodigoPaciente,
-                                huella, "bogusurl");
+                        agregarHuella = agregarHuellaTask.execute(codigoPaciente,
+                                        huella, "bogusurl");
+                        Log.e("retrievedCodigoPaciente", codigoPaciente);
 
                         try {
                             String msg = agregarHuella.get();
