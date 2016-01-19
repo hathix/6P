@@ -126,14 +126,10 @@ public class ParticipantDashboardActivity extends BaseActivity {
             visits = asyncTask.get();
             Date date = new Date();
             String status;
-            Visitas visit;
-
 
             // start counting
-            if (visits != null && visits.length >= 1)
-                for (int i=0; i < visits.length; i++)
-                {
-                    visit = visits[i];
+            if (visits != null && visits.length >= 1) {
+                for (Visitas visit : visits) {
                     try {
                         date = visitDateFormat.parse(visit.FechaVisita.split("\\s+")[1]);
 
@@ -170,15 +166,16 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     if (visit.CodigoGrupoVisita.equals("3") && visit.CodigoVisita.equals("1")) {
                         first_visit = visit.FechaVisita;
                     }
-
                 }
-            Button btnSchedVisit = (Button) findViewById(R.id.log_visit);
+            }
+
+            Button btnScheduleVisit = (Button) findViewById(R.id.log_visit);
             if (pending_visitas == null) {
 
                 Log.v(TAG, "No pending visit");
                 // "Schedule visit" button should open ScheduleVisitActivity
 
-                btnSchedVisit.setOnClickListener(new View.OnClickListener() {
+                btnScheduleVisit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ParticipantDashboardActivity.this, ScheduleVisitActivity.class);
@@ -186,14 +183,16 @@ public class ParticipantDashboardActivity extends BaseActivity {
                         startActivity(intent);
                     }
                 });
-
-
-
             }
             else {
 
-                Log.v(TAG, "Put pending visit info here");
-                btnSchedVisit.setVisibility(View.INVISIBLE);
+                Log.v(TAG, "There is a pending visit");
+                Log.v(TAG, pending_visitas.Visita);
+                Log.v(TAG, pending_visitas.FechaVisita);
+                Log.v(TAG, pending_visitas.HoraCita);
+
+                btnScheduleVisit.setVisibility(View.INVISIBLE);
+                // TODO check if past window
                 //if past window ended, create missed visit
                 // if not, log visit
 
