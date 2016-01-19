@@ -35,6 +35,9 @@ public class Visita extends Cacheable implements KvmSerializable {
 			this.GenerarAuto = jsonObject.getBoolean("GenerarAuto");
 			this.Dependiente = jsonObject.getInt("Dependiente");
 			this.DiasVisitaProx = jsonObject.getInt("DiasVisitaProx");
+			this.DiasAntes = jsonObject.getInt("DiasAntes");
+			this.DiasDespues = jsonObject.getInt("DiasDespues");
+			this.OrdenVisita = jsonObject.getInt("OrdenVisita");
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -52,6 +55,9 @@ public class Visita extends Cacheable implements KvmSerializable {
 			temp.put("GenerarAuto", this.GenerarAuto);
 			temp.put("Dependiente", this.Dependiente);
 			temp.put("DiasVisitaProx", this.DiasVisitaProx);
+			temp.put("DiasAntes", this.DiasAntes);
+			temp.put("DiasDespues", this.DiasDespues);
+			temp.put("OrdenVisita", this.OrdenVisita);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -207,19 +213,19 @@ public class Visita extends Cacheable implements KvmSerializable {
             break;
         case 2:
         	NombreGrupoVisita = val.toString();
-            break;
+			break;
         case 3:
         	CodigoVisita  = Integer.parseInt(val.toString());
-            break;
+			break;
         case 4:
         	DescripcionVisita  = val.toString();
             break;
         case 5:
         	GenerarAuto = Boolean.valueOf(val.toString());
-            break;
+			break;
         case 6:
         	Dependiente  = Integer.parseInt(val.toString());
-            break;
+			break;
 		case 7:
 			DiasVisitaProx = Integer.parseInt(val.toString());
 			break;

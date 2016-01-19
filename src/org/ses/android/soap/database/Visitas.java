@@ -38,6 +38,7 @@ public class Visitas extends Cacheable implements KvmSerializable {
             this.CodigoVisitas = jsonObject.getString("CodigoVisitas");
             this.CodigoEstatusPaciente = jsonObject.getString("CodigoEstatusPaciente");
             this.CodigoUsuario = jsonObject.getString("CodigoUsuario");
+            this.FechaUpdEstado = jsonObject.getString("FechaUpdEstado");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -58,6 +59,7 @@ public class Visitas extends Cacheable implements KvmSerializable {
             temp.put("CodigoVisitas", this.CodigoVisitas);
             temp.put("CodigoEstatusPaciente", this.CodigoEstatusPaciente);
             temp.put("CodigoUsuario", this.CodigoUsuario);
+            temp.put("FechaUpdEstado", this.FechaUpdEstado);
         } catch (JSONException e) {
             e.printStackTrace();
         }
