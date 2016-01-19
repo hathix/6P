@@ -43,8 +43,6 @@ public class PreferencesManager
      * if there is a fingerprint stored, this gets rid of it
      */
     public static void removeFingerprint(Context context) {
-        clearCacheable(context, "Fingerprint");
-        /*
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         SharedPreferences.Editor editor = mPreferences.edit();
         if (mPreferences.getString("Fingerprint", "").length() > 0)
@@ -52,7 +50,6 @@ public class PreferencesManager
             editor.remove("Fingerprint");
             editor.commit();
         }
-        */
     }
 
     /*
