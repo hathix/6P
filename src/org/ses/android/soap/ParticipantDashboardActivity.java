@@ -179,7 +179,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
                 Log.v(TAG, "No pending visit");
                 // "Schedule visit" button should open ScheduleVisitActivity
-
+                btnLogVisit.setVisibility(View.INVISIBLE);
                 btnScheduleVisit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
