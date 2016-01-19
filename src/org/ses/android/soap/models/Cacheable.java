@@ -9,6 +9,8 @@ public class Cacheable {
 
     public JSONObject jsonObject = null;
 
+    public Cacheable() {}
+
     public Cacheable(JSONObject jsonObject) { this.jsonObject = jsonObject; }
 
     public JSONObject toJSON() { return new JSONObject(); }
