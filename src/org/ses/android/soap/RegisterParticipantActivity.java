@@ -695,6 +695,7 @@ public class RegisterParticipantActivity extends BaseActivity {
                     else {
                         Intent i = new Intent(context, FingerprintConfirmActivity.class);
                         i.putExtra("Participant", participant);
+                        i.putExtra("codigoPaciente", id_pac);
                         startActivity(i);
                     }
 
