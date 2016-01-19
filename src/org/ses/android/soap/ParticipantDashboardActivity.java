@@ -172,13 +172,13 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     }
 
                 }
-            Button btnLogVisit = (Button) findViewById(R.id.log_visit);
+            Button btnSchedVisit = (Button) findViewById(R.id.log_visit);
             if (pending_visitas == null) {
 
                 Log.v(TAG, "No pending visit");
                 // "Schedule visit" button should open ScheduleVisitActivity
 
-                btnLogVisit.setOnClickListener(new View.OnClickListener() {
+                btnSchedVisit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Intent intent = new Intent(ParticipantDashboardActivity.this, ScheduleVisitActivity.class);
@@ -193,7 +193,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
             else {
 
                 Log.v(TAG, "Put pending visit info here");
-                btnLogVisit.setVisibility(View.INVISIBLE);
+                btnSchedVisit.setVisibility(View.INVISIBLE);
                 //if past window ended, create missed visit
                 // if not, log visit
 
