@@ -57,6 +57,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
     private TextView monthReceivedView;
     private TextView totalReceivedView;
     private Visitas pending_visitas;
+    private String stringified_pending_visitas;
     private static final String TAG = "MyActivity";
 
     private String first_visit = "Does Not Exist";
@@ -126,10 +127,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
             Date date = new Date();
             String status;
             Visitas visit;
-              /*
-               * Pending visits -- find visitas list from tasks, filter it and find the one that's pending
-               * Estado 1
-               */
+
 
             // start counting
             if (visits != null && visits.length >= 1)
@@ -170,6 +168,22 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     }
                     if (pending_visitas == null) {
                         Log.v(TAG, "No pending visit");
+                        // "Schedule visit" button should open ScheduleVisitActivity
+                        Button btnLogVisit = (Button) findViewById(R.id.log_visit);
+                        btnLogVisit.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent intent = new Intent(ParticipantDashboardActivity.this, ScheduleVisitActivity.class);
+                                intent.putExtra("Participant", participant);
+                                startActivity(intent);
+                            }
+                        });
+                    }
+                    else {
+                        Log.v(TAG, "Put pending visit info here");
+                        //if past window ended, create missed visit
+                        // if not, log visit
+
                     }
                 }
             weekMissedView.setText(Integer.toString(weekMissed));
@@ -189,16 +203,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
             e.printStackTrace();
         }
 
-        // "Log visit" button should open NewVisitActivity
-        Button btnLogVisit = (Button) findViewById(R.id.log_visit);
-        btnLogVisit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ParticipantDashboardActivity.this, ScheduleVisitActivity.class);
-                intent.putExtra("Participant", participant);
-                startActivity(intent);
-            }
-        });
+
 
         // "History" button should open ParticipantHistoryActivity
         Button btnHistory = (Button) findViewById(R.id.participant_history);
