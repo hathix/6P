@@ -22,7 +22,7 @@ public class AgregarHuellaTask extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String ... params)
     {
-        String resul = "OK";
+        String resul = "";
 
         final String NAMESPACE = StringConexion.conexion;
         final String SERVICE_NAME = StringConexion.serviceName;
