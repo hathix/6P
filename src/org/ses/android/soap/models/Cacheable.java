@@ -7,7 +7,7 @@ import org.json.JSONObject;
  */
 public class Cacheable {
 
-    public JSONObject jsonObject;
+    public JSONObject jsonObject = null;
 
     public Cacheable(JSONObject jsonObject) { this.jsonObject = jsonObject; }
 
