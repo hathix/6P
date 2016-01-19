@@ -56,7 +56,7 @@ import org.ses.android.soap.preferences.PreferencesActivity;
 
 //TODO: add scheduled days
 
-public class NewVisitActivity extends BaseActivity {
+public class ScheduleVisitActivity extends BaseActivity {
 
     private Participant currentParticipant;
     private SharedPreferences mPreferences;
@@ -427,7 +427,7 @@ public class NewVisitActivity extends BaseActivity {
 
         codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
 
-        AlertDialog.Builder builder = new AlertDialog.Builder(NewVisitActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(ScheduleVisitActivity.this);
         builder.setMessage("Desea Generar Visita?")
                 .setTitle("Advertencia")
                 .setCancelable(false)
@@ -436,7 +436,7 @@ public class NewVisitActivity extends BaseActivity {
                             @Override
                             public void onClick(DialogInterface dialog, int id) {
                                 generateVisit();
-                                Intent intent = new Intent(NewVisitActivity.this,ParticipantDashboardActivity.class);
+                                Intent intent = new Intent(ScheduleVisitActivity.this,ParticipantDashboardActivity.class);
                                 intent.putExtra("Participant", currentParticipant);
                                 startActivity(intent);
                             }

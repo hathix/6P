@@ -71,7 +71,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="org.ses.android.soap.NewVisitActivity"
+            android:name="org.ses.android.soap.ScheduleVisitActivity"
             android:theme="@android:style/Theme.Holo.Light"
             android:label="@string/title_log_new_visit" >
             <intent-filter>
