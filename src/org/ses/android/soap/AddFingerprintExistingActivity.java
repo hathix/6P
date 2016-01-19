@@ -108,7 +108,8 @@ public class AddFingerprintExistingActivity extends BaseActivity {
                                                             PreferencesManager.getFingerprint(getBaseContext()),
                                                             Base64.DEFAULT);
                                                     agregarHuellaTask = new AgregarHuellaTask();
-                                                    agregarHuella = agregarHuellaTask.execute(dni, huella, "bogusurl");
+                                                    agregarHuella = agregarHuellaTask.execute(participant.CodigoPaciente,
+                                                            huella, "bogusurl");
 
                                                     try {
                                                         String msg = agregarHuella.get();
