@@ -56,6 +56,8 @@ public class ParticipantDashboardActivity extends BaseActivity {
     private TextView weekReceivedView;
     private TextView monthReceivedView;
     private TextView totalReceivedView;
+    private Visitas pending_visitas;
+    private static final String TAG = "MyActivity";
 
     private String first_visit = "Does Not Exist";
 
@@ -92,6 +94,11 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
         tvwStartDate = (TextView) findViewById(R.id.tvwStart);
 
+
+
+
+
+
         // TODO Calculate next visit date.
 
         // Fill in table
@@ -119,6 +126,10 @@ public class ParticipantDashboardActivity extends BaseActivity {
             Date date = new Date();
             String status;
             Visitas visit;
+              /*
+               * Pending visits -- find visitas list from tasks, filter it and find the one that's pending
+               * Estado 1
+               */
 
             // start counting
             if (visits != null && visits.length >= 1)
@@ -127,6 +138,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     visit = visits[i];
                     try {
                         date = visitDateFormat.parse(visit.FechaVisita.split("\\s+")[1]);
+
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -144,6 +156,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                         }
                     } else if (!status.equals("Pendiente")) { // Must be missed
                         totalMissed++;
+                        pending_visitas = visit;
                         if (date.after(weekAgo)) {
                             monthMissed++;
                             weekMissed++;
@@ -154,6 +167,9 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
                     if (visit.CodigoGrupoVisita.equals("3") && visit.CodigoVisita.equals("1")) {
                         first_visit = visit.FechaVisita;
+                    }
+                    if (pending_visitas == null) {
+                        Log.v(TAG, "No pending visit");
                     }
                 }
             weekMissedView.setText(Integer.toString(weekMissed));
