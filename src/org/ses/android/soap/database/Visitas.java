@@ -23,7 +23,8 @@ public class Visitas extends Cacheable implements KvmSerializable {
 	public String CodigoEstatusPaciente;
 	public String CodigoUsuario;
 
-    public Visitas(JSONObject jsonObject) {
+    public Visitas(Cacheable cacheable) {
+        JSONObject jsonObject = cacheable.jsonObject;
         try {
             this.Proyecto = jsonObject.getString("Proyecto");
             this.Visita = jsonObject.getString("Visita");
@@ -41,6 +42,7 @@ public class Visitas extends Cacheable implements KvmSerializable {
         }
     }
 
+    @Override
     public JSONObject toJSON() {
         JSONObject temp = new JSONObject();
         try {

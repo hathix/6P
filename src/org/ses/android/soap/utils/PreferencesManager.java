@@ -104,8 +104,8 @@ public class PreferencesManager
         }
     }
 
-    // Try to receive Cacheable list. Need to upcast your Cacheable after retrieving.
-    public ArrayList<Cacheable> getCacheableList(Context context, String saveName) {
+    // Try to receive Cacheable list. Need to upcast your Cacheable using constructor after retrieving.
+    public static ArrayList<Cacheable> getCacheableList(Context context, String saveName) {
         SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         String objectString = mPreferences.getString(saveName, "");
         ArrayList<Cacheable> objectList = new ArrayList<Cacheable>();

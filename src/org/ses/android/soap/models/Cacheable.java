@@ -7,9 +7,11 @@ import org.json.JSONObject;
  */
 public class Cacheable {
 
+    public JSONObject jsonObject;
+
     public Cacheable() {}
 
-    public Cacheable(JSONObject jsonObject) {}
+    public Cacheable(JSONObject jsonObject) { this.jsonObject = jsonObject; }
 
     public JSONObject toJSON() { return new JSONObject(); }
 

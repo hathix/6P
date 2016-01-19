@@ -21,7 +21,8 @@ public class Visita extends Cacheable implements KvmSerializable {
 	public int Dependiente;
 	public int DiasVisitaProx;
 
-	public Visita(JSONObject jsonObject) {
+	public Visita(Cacheable cacheable) {
+		JSONObject jsonObject = cacheable.jsonObject;
 		try {
 			this.CodigoProyecto = jsonObject.getInt("CodigoProyecto");
 			this.CodigoGrupoVisita = jsonObject.getInt("CodigoGrupoVisita");
@@ -36,6 +37,7 @@ public class Visita extends Cacheable implements KvmSerializable {
 		}
 	}
 
+	@Override
 	public JSONObject toJSON() {
 		JSONObject temp = new JSONObject();
 		try {
