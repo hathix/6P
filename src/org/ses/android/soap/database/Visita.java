@@ -20,6 +20,9 @@ public class Visita extends Cacheable implements KvmSerializable {
 	public Boolean GenerarAuto;
 	public int Dependiente;
 	public int DiasVisitaProx;
+	public int DiasAntes;
+	public int DiasDespues;
+    public int OrdenVisita;
 
 	public Visita(Cacheable cacheable) {
 		JSONObject jsonObject = cacheable.jsonObject;
@@ -66,6 +69,10 @@ public class Visita extends Cacheable implements KvmSerializable {
 		GenerarAuto = false;
 		Dependiente = 0;
 		DiasVisitaProx = 0;
+        DiasAntes = 0;
+        DiasDespues = 0;
+        OrdenVisita = 0;
+
 	}
 	
 	public Visita(
@@ -76,7 +83,10 @@ public class Visita extends Cacheable implements KvmSerializable {
 			String DescripcionVisita,
 			Boolean GenerarAuto,
 			int Dependiente,
-			int DiasVisitaProx
+			int DiasVisitaProx,
+			int DiasAntes,
+			int DiasDespues,
+            int OrdenVisita
 			)
 	{
 		this.CodigoProyecto = CodigoProyecto;
@@ -87,6 +97,9 @@ public class Visita extends Cacheable implements KvmSerializable {
 		this.GenerarAuto = GenerarAuto;
 		this.Dependiente = Dependiente;
 		this.DiasVisitaProx = DiasVisitaProx;
+		this.DiasAntes = DiasAntes;
+		this.DiasDespues = DiasDespues;
+        this.OrdenVisita = OrdenVisita;
 
 	}
 	
@@ -111,6 +124,12 @@ public class Visita extends Cacheable implements KvmSerializable {
             return Dependiente;
 		case 7:
 			return DiasVisitaProx;
+        case 8:
+            return DiasAntes;
+        case 9:
+            return DiasDespues;
+        case 10:
+            return OrdenVisita;
 
         }
 		
@@ -119,7 +138,7 @@ public class Visita extends Cacheable implements KvmSerializable {
 	
 	@Override
 	public int getPropertyCount() {
-		return 8;
+		return 11;
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -158,9 +177,21 @@ public class Visita extends Cacheable implements KvmSerializable {
 		case 7:
 			info.type = PropertyInfo.INTEGER_CLASS;
 			info.name = "DiasVisitaProx";
-            
-	            
-	        default:break;
+            break;
+        case 8:
+            info.type = PropertyInfo.INTEGER_CLASS;
+            info.name = "DiasAntes";
+            break;
+        case 9:
+            info.type = PropertyInfo.INTEGER_CLASS;
+            info.name = "DiasDespues";
+            break;
+        case 10:
+            info.type = PropertyInfo.INTEGER_CLASS;
+            info.name = "OrdenVisita";
+            break;
+
+        default:break;
         }
 	}
 	
@@ -192,6 +223,15 @@ public class Visita extends Cacheable implements KvmSerializable {
 		case 7:
 			DiasVisitaProx = Integer.parseInt(val.toString());
 			break;
+        case 8:
+            DiasAntes = Integer.parseInt(val.toString());
+            break;
+        case 9:
+            DiasDespues = Integer.parseInt(val.toString());
+            break;
+        case 10:
+            OrdenVisita = Integer.parseInt(val.toString());
+            break;
 
 	    default:
 	        break;
