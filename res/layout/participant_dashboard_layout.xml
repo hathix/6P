@@ -24,13 +24,13 @@
             android:paddingRight="10dp" >
 
             <Button
-                android:id="@+id/log_visit"
+                android:id="@+id/sched_visit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:padding="20dp"
                 android:textSize="21sp"
                 android:background="@drawable/botonblanco"
-                android:text="@string/log_visit"
+                android:text="@string/sched_visit"
                 android:layout_gravity="center_horizontal"
                 android:layout_weight="1" />
 

@@ -116,8 +116,12 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 monthReceived = 0, totalReceived = 0;
 
         Calendar cal = Calendar.getInstance();
+
+
+        Date today = cal.getTime();
         cal.add(Calendar.DATE, -7);
         Date weekAgo = cal.getTime();
+
 
         cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, -1);
@@ -172,7 +176,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     }
 
                 }
-            Button btnSchedVisit = (Button) findViewById(R.id.log_visit);
+            Button btnSchedVisit = (Button) findViewById(R.id.sched_visit);
             if (pending_visitas == null) {
 
                 Log.v(TAG, "No pending visit");
@@ -193,9 +197,20 @@ public class ParticipantDashboardActivity extends BaseActivity {
             else {
 
                 Log.v(TAG, "Put pending visit info here");
+                /*
                 btnSchedVisit.setVisibility(View.INVISIBLE);
-                //if past window ended, create missed visit
-                // if not, log visit
+                Calendar calendar = Calendar.getInstance();//shouldnt start at getInstance but at FechUpdest
+                Date window = visitDateFormat.parse(pending_visitas.FechaUpdEstado.split("\\s+")[1]);
+
+                calendar.add(window, pending_visitas.Visita.DiasVisitaProx + pending_visitas.Visita.FechaDespues);
+                Date windows = calendar.getTime();
+
+                if (today.after(windows)){
+                    //log missed visit
+                }
+
+                // if not, log visit & create pending
+                */
 
             }
             weekMissedView.setText(Integer.toString(weekMissed));
