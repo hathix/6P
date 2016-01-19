@@ -1,31 +1,19 @@
 package org.ses.android.soap;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.ses.android.seispapp120.R;
-import org.ses.android.soap.database.Idreg;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;
-import org.ses.android.soap.tasks.GenerarIdENRTask;
-import org.ses.android.soap.tasks.GenerarIdTAMTask;
-import org.ses.android.soap.tasks.MostrarTipoIDTask;
-import org.ses.android.soap.tasks.TienePermisosTask;
 import org.ses.android.soap.tasks.VisitasListTask;
 
 import java.text.DateFormat;
@@ -56,10 +44,9 @@ public class ParticipantDashboardActivity extends BaseActivity {
     private TextView weekReceivedView;
     private TextView monthReceivedView;
     private TextView totalReceivedView;
-    private Visitas pending_visitas;
+    private Visitas pendingVisitas;
     Button btnScheduleVisit;
     Button btnLogVisit;
-    private String stringified_pending_visitas;
     private static final String TAG = "MyActivity";
 
     private String first_visit = "Does Not Exist";
@@ -165,7 +152,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                             monthMissed++;
                         }
                     } else {
-                        pending_visitas = visit;
+                        pendingVisitas = visit;
                         Log.v(TAG, "adding pending visit");
                     }
 
@@ -195,13 +182,13 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     Intent visitas_intent = new Intent(ParticipantDashboardActivity.this, LogVisitActivity.class);
-                    visitas_intent.putExtra("Visitas", pending_visitas);
+                    visitas_intent.putExtra("Visitas", pendingVisitas);
                     startActivity(visitas_intent);
                 }
             });
             btnLogVisit.setVisibility(View.VISIBLE);
 
-            if (pending_visitas == null) {
+            if (pendingVisitas == null) {
                 // if there's no pending visit, the user can only schedule a new visit
                 Log.v(TAG, "No pending visit");
 
@@ -210,14 +197,14 @@ public class ParticipantDashboardActivity extends BaseActivity {
             }
             else {
                 Log.v(TAG, "There is a pending visit");
-                Log.v(TAG, pending_visitas.Visita);
-                Log.v(TAG, pending_visitas.FechaVisita);
-                Log.v(TAG, pending_visitas.HoraCita);
+                Log.v(TAG, pendingVisitas.Visita);
+                Log.v(TAG, pendingVisitas.FechaVisita);
+                Log.v(TAG, pendingVisitas.HoraCita);
 
                 // if there is a pending visit, either the patient missed it (past the end of the
                 // window) or the patient is in/before the window (so they can be checked in for it)
 
-                // TODO check if you're past the end of pending_visitas's window
+                // TODO check if you're past the end of pendingVisitas's window
                 boolean isPastEndOfWindow = false;
                 if (isPastEndOfWindow) {
                     // TODO mark missed visit
