@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.USE_CREDENTIALS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
-    <android:uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 
     <application
@@ -73,7 +73,7 @@
         <activity
             android:name="org.ses.android.soap.ScheduleVisitActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/title_log_new_visit" >
+            android:label="@string/sched_visit" >
             <intent-filter>
                 <action android:name="android.intent.action.ScheduleVisitActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />
@@ -82,7 +82,7 @@
         <activity
             android:name="org.ses.android.soap.LogVisitActivity"
             android:theme="@android:style/Theme.Holo.Light"
-            android:label="@string/title_log_new_visit" >
+            android:label="@string/log_visit">
             <intent-filter>
                 <action android:name="android.intent.action.LogVisitActivity" />
                 <category android:name="android.intent.category.ALTERNATIVE" />

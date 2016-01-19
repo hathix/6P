@@ -214,6 +214,8 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 // TODO check if past window
                 //if past window ended, create missed visit
                 // if not, log visit
+
+                //TODO: add a button to take you to log visit activity
                 Intent visitas_intent = new Intent(ParticipantDashboardActivity.this, LogVisitActivity.class);
                 visitas_intent.putExtra("Visitas", pending_visitas);
                 startActivity(visitas_intent);
