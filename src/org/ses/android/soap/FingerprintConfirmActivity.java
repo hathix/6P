@@ -3,6 +3,7 @@ package org.ses.android.soap;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -13,7 +14,7 @@ import android.widget.Toast;
 import org.ses.android.seispapp120.R;
 
 import org.ses.android.soap.database.Participant;
-// TODO import org.ses.android.soap.tasks.PutFingerprintTask;
+import org.ses.android.soap.tasks.AgregarHuellaTask;
 import org.ses.android.soap.utils.PreferencesManager;
 
 import SecuGen.FDxSDKPro.SGFDxErrorCode;
@@ -33,8 +34,8 @@ public class FingerprintConfirmActivity extends FingerprintBaseActivity {
 
     private byte[] storedTemplate;
 
-    // TODO PutFingerprintTask registerPatientFingerprint;
-    private AsyncTask<String, String, String> putFingerprint;
+    AgregarHuellaTask agregarHuellaTask;
+    private AsyncTask<String, String, String> agregarHuella;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -99,10 +100,18 @@ public class FingerprintConfirmActivity extends FingerprintBaseActivity {
                     try {
                         Log.v("register", "Try to register fingerprint.");
 
-                        // TODO registerPatientFingerprint = new PutFingerprintTask();
+                        String huella = Base64.encodeToString(storedTemplate, Base64.DEFAULT);
+                        agregarHuellaTask = new AgregarHuellaTask();
+                        agregarHuella = agregarHuellaTask.execute(currParticipant.CodigoPaciente,
+                                huella, "bogusurl");
 
-                        // TODO putFingerprint = registerPatientFingerprint.execute(..., url);
-                        //finish();
+                        try {
+                            String msg = agregarHuella.get();
+                            Log.e("agregarHuellaTask", msg);
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e("agregarHuellaTask", "failed");
+                        }
 
                         Toast.makeText(getApplicationContext(), getString(R.string.fingerprint_saved), Toast.LENGTH_SHORT).show();
 
