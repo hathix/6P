@@ -172,16 +172,12 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     }
 
                 }
-            if (pending_visitas != null) {
-                Log.v(TAG, "Put pending visit info here");
-                //if past window ended, create missed visit
-                // if not, log visit
-            }
-            else {
+            Button btnLogVisit = (Button) findViewById(R.id.log_visit);
+            if (pending_visitas == null) {
 
                 Log.v(TAG, "No pending visit");
                 // "Schedule visit" button should open ScheduleVisitActivity
-                Button btnLogVisit = (Button) findViewById(R.id.log_visit);
+
                 btnLogVisit.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -191,6 +187,15 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     }
                 });
 
+
+
+            }
+            else {
+
+                Log.v(TAG, "Put pending visit info here");
+                btnLogVisit.setVisibility(View.INVISIBLE);
+                //if past window ended, create missed visit
+                // if not, log visit
 
             }
             weekMissedView.setText(Integer.toString(weekMissed));
