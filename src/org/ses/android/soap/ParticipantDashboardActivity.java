@@ -208,6 +208,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 boolean isPastEndOfWindow = VisitUtilities.isPastVisitWindow(pendingVisitas);
                 if (isPastEndOfWindow) {
                     // TODO mark missed visit
+                    // this is gonna be very similar to what happens in LogVisitActivity
 
                     // show "schedule visit" button
                     btnScheduleVisit.setVisibility(View.VISIBLE);
