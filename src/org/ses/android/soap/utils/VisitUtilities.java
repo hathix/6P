@@ -20,7 +20,6 @@ public class VisitUtilities {
     private Visitas pending_visit;
     private Visitas[] visits;
     private SharedPreferences mPreferences;
-    private AsyncTask<String, String, Visitas[]> asyncTask;
     private static final String VISIT_PENDING_STATUS = "Pendiente";
     private static final String UPDATE_VISIT_SUCCESS_RESPONSE = "OK";
     private static final String PATIENT_STATUS_CODE = "1";
@@ -50,28 +49,25 @@ public class VisitUtilities {
     }
 
 
-    public boolean hasPendingVisit(Participant participant) {
+    public Visitas getPendingVisit(Participant participant) {
         //get VisitasListTask visits for said patient:
         VisitasListTask tarea = new VisitasListTask();
+        AsyncTask<String, String, Visitas[]> asyncTask;
         String codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         String codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
         asyncTask = tarea.execute(participant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
 
         try {
             visits = asyncTask.get();
-
-            pending_visit = VisitUtilities.getPendingVisit(visits);
-            if (pending_visit == null) {
-                return false;
-            } else {
-                return true;
-            }
-        } catch (InterruptedException e) {
+            pending_visit = getPendingVisit(visits);
+            return pending_visit;
+        }
+         catch (InterruptedException e) {
             e.printStackTrace();
-            return false;
+            return null;
         } catch (ExecutionException e) {
             e.printStackTrace();
-            return false;
+            return null;
         }
     }
 
