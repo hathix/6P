@@ -23,6 +23,7 @@ import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.BuscarHuellaTask;
+import org.ses.android.soap.tasks.ObtenerIdPacienteTask;
 import org.ses.android.soap.tasks.ParticipantLoadTask;
 import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.utils.PreferencesManager;
@@ -42,13 +43,14 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
     private Button btnSearch;
 
     private AsyncTask<String, String, Participant> asyncTask;
+    private AsyncTask<String, String, String> asyncTask1;
     private SharedPreferences mPreferences;
 
     private int year, month, day;
     private final int DATE_DIALOG_ID = 999;
 
     private Participant participant;
-    String dni, firstName, paternalLast, maternalLast, dob;
+    String dni, firstName, paternalLast, maternalLast, dob, result;
 
     Boolean changed_dob = false;
 
@@ -192,25 +194,22 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 Boolean dni_inputted = false;
                 Boolean dni_valid = false;
 
-                // DNI has been entered, but it's not valid length
+                // check if fields are entered
                 if (dni != null && dni.length() > 0) {
                     dni_inputted = true;
                     if (dni.length() == 8) {
                         dni_valid = true;
                     }
                 }
-
                 if (firstName != null && firstName.length() > 0 &&
                         maternalLast != null && maternalLast.length() > 0 &&
                         paternalLast != null && paternalLast.length() > 0 &&
                         changed_dob) {
                     name_dob_inputted = true;
                 }
-
                 if (!mPreferences.getString("Fingerprint","notFound").equals("notFound")) {
                     fingerprint_inputted = true;
                 }
-
                 if (dni_inputted && !dni_valid && !fingerprint_inputted && !name_dob_inputted) {
                     Log.v("dni", "Invalid DNI");
                     Toast.makeText(FingerprintFindActivity.this,
@@ -218,7 +217,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                             Toast.LENGTH_SHORT).show();
                 }
 
-                // valid-length DNI has been entered, search just off that
+                // only valid-length DNI inputted, search just off that
                 else if (dni_valid && !fingerprint_inputted && !name_dob_inputted) {
                     try {
                         ParticipantLoadTask tarea = new ParticipantLoadTask();
@@ -228,22 +227,9 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                         participant = asyncTask.get();
 
                         if (participant == null) {
-                            Intent intent = new Intent(getBaseContext(), NoMatchActivity.class);
-                            intent.putExtra("dni", dni);
-                            if (firstName != null && !firstName.equals(""))
-                                intent.putExtra("firstName", firstName);
-                            if (maternalLast != null && !maternalLast.equals(""))
-                                intent.putExtra("maternalLast", maternalLast);
-                            if (paternalLast != null && !paternalLast.equals(""))
-                                intent.putExtra("paternalLast", paternalLast);
-                            if (dob != null && !dob.equals(""))
-                                intent.putExtra("dob", dob);
-                            startActivity(intent);
+                            triggerNoMatch();
                         } else {
-                            Log.i("CodigoPaciente", participant.CodigoPaciente);
-                            Intent intent = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
-                            intent.putExtra("Participant", participant);
-                            startActivity(intent);
+                            triggerPatientFound();
                         }
                     } catch (InterruptedException e) {
                         // TODO Auto-generated catch block
@@ -254,19 +240,68 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                     }
 
                 }
-
-                else if (fingerprint_inputted && !name_dob_inputted && !dni_inputted) {
+                // only fingerprint inputted
+                else if (fingerprint_inputted && !name_dob_inputted && !dni_valid) {
                     BuscarHuellaTask tarea = new BuscarHuellaTask();
+                    asyncTask1 = tarea.execute(mPreferences.getString("Fingerprint",""));
+                    result = asyncTask1.get();
 
+                    if (result.equals("fingerprintNotFound")) {
+                        triggerNoMatch();
+                    }
+                    else {
+                        successfulCodigoFound();
+                    }
                 }
 
-                // We have full name + DOB information
-                if (firstName != null && maternalLast != null && paternalLast != null &&
-                        firstName.length() > 0 && maternalLast.length() > 0 && paternalLast.length() > 0) {
-                    // search based off name
+                // only name and dob inputted
+                else if (name_dob_inputted && !fingerprint_inputted && !dni_valid) {
+                    ObtenerIdPacienteTask tarea = new ObtenerIdPacienteTask();
+                    asyncTask1 = tarea.execute(firstName,paternalLast,maternalLast,dob,"bogusurl");
+                    result = asyncTask1.get();
+
+                    if (result != null && result.length() == 36) {
+                        successfulCodigoFound();
+                    }
+                    else {
+                        triggerNoMatch();
+                    }
                 }
             }
         });
+    }
+
+    private void triggerNoMatch() {
+        Intent intent = new Intent(getBaseContext(), NoMatchActivity.class);
+        intent.putExtra("dni", dni);
+        if (firstName != null && !firstName.equals(""))
+            intent.putExtra("firstName", firstName);
+        if (maternalLast != null && !maternalLast.equals(""))
+            intent.putExtra("maternalLast", maternalLast);
+        if (paternalLast != null && !paternalLast.equals(""))
+            intent.putExtra("paternalLast", paternalLast);
+        if (dob != null && !dob.equals(""))
+            intent.putExtra("dob", dob);
+        startActivity(intent);
+    }
+
+    private void triggerPatientFound() {
+        Log.i("CodigoPaciente", participant.CodigoPaciente);
+        Intent intent = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
+        intent.putExtra("Participant", participant);
+        startActivity(intent);
+    }
+
+    private void successfulCodigoFound() {
+        ParticipantLoadFromCodigoTask asyncTask = new ParticipantLoadFromCodigoTask();
+        asyncTask.execute(result);
+        participant = asyncTask.get();
+
+        if (participant == null) {
+            triggerNoMatch();
+        } else {
+            triggerPatientFound();
+        }
     }
 }
 
