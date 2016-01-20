@@ -186,12 +186,12 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     startActivity(visitas_intent);
                 }
             });
-            btnLogVisit.setVisibility(View.VISIBLE);
+            btnLogVisit.setVisibility(View.INVISIBLE);
 
             if (pendingVisitas == null) {
                 // if there's no pending visit, the user can only schedule a new visit
                 Log.v(TAG, "No pending visit");
-
+                //There shouldn't be a log button, right? TODO Check if you are done with the project
                 // show "schedule visit" button
                 btnScheduleVisit.setVisibility(View.VISIBLE);
             }
