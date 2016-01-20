@@ -9,6 +9,7 @@ import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.EstadoVisitaTask;
 import org.ses.android.soap.tasks.StringConexion;
+import org.ses.android.soap.tasks.VisitasListTask;
 
 import java.util.concurrent.ExecutionException;
 
@@ -16,7 +17,10 @@ import java.util.concurrent.ExecutionException;
  * Created by neel on 1/20/16.
  */
 public class VisitUtilities {
-
+    private Visitas pending_visit;
+    private Visitas[] visits;
+    private SharedPreferences mPreferences;
+    private AsyncTask<String, String, Visitas[]> asyncTask;
     private static final String VISIT_PENDING_STATUS = "Pendiente";
     private static final String UPDATE_VISIT_SUCCESS_RESPONSE = "OK";
     private static final String PATIENT_STATUS_CODE = "1";
@@ -44,6 +48,33 @@ public class VisitUtilities {
         // TODO
         return false;
     }
+
+
+    public boolean hasPendingVisit(Participant participant) {
+        //get VisitasListTask visits for said patient:
+        VisitasListTask tarea = new VisitasListTask();
+        String codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
+        String codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
+        asyncTask = tarea.execute(participant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
+
+        try {
+            visits = asyncTask.get();
+
+            pending_visit = VisitUtilities.getPendingVisit(visits);
+            if (pending_visit == null) {
+                return false;
+            } else {
+                return true;
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+            return false;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
 
     /**
      * Calls an async task to change a participant's status for a particular visit. That is,
