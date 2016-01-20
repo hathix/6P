@@ -32,9 +32,7 @@ public class BuscarHuellaTask extends AsyncTask<String, String, String> {
         final String URL=NAMESPACE+SERVICE_NAME;
         final String METHOD_NAME = "BuscarHuella";
         final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
-
-
-
+        
         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
         request.addProperty("Huella", params[0]);
 
