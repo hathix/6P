@@ -44,7 +44,6 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
     private Button btnConfirm;
     Participant participant;
 
-    Context context;
     private Visitas[] visits;
 
 
@@ -99,7 +98,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                         getString(R.string.no_fingerprint_match),
                         Toast.LENGTH_SHORT).show();
             } else {
-                getParticipantVisits(context);
+                getParticipantVisits();
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -111,21 +110,17 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
 
     /**
      * Get participant visits from codigo. Uses ParticipantLoadFromCodigoTask.
-     *
-     * @param context
      */
-    public void getParticipantVisits(Context context) {
+    public void getParticipantVisits() {
         String participant_result = ""; //?
-        Visitas pending_visit;
-        Participant participant;
         ParticipantLoadFromCodigoTask participantTask = new ParticipantLoadFromCodigoTask();
         participantTask.execute(participant_result, "bogusurl");
         try {
-            participant = participantTask.get();
+            Participant participant = participantTask.get();
             if (participant == null) {
                 Log.v("myActivity", "error getting participant visits");
             } else {
-                pending_visit = VisitUtilities.getPendingVisit(participant, context); // this is a participant
+                Visitas pending_visit = VisitUtilities.getPendingVisit(participant, getBaseContext());
                 if (pending_visit == null) {
                     //take to dash
                     takeToDash();
@@ -197,9 +192,6 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                     askForRescan();
                 }
                 searchFingerPrint();
-                // TODO Use mTemplate to do the search with FingerprintSearchTask
-                // If found, automatically log visit using auto-scheduling
-                // If not found, redirect to register page or something like that
             }
         });
     }
