@@ -33,8 +33,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
+import org.ses.android.soap.models.Cacheable;
 import org.ses.android.soap.models.Locale;
 import org.ses.android.soap.models.Project;
 import org.ses.android.soap.database.Visita;
@@ -286,7 +288,7 @@ public class PromoterLoginActivity extends Activity {
                         if (visitaList != null) {
                             // TODO Fix this when Internet returns
                             PreferencesManager.saveCacheableList(getBaseContext(), "visitaList",
-                                    new ArrayList<Visita>(visitaList));
+                                    new ArrayList<Cacheable>(Arrays.asList(visitaList)));
                         }
 
                         Intent intent=new Intent(PromoterLoginActivity.this,MainMenuActivity.class);
