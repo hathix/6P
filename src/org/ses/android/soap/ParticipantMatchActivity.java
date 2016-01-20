@@ -17,6 +17,9 @@ import android.widget.Button;
 import android.widget.ListView;
 
 /**
+ * NOTE(1/20/16): this activity is no longer used. We only find 1 patient, so we always jump
+ * straight to their dashboard. We never need to come here.
+ *
  * Created by anyway on 1/11/16.
  */
 public class ParticipantMatchActivity extends BaseActivity {
