@@ -37,15 +37,15 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
     private ImageView imgFingerprint;
     private Button btnScan;
-    private EditText edt_first_name;
-    private EditText edt_maternal_name;
-    private EditText edt_paternal_name;
-    private EditText edt_dni_document;
-    private TextView edt_dob;
+    private EditText edtFirstName;
+    private EditText edtMaternalName;
+    private EditText edtPaternalName;
+    private EditText edtDniDocument;
+    private TextView edtDOB;
     private Button btnSearch;
 
-    private AsyncTask<String, String, Participant> asyncTask;
-    private AsyncTask<String, String, String> asyncTask1;
+    private AsyncTask<String, String, Participant> asyncTaskParticipant;
+    private AsyncTask<String, String, String> asyncTaskString;
     private SharedPreferences mPreferences;
 
     private int year, month, day;
@@ -54,7 +54,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
     private Participant participant;
     String dni, firstName, paternalLast, maternalLast, dob, result;
 
-    Boolean changed_dob = false;
+    Boolean changedDOB = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,11 +63,11 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
         imgFingerprint = (ImageView) findViewById(R.id.imgFingerprint);
         btnScan = (Button) findViewById(R.id.btnScan);
-        edt_first_name = (EditText) findViewById(R.id.edt_first_name);
-        edt_maternal_name = (EditText) findViewById(R.id.edt_maternal_name);
-        edt_paternal_name = (EditText) findViewById(R.id.edt_paternal_name);
-        edt_dob = (TextView) findViewById(R.id.tvwfecha_nacimiento);
-        edt_dni_document = (EditText) findViewById(R.id.edt_dni_document);
+        edtFirstName = (EditText) findViewById(R.id.edt_first_name);
+        edtMaternalName = (EditText) findViewById(R.id.edt_maternal_name);
+        edtPaternalName = (EditText) findViewById(R.id.edt_paternal_name);
+        edtDOB = (TextView) findViewById(R.id.tvwfecha_nacimiento);
+        edtDniDocument = (EditText) findViewById(R.id.edt_dni_document);
         btnSearch = (Button) findViewById(R.id.btnSearch);
 
         setupScanner();
@@ -103,13 +103,13 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
         day = c.get(Calendar.DAY_OF_MONTH);
 
         // set current date into textview
-        edt_dob.setText(day + "/" +
+        edtDOB.setText(day + "/" +
                 (month + 1) + "/" +
                 year);
     }
 
     public void addListenerOntvwfecha_nacimiento() {
-        edt_dob.setOnTouchListener(new OnTouchListener() {
+        edtDOB.setOnTouchListener(new OnTouchListener() {
 
             @SuppressWarnings("deprecation")
             @Override
@@ -120,7 +120,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
 
         });
-        edt_dob.setOnClickListener(new OnClickListener() {
+        edtDOB.setOnClickListener(new OnClickListener() {
 
             @SuppressWarnings("deprecation")
             @Override
@@ -156,11 +156,11 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
             day = selectedDay;
 
             // set selected date into textview
-            edt_dob.setText(new StringBuilder().append(day)
+            edtDOB.setText(new StringBuilder().append(day)
                     .append("/").append(month + 1).append("/").append(year)
                     .append(" "));
 
-            changed_dob = true;
+            changedDOB = true;
         }
     };
 
@@ -175,12 +175,12 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
         btnSearch.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                dni = edt_dni_document.getText().toString();
+                dni = edtDniDocument.getText().toString();
                 Log.i("DNI", dni);
-                firstName = edt_first_name.getText().toString();
-                maternalLast = edt_maternal_name.getText().toString();
-                paternalLast = edt_paternal_name.getText().toString();
-                dob = edt_dob.getText().toString();
+                firstName = edtFirstName.getText().toString();
+                maternalLast = edtMaternalName.getText().toString();
+                paternalLast = edtPaternalName.getText().toString();
+                dob = edtDOB.getText().toString();
 
                 // read in other stuff as well
 
@@ -191,29 +191,29 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 // Don't really need this, but whatever: tasks have not been properly updated
                 String url = StringConexion.conexion;
 
-                Boolean name_dob_inputted = false;
-                Boolean fingerprint_inputted = false;
-                Boolean dni_inputted = false;
-                Boolean dni_valid = false;
-                Boolean name_partially_inputted = false;
+                Boolean nameDOBInputted = false;
+                Boolean fingerprintInputted = false;
+                Boolean dniInputted = false;
+                Boolean dniValid = false;
+                Boolean namePartiallyInputted = false;
 
                 // check if fields are entered
                 if (dni != null && dni.length() > 0) {
-                    dni_inputted = true;
+                    dniInputted = true;
                     if (dni.length() == 8) {
-                        dni_valid = true;
+                        dniValid = true;
                     }
                 }
                 if (firstName != null && firstName.length() > 0 &&
                         maternalLast != null && maternalLast.length() > 0 &&
                         paternalLast != null && paternalLast.length() > 0 &&
-                        changed_dob) {
-                    name_dob_inputted = true;
+                        changedDOB) {
+                    nameDOBInputted = true;
                 }
                 if (!mPreferences.getString("Fingerprint","notFound").equals("notFound")) {
-                    fingerprint_inputted = true;
+                    fingerprintInputted = true;
                 }
-                if (dni_inputted && !dni_valid && !fingerprint_inputted && !name_dob_inputted) {
+                if (dniInputted && !dniValid && !fingerprintInputted && !nameDOBInputted) {
                     Log.v("dni", "Invalid DNI");
                     Toast.makeText(FingerprintFindActivity.this,
                             getString(R.string.dni_wrong_length),
@@ -222,17 +222,17 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 if ((firstName != null && firstName.length() > 0) ||
                         (maternalLast != null && maternalLast.length() > 0) ||
                         (paternalLast != null && paternalLast.length() > 0)) {
-                    name_partially_inputted = true;
+                    namePartiallyInputted = true;
                 }
 
                 // only valid-length DNI inputted, search just off that
-                if (dni_valid && !fingerprint_inputted && !name_dob_inputted) {
+                if (dniValid && !fingerprintInputted && !nameDOBInputted) {
                     try {
                         ParticipantLoadTask tarea = new ParticipantLoadTask();
                         Log.v("Loaded Task", "");
-                        asyncTask = tarea.execute(dni, url);
+                        asyncTaskParticipant = tarea.execute(dni, url);
                         Log.v("Executed task", "");
-                        participant = asyncTask.get();
+                        participant = asyncTaskParticipant.get();
 
                         if (participant == null) {
                             triggerNoMatch();
@@ -249,13 +249,13 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
                 }
                 // name, fingerprint inputted; not dni
-                else if (fingerprint_inputted && name_partially_inputted && !dni_valid) {
+                else if (fingerprintInputted && namePartiallyInputted && !dniValid) {
                     BuscarHuellaFiltradoTask tarea = new BuscarHuellaFiltradoTask();
-                    asyncTask1 = tarea.execute(mPreferences.getString("Fingerprint",""),firstName,
+                    asyncTaskString = tarea.execute(mPreferences.getString("Fingerprint",""),firstName,
                             paternalLast,maternalLast);
 
                     try {
-                        result = asyncTask1.get();
+                        result = asyncTaskString.get();
 
                         if (result.equals("fingerprintNotFound") || result.equals("someMatchDidntWork")) {
                             buscarHuella();
@@ -274,12 +274,12 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 }
 
                 // only name and dob inputted
-                else if (name_dob_inputted && !fingerprint_inputted && !dni_valid) {
+                else if (nameDOBInputted && !fingerprintInputted && !dniValid) {
                     ObtenerIdPacienteTask tarea = new ObtenerIdPacienteTask();
-                    asyncTask1 = tarea.execute(firstName,paternalLast,maternalLast,dob,"bogusurl");
+                    asyncTaskString = tarea.execute(firstName,paternalLast,maternalLast,dob,"bogusurl");
 
                     try {
-                        result = asyncTask1.get();
+                        result = asyncTaskString.get();
 
                         if (result != null && result.length() == 36) {
                             successfulCodigoFound();
@@ -298,13 +298,13 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 }
 
                 // dni, name, dob inputted; no fingerprint
-                else if (dni_valid && name_dob_inputted && !fingerprint_inputted) {
+                else if (dniValid && nameDOBInputted && !fingerprintInputted) {
                     try {
                         ParticipantLoadTask tarea = new ParticipantLoadTask();
                         Log.v("Loaded Task", "");
-                        asyncTask = tarea.execute(dni, url);
+                        asyncTaskParticipant = tarea.execute(dni, url);
                         Log.v("Executed task", "");
-                        participant = asyncTask.get();
+                        participant = asyncTaskParticipant.get();
 
                         if (participant == null) {
                             triggerNoMatch();
@@ -330,7 +330,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 }
 
                 // fingerprint inputted
-                if (fingerprint_inputted) {
+                if (fingerprintInputted) {
                     buscarHuella();
                 }
 
@@ -385,10 +385,10 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
     private void buscarHuella()
     {
         BuscarHuellaTask tarea = new BuscarHuellaTask();
-        asyncTask1 = tarea.execute(mPreferences.getString("Fingerprint",""));
+        asyncTaskString = tarea.execute(mPreferences.getString("Fingerprint",""));
 
         try {
-            result = asyncTask1.get();
+            result = asyncTaskString.get();
 
             if (result.equals("fingerprintNotFound") || result.equals("someMatchDidntWork")) {
                 triggerNoMatch();
