@@ -1,31 +1,19 @@
 package org.ses.android.soap;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TableLayout;
-import android.widget.TableRow;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.ses.android.seispapp120.R;
-import org.ses.android.soap.database.Idreg;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;
-import org.ses.android.soap.tasks.GenerarIdENRTask;
-import org.ses.android.soap.tasks.GenerarIdTAMTask;
-import org.ses.android.soap.tasks.MostrarTipoIDTask;
-import org.ses.android.soap.tasks.TienePermisosTask;
 import org.ses.android.soap.tasks.VisitasListTask;
 
 import java.text.DateFormat;
@@ -37,10 +25,10 @@ import java.util.Date;
 
 /**
  * Created by anyway on 1/11/16.
- *
+ * <p/>
  * The "command center" for a patient, providing information at a glance about them and providing
  * links to log a new visit, see their visit history, etc.
- *
+ * <p/>
  * Any Intent that opens this Activity **MUST** pass a Patient in the Bundle.
  */
 public class ParticipantDashboardActivity extends BaseActivity {
@@ -56,6 +44,10 @@ public class ParticipantDashboardActivity extends BaseActivity {
     private TextView weekReceivedView;
     private TextView monthReceivedView;
     private TextView totalReceivedView;
+    private Visitas pendingVisitas;
+    Button btnScheduleVisit;
+    Button btnLogVisit;
+    private static final String TAG = "MyActivity";
 
     private String first_visit = "Does Not Exist";
 
@@ -92,6 +84,12 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
         tvwStartDate = (TextView) findViewById(R.id.tvwStart);
 
+
+        // buttons
+        btnScheduleVisit = (Button) findViewById(R.id.sched_visit);
+        btnLogVisit = (Button) findViewById(R.id.log_visit);
+
+
         // TODO Calculate next visit date.
 
         // Fill in table
@@ -108,8 +106,12 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 monthReceived = 0, totalReceived = 0;
 
         Calendar cal = Calendar.getInstance();
+
+
+        Date today = cal.getTime();
         cal.add(Calendar.DATE, -7);
         Date weekAgo = cal.getTime();
+
 
         cal = Calendar.getInstance();
         cal.add(Calendar.MONTH, -1);
@@ -118,15 +120,13 @@ public class ParticipantDashboardActivity extends BaseActivity {
             visits = asyncTask.get();
             Date date = new Date();
             String status;
-            Visitas visit;
 
             // start counting
-            if (visits != null && visits.length >= 1)
-                for (int i=0; i < visits.length; i++)
-                {
-                    visit = visits[i];
+            if (visits != null && visits.length >= 1) {
+                for (Visitas visit : visits) {
                     try {
                         date = visitDateFormat.parse(visit.FechaVisita.split("\\s+")[1]);
+
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -144,18 +144,80 @@ public class ParticipantDashboardActivity extends BaseActivity {
                         }
                     } else if (!status.equals("Pendiente")) { // Must be missed
                         totalMissed++;
+
                         if (date.after(weekAgo)) {
                             monthMissed++;
                             weekMissed++;
                         } else if (date.after(monthAgo)) {
                             monthMissed++;
                         }
+                    } else {
+                        pendingVisitas = visit;
+                        Log.v(TAG, "adding pending visit");
                     }
+
 
                     if (visit.CodigoGrupoVisita.equals("3") && visit.CodigoVisita.equals("1")) {
                         first_visit = visit.FechaVisita;
                     }
                 }
+
+            }
+
+            // prepare the button that'll open the schedule visit activity
+            // it's activated and hidden by default -- later on in this function we might
+            // show it
+            btnScheduleVisit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent = new Intent(ParticipantDashboardActivity.this, ScheduleVisitActivity.class);
+                    intent.putExtra("Participant", participant);
+                    startActivity(intent);
+                }
+            });
+            btnScheduleVisit.setVisibility(View.GONE);
+
+            // prepare button that'll open the log visit activity. like before, hidden by default.
+            btnLogVisit.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent visitasIntent = new Intent(ParticipantDashboardActivity.this, LogVisitActivity.class);
+                    visitasIntent.putExtra("Participant", participant);
+                    visitasIntent.putExtra("Visitas", pendingVisitas);
+                    startActivity(visitasIntent);
+                }
+            });
+            btnLogVisit.setVisibility(View.GONE);
+
+            if (pendingVisitas == null) {
+                // if there's no pending visit, the user can only schedule a new visit
+                Log.v(TAG, "No pending visit");
+
+                // show "schedule visit" button
+                btnScheduleVisit.setVisibility(View.VISIBLE);
+            } else {
+                Log.v(TAG, "There is a pending visit");
+                Log.v(TAG, pendingVisitas.Visita);
+                Log.v(TAG, pendingVisitas.FechaVisita);
+                Log.v(TAG, pendingVisitas.HoraCita);
+
+                // if there is a pending visit, either the patient missed it (past the end of the
+                // window) or the patient is in/before the window (so they can be checked in for it)
+
+                // TODO check if you're past the end of pendingVisitas's window
+                boolean isPastEndOfWindow = false;
+                if (isPastEndOfWindow) {
+                    // TODO mark missed visit
+
+                    // show "schedule visit" button
+                    btnScheduleVisit.setVisibility(View.VISIBLE);
+                } else {
+                    // show the "log visit" button
+                    btnLogVisit.setVisibility(View.VISIBLE);
+                }
+            }
+
+            // information table
             weekMissedView.setText(Integer.toString(weekMissed));
             monthMissedView.setText(Integer.toString(monthMissed));
             totalMissedView.setText(Integer.toString(totalMissed));
@@ -168,21 +230,10 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (ExecutionException e)
-        {
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
 
-        // "Log visit" button should open NewVisitActivity
-        Button btnLogVisit = (Button) findViewById(R.id.log_visit);
-        btnLogVisit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(ParticipantDashboardActivity.this, ScheduleVisitActivity.class);
-                intent.putExtra("Participant", participant);
-                startActivity(intent);
-            }
-        });
 
         // "History" button should open ParticipantHistoryActivity
         Button btnHistory = (Button) findViewById(R.id.participant_history);

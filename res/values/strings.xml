@@ -15,6 +15,8 @@
     <string name="opc_reg_partipantes">Participant Registration</string>
     <string name="opc_gen_visitas">Generate Visit</string>
     <string name="opc_cerrar_sesion">Close Session</string>
+    <string name="visit_confirmed_success">Visit Confirmed</string> <!-- in log visit -->
+    <string name="visit_confirmed_error">Error in Visit Confirmation</string> <!-- in log visit -->
     <string name="login_usuario">User:</string>
     <string name="login_password">Password</string>
     <string name="login_logo">logo.jpg</string>
@@ -31,7 +33,8 @@
     <string name="ape_pat">1st Family name:</string>
     <string name="ape_mat">2nd Family name:</string>
     <string name="masculino">Male</string>
-    <string name="log_visit">Log Visit</string>
+    <string name="sched_visit">Schedule Visit</string> <!-- creates pending visit -->
+    <string name="log_visit">Log Visit</string> <!-- switches pending to attended -->
     <string name="historia">History</string>
     <string name="femenino">Female</string>
     <string name="fecha_nacimiento">Birth Date:</string>

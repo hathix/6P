@@ -8,8 +8,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
+import android.os.Parcel;
+import android.os.Parcelable;
+import org.ksoap2.serialization.KvmSerializable;
+import org.ksoap2.serialization.PropertyInfo;
 
-public class Visitas extends Cacheable implements KvmSerializable {
+
+public class Visitas extends Cacheable implements KvmSerializable, Parcelable {
 
 	public String Proyecto;
 	public String Visita;
@@ -111,6 +116,49 @@ public class Visitas extends Cacheable implements KvmSerializable {
 		this.CodigoUsuario = CodigoUsuario;
         this.FechaUpdEstado = FechaUpdEstado;
 	}
+
+
+    public int describeContents() {
+        return 0;
+    }
+
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(Proyecto);
+        dest.writeString(Visita);
+        dest.writeString(FechaVisita);
+        dest.writeString(HoraCita);
+        dest.writeString(EstadoVisita);
+        dest.writeString(CodigoProyecto);
+        dest.writeString(CodigoVisita);
+        dest.writeString(CodigoVisitas);
+        dest.writeString(CodigoEstatusPaciente);
+        dest.writeString(CodigoUsuario);
+    }
+
+    public static final Parcelable.Creator<Visitas> CREATOR =
+            new Parcelable.Creator<Visitas>() {
+                public Visitas createFromParcel(Parcel in) {
+                    return new Visitas(in);
+                }
+
+                public Visitas[] newArray(int size) {
+                    return new Visitas[size];
+                }
+            };
+
+    private Visitas(Parcel in) {
+        Proyecto = in.readString();
+        Visita = in.readString();
+        FechaVisita = in.readString();
+        HoraCita = in.readString();
+        EstadoVisita = in.readString();
+        CodigoProyecto = in.readString();
+        CodigoVisita = in.readString();
+        CodigoVisitas = in.readString();
+        CodigoEstatusPaciente = in.readString();
+        CodigoUsuario = in.readString();
+    }
 	
 	@Override
 	public Object getProperty(int arg0) {
