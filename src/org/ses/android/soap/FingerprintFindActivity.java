@@ -267,6 +267,11 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                         triggerNoMatch();
                     }
                 }
+
+                // name, dob, fingerprint inputted; not dni
+                else if (name_dob_inputted && fingerprint_inputted && !dni_valid) {
+                    
+                }
             }
         });
     }
