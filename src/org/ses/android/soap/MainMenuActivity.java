@@ -43,10 +43,10 @@ public class MainMenuActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_menu_layout);
         // dynamically construct the "ODK Collect vA.B" string
-        TextView mainMenuMessageLabel = (TextView) findViewById(R.id.main_menu_header);
+//        TextView mainMenuMessageLabel = (TextView) findViewById(R.id.main_menu_header);
         AppStatus appStatus = new AppStatus();
 
-        mainMenuMessageLabel.setText(appStatus.getVersionedAppName(this));
+//        mainMenuMessageLabel.setText(appStatus.getVersionedAppName(this));
 
         if (AppStatus.getInstance(this).isOnline(this)) {
             Toast.makeText(this,R.string.online,Toast.LENGTH_SHORT).show();
