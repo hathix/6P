@@ -95,6 +95,9 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
             result = asyncTaskString.get();
             if (result.equals("fingerprintNotFound") || (result.equals("someMatchDidntWork"))) {
                 Log.v("myActivity", "no fingerprint match found");
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.no_fingerprint_match),
+                        Toast.LENGTH_SHORT).show();
             } else {
                 getParticipantVisits(context);
             }
@@ -142,7 +145,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
     public void markMissedOrAttended(Participant participant, Visitas visitas) {
         if (VisitUtilities.isPastVisitWindow(visitas)) {
             //mark missed
-            boolean missed_success  = VisitUtilities.updateVisitStatus(
+            boolean missed_success = VisitUtilities.updateVisitStatus(
                     participant, visitas, VisitStatus.MISSED.value(),
                     mPreferences);
             // show toast with error
@@ -150,8 +153,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.visit_missed_success),
                         Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 // show toast with error
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.visit_missed_error),
@@ -170,8 +172,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.visit_confirmed_success),
                         Toast.LENGTH_SHORT).show();
-            }
-            else {
+            } else {
                 // show toast with error
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.visit_confirmed_error),

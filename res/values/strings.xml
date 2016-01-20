@@ -383,6 +383,7 @@
     <string name="dni_not_found">Could not find patient with this DNI.</string>
     <string name="fingerprint_saved">Fingerprint Saved</string>
     <string name="fingerprint_save_failed">Fingerprint Save Failed. Please try again.</string>
+    <string name="no_fingerprint_match">Found no participants with matching fingerprint. Please try again.</string>
     <string name="first_name">First Name:</string>
     <string name="lista">View Missing Appointments</string>
     <string name="matches">Select Patient to Confirm</string>
@@ -418,5 +419,6 @@
     <string name="try_again">Try Again</string>
     <string name="textAddInfo">Enter Optional Additional Info</string>
     <string name="textFingerprintInstruction">Please place index finger on scanner.</string>
+
 
 </resources>
