@@ -1,5 +1,6 @@
 package org.ses.android.soap.utils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.preference.PreferenceManager;
@@ -49,13 +50,13 @@ public class VisitUtilities extends BaseActivity {
     }
 
 
-    public  Visitas getPendingVisit(Participant participant) {
+    public static Visitas getPendingVisit(Participant participant, Context context) {
         //get VisitasListTask visits for said patient:
         VisitasListTask tarea = new VisitasListTask();
         Visitas pending_visit;
         Visitas[] visits;
 
-        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
         AsyncTask<String, String, Visitas[]> asyncTask;
         String codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         String codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");

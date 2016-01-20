@@ -39,7 +39,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
     private ImageView imgFingerprint;
     private Button btnScan;
     private Button btnConfirm;
-    private Participant participant;
+    Participant participant;
     private Visitas pending_visit;
     private Visitas[] visits;
 
@@ -98,7 +98,9 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
     }
 
 
-    public void getParticipantVisits() {
+    public static void getParticipantVisits() {
+        String result;
+        Participant participant;
         ParticipantLoadFromCodigoTask participantTask = new ParticipantLoadFromCodigoTask();
         participantTask.execute(result, "bogusurl");
         try {
