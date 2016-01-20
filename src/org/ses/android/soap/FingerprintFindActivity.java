@@ -22,6 +22,7 @@ import android.widget.Toast;
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.preferences.PreferencesActivity;
+import org.ses.android.soap.tasks.BuscarHuellaTask;
 import org.ses.android.soap.tasks.ParticipantLoadTask;
 import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.utils.PreferencesManager;
@@ -48,6 +49,8 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
     private Participant participant;
     String dni, firstName, paternalLast, maternalLast, dob;
+
+    Boolean changed_dob = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -152,6 +155,8 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
             edt_dob.setText(new StringBuilder().append(day)
                     .append("/").append(month + 1).append("/").append(year)
                     .append(" "));
+
+            changed_dob = true;
         }
     };
 
@@ -182,8 +187,31 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 // Don't really need this, but whatever: tasks have not been properly updated
                 String url = StringConexion.conexion;
 
+                Boolean name_dob_inputted = false;
+                Boolean fingerprint_inputted = false;
+                Boolean dni_inputted = false;
+                Boolean dni_valid = false;
+
                 // DNI has been entered, but it's not valid length
-                if (dni != null && dni.length() > 0 && dni.length() != 8) {
+                if (dni != null && dni.length() > 0) {
+                    dni_inputted = true;
+                    if (dni.length() == 8) {
+                        dni_valid = true;
+                    }
+                }
+
+                if (firstName != null && firstName.length() > 0 &&
+                        maternalLast != null && maternalLast.length() > 0 &&
+                        paternalLast != null && paternalLast.length() > 0 &&
+                        changed_dob) {
+                    name_dob_inputted = true;
+                }
+
+                if (!mPreferences.getString("Fingerprint","notFound").equals("notFound")) {
+                    fingerprint_inputted = true;
+                }
+
+                if (dni_inputted && !dni_valid && !fingerprint_inputted && !name_dob_inputted) {
                     Log.v("dni", "Invalid DNI");
                     Toast.makeText(FingerprintFindActivity.this,
                             getString(R.string.dni_wrong_length),
@@ -191,7 +219,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 }
 
                 // valid-length DNI has been entered, search just off that
-                else if (dni != null && dni.length() == 8) {
+                else if (dni_valid && !fingerprint_inputted && !name_dob_inputted) {
                     try {
                         ParticipantLoadTask tarea = new ParticipantLoadTask();
                         Log.v("Loaded Task", "");
@@ -224,6 +252,11 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                         // TODO Auto-generated catch block
                         e.printStackTrace();
                     }
+
+                }
+
+                else if (fingerprint_inputted && !name_dob_inputted && !dni_inputted) {
+                    BuscarHuellaTask tarea = new BuscarHuellaTask();
 
                 }
 
