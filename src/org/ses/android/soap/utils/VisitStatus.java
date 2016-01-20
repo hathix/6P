@@ -7,10 +7,12 @@ package org.ses.android.soap.utils;
  */
 public enum VisitStatus {
     PENDING (1),
+    // not used much
     POSTPONED (2),
     ATTENDED (3),
     CANCELED (4),
     MISSED (5),
+    // not used
     RETIRED (6);
 
     private final int value;
