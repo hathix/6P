@@ -9,20 +9,22 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.VisitasListTask;
+import org.ses.android.soap.utils.VisitStatus;
 import org.ses.android.soap.utils.VisitUtilities;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.concurrent.ExecutionException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by anyway on 1/11/16.
@@ -207,8 +209,24 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 // TODO check if you're past the end of pendingVisitas's window
                 boolean isPastEndOfWindow = VisitUtilities.isPastVisitWindow(pendingVisitas);
                 if (isPastEndOfWindow) {
-                    // TODO mark missed visit
-                    // this is gonna be very similar to what happens in LogVisitActivity
+                    boolean success = VisitUtilities.updateVisitStatus(
+                            participant, pendingVisitas, VisitStatus.MISSED.value(),
+                            mPreferences);
+
+                    String toastMessage;
+                    if (success) {
+                        // visit successfully confirmed
+                        // show toast with success
+                        toastMessage = getString(R.string.visit_missed_success);
+                    } else {
+                        // visit was not confirmed
+                        // show toast with error
+                        toastMessage = getString(R.string.visit_missed_error);
+                    }
+
+                    // show toast with success
+                    Toast.makeText(getApplicationContext(),
+                            toastMessage, Toast.LENGTH_LONG).show();
 
                     // show "schedule visit" button
                     btnScheduleVisit.setVisibility(View.VISIBLE);

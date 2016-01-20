@@ -1,13 +1,9 @@
 package org.ses.android.soap.utils;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
-import org.ses.android.seispapp120.R;
-import org.ses.android.soap.ParticipantDashboardActivity;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;

@@ -2,10 +2,8 @@ package org.ses.android.soap;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -13,13 +11,8 @@ import android.widget.Toast;
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
-import org.ses.android.soap.preferences.PreferencesActivity;
-import org.ses.android.soap.tasks.EstadoVisitaTask;
-import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.utils.VisitStatus;
 import org.ses.android.soap.utils.VisitUtilities;
-
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by saranya on 1/19/16.
