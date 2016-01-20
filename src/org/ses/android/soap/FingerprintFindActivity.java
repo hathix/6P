@@ -26,6 +26,7 @@ import org.ses.android.soap.tasks.BuscarHuellaTask;
 import org.ses.android.soap.tasks.ObtenerIdPacienteTask;
 import org.ses.android.soap.tasks.ParticipantLoadTask;
 import org.ses.android.soap.tasks.ParticipantLoadFromCodigoTask;
+import org.ses.android.soap.tasks.BuscarHuellaFiltradoTask;
 import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.utils.PreferencesManager;
 
@@ -194,6 +195,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 Boolean fingerprint_inputted = false;
                 Boolean dni_inputted = false;
                 Boolean dni_valid = false;
+                Boolean name_partially_inputted = false;
 
                 // check if fields are entered
                 if (dni != null && dni.length() > 0) {
@@ -216,6 +218,11 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                     Toast.makeText(FingerprintFindActivity.this,
                             getString(R.string.dni_wrong_length),
                             Toast.LENGTH_SHORT).show();
+                }
+                if ((firstName != null && firstName.length() > 0) ||
+                        (maternalLast != null && maternalLast.length() > 0) ||
+                        (paternalLast != null && paternalLast.length() > 0)) {
+                    name_partially_inputted = true;
                 }
 
                 // only valid-length DNI inputted, search just off that
@@ -251,8 +258,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
                         if (result.equals("fingerprintNotFound")) {
                             triggerNoMatch();
-                        }
-                        else {
+                        } else {
                             successfulCodigoFound();
                         }
                     }
@@ -289,9 +295,34 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                     }
                 }
 
-                // name, dob, fingerprint inputted; not dni
-                else if (name_dob_inputted && fingerprint_inputted && !dni_valid) {
-                    
+                // name, fingerprint inputted; not dni
+                else if (name_partially_inputted && !dni_valid) {
+                    BuscarHuellaFiltradoTask tarea = new BuscarHuellaFiltradoTask();
+                    asyncTask1 = tarea.execute(mPreferences.getString("Fingerprint",""),firstName,
+                            paternalLast,maternalLast);
+
+                    try {
+                        result = asyncTask1.get();
+
+                        if (result.equals("fingerprintNotFound")) {
+                            triggerNoMatch();
+                        } else {
+                            successfulCodigoFound();
+                        }
+                    }
+                    catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+
+                }
+
+                // dni inputted
+                else if (dni_valid) {
+
                 }
             }
         });
