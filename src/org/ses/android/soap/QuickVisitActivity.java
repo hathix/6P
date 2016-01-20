@@ -108,9 +108,10 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
 
     /**
      * Get participant visits from codigo. Uses ParticipantLoadFromCodigoTask.
+     *
      * @param context
      */
-    public  void getParticipantVisits(Context context) {
+    public void getParticipantVisits(Context context) {
         String participant_result = ""; //?
         Visitas pending_visit;
         Participant participant;
@@ -124,8 +125,8 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                 pending_visit = VisitUtilities.getPendingVisit(participant, context); // this is a participant
                 if (pending_visit == null) {
                     //take to dash
-                }
-                else {
+                    takeToDash();
+                } else {
                     markMissedOrAttended(participant, pending_visit);
                 }
 
@@ -140,14 +141,43 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
 
     public void markMissedOrAttended(Participant participant, Visitas visitas) {
         if (VisitUtilities.isPastVisitWindow(visitas)) {
-            boolean failure = VisitUtilities.updateVisitStatus(
+            //mark missed
+            boolean missed_success  = VisitUtilities.updateVisitStatus(
                     participant, visitas, VisitStatus.MISSED.value(),
                     mPreferences);
-        }
-        else {
-            boolean success = VisitUtilities.updateVisitStatus(
+            // show toast with error
+            if (missed_success) {
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.visit_missed_success),
+                        Toast.LENGTH_SHORT).show();
+            }
+            else {
+                // show toast with error
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.visit_missed_error),
+                        Toast.LENGTH_SHORT).show();
+            }
+            takeToDash();
+
+        } else {
+            //mark attended
+            boolean attended_success = VisitUtilities.updateVisitStatus(
                     participant, visitas, VisitStatus.ATTENDED.value(),
                     mPreferences);
+            // visit successfully confirmed
+            // show toast with success
+            if (attended_success) {
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.visit_confirmed_success),
+                        Toast.LENGTH_SHORT).show();
+            }
+            else {
+                // show toast with error
+                Toast.makeText(getApplicationContext(),
+                        getString(R.string.visit_confirmed_error),
+                        Toast.LENGTH_SHORT).show();
+            }
+            takeToDash();
         }
     }
 
@@ -171,6 +201,12 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                 // If not found, redirect to register page or something like that
             }
         });
+    }
+
+    public void takeToDash() {
+        Intent i = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
+        i.putExtra("Participant", participant);
+        startActivity(i);
     }
 
     public void askForRescan() {
