@@ -3,6 +3,7 @@ package org.ses.android.soap;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.content.SharedPreferences;
+import android.content.Context;
 
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.preferences.PreferencesActivity;
@@ -22,6 +24,7 @@ import SecuGen.FDxSDKPro.SGFDxErrorCode;
 import SecuGen.FDxSDKPro.SGFDxSecurityLevel;
 
 import org.ses.android.soap.database.Participant;
+import org.ses.android.soap.utils.VisitStatus;
 import org.ses.android.soap.utils.VisitUtilities;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.database.Visita;
@@ -40,8 +43,10 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
     private Button btnScan;
     private Button btnConfirm;
     Participant participant;
-    private Visitas pending_visit;
+
+    Context context;
     private Visitas[] visits;
+
 
     String result;
     // TODO FingerprintSearchTask searchPatientFingerprint;
@@ -53,6 +58,8 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(
+                getBaseContext().getApplicationContext());
         setContentView(R.layout.fingerprint_confirm_layout);
 
         imgFingerprint = (ImageView) findViewById(R.id.imageViewScan1);
@@ -81,6 +88,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
 
 
     public void searchFingerPrint() {
+
         BuscarHuellaTask tarea = new BuscarHuellaTask();
         asyncTaskString = tarea.execute(mPreferences.getString("Fingerprint", ""));
         try {
@@ -88,7 +96,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
             if (result.equals("fingerprintNotFound") || (result.equals("someMatchDidntWork"))) {
                 Log.v("myActivity", "no fingerprint match found");
             } else {
-                getParticipantVisits();
+                getParticipantVisits(context);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -98,18 +106,28 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
     }
 
 
-    public static void getParticipantVisits() {
-        String result;
+    /**
+     * Get participant visits from codigo. Uses ParticipantLoadFromCodigoTask.
+     * @param context
+     */
+    public  void getParticipantVisits(Context context) {
+        String participant_result = ""; //?
+        Visitas pending_visit;
         Participant participant;
         ParticipantLoadFromCodigoTask participantTask = new ParticipantLoadFromCodigoTask();
-        participantTask.execute(result, "bogusurl");
+        participantTask.execute(participant_result, "bogusurl");
         try {
             participant = participantTask.get();
             if (participant == null) {
                 Log.v("myActivity", "error getting participant visits");
             } else {
-
-                VisitUtilities.getPendingVisit(participant); // this is a participant
+                pending_visit = VisitUtilities.getPendingVisit(participant, context); // this is a participant
+                if (pending_visit == null) {
+                    //take to dash
+                }
+                else {
+                    markMissedOrAttended(participant, pending_visit);
+                }
 
             }
         } catch (InterruptedException e) {
@@ -120,7 +138,18 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
     }
 
 
-
+    public void markMissedOrAttended(Participant participant, Visitas visitas) {
+        if (VisitUtilities.isPastVisitWindow(visitas)) {
+            boolean failure = VisitUtilities.updateVisitStatus(
+                    participant, visitas, VisitStatus.MISSED.value(),
+                    mPreferences);
+        }
+        else {
+            boolean success = VisitUtilities.updateVisitStatus(
+                    participant, visitas, VisitStatus.ATTENDED.value(),
+                    mPreferences);
+        }
+    }
 
     public void setListeners() {
         btnScan.setOnClickListener(new View.OnClickListener() {
