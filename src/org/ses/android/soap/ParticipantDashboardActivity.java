@@ -25,10 +25,10 @@ import java.util.Date;
 
 /**
  * Created by anyway on 1/11/16.
- *
+ * <p/>
  * The "command center" for a patient, providing information at a glance about them and providing
  * links to log a new visit, see their visit history, etc.
- *
+ * <p/>
  * Any Intent that opens this Activity **MUST** pass a Patient in the Bundle.
  */
 public class ParticipantDashboardActivity extends BaseActivity {
@@ -175,7 +175,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     startActivity(intent);
                 }
             });
-            btnScheduleVisit.setVisibility(View.INVISIBLE);
+            btnScheduleVisit.setVisibility(View.GONE);
 
             // prepare button that'll open the log visit activity. like before, hidden by default.
             btnLogVisit.setOnClickListener(new View.OnClickListener() {
@@ -187,7 +187,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     startActivity(visitasIntent);
                 }
             });
-            btnLogVisit.setVisibility(View.VISIBLE);
+            btnLogVisit.setVisibility(View.GONE);
 
             if (pendingVisitas == null) {
                 // if there's no pending visit, the user can only schedule a new visit
@@ -195,8 +195,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
                 // show "schedule visit" button
                 btnScheduleVisit.setVisibility(View.VISIBLE);
-            }
-            else {
+            } else {
                 Log.v(TAG, "There is a pending visit");
                 Log.v(TAG, pendingVisitas.Visita);
                 Log.v(TAG, pendingVisitas.FechaVisita);
@@ -212,8 +211,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
                     // show "schedule visit" button
                     btnScheduleVisit.setVisibility(View.VISIBLE);
-                }
-                else {
+                } else {
                     // show the "log visit" button
                     btnLogVisit.setVisibility(View.VISIBLE);
                 }
@@ -232,11 +230,9 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
         } catch (InterruptedException e) {
             e.printStackTrace();
-        } catch (ExecutionException e)
-        {
+        } catch (ExecutionException e) {
             e.printStackTrace();
         }
-
 
 
         // "History" button should open ParticipantHistoryActivity
