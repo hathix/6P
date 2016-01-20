@@ -275,14 +275,19 @@ public class PromoterLoginActivity extends Activity {
                         VisitaAllLoadTask visitaAllLoadTask = new VisitaAllLoadTask();
                         AsyncTask<String, String, Visita[]> visitaAllLoad =
                                 visitaAllLoadTask.execute(project_num, "bogusurl");
+                        Visita[] visitaList = null;
                         try {
-                            Visita[] visitaList = visitaAllLoad.get();
+                            visitaList = visitaAllLoad.get();
                             Log.e("visitaLoadAll", "loaded");
                         } catch (Exception e) {
                             e.printStackTrace();
                             Log.e("visitaLoadAll", "failed to load");
                         }
-
+                        if (visitaList != null) {
+                            // TODO Fix this when Internet returns
+                            PreferencesManager.saveCacheableList(getBaseContext(), "visitaList",
+                                    new ArrayList<Visita>(visitaList));
+                        }
 
                         Intent intent=new Intent(PromoterLoginActivity.this,MainMenuActivity.class);
                         startActivity(intent);
