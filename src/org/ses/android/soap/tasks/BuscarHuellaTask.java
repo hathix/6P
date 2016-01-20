@@ -23,6 +23,8 @@ import org.ksoap2.transport.HttpTransportSE;
 public class BuscarHuellaTask extends AsyncTask<String, String, String> {
     
     @Override
+    // Takes two parameters, the first of which is the fingerprint string and the second of which
+    // is the URL
     protected String doInBackground(String ... params)
     {
         String resul = "";

@@ -11,8 +11,11 @@ import org.ses.android.soap.database.Participant;
 public class ParticipantLoadFromCodigoTask extends AsyncTask<String, String, Participant> {
 
     @Override
+    // Takes two parameters, the first of which is the codigoPaciente and the second of which
+    // is the URL
     protected Participant doInBackground(String... params) {
 
+        // C# method returns a list
         Participant[] lstParticipant = null;
         Participant resul = null;
 
@@ -34,25 +37,25 @@ public class ParticipantLoadFromCodigoTask extends AsyncTask<String, String, Par
         try {
             transporte.call(SOAP_ACTION, envelope);
 
-            SoapObject resSoap = (SoapObject) envelope.getResponse();
+            SoapObject resultSoap = (SoapObject) envelope.getResponse();
 
-            lstParticipant = new Participant[resSoap.getPropertyCount()];
+            lstParticipant = new Participant[resultSoap.getPropertyCount()];
 
-            SoapObject ic = (SoapObject) resSoap.getProperty(0);
+            SoapObject propertySoap = (SoapObject) resultSoap.getProperty(0);
 
-            Participant par = new Participant();
+            Participant participantObject = new Participant();
 
-            par.CodigoPaciente = ic.getProperty(0).toString();
-            par.Nombres = ic.getProperty(1).toString();
-            par.ApellidoPaterno = ic.getProperty(2).toString();
-            par.ApellidoMaterno = ic.getProperty(3).toString();
-            par.CodigoTipoDocumento = Integer.parseInt(ic.getProperty(4).toString());
-            par.DocumentoIdentidad = ic.getProperty(5).toString();
-            par.FechaNacimiento = ic.getProperty(6).toString();
-            par.Sexo = Integer.parseInt(ic.getProperty(7).toString());
-            lstParticipant[0] = par;
+            participantObject.CodigoPaciente = propertySoap.getProperty(0).toString();
+            participantObject.Nombres = propertySoap.getProperty(1).toString();
+            participantObject.ApellidoPaterno = propertySoap.getProperty(2).toString();
+            participantObject.ApellidoMaterno = propertySoap.getProperty(3).toString();
+            participantObject.CodigoTipoDocumento = Integer.parseInt(propertySoap.getProperty(4).toString());
+            participantObject.DocumentoIdentidad = propertySoap.getProperty(5).toString();
+            participantObject.FechaNacimiento = propertySoap.getProperty(6).toString();
+            participantObject.Sexo = Integer.parseInt(propertySoap.getProperty(7).toString());
+            lstParticipant[0] = participantObject;
 
-            if (resSoap.getPropertyCount() > 0) {
+            if (resultSoap.getPropertyCount() > 0) {
                 resul = lstParticipant[0];
             }
 
