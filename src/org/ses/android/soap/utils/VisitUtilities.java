@@ -1,5 +1,6 @@
 package org.ses.android.soap.utils;
 
+import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
 
 /**
@@ -22,5 +23,14 @@ public class VisitUtilities {
         }
 
         return null;
+    }
+
+    /**
+     * Determines if we are currently past the end of the given visit's window. This compares
+     * the current time to the visit's scheduled time plus its buffer length.
+     */
+    public static boolean isPastVisitWindow(Visitas visit) {
+        // TODO
+        return false;
     }
 }
