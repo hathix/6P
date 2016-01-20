@@ -175,7 +175,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     startActivity(intent);
                 }
             });
-            btnScheduleVisit.setVisibility(View.INVISIBLE);
+            btnScheduleVisit.setVisibility(View.GONE);
 
             // prepare button that'll open the log visit activity. like before, hidden by default.
             btnLogVisit.setOnClickListener(new View.OnClickListener() {
@@ -186,7 +186,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                     startActivity(visitas_intent);
                 }
             });
-            btnLogVisit.setVisibility(View.INVISIBLE);
+            btnLogVisit.setVisibility(View.GONE);
 
             if (pendingVisitas == null) {
                 // if there's no pending visit, the user can only schedule a new visit
