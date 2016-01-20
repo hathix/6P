@@ -104,25 +104,28 @@ public class AddFingerprintExistingActivity extends BaseActivity {
                                             new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
-                                                    String huella = Base64.encodeToString(
-                                                            PreferencesManager.getFingerprint(getBaseContext()),
-                                                            Base64.DEFAULT);
-                                                    agregarHuellaTask = new AgregarHuellaTask();
-                                                    agregarHuella = agregarHuellaTask.execute(participant.CodigoPaciente,
-                                                            huella, "bogusurl");
-
                                                     try {
-                                                        String msg = agregarHuella.get();
-                                                        Log.e("agregarHuellaTask", msg);
+                                                        // Redirect to confirm fingerprint
+                                                        Intent intent = new Intent(getBaseContext(), FingerprintConfirmActivity.class);
+                                                        intent.putExtra("Participant", participant);
+                                                        // get CodigoPaciente
+                                                        ObtenerIdPacienteTask obtenerIdPacienteTask = new ObtenerIdPacienteTask();
+                                                        AsyncTask<String, String, String> getIdPaciente =
+                                                                obtenerIdPacienteTask.execute(participant.Nombres,
+                                                                        participant.ApellidoPaterno,
+                                                                        participant.ApellidoMaterno,
+                                                                        participant.FechaNacimiento, url);
+                                                        String id_pac = getIdPaciente.get();
+                                                        Log.e("ObtainCodigo", id_pac);
+                                                        intent.putExtra("codigoPaciente", id_pac);
+                                                        startActivity(intent);
                                                     } catch (Exception e) {
                                                         e.printStackTrace();
-                                                        Log.e("agregarHuellaTask", "failed");
+                                                        Log.e("ObtainCodigo", "failed");
+                                                        Toast.makeText(AddFingerprintExistingActivity.this,
+                                                                getString(R.string.fingerprint_save_failed),
+                                                                Toast.LENGTH_SHORT).show();
                                                     }
-
-                                                    // Now redirect to dashboard
-                                                    Intent intent = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
-                                                    intent.putExtra("Participant", participant);
-                                                    startActivity(intent);
                                                 }
                                             })
                                     .setNegativeButton(getString(R.string.answer_no),
