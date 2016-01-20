@@ -16,16 +16,19 @@ import org.ksoap2.transport.HttpTransportSE;
 /**
  * Created by franciscorivera on 1/8/16.
  * Used to query the SOAP API for a fingerprint and retrieve the
- * participant object that the fingerprint belongs to (null if
+ * codigoPaciente that the fingerprint belongs to (null if
  * error)
  */
 
-public class BuscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
+public class BuscarHuellaTask extends AsyncTask<String, String, String> {
     
     @Override
-    protected Participant doInBackground(Byte ... params)
+    // Takes two parameters, the first of which is the fingerprint string and the second of which
+    // is the URL
+    protected String doInBackground(String ... params)
     {
-        Participant participant = new Participant();
+        String resul = "";
+
         final String NAMESPACE = StringConexion.conexion;
         final String SERVICE_NAME = StringConexion.serviceName;
         final String URL=NAMESPACE+SERVICE_NAME;
@@ -33,7 +36,7 @@ public class BuscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
         final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
 
         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-        request.addProperty("huella", params);
+        request.addProperty("Huella", params[0]);
 
         SoapSerializationEnvelope envelope =
                 new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -48,28 +51,19 @@ public class BuscarHuellaTask extends AsyncTask<Byte, Void, Participant> {
         {
             transporte.call(SOAP_ACTION, envelope);
 
-            SoapObject resSoap =(SoapObject)envelope.getResponse();
-            SoapObject dataObject = (SoapObject)resSoap.getProperty(0);
-
-            participant.CodigoPaciente = dataObject.getProperty(0).toString();
-            participant.Nombres = dataObject.getProperty(1).toString();
-            participant.ApellidoPaterno = dataObject.getProperty(2).toString();
-            participant.ApellidoMaterno = dataObject.getProperty(3).toString();
-            participant.CodigoTipoDocumento = Integer.parseInt(dataObject.getProperty(4).toString());
-            participant.DocumentoIdentidad = dataObject.getProperty(5).toString();
-            participant.FechaNacimiento = dataObject.getProperty(6).toString();
-            participant.Sexo = Integer.parseInt(dataObject.getProperty(7).toString());
-            Log.i("CodigoPaciente", "res: " + participant.DocumentoIdentidad);
+            SoapPrimitive resultado_xml =(SoapPrimitive)envelope.getResponse();
+            String res = resultado_xml.toString();
+            resul = res;
+            Log.i("CodigoPaciente", "res: " + res);
 
         }
         catch (Exception e)
         {
-            participant = null;
+            resul = "";
             Log.i("Exception" ,e.getMessage());
         }
 
-
-        return participant;
+        return resul;
 
     }
 }
