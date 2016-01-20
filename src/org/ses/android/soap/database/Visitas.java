@@ -2,6 +2,10 @@ package org.ses.android.soap.database;
 
 import java.util.Hashtable;
 
+import org.ses.android.soap.models.Cacheable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
 import android.os.Parcel;
@@ -10,7 +14,7 @@ import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
 
 
-public class Visitas implements KvmSerializable, Parcelable {
+public class Visitas extends Cacheable implements KvmSerializable, Parcelable {
 
 	public String Proyecto;
 	public String Visita;
@@ -23,6 +27,50 @@ public class Visitas implements KvmSerializable, Parcelable {
 	public String CodigoVisitas;
 	public String CodigoEstatusPaciente;
 	public String CodigoUsuario;
+    public String FechaUpdEstado;
+
+    public Visitas(Cacheable cacheable) {
+        JSONObject jsonObject = cacheable.jsonObject;
+        try {
+            this.Proyecto = jsonObject.getString("Proyecto");
+            this.Visita = jsonObject.getString("Visita");
+            this.FechaVisita = jsonObject.getString("FechaVisita");
+            this.HoraCita = jsonObject.getString("HoraCita");
+            this.EstadoVisita = jsonObject.getString("EstadoVisita");
+            this.CodigoProyecto = jsonObject.getString("CodigoProyecto");
+            this.CodigoGrupoVisita = jsonObject.getString("CodigoGrupoVisita");
+            this.CodigoVisita = jsonObject.getString("CodigoVisita");
+            this.CodigoVisitas = jsonObject.getString("CodigoVisitas");
+            this.CodigoEstatusPaciente = jsonObject.getString("CodigoEstatusPaciente");
+            this.CodigoUsuario = jsonObject.getString("CodigoUsuario");
+            this.FechaUpdEstado = jsonObject.getString("FechaUpdEstado");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @Override
+    public JSONObject toJSON() {
+        JSONObject temp = new JSONObject();
+        try {
+            temp.put("Proyecto", this.Proyecto);
+            temp.put("Visita", this.Visita);
+            temp.put("FechaVisita", this.FechaVisita);
+            temp.put("HoraCita", this.HoraCita);
+            temp.put("EstadoVisita", this.EstadoVisita);
+            temp.put("CodigoProyecto", this.CodigoProyecto);
+            temp.put("CodigoGrupoVisita", this.CodigoGrupoVisita);
+            temp.put("CodigoVisita", this.CodigoVisita);
+            temp.put("CodigoVisitas", this.CodigoVisitas);
+            temp.put("CodigoEstatusPaciente", this.CodigoEstatusPaciente);
+            temp.put("CodigoUsuario", this.CodigoUsuario);
+            temp.put("FechaUpdEstado", this.FechaUpdEstado);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return temp;
+    }
 	
 	public Visitas()
 	{
@@ -37,6 +85,7 @@ public class Visitas implements KvmSerializable, Parcelable {
 		CodigoVisitas= "";
 		CodigoEstatusPaciente= "";
 		CodigoUsuario= "";
+        FechaUpdEstado = "";
 	}
 	
 	public Visitas(
@@ -50,7 +99,8 @@ public class Visitas implements KvmSerializable, Parcelable {
 			String CodigoVisita,
 			String CodigoVisitas,
 			String CodigoEstatusPaciente,
-			String CodigoUsuario			
+			String CodigoUsuario,
+            String FechaUpdEstado
 	)
 	{
 		this.Proyecto = Proyecto;
@@ -62,8 +112,9 @@ public class Visitas implements KvmSerializable, Parcelable {
 		this.CodigoGrupoVisita = CodigoGrupoVisita;
 		this.CodigoVisita = CodigoVisita;
 		this.CodigoVisitas = CodigoVisitas;
-		this.CodigoEstatusPaciente= CodigoEstatusPaciente;
-		this.CodigoUsuario= CodigoUsuario;
+		this.CodigoEstatusPaciente = CodigoEstatusPaciente;
+		this.CodigoUsuario = CodigoUsuario;
+        this.FechaUpdEstado = FechaUpdEstado;
 	}
 
 
@@ -135,7 +186,9 @@ public class Visitas implements KvmSerializable, Parcelable {
         case 9:
             return CodigoEstatusPaciente;
         case 10:
-            return CodigoUsuario;            
+            return CodigoUsuario;
+        case 11:
+            return FechaUpdEstado;
         }
 		
 		return null;
@@ -143,7 +196,7 @@ public class Visitas implements KvmSerializable, Parcelable {
 	
 	@Override
 	public int getPropertyCount() {
-		return 11;
+		return 12;
 	}
 	
 	@SuppressWarnings("rawtypes")
@@ -186,13 +239,20 @@ public class Visitas implements KvmSerializable, Parcelable {
         case 8:
             info.type = PropertyInfo.STRING_CLASS;
             info.name = "CodigoVisitas";
+            break;
         case 9:
             info.type = PropertyInfo.STRING_CLASS;
-            info.name = "CodigoEstatusPaciente";            
+            info.name = "CodigoEstatusPaciente";
+            break;
         case 10:
             info.type = PropertyInfo.STRING_CLASS;
             info.name = "CodigoUsuario";            
-            break; 
+            break;
+        case 11:
+            info.type = PropertyInfo.STRING_CLASS;
+            info.name = "FechaUpdEstado";
+            break;
+
         default:break;
         }
 	}
@@ -233,7 +293,11 @@ public class Visitas implements KvmSerializable, Parcelable {
             break;
         case 10:
         	CodigoUsuario  = val.toString();
-            break;            
+            break;
+        case 11:
+            FechaUpdEstado  = val.toString();
+            break;
+        
         default:break;
         }
 	}

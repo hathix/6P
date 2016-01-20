@@ -1,6 +1,7 @@
 package org.ses.android.soap.tasks;
 
 import android.os.AsyncTask;
+import android.util.Base64;
 import android.util.Log;
 
 import org.ksoap2.SoapEnvelope;
@@ -13,22 +14,13 @@ import org.ksoap2.transport.HttpTransportSE;
 
 /**
  * Created by franciscorivera on 1/8/16.
- * Is initialized by a codigoPaciente (primary key corresponding to a participant,
- * then the doInBackground method takes a 400 byte array representing a fingerprint
- * and saves it to the database corresponding to the codigoPaciente. Returns
- * whatever message the SOAP API returns.
+ * Take codigoPaciente and fingerprint in string form
+ * and save fingerprint to the database corresponding to the codigoPaciente.
  */
-public class AgregarHuellaTask extends AsyncTask<Byte, Void, String> {
-
-    private String codigoPaciente;
-
-    public  AgregarHuellaTask(String codigoPaciente)
-    {
-        this.codigoPaciente = codigoPaciente;
-    }
+public class AgregarHuellaTask extends AsyncTask<String, String, String> {
 
     @Override
-    protected String doInBackground(Byte ... params)
+    protected String doInBackground(String ... params)
     {
         String resul = "";
 
@@ -39,8 +31,9 @@ public class AgregarHuellaTask extends AsyncTask<Byte, Void, String> {
         final String SOAP_ACTION = NAMESPACE+METHOD_NAME;
 
         SoapObject request = new SoapObject(NAMESPACE, METHOD_NAME);
-        request.addProperty("huella", params);
-        request.addProperty("codigo", codigoPaciente);
+
+        request.addProperty("CodigoPaciente", params[0]);
+        request.addProperty("Huella", params[1]);
 
         SoapSerializationEnvelope envelope =
                 new SoapSerializationEnvelope(SoapEnvelope.VER11);
@@ -57,9 +50,10 @@ public class AgregarHuellaTask extends AsyncTask<Byte, Void, String> {
 
             SoapPrimitive resultado_xml =(SoapPrimitive)envelope.getResponse();
             resul = resultado_xml.toString();
-            Log.i("mensaje", resul);
-
-
+            Log.i("AgregarHuellaTask", "resul: " + resul);
+            int intRes = Integer.parseInt(resul);
+            if(intRes < 1)
+                resul = "";
         }
         catch (Exception e)
         {

@@ -2,10 +2,15 @@ package org.ses.android.soap.database;
 
 import java.util.Hashtable;
 
+import org.ses.android.soap.models.Cacheable;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import org.ksoap2.serialization.KvmSerializable;
 import org.ksoap2.serialization.PropertyInfo;
 
-public class Visita implements KvmSerializable {
+public class Visita extends Cacheable implements KvmSerializable {
 
 	public int CodigoProyecto;
 	public int CodigoGrupoVisita;
@@ -18,6 +23,47 @@ public class Visita implements KvmSerializable {
 	public int DiasAntes;
 	public int DiasDespues;
     public int OrdenVisita;
+
+	public Visita(Cacheable cacheable) {
+		JSONObject jsonObject = cacheable.jsonObject;
+		try {
+			this.CodigoProyecto = jsonObject.getInt("CodigoProyecto");
+			this.CodigoGrupoVisita = jsonObject.getInt("CodigoGrupoVisita");
+			this.NombreGrupoVisita = jsonObject.getString("NombreGrupoVisita");
+			this.CodigoVisita = jsonObject.getInt("CodigoVisita");
+			this.DescripcionVisita = jsonObject.getString("DescripcionVisita");
+			this.GenerarAuto = jsonObject.getBoolean("GenerarAuto");
+			this.Dependiente = jsonObject.getInt("Dependiente");
+			this.DiasVisitaProx = jsonObject.getInt("DiasVisitaProx");
+			this.DiasAntes = jsonObject.getInt("DiasAntes");
+			this.DiasDespues = jsonObject.getInt("DiasDespues");
+			this.OrdenVisita = jsonObject.getInt("OrdenVisita");
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public JSONObject toJSON() {
+		JSONObject temp = new JSONObject();
+		try {
+			temp.put("CodigoProyecto", this.CodigoProyecto);
+			temp.put("CodigoGrupoVisita", this.CodigoGrupoVisita);
+			temp.put("NombreGrupoVisita", this.NombreGrupoVisita);
+			temp.put("CodigoVisita", this.CodigoVisita);
+			temp.put("DescripcionVisita", this.DescripcionVisita);
+			temp.put("GenerarAuto", this.GenerarAuto);
+			temp.put("Dependiente", this.Dependiente);
+			temp.put("DiasVisitaProx", this.DiasVisitaProx);
+			temp.put("DiasAntes", this.DiasAntes);
+			temp.put("DiasDespues", this.DiasDespues);
+			temp.put("OrdenVisita", this.OrdenVisita);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+
+		return temp;
+	}
 	
 	public Visita()
 	{
@@ -167,19 +213,19 @@ public class Visita implements KvmSerializable {
             break;
         case 2:
         	NombreGrupoVisita = val.toString();
-            break;
+			break;
         case 3:
         	CodigoVisita  = Integer.parseInt(val.toString());
-            break;
+			break;
         case 4:
         	DescripcionVisita  = val.toString();
             break;
         case 5:
         	GenerarAuto = Boolean.valueOf(val.toString());
-            break;
+			break;
         case 6:
         	Dependiente  = Integer.parseInt(val.toString());
-            break;
+			break;
 		case 7:
 			DiasVisitaProx = Integer.parseInt(val.toString());
 			break;

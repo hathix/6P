@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.FragmentActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View.OnClickListener;
@@ -21,6 +22,7 @@ import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Idreg;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.preferences.PreferencesActivity;
+import org.ses.android.soap.tasks.AgregarHuellaTask;
 import org.ses.android.soap.tasks.GenerarIdENRTask;
 import org.ses.android.soap.tasks.GenerarIdTAMTask;
 import org.ses.android.soap.tasks.MostrarTipoIDTask;
@@ -29,6 +31,7 @@ import org.ses.android.soap.tasks.ParticipantLoadTask;
 import org.ses.android.soap.tasks.RegistrarParticipanteTask;
 import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.tasks.TienePermisosTask;
+import org.ses.android.soap.utils.PreferencesManager;
 
 import java.util.concurrent.ExecutionException;
 
@@ -40,11 +43,16 @@ public class AddFingerprintExistingActivity extends BaseActivity {
     private EditText enterDni;
     private Button btnSearch;
 
+    // Tasks for search
     private AsyncTask<String, String, Participant> asyncTask;
     private Participant participant;
 
     String dni;
     String url = StringConexion.conexion;
+
+    // Tasks for adding fingerprint
+    AgregarHuellaTask agregarHuellaTask;
+    private AsyncTask<String, String, String> agregarHuella;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,7 +104,25 @@ public class AddFingerprintExistingActivity extends BaseActivity {
                                             new DialogInterface.OnClickListener() {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
-                                                    // TODO Call PutFingerprintTask
+                                                    String huella = Base64.encodeToString(
+                                                            PreferencesManager.getFingerprint(getBaseContext()),
+                                                            Base64.DEFAULT);
+                                                    agregarHuellaTask = new AgregarHuellaTask();
+                                                    agregarHuella = agregarHuellaTask.execute(participant.CodigoPaciente,
+                                                            huella, "bogusurl");
+
+                                                    try {
+                                                        String msg = agregarHuella.get();
+                                                        Log.e("agregarHuellaTask", msg);
+                                                    } catch (Exception e) {
+                                                        e.printStackTrace();
+                                                        Log.e("agregarHuellaTask", "failed");
+                                                    }
+
+                                                    // Now redirect to dashboard
+                                                    Intent intent = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
+                                                    intent.putExtra("Participant", participant);
+                                                    startActivity(intent);
                                                 }
                                             })
                                     .setNegativeButton(getString(R.string.answer_no),
