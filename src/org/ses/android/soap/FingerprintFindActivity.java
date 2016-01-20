@@ -25,6 +25,7 @@ import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.BuscarHuellaTask;
 import org.ses.android.soap.tasks.ObtenerIdPacienteTask;
 import org.ses.android.soap.tasks.ParticipantLoadTask;
+import org.ses.android.soap.tasks.ParticipantLoadFromCodigoTask;
 import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.utils.PreferencesManager;
 
@@ -244,13 +245,23 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 else if (fingerprint_inputted && !name_dob_inputted && !dni_valid) {
                     BuscarHuellaTask tarea = new BuscarHuellaTask();
                     asyncTask1 = tarea.execute(mPreferences.getString("Fingerprint",""));
-                    result = asyncTask1.get();
 
-                    if (result.equals("fingerprintNotFound")) {
-                        triggerNoMatch();
+                    try {
+                        result = asyncTask1.get();
+
+                        if (result.equals("fingerprintNotFound")) {
+                            triggerNoMatch();
+                        }
+                        else {
+                            successfulCodigoFound();
+                        }
                     }
-                    else {
-                        successfulCodigoFound();
+                    catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
                     }
                 }
 
@@ -258,13 +269,23 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 else if (name_dob_inputted && !fingerprint_inputted && !dni_valid) {
                     ObtenerIdPacienteTask tarea = new ObtenerIdPacienteTask();
                     asyncTask1 = tarea.execute(firstName,paternalLast,maternalLast,dob,"bogusurl");
-                    result = asyncTask1.get();
 
-                    if (result != null && result.length() == 36) {
-                        successfulCodigoFound();
+                    try {
+                        result = asyncTask1.get();
+
+                        if (result != null && result.length() == 36) {
+                            successfulCodigoFound();
+                        }
+                        else {
+                            triggerNoMatch();
+                        }
                     }
-                    else {
-                        triggerNoMatch();
+                    catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
                     }
                 }
 
@@ -299,14 +320,25 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
     private void successfulCodigoFound() {
         ParticipantLoadFromCodigoTask asyncTask = new ParticipantLoadFromCodigoTask();
-        asyncTask.execute(result);
-        participant = asyncTask.get();
+        asyncTask.execute(result, "bogusurl");
 
-        if (participant == null) {
-            triggerNoMatch();
-        } else {
-            triggerPatientFound();
+        try {
+            participant = asyncTask.get();
+
+            if (participant == null) {
+                triggerNoMatch();
+            } else {
+                triggerPatientFound();
+            }
         }
+        catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
     }
 }
 
