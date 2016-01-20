@@ -249,26 +249,8 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
                 }
                 // only fingerprint inputted
-                else if (fingerprint_inputted && !name_dob_inputted && !dni_valid) {
-                    BuscarHuellaTask tarea = new BuscarHuellaTask();
-                    asyncTask1 = tarea.execute(mPreferences.getString("Fingerprint",""));
-
-                    try {
-                        result = asyncTask1.get();
-
-                        if (result.equals("fingerprintNotFound")) {
-                            triggerNoMatch();
-                        } else {
-                            successfulCodigoFound();
-                        }
-                    }
-                    catch (InterruptedException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    } catch (ExecutionException e) {
-                        // TODO Auto-generated catch block
-                        e.printStackTrace();
-                    }
+                else if (fingerprint_inputted) {
+                    buscarHuella();
                 }
 
                 // only name and dob inputted
@@ -296,7 +278,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 }
 
                 // name, fingerprint inputted; not dni
-                else if (name_partially_inputted && !dni_valid) {
+                else if (fingerprint_inputted && name_partially_inputted && !dni_valid) {
                     BuscarHuellaFiltradoTask tarea = new BuscarHuellaFiltradoTask();
                     asyncTask1 = tarea.execute(mPreferences.getString("Fingerprint",""),firstName,
                             paternalLast,maternalLast);
@@ -304,8 +286,8 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                     try {
                         result = asyncTask1.get();
 
-                        if (result.equals("fingerprintNotFound")) {
-                            triggerNoMatch();
+                        if (result.equals("fingerprintNotFound") || result.equals("someMatchDidntWork")) {
+                            buscarHuella();
                         } else {
                             successfulCodigoFound();
                         }
@@ -320,10 +302,38 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
                 }
 
-                // dni inputted
-                else if (dni_valid) {
+                // dni, name, dob inputted; no fingerprint
+                else if (dni_valid && name_dob_inputted && !fingerprint_inputted) {
+                    try {
+                        ParticipantLoadTask tarea = new ParticipantLoadTask();
+                        Log.v("Loaded Task", "");
+                        asyncTask = tarea.execute(dni, url);
+                        Log.v("Executed task", "");
+                        participant = asyncTask.get();
 
+                        if (participant == null) {
+                            triggerNoMatch();
+                        } else {
+                            if (participant.Nombres.equals(firstName.toUpperCase()) &&
+                                    participant.ApellidoPaterno.equals(paternalLast.toUpperCase()) &&
+                                    participant.ApellidoMaterno.equals(maternalLast.toUpperCase())) {
+                                triggerPatientFound();
+                            }
+                            else {
+                                Toast.makeText(FingerprintFindActivity.this,
+                                        getString(R.string.info_not_matched),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
                 }
+                
             }
         });
     }
@@ -371,5 +381,30 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
         }
 
     }
+
+    private void buscarHuella()
+    {
+        BuscarHuellaTask tarea = new BuscarHuellaTask();
+        asyncTask1 = tarea.execute(mPreferences.getString("Fingerprint",""));
+
+        try {
+            result = asyncTask1.get();
+
+            if (result.equals("fingerprintNotFound") || result.equals("someMatchDidntWork")) {
+                triggerNoMatch();
+            } else {
+                successfulCodigoFound();
+            }
+        }
+        catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+    }
+
+
 }
 
