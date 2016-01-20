@@ -28,8 +28,13 @@ public class VisitUtilities extends BaseActivity {
     /**
      * Given an array of a patient's visits (which can be loaded from VisitasListTask),
      * finds their one pending visit, if any. (A patient can have at most 1 pending visit.)
+     * Returns null if there is no pending visit or if there are no visits at all.
      */
     public static Visitas getPendingVisit(Visitas[] patientVisits) {
+        if (patientVisits == null) {
+            return null;
+        }
+        
         for (Visitas visit : patientVisits) {
             String status = visit.EstadoVisita;
             if (status.equals(VISIT_PENDING_STATUS)) {
