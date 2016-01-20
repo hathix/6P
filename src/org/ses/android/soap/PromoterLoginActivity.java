@@ -469,9 +469,4 @@ public class PromoterLoginActivity extends Activity {
             Log.e("PromoterLoginActivity: loadProjectActivity", "Null Pointer Exception ");
         }
     }
-
-    // Load the list of "Visita"'s and cache it
-    private void LoadVisitaList() {
-
-    }
 }
