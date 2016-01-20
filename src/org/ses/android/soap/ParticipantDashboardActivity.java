@@ -15,6 +15,7 @@ import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.VisitasListTask;
+import org.ses.android.soap.utils.VisitUtilities;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -121,6 +122,9 @@ public class ParticipantDashboardActivity extends BaseActivity {
             Date date = new Date();
             String status;
 
+            // find pending visit
+            pendingVisitas = VisitUtilities.getPendingVisit(visits);
+
             // start counting
             if (visits != null && visits.length >= 1) {
                 for (Visitas visit : visits) {
@@ -151,11 +155,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                         } else if (date.after(monthAgo)) {
                             monthMissed++;
                         }
-                    } else {
-                        pendingVisitas = visit;
-                        Log.v(TAG, "adding pending visit");
                     }
-
 
                     if (visit.CodigoGrupoVisita.equals("3") && visit.CodigoVisita.equals("1")) {
                         first_visit = visit.FechaVisita;
