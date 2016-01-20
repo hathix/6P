@@ -34,7 +34,7 @@ public class VisitUtilities extends BaseActivity {
         if (patientVisits == null) {
             return null;
         }
-        
+
         for (Visitas visit : patientVisits) {
             String status = visit.EstadoVisita;
             if (status.equals(VISIT_PENDING_STATUS)) {

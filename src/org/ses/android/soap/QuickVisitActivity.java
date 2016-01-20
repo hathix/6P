@@ -42,12 +42,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
     private ImageView imgFingerprint;
     private Button btnScan;
     private Button btnConfirm;
-    Participant participant;
 
-    private Visitas[] visits;
-
-
-    String result;
     // TODO FingerprintSearchTask searchPatientFingerprint;
     private AsyncTask<String, String, String> search_fingerprint_task;
     private AsyncTask<String, String, String> asyncTaskString;
@@ -91,14 +86,14 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
         BuscarHuellaTask tarea = new BuscarHuellaTask();
         asyncTaskString = tarea.execute(mPreferences.getString("Fingerprint", ""));
         try {
-            result = asyncTaskString.get();
+            String result = asyncTaskString.get();
             if (result.equals("fingerprintNotFound") || (result.equals("someMatchDidntWork"))) {
                 Log.v("myActivity", "no fingerprint match found");
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.no_fingerprint_match),
                         Toast.LENGTH_SHORT).show();
             } else {
-                getParticipantVisits();
+                getParticipantVisits(result);
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -111,10 +106,9 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
     /**
      * Get participant visits from codigo. Uses ParticipantLoadFromCodigoTask.
      */
-    public void getParticipantVisits() {
-        String participant_result = ""; //?
+    public void getParticipantVisits(String patientCodigo) {
         ParticipantLoadFromCodigoTask participantTask = new ParticipantLoadFromCodigoTask();
-        participantTask.execute(participant_result, "bogusurl");
+        participantTask.execute(patientCodigo, "bogusurl");
         try {
             Participant participant = participantTask.get();
             if (participant == null) {
@@ -123,7 +117,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                 Visitas pending_visit = VisitUtilities.getPendingVisit(participant, getBaseContext());
                 if (pending_visit == null) {
                     //take to dash
-                    takeToDash();
+                    takeToDash(participant);
                 } else {
                     markMissedOrAttended(participant, pending_visit);
                 }
@@ -154,7 +148,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                         getString(R.string.visit_missed_error),
                         Toast.LENGTH_SHORT).show();
             }
-            takeToDash();
+            takeToDash(participant);
 
         } else {
             //mark attended
@@ -173,7 +167,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                         getString(R.string.visit_confirmed_error),
                         Toast.LENGTH_SHORT).show();
             }
-            takeToDash();
+            takeToDash(participant);
         }
     }
 
@@ -196,7 +190,10 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
         });
     }
 
-    public void takeToDash() {
+    /**
+     * Opens up the dashboard for a particular participant.
+     */
+    public void takeToDash(Participant participant) {
         Intent i = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
         i.putExtra("Participant", participant);
         startActivity(i);
