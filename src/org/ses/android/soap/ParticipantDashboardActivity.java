@@ -181,9 +181,10 @@ public class ParticipantDashboardActivity extends BaseActivity {
             btnLogVisit.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Intent visitas_intent = new Intent(ParticipantDashboardActivity.this, LogVisitActivity.class);
-                    visitas_intent.putExtra("Visitas", pendingVisitas);
-                    startActivity(visitas_intent);
+                    Intent visitasIntent = new Intent(ParticipantDashboardActivity.this, LogVisitActivity.class);
+                    visitasIntent.putExtra("Participant", participant);
+                    visitasIntent.putExtra("Visitas", pendingVisitas);
+                    startActivity(visitasIntent);
                 }
             });
             btnLogVisit.setVisibility(View.VISIBLE);
