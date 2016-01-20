@@ -2,8 +2,10 @@ package org.ses.android.soap.utils;
 
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import org.ses.android.soap.BaseActivity;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;
@@ -16,10 +18,8 @@ import java.util.concurrent.ExecutionException;
 /**
  * Created by neel on 1/20/16.
  */
-public class VisitUtilities {
-    private Visitas pending_visit;
-    private Visitas[] visits;
-    private SharedPreferences mPreferences;
+public class VisitUtilities extends BaseActivity {
+
     private static final String VISIT_PENDING_STATUS = "Pendiente";
     private static final String UPDATE_VISIT_SUCCESS_RESPONSE = "OK";
     private static final String PATIENT_STATUS_CODE = "1";
@@ -49,9 +49,13 @@ public class VisitUtilities {
     }
 
 
-    public Visitas getPendingVisit(Participant participant) {
+    public  Visitas getPendingVisit(Participant participant) {
         //get VisitasListTask visits for said patient:
         VisitasListTask tarea = new VisitasListTask();
+        Visitas pending_visit;
+        Visitas[] visits;
+
+        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         AsyncTask<String, String, Visitas[]> asyncTask;
         String codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         String codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");

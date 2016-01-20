@@ -107,9 +107,8 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                 Log.v("myActivity", "error getting participant visits");
             } else {
 
-                if (VisitUtilities.hasPendingVisit(participant)) {// this is a participant
+                VisitUtilities.getPendingVisit(participant); // this is a participant
 
-                }
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
