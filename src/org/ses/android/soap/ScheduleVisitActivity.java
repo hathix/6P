@@ -246,10 +246,7 @@ public class ScheduleVisitActivity extends BaseActivity {
                         String rawItemText = parent.getItemAtPosition(position).toString();
                         int dashIndex = rawItemText.indexOf("-", 0) - 1;
                         int rawVisitas = Integer.valueOf(rawItemText.substring(0, dashIndex).trim());
-                        // note that the list item contains the *last* visit number, we need
-                        // to increment it to get the *next* visit number
-                        int nextVisitas = rawVisitas + 1;
-                        selectedVisitas = String.valueOf(nextVisitas);
+                        selectedVisitas = String.valueOf(rawVisitas);
 
 //					if (!selectedVisitas.equals("0")) loadProyectoSpinner(selectedVisitas);
                         Log.i("Visita", "Visita: pos: " + selectedVisitas + " valor:" + parent.getItemAtPosition(position));

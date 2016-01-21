@@ -14,6 +14,7 @@ import org.ses.android.soap.database.Visita;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.EstadoVisitaTask;
 import org.ses.android.soap.tasks.StringConexion;
+import org.ses.android.soap.tasks.VisitaAllLoadTask;
 import org.ses.android.soap.tasks.VisitasListTask;
 
 import org.ses.android.soap.utils.PreferencesManager;
@@ -21,6 +22,7 @@ import org.ses.android.soap.utils.PreferencesManager;
 import android.content.Context;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -67,7 +69,8 @@ public class VisitUtilities extends BaseActivity {
         ArrayList<Cacheable> visitaListBeforeCasting = PreferencesManager.getCacheableList(context,
                 "visitaList");
         if (visitaListBeforeCasting == null) {
-            // TODO fix with caching or something
+            // this shouldn't happen b/c caching should work; raise warning if it does
+            Log.w("isPastVisitWindow", "visitaList not cached!");
             return false;
         }
 
@@ -102,6 +105,9 @@ public class VisitUtilities extends BaseActivity {
     }
 
 
+    /**
+     * Given a participant, returns their pending visit, if any.
+     */
     public static Visitas getPendingVisit(Participant participant, Context context) {
         //get VisitasListTask visits for said patient:
         VisitasListTask tarea = new VisitasListTask();
@@ -182,5 +188,37 @@ public class VisitUtilities extends BaseActivity {
             e.printStackTrace();
             return false;
         }
+    }
+
+    /**
+     * Caches the list of `Visita` objects for the selected projects. This is useful for, e.g.,
+     * calculating the window of a `Visitas`, which requires knowing its `Visita`. More generally,
+     * it's useful for finding the `Visita` of a `Visitas`.
+     *
+     * @param projectId also known as CodigoProyecto. Can be found in mPrefs.
+     * @param context
+     * @return true if the visita list was successfully loaded and cached, false otherwise.
+     */
+    public static boolean cacheVisitaList(String projectId, Context context) {
+        VisitaAllLoadTask visitaAllLoadTask = new VisitaAllLoadTask();
+        AsyncTask<String, String, Visita[]> visitaAllLoad =
+                visitaAllLoadTask.execute(projectId, "bogusurl");
+        Visita[] visitaList = null;
+        try {
+            visitaList = visitaAllLoad.get();
+            Log.v("visitaLoadAll", "loaded");
+        } catch (Exception e) {
+            e.printStackTrace();
+            Log.v("visitaLoadAll", "failed to load");
+        }
+
+        if (visitaList != null) {
+            // TODO Fix this when Internet returns
+            PreferencesManager.saveCacheableList(context, "visitaList",
+                    new ArrayList<Cacheable>(Arrays.asList(visitaList)));
+            return true;
+        }
+
+        return false;
     }
 }
