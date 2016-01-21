@@ -383,7 +383,7 @@
     <string name="dni_not_found">Could not find patient with this DNI.</string>
     <string name="patient_has_fingerprint">Adding Failed. That patient already has a fingerprint.</string>
     <string name="fingerprint_dni_not_matched">This fingerprint belongs to another patient.</string>
-    <string name="fingerprint_missing">Add fingerprint</string>
+    <string name="fingerprint_missing">Add Fingerprint</string>
     <string name="fingerprint_saved">Fingerprint Saved</string>
     <string name="fingerprint_save_failed">Fingerprint Save Failed. Please try again.</string>
     <string name="no_fingerprint_match">Found no participants with matching fingerprint. Please try again.</string>
