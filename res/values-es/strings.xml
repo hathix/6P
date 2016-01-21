@@ -410,4 +410,5 @@
     <string name="check_gps">Verificar que su GPS este activo</string>
     <string name="register_patient_submit">Guardar</string>
     <string name="next_visit">Siguiente Visita: </string>
+    <string name="fingerprint_dni_not_matched">Esta huella le pertenece a otro paciente.</string>
 </resources>

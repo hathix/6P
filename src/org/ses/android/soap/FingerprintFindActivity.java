@@ -347,13 +347,38 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                             if (HuellaExiste()) {
                                 buscarHuella();
                             }
-                            // if fingerprint does not exist in database, go to fingerprint confirm page
+                            // if codigopaciente is not associated with a fingerprint in database
+                            // check if the fingerprint is already in the database
+                            // if fingerprint is already in database, notify user
+                            // if fingerprint is not in database, go to fingerprint confirm activity
                             else {
-                                Intent intent = new Intent(v.getContext(),FingerprintConfirmActivity.class);
-                                intent.putExtra("Participant",participant);
-                                intent.putExtra("codigoPaciente",participant.CodigoPaciente);
-                                startActivity(intent);
-                                Log.i("Search","end");
+
+                                BuscarHuellaTask tarea1 = new BuscarHuellaTask();
+                                asyncTaskString = tarea1.execute(mPreferences.getString("Fingerprint",""));
+
+                                try {
+                                    result = asyncTaskString.get();
+
+                                    if (result.equals("fingerprintNotFound") || result.equals("someMatchDidntWork")) {
+                                        Intent intent = new Intent(v.getContext(),FingerprintConfirmActivity.class);
+                                        intent.putExtra("Participant",participant);
+                                        intent.putExtra("codigoPaciente",participant.CodigoPaciente);
+                                        startActivity(intent);
+                                        Log.i("Search", "end");
+                                    } else {
+                                        Toast.makeText(FingerprintFindActivity.this,
+                                                getString(R.string.fingerprint_dni_not_matched),
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                catch (InterruptedException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                } catch (ExecutionException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+
                             }
                         }
                     } catch (InterruptedException e) {
