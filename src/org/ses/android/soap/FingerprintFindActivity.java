@@ -230,6 +230,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
                 // only valid-length DNI inputted, search just off that
                 if (dniValid && !fingerprintInputted && !nameDOBInputted) {
+                    Log.i("Search", "Only DNI");
                     try {
                         ParticipantLoadTask tarea = new ParticipantLoadTask();
                         Log.v("Loaded Task", "");
@@ -253,6 +254,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 }
                 // name, fingerprint inputted; not dni
                 else if (fingerprintInputted && namePartiallyInputted && !dniValid) {
+                    Log.i("Search", "Fingerprint and Name Partially Inputted");
                     BuscarHuellaFiltradoTask tarea = new BuscarHuellaFiltradoTask();
                     asyncTaskString = tarea.execute(mPreferences.getString("Fingerprint",""),firstName,
                             paternalLast,maternalLast);
@@ -278,6 +280,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
                 // only name and dob inputted
                 else if (nameDOBInputted && !fingerprintInputted && !dniValid) {
+                    Log.i("Search","Name and DOB");
                     ObtenerIdPacienteTask tarea = new ObtenerIdPacienteTask();
                     asyncTaskString = tarea.execute(firstName,paternalLast,maternalLast,dob,"bogusurl");
 
@@ -302,6 +305,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
                 // dni, name, dob inputted; no fingerprint
                 else if (dniValid && nameDOBInputted && !fingerprintInputted) {
+                    Log.i("Search", "DNI, Name, and DOB");
                     try {
                         ParticipantLoadTask tarea = new ParticipantLoadTask();
                         Log.v("Loaded Task", "");
@@ -333,7 +337,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 }
                 // fingerprint and dni inputted
                 else if (fingerprintInputted && dniValid) {
-                    Log.i("Search","Fingerprint,DNI");
+                    Log.i("Search","Fingerprint and DNI");
                     try {
                         ParticipantLoadTask tarea = new ParticipantLoadTask();
                         Log.v("Loaded Task", "");
