@@ -11,6 +11,7 @@ import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.models.Cacheable;
 import org.ses.android.soap.database.Visita;
+import org.ses.android.soap.models.VisitWindow;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.EstadoVisitaTask;
 import org.ses.android.soap.tasks.StringConexion;
@@ -64,44 +65,66 @@ public class VisitUtilities extends BaseActivity {
      * Before start of visit window => false (it's OK if patient comes early to window)
      * In visit window => false
      * After end of visit window => true
+     * <p/>
+     * If there's some error, this will also return false.
      */
     public static boolean isPastVisitWindow(Visitas visit, Context context) {
+        VisitWindow window = visitWindowFromVisitas(visit, context);
+
+        if (window != null) {
+            return window.isPastEnd();
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Creates and returns a VisitWindow given a visit. If there is no Visita associated with the
+     * VisitWindow, or some other error occurs, returns null.
+     *
+     * @param visit   a Visitas object
+     * @param context from getBaseContext()
+     */
+    public static VisitWindow visitWindowFromVisitas(Visitas visit, Context context) {
+        Visita visita = visitaFromVisitas(visit, context);
+
+        if (visita != null) {
+            VisitWindow window = new VisitWindow(visit, visita);
+            return window;
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * Finds the Visita associated with a Visitas, or null if there is no Visita or some
+     * error occured.
+     *
+     * @param visit   a Visitas object
+     * @param context from getBaseContext()
+     */
+    public static Visita visitaFromVisitas(Visitas visit, Context context) {
+        // use the visita cache
         ArrayList<Cacheable> visitaListBeforeCasting = PreferencesManager.getCacheableList(context,
                 "visitaList");
         if (visitaListBeforeCasting == null) {
             // this shouldn't happen b/c caching should work; raise warning if it does
-            Log.w("isPastVisitWindow", "visitaList not cached!");
-            return false;
+            Log.w("visitWindowFromVisitas", "visitaList not cached!");
+            return null;
         }
 
+        // we need the visita to calculate the window; find the matching one
         for (Cacheable visitaBeforeCasting : visitaListBeforeCasting) {
             Visita visita = new Visita(visitaBeforeCasting);
             if (visita.CodigoProyecto == Integer.parseInt(visit.CodigoProyecto) &&
                     visita.CodigoGrupoVisita == Integer.parseInt(visit.CodigoGrupoVisita) &&
                     visita.CodigoVisita == Integer.parseInt(visit.CodigoVisita)) {
-                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                try {
-                    Date windowCenter = dateFormat.parse(visit.FechaVisita);
-                    Calendar c = Calendar.getInstance();
-
-                    c.setTime(windowCenter);
-                    c.add(Calendar.DATE, -1 * visita.DiasAntes);
-                    Date windowLeft = c.getTime();
-
-//                    c.setTime(windowCenter);
-//                    c.add(Calendar.DATE, visita.DiasDespues);
-//                    Date windowRight = c.getTime();
-
-                    // again, it's ok if we're early to the visit; this method should only
-                    // return true only if we are beyond the end of the window
-                    Date currentDate = new Date();
-                    return currentDate.after(windowLeft);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                return visita;
             }
         }
-        return false;
+
+        // no visita found, so no window can be calculated!
+        return null;
     }
 
 
