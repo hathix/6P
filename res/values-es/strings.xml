@@ -430,4 +430,8 @@
     <string name="visit_confirmed_success">Visita Confirmada</string>
     <string name="title_quick_visit">Registro de Visita Rápido</string>
     <string name="dni_found_save">Encontramos el paciente %1$s con este DNI. Salvarle la huella?</string>
+	<string name="no_fingerprint_match">No encontro participante con esa huella. Favor de intentar de nuevo.</string>
+	<string name="scan_first_time">Favor de escanear huella.</string>
+	<string name="visit_missed_error">Error en marcar la visita como falta!</string>
+	<string name="visit_missed_success">Paciente falto a una visita pendiente!</string>
 </resources>
