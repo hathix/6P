@@ -65,6 +65,9 @@ public class MainMenuActivity extends BaseActivity {
         btnRunODK = (Button) findViewById(R.id.btnRunODK_new);
         mAdminPreferences = this.getSharedPreferences(AdminPreferencesActivity.ADMIN_PREFERENCES, 0);
 
+        // TODO: missed visits activity
+        btnViewMissingAppts.setVisibility(View.GONE);
+
         btnCheckInRegisterUpdatePatient.setOnClickListener(new OnClickListener() {
 
             @Override
