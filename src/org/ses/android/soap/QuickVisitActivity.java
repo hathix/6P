@@ -65,6 +65,9 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
         imgFingerprint.setImageBitmap(grayBitmap);
 
         setListeners();
+
+        // Wipe presently stored fingerprint
+        PreferencesManager.removeFingerprint(getBaseContext());
     }
 
     @Override
@@ -77,7 +80,9 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
         byte[] buffer = ScanFingerPrintBase();
         if (buffer != null) {
             imgFingerprint.setImageBitmap(this.toGrayscale(buffer));
+            PreferencesManager.setFingerprint(getBaseContext(), mTemplate);
         }
+
     }
 
 
