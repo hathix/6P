@@ -184,6 +184,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 @Override
                 public void onClick(View v) {
                     Intent visitasIntent = new Intent(ParticipantDashboardActivity.this, LogVisitActivity.class);
+                    Log.v("PendingVisitas", pendingVisitas.CodigoVisitas);
                     visitasIntent.putExtra("Participant", participant);
                     visitasIntent.putExtra("Visitas", pendingVisitas);
                     startActivity(visitasIntent);

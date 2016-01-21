@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -40,6 +41,7 @@ public class LogVisitActivity extends BaseActivity {
 
         currentParticipant = getIntent().getParcelableExtra("Participant");
         pendingVisitas = getIntent().getParcelableExtra("Visitas");
+        Log.v("PendingVisitas2", pendingVisitas.CodigoVisitas);
 
         end_window = (TextView) findViewById(R.id.end_window);
         start_window = (TextView) findViewById(R.id.start_window);
