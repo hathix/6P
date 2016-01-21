@@ -99,7 +99,7 @@ public class ScheduleVisitActivity extends BaseActivity {
     private String selectedLocal;
     private String selectedProject;
     private String selectedGroup;
-    private String selectedVisita;
+    private String selectedVisitas;
     private String participantId;
     private String visitDate;
     private String visitTime;
@@ -152,21 +152,20 @@ public class ScheduleVisitActivity extends BaseActivity {
 
         // calculate all values for generarVisita
 
-
-//        private String selectedLocal;
-//        private String selectedProject;
-//        private String selectedGroup;
-//        private String selectedVisita;
-//        private String participantId;
-//        private String visitDate;
-//        private String visitTime;
-//        private String userId;
-//        private String url;
+        //        private String selectedLocal;
+        //        private String selectedProject;
+        //        private String selectedGroup;
+        //        private String selectedVisitas;
+        //        private String participantId;
+        //        private String visitDate;
+        //        private String visitTime;
+        //        private String userId;
+        //        private String url;
 
         selectedLocal = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
         selectedProject = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
         // selectedGroup set by spinners
-        // selectedVisita set by spinners
+        // selectedVisitas set by spinners
         participantId = currentParticipant.CodigoPaciente;
         // visitDate set when save button hit
         // visitTime set when save button hit
@@ -240,13 +239,17 @@ public class ScheduleVisitActivity extends BaseActivity {
                     @Override
                     public void onItemSelected(AdapterView<?> parent,
                                                android.view.View v, int position, long id) {
-                        // JT:20150817
-                        //selectedVisita = parent.getItemAtPosition(position).toString().substring(0,1);
-                        selectedVisita = parent.getItemAtPosition(position).toString();
-                        selectedVisita = selectedVisita.substring(0, selectedVisita.indexOf("-", 0) - 1).trim();
 
-//					if (!selectedVisita.equals("0")) loadProyectoSpinner(selectedVisita);
-                        Log.i("Visita", "Visita: pos: " + selectedVisita + " valor:" + parent.getItemAtPosition(position));
+                        // the text in the list item will be something like
+                        // "3 - V3"
+                        // extract the visit number (here, the "3") from the raw item text.
+                        String rawItemText = parent.getItemAtPosition(position).toString();
+                        int dashIndex = rawItemText.indexOf("-", 0) - 1;
+                        int rawVisitas = Integer.valueOf(rawItemText.substring(0, dashIndex).trim());
+                        selectedVisitas = String.valueOf(rawVisitas);
+
+//					if (!selectedVisitas.equals("0")) loadProyectoSpinner(selectedVisitas);
+                        Log.i("Visita", "Visita: pos: " + selectedVisitas + " valor:" + parent.getItemAtPosition(position));
                     }
 
                     @Override
@@ -454,16 +457,12 @@ public class ScheduleVisitActivity extends BaseActivity {
      */
     private void generateVisit() {
         GenerarVisitaTask tarea = new GenerarVisitaTask();
-        //int CodigoLocal, int CodigoProyecto, int CodigoVisita, string CodigoPaciente, string FechaVisita, string HoraCita, int CodigoUsuario
-
-        // TODO
-        // selectedGroup, selectedVisita, participantId are empty
 
         generarVisita = tarea.execute(
                 selectedLocal,
                 selectedProject,
                 selectedGroup,
-                selectedVisita,
+                selectedVisitas,
                 participantId,
                 visitDate,
                 visitTime,
@@ -489,14 +488,14 @@ public class ScheduleVisitActivity extends BaseActivity {
                 Log.i("Visita", "estadoENR: " + estadoENR.toString() + "--- estadoTAM: " + estadoTAM.toString());
 //                if (estadoENR.equals("1") || estadoTAM.equals("1")){
 //                    // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
-//                    if ((selectedGroup.equals("1") || selectedGroup.equals("2"))  && selectedVisita.equals("1")) {
+//                    if ((selectedGroup.equals("1") || selectedGroup.equals("2"))  && selectedVisitas.equals("1")) {
 //                        Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
 //                        Bundle extras = new Bundle();
 //                        extras.putString("selectedLocal", selectedLocal);
 //                        extras.putString("selectedProject", selectedProject);
 //                        extras.putString("participantId",participantId);
 //                        extras.putString("selectedGroup", selectedGroup);
-//                        extras.putString("selectedVisita",selectedVisita);
+//                        extras.putString("selectedVisitas",selectedVisitas);
 //                        extras.putString("userId",userId);
 //                        extras.putString("url",url);
 //                        pass.putExtras(extras);
@@ -505,30 +504,30 @@ public class ScheduleVisitActivity extends BaseActivity {
 //                }
                 Boolean asignarID = false;
                 if (estadoTAM.equals("1") && estadoENR.equals("1")) {
-                    if ((selectedGroup.equals("1") || selectedGroup.equals("2")) && selectedVisita.equals("1")) {
+                    if ((selectedGroup.equals("1") || selectedGroup.equals("2")) && selectedVisitas.equals("1")) {
                         asignarID = true;
                     }
                 }
                 //   if (estadoTAM.equals("0") && estadoENR.equals("1")){
-                //     if ((selectedGroup.equals("2"))  && selectedVisita.equals("1")) {
+                //     if ((selectedGroup.equals("2"))  && selectedVisitas.equals("1")) {
                 //            asignarID = true;
                 //     }
                 // }
                 if (estadoTAM.equals("1") && estadoENR.equals("0")) {
-                    if ((selectedGroup.equals("1") || selectedGroup.equals("2")) && selectedVisita.equals("1")) {
+                    if ((selectedGroup.equals("1") || selectedGroup.equals("2")) && selectedVisitas.equals("1")) {
                         asignarID = true;
                     }
                 }
                 if (asignarID.equals(true)) {
                     // Asignar IDs de acuerdo al tipo de visita (TAM o ENR)
-                    //if ((selectedGroup.equals("1") || selectedGroup.equals("2"))  && selectedVisita.equals("1")) {
+                    //if ((selectedGroup.equals("1") || selectedGroup.equals("2"))  && selectedVisitas.equals("1")) {
                     /* Intent pass = new Intent(getApplicationContext(),ParticipanteAsignarIdActivity.class);
                     Bundle extras = new Bundle();
                     extras.putString("selectedLocal", selectedLocal);
                     extras.putString("selectedProject", selectedProject);
                     extras.putString("participantId",participantId);
                     extras.putString("selectedGroup", selectedGroup);
-                    extras.putString("selectedVisita",selectedVisita);
+                    extras.putString("selectedVisitas",selectedVisitas);
                     extras.putString("userId",userId);
                     extras.putString("url",url);
                     extras.putString("estadoTAM",estadoTAM);
