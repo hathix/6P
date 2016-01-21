@@ -24,6 +24,7 @@ import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.BuscarHuellaTask;
 import org.ses.android.soap.tasks.ObtenerIdPacienteTask;
+import org.ses.android.soap.tasks.PacienteTieneHuellaTask;
 import org.ses.android.soap.tasks.ParticipantLoadTask;
 import org.ses.android.soap.tasks.ParticipantLoadFromCodigoTask;
 import org.ses.android.soap.tasks.BuscarHuellaFiltradoTask;
@@ -46,6 +47,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
     private AsyncTask<String, String, Participant> asyncTaskParticipant;
     private AsyncTask<String, String, String> asyncTaskString;
+    private AsyncTask<String, String, Integer> asyncTaskInteger;
     private SharedPreferences mPreferences;
 
     private int year, month, day;
@@ -53,6 +55,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
     private Participant participant;
     String dni, firstName, paternalLast, maternalLast, dob, result;
+    int exist;
 
     Boolean changedDOB = false;
 
@@ -227,6 +230,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
                 // only valid-length DNI inputted, search just off that
                 if (dniValid && !fingerprintInputted && !nameDOBInputted) {
+                    Log.i("Search", "Only DNI");
                     try {
                         ParticipantLoadTask tarea = new ParticipantLoadTask();
                         Log.v("Loaded Task", "");
@@ -250,6 +254,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                 }
                 // name, fingerprint inputted; not dni
                 else if (fingerprintInputted && namePartiallyInputted && !dniValid) {
+                    Log.i("Search", "Fingerprint and Name Partially Inputted");
                     BuscarHuellaFiltradoTask tarea = new BuscarHuellaFiltradoTask();
                     asyncTaskString = tarea.execute(mPreferences.getString("Fingerprint",""),firstName,
                             paternalLast,maternalLast);
@@ -275,6 +280,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
                 // only name and dob inputted
                 else if (nameDOBInputted && !fingerprintInputted && !dniValid) {
+                    Log.i("Search","Name and DOB");
                     ObtenerIdPacienteTask tarea = new ObtenerIdPacienteTask();
                     asyncTaskString = tarea.execute(firstName,paternalLast,maternalLast,dob,"bogusurl");
 
@@ -299,6 +305,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
                 // dni, name, dob inputted; no fingerprint
                 else if (dniValid && nameDOBInputted && !fingerprintInputted) {
+                    Log.i("Search", "DNI, Name, and DOB");
                     try {
                         ParticipantLoadTask tarea = new ParticipantLoadTask();
                         Log.v("Loaded Task", "");
@@ -328,9 +335,67 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                         e.printStackTrace();
                     }
                 }
+                // fingerprint and dni inputted
+                else if (fingerprintInputted && dniValid) {
+                    Log.i("Search","Fingerprint and DNI");
+                    try {
+                        ParticipantLoadTask tarea = new ParticipantLoadTask();
+                        Log.v("Loaded Task", "");
+                        asyncTaskParticipant = tarea.execute(dni, url);
+                        Log.v("Executed task", "");
+                        participant = asyncTaskParticipant.get();
+
+                        if (participant == null) {
+                            buscarHuella();
+                        } else {
+                            if (HuellaExiste()) {
+                                buscarHuella();
+                            }
+                            // if codigopaciente is not associated with a fingerprint in database
+                            // check if the fingerprint is already in the database
+                            // if fingerprint is already in database, notify user
+                            // if fingerprint is not in database, go to fingerprint confirm activity
+                            else {
+
+                                BuscarHuellaTask tarea1 = new BuscarHuellaTask();
+                                asyncTaskString = tarea1.execute(mPreferences.getString("Fingerprint",""));
+
+                                try {
+                                    result = asyncTaskString.get();
+
+                                    if (result.equals("fingerprintNotFound") || result.equals("someMatchDidntWork")) {
+                                        Intent intent = new Intent(v.getContext(),FingerprintConfirmActivity.class);
+                                        intent.putExtra("Participant",participant);
+                                        intent.putExtra("codigoPaciente",participant.CodigoPaciente);
+                                        startActivity(intent);
+                                    } else {
+                                        Toast.makeText(FingerprintFindActivity.this,
+                                                getString(R.string.fingerprint_dni_not_matched),
+                                                Toast.LENGTH_SHORT).show();
+                                    }
+                                }
+                                catch (InterruptedException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                } catch (ExecutionException e) {
+                                    // TODO Auto-generated catch block
+                                    e.printStackTrace();
+                                }
+
+                            }
+                        }
+                    } catch (InterruptedException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
 
                 // fingerprint inputted
-                if (fingerprintInputted) {
+                else if (fingerprintInputted) {
+                    Log.i("Search","Fingerprint");
                     buscarHuella();
                 }
 
@@ -403,6 +468,31 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    private boolean HuellaExiste() {
+        PacienteTieneHuellaTask tarea = new PacienteTieneHuellaTask();
+        asyncTaskInteger = tarea.execute(participant.CodigoPaciente);
+
+        try {
+            exist = asyncTaskInteger.get();
+            Log.i("HuellaExiste", String.valueOf(exist));
+
+            if (exist == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return false;
     }
 
 

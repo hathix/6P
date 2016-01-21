@@ -8,9 +8,9 @@ import android.util.Log;
 
 import org.ses.android.soap.BaseActivity;
 import org.ses.android.soap.database.Participant;
+import org.ses.android.soap.database.Visita;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.models.Cacheable;
-import org.ses.android.soap.database.Visita;
 import org.ses.android.soap.models.VisitWindow;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.EstadoVisitaTask;
@@ -18,16 +18,9 @@ import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.tasks.VisitaAllLoadTask;
 import org.ses.android.soap.tasks.VisitasListTask;
 
-import org.ses.android.soap.utils.PreferencesManager;
-
-import android.content.Context;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Created by neel on 1/20/16.

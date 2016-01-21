@@ -377,7 +377,7 @@
     <string name="cambio_server">Configuration</string>
 
     <string name="add_fingerprint_existing">Add Fingerprint to Existing Patient</string>
-    <string name="add_fingerprint_existing_header">Search for Existing Patient Using the Following Optional Fields:</string>
+    <string name="add_fingerprint_existing_header">Search for Existing Patient Using DNI:</string>
     <string name="action_home">Home</string>
     <string name="action_logout">Logout</string>
     <string name="confirm">Confirm</string>
@@ -385,6 +385,9 @@
     <string name="dni_found">DNI Found</string>
     <string name="dni_found_save">Found patient %1$s with this DNI. Save fingerprint to this patient?</string>
     <string name="dni_not_found">Could not find patient with this DNI.</string>
+    <string name="patient_has_fingerprint">Adding Failed. That patient already has a fingerprint.</string>
+    <string name="fingerprint_dni_not_matched">This fingerprint belongs to another patient.</string>
+    <string name="fingerprint_missing">Add Fingerprint</string>
     <string name="fingerprint_saved">Fingerprint Saved</string>
     <string name="fingerprint_save_failed">Fingerprint Save Failed. Please try again.</string>
     <string name="no_fingerprint_match">Found no participants with matching fingerprint. Please try again.</string>
@@ -393,6 +396,7 @@
     <string name="lista">View Missing Appointments</string>
     <string name="matches">Select Patient to Confirm</string>
     <string name="maternal_name">Maternal Name:</string>
+    <string name="name">Name</string>
     <string name="next_visit">Next Visit: </string>
     <string name="no_patient_found">No Patient Found</string>
     <string name="not_found">Not Found</string>
@@ -405,6 +409,7 @@
     <string name="register_patient_submit">Submit</string>
     <string name="save_visit">Save Visit</string>
     <string name="scan">Scan</string>
+    <string name="scan_first_time">Please scan fingerprint.</string>
     <string name="scan1">Scan again to confirm fingerprint.</string>
     <string name="scan2">Not confirmed. Please try again.</string>
     <string name="scan_again">Does not match previous scan; please scan again.</string>
