@@ -151,7 +151,7 @@ public class ScheduleVisitActivity extends BaseActivity {
         currentParticipant = getIntent().getParcelableExtra("Participant");
 
         names.setText(currentParticipant.getFullNameTitleCase());
-        Log.v("my activity", "null");
+
         mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
         codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
         codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
@@ -159,17 +159,21 @@ public class ScheduleVisitActivity extends BaseActivity {
         //Locale
         String local_name = mPreferences.getString(PreferencesActivity.KEY_LOCAL_NAME, "");
         local.setText(local_name);
+
+        // selLocal
         String local_id = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
         int intLocal = Integer.valueOf(local_id);
         selLocal = Integer.toString(intLocal);
-        Log.i("Visita", ",selLocal:" + selLocal + ",selProyecto:" + selProyecto);
+
         //Project
         String project_name = mPreferences.getString(PreferencesActivity.KEY_PROJECT_NAME, "");
         project.setText(project_name);
+
+        // selProyecto
         String project_id = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
         int intProject = Integer.valueOf(project_id);
         selProyecto = Integer.toString(intProject);
-        Log.i("Visita", ",selProyecto:" + selProyecto);
+        Log.i("Visita", "selLocal=" + selLocal + ", selProyecto=" + selProyecto);
 
         codigopaciente = mPreferences.getString("CodigoPaciente", "");
 

@@ -146,7 +146,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
      * @param visitas
      */
     public void markMissedOrAttended(Participant participant, Visitas visitas) {
-        if (VisitUtilities.isPastVisitWindow(visitas)) {
+        if (VisitUtilities.isPastVisitWindow(visitas, getBaseContext())) {
             //mark missed
             boolean missed_success = VisitUtilities.updateVisitStatus(
                     participant, visitas, VisitStatus.MISSED.value(),
