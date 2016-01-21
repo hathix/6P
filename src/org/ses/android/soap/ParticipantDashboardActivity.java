@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Participant;
@@ -16,13 +17,15 @@ import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.PacienteTieneHuellaTask;
 import org.ses.android.soap.tasks.VisitasListTask;
+import org.ses.android.soap.utils.VisitStatus;
+import org.ses.android.soap.utils.VisitUtilities;
 
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.concurrent.ExecutionException;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by anyway on 1/11/16.
@@ -139,6 +142,9 @@ public class ParticipantDashboardActivity extends BaseActivity {
             Date date = new Date();
             String status;
 
+            // find pending visit
+            pendingVisitas = VisitUtilities.getPendingVisit(visits);
+
             // start counting
             if (visits != null && visits.length >= 1) {
                 for (Visitas visit : visits) {
@@ -169,11 +175,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                         } else if (date.after(monthAgo)) {
                             monthMissed++;
                         }
-                    } else {
-                        pendingVisitas = visit;
-                        Log.v(TAG, "adding pending visit");
                     }
-
 
                     if (visit.CodigoGrupoVisita.equals("3") && visit.CodigoVisita.equals("1")) {
                         first_visit = visit.FechaVisita;
@@ -223,9 +225,26 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 // window) or the patient is in/before the window (so they can be checked in for it)
 
                 // TODO check if you're past the end of pendingVisitas's window
-                boolean isPastEndOfWindow = false;
+                boolean isPastEndOfWindow = VisitUtilities.isPastVisitWindow(pendingVisitas, getBaseContext());
                 if (isPastEndOfWindow) {
-                    // TODO mark missed visit
+                    boolean success = VisitUtilities.updateVisitStatus(
+                            participant, pendingVisitas, VisitStatus.MISSED.value(),
+                            mPreferences);
+
+                    String toastMessage;
+                    if (success) {
+                        // visit successfully confirmed
+                        // show toast with success
+                        toastMessage = getString(R.string.visit_missed_success);
+                    } else {
+                        // visit was not confirmed
+                        // show toast with error
+                        toastMessage = getString(R.string.visit_missed_error);
+                    }
+
+                    // show toast with success
+                    Toast.makeText(getApplicationContext(),
+                            toastMessage, Toast.LENGTH_LONG).show();
 
                     // show "schedule visit" button
                     btnScheduleVisit.setVisibility(View.VISIBLE);

@@ -17,6 +17,8 @@
     <string name="opc_cerrar_sesion">Close Session</string>
     <string name="visit_confirmed_success">Visit Confirmed</string> <!-- in log visit -->
     <string name="visit_confirmed_error">Error in Visit Confirmation</string> <!-- in log visit -->
+    <string name="visit_missed_success">Patient missed their pending visit!</string> <!-- in log visit -->
+    <string name="visit_missed_error">Error marking visit as missed!</string> <!-- in log visit -->
     <string name="login_usuario">User:</string>
     <string name="login_password">Password</string>
     <string name="login_logo">logo.jpg</string>
@@ -384,6 +386,7 @@
     <string name="fingerprint_missing">Add fingerprint</string>
     <string name="fingerprint_saved">Fingerprint Saved</string>
     <string name="fingerprint_save_failed">Fingerprint Save Failed. Please try again.</string>
+    <string name="no_fingerprint_match">Found no participants with matching fingerprint. Please try again.</string>
     <string name="first_name">First Name:</string>
     <string name="info_not_matched">Information does not match.</string>
     <string name="lista">View Missing Appointments</string>

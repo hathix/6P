@@ -33,10 +33,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 
+import org.ses.android.soap.models.Cacheable;
 import org.ses.android.soap.models.Locale;
 import org.ses.android.soap.models.Project;
+import org.ses.android.soap.database.Visita;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.LocaleLoadTask;
 import org.ses.android.soap.tasks.ProjectLoadTask;
@@ -46,7 +49,12 @@ import org.ses.android.soap.utils.AccountLogin;
 import org.ses.android.soap.utils.InternetConnection;
 import org.ses.android.soap.utils.OfflineStorageManager;
 import org.ses.android.seispapp120.R;
+import org.ses.android.soap.utils.VisitUtilities;
 import org.ses.android.soap.widgets.CambioServer;
+
+import org.ses.android.soap.tasks.VisitaAllLoadTask;
+
+import org.ses.android.soap.utils.PreferencesManager;
 
 /*
  * Written by Brendan
@@ -65,6 +73,7 @@ public class PromoterLoginActivity extends Activity {
     private Spinner spnProject;
     public ProgressDialog mProgressDialog;
     private static final int PROGRESS_DIALOG = 1;
+
     protected void onResume() {
         super.onResume();
         String username = AccountLogin.CheckAlreadyLoggedIn(this);
@@ -75,8 +84,8 @@ public class PromoterLoginActivity extends Activity {
         } else {
             //String myurl = getString(R.string.server_url);
             // Get the server from the settings
-         //   mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
-            String myurl =  StringConexion.conexion;
+            //   mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            String myurl = StringConexion.conexion;
 
             loadLocaleSpinner(myurl);
         }
@@ -106,7 +115,7 @@ public class PromoterLoginActivity extends Activity {
             Intent intent = new Intent(this, MainMenuActivity.class);
             startActivity(intent);
         } else {
-           // mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+            // mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
             String myurl = StringConexion.conexion;
             loadLocaleSpinner(myurl);
         }
@@ -129,16 +138,18 @@ public class PromoterLoginActivity extends Activity {
                     public void onItemSelected(AdapterView<?> parent,
                                                android.view.View v, int position, long id) {
                         String selLocal = Integer.toString(position);
-                        Log.i("PromoterLogin Activity","spnLocale.setOnItemSelectedListener: pos: "+ selLocal + " valor:" + parent.getItemAtPosition(position));
-                        if ( selLocal != null) {
-                           // mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+                        Log.i("PromoterLogin Activity", "spnLocale.setOnItemSelectedListener: pos: " + selLocal + " valor:" + parent.getItemAtPosition(position));
+                        if (selLocal != null) {
+                            // mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                             String myurl = StringConexion.conexion;
-                            if (!selLocal.equals("0")) loadProjectSpinner(selLocal,StringConexion.conexion);
+                            if (!selLocal.equals("0"))
+                                loadProjectSpinner(selLocal, StringConexion.conexion);
                         }
 
-                        Log.i("PromoterLogin Activity","Seleccionado(2): pos: "+ selLocal + " valor:" + parent.getItemAtPosition(position));
+                        Log.i("PromoterLogin Activity", "Seleccionado(2): pos: " + selLocal + " valor:" + parent.getItemAtPosition(position));
                         //Log.i("PromoterLigin Activity"," valor:" + selLocal);
                     }
+
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
                         Toast.makeText(getBaseContext(), getString(R.string.select_local),
@@ -159,9 +170,10 @@ public class PromoterLoginActivity extends Activity {
                     public void onItemSelected(AdapterView<?> parent,
                                                android.view.View v, int position, long id) {
                         String selProject = Integer.toString(position);
-                        //codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
-                        Log.i("PromoterLogin Activity","spnProject.setOnItemSelectedListener: pos: "+ selProject + " valor:" + parent.getItemAtPosition(position));
+                        //userId = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
+                        Log.i("PromoterLogin Activity", "spnProject.setOnItemSelectedListener: pos: " + selProject + " valor:" + parent.getItemAtPosition(position));
                     }
+
                     @Override
                     public void onNothingSelected(AdapterView<?> parent) {
                         Toast.makeText(getBaseContext(), getString(R.string.select_project),
@@ -233,21 +245,21 @@ public class PromoterLoginActivity extends Activity {
         if (username.equals("") || password.equals("") || locale_num.equals("0")) {
             String alertMsg = "";
             if (username.equals("")) {
-                alertMsg =getString(R.string.login_enter_user);
-            }else if (password.equals("")){
-                alertMsg =getString(R.string.login_enter_password);
-            }else{
-                alertMsg =getString(R.string.select_local);
+                alertMsg = getString(R.string.login_enter_user);
+            } else if (password.equals("")) {
+                alertMsg = getString(R.string.login_enter_password);
+            } else {
+                alertMsg = getString(R.string.select_local);
             }
 
-            Toast.makeText(this,alertMsg , Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, alertMsg, Toast.LENGTH_SHORT).show();
 
             progressBar.getHandler().post(new Runnable() {
                 public void run() {
                     progressBar.setVisibility(View.GONE);
                 }
             });
-        }else{
+        } else {
             String project_name = spnProject.getItemAtPosition(spnProject.getSelectedItemPosition()).toString();
             String project_num = null;
 
@@ -261,13 +273,12 @@ public class PromoterLoginActivity extends Activity {
 
             if (validLogin) {
                 SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-                String user_id = mPreferences.getString(PreferencesActivity.KEY_USERID,"");
-                String url =  StringConexion.conexion;
+                String user_id = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
+                String url = StringConexion.conexion;
                 try {
-                    boolean validPermission = AccountLogin.CheckPermission(user_id, locale_num, project_num,url);
+                    boolean validPermission = AccountLogin.CheckPermission(user_id, locale_num, project_num, url);
                     if (validPermission) {
-
-                        Intent intent=new Intent(PromoterLoginActivity.this,MainMenuActivity.class);
+                        Intent intent = new Intent(PromoterLoginActivity.this, MainMenuActivity.class);
                         startActivity(intent);
                         finish();
                         progressBar.getHandler().post(new Runnable() {
@@ -276,7 +287,7 @@ public class PromoterLoginActivity extends Activity {
                             }
                         });
 
-                    }else{
+                    } else {
                         AlertError("Login Error", getString(R.string.login_no_permission));
                         progressBar.getHandler().post(new Runnable() {
                             public void run() {
@@ -336,7 +347,7 @@ public class PromoterLoginActivity extends Activity {
         ArrayList<Locale> arrLocale = null;
         String[] locales;
         boolean connected = InternetConnection.checkConnection(this);
-        if (connected){
+        if (connected) {
             try {
                 // try server side first
                 loadLocale = localeTask.execute(url);
@@ -381,13 +392,12 @@ public class PromoterLoginActivity extends Activity {
             }
         } catch (JSONException e1) {
             Log.e("PromoterLoginActivity: loadLocaleActivity", " JSON Exception On Load");
-        }
-        catch(NullPointerException e1){
+        } catch (NullPointerException e1) {
             Log.e("PromoterLoginActivity: loadLocaleActivity", "Null Pointer Exception ");
         }
     }
 
-    public void loadProjectSpinner(String local,String url){
+    public void loadProjectSpinner(String local, String url) {
         ProjectLoadTask tareaProject = new ProjectLoadTask();
         AsyncTask loadProject;
         ArrayList<Project> arrProject = null;
@@ -395,10 +405,10 @@ public class PromoterLoginActivity extends Activity {
 
 
         boolean connected = InternetConnection.checkConnection(this);
-        if (connected){
+        if (connected) {
             try {
                 // try server side first
-                loadProject = tareaProject.execute(local,url);
+                loadProject = tareaProject.execute(local, url);
                 arrProject = (ArrayList<Project>) loadProject.get();
                 projects = Project.ConvertLocalObjsToStrings(arrProject);
 
@@ -440,8 +450,7 @@ public class PromoterLoginActivity extends Activity {
             }
         } catch (JSONException e1) {
             Log.e("PromoterLoginActivity: loadProjectActivity", " JSON Exception On Load");
-        }
-        catch(NullPointerException e1){
+        } catch (NullPointerException e1) {
             Log.e("PromoterLoginActivity: loadProjectActivity", "Null Pointer Exception ");
         }
     }

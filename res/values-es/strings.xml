@@ -224,11 +224,16 @@
     <string name="change_view">Cambiar Vista</string>
     <string name="show_sent_and_unsent_forms">Formuladios Enviados y No Enviados</string>
     <string name="show_unsent_forms">Solo formularios no enviados</string>
-    <string name="added_on_date_at_time">\'Agregado \' EEE, dd MMM, yyyy \'a las\' HH mm</string><!-- http //docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html -->
-    <string name="saved_on_date_at_time">\'Guardado \' EEE, dd MMM, yyyy \'a las\' HH mm</string><!-- http //docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html -->
-    <string name="finalized_on_date_at_time">\'Finalizado \' EEE, dd MMM, yyyy \'a las\' HH mm</string><!-- http //docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html -->
-    <string name="sent_on_date_at_time">\'Enviado \' EEE, dd MMM, yyyy \'a las\' HH mm</string><!-- http //docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html -->
-    <string name="sending_failed_on_date_at_time">\'Envio fallado \' EEE, dd MMM, yyyy \'a las\' HH mm</string><!-- http //docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html -->
+    <string name="added_on_date_at_time">\'Agregado \' EEE, dd MMM, yyyy \'a las\' HH mm</string>
+    <!-- http //docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html -->
+    <string name="saved_on_date_at_time">\'Guardado \' EEE, dd MMM, yyyy \'a las\' HH mm</string>
+    <!-- http //docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html -->
+    <string name="finalized_on_date_at_time">\'Finalizado \' EEE, dd MMM, yyyy \'a las\' HH mm</string>
+    <!-- http //docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html -->
+    <string name="sent_on_date_at_time">\'Enviado \' EEE, dd MMM, yyyy \'a las\' HH mm</string>
+    <!-- http //docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html -->
+    <string name="sending_failed_on_date_at_time">\'Envio fallado \' EEE, dd MMM, yyyy \'a las\' HH mm</string>
+    <!-- http //docs.oracle.com/javase/6/docs/api/java/text/SimpleDateFormat.html -->
     <string name="version">Version </string>
     <string name="parent_form_not_present">No se pudo editar este formulario por que su formulario matriz (en blanco) no se ha encontrado\n\nID de formulario  %1$s</string>
     <string name="launch_app">Iniciar</string>
@@ -414,4 +419,15 @@
     <string name="fingerprint_missing">Agregar huella</string>
     <string name="patient_has_fingerprint">No se pudo agregar. Paciente ya tiene una huella.</string>
     <string name="name">Nombre</string>
+    <string name="dni_found">DNI No Encontrado</string>
+    <string name="dni_not_found">Paciente con ese DNI no fue encontrado.</string>
+    <string name="fingerprint_save_failed">La huella no pudo ser salvada. Favor de intentar de nuevo.</string>
+    <string name="info_not_matched">La información no coincide.</string>
+    <string name="quick_check_in">Registro de Visita Rápido</string>
+    <string name="scan_first">Escanear antes de buscar.</string>
+    <string name="sched_visit">Programar Visita</string>
+    <string name="visit_confirmed_error"> Error en la Confirmación de la Visita</string>
+    <string name="visit_confirmed_success">Visita Confirmada</string>
+    <string name="title_quick_visit">Registro de Visita Rápido</string>
+    <string name="dni_found_save">Encontramos el paciente %1$s con este DNI. Salvarle la huella?</string>
 </resources>
