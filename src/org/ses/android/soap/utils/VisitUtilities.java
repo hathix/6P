@@ -58,7 +58,7 @@ public class VisitUtilities extends BaseActivity {
     /**
      * Determines if we are currently past the end of the given visit's window. This compares
      * the current time to the visit's scheduled time plus its buffer length.
-     *
+     * <p/>
      * Before start of visit window => false (it's OK if patient comes early to window)
      * In visit window => false
      * After end of visit window => true
@@ -66,6 +66,11 @@ public class VisitUtilities extends BaseActivity {
     public static boolean isPastVisitWindow(Visitas visit, Context context) {
         ArrayList<Cacheable> visitaListBeforeCasting = PreferencesManager.getCacheableList(context,
                 "visitaList");
+        if (visitaListBeforeCasting == null) {
+            // TODO fix with caching or something
+            return false;
+        }
+
         for (Cacheable visitaBeforeCasting : visitaListBeforeCasting) {
             Visita visita = new Visita(visitaBeforeCasting);
             if (visita.CodigoProyecto == Integer.parseInt(visit.CodigoProyecto) &&
@@ -113,8 +118,7 @@ public class VisitUtilities extends BaseActivity {
             visits = asyncTask.get();
             pending_visit = getPendingVisit(visits);
             return pending_visit;
-        }
-         catch (InterruptedException e) {
+        } catch (InterruptedException e) {
             e.printStackTrace();
             return null;
         } catch (ExecutionException e) {
