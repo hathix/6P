@@ -49,6 +49,10 @@ public class VisitUtilities {
     /**
      * Determines if we are currently past the end of the given visit's window. This compares
      * the current time to the visit's scheduled time plus its buffer length.
+     *
+     * Before start of visit window => false (it's OK if patient comes early to window)
+     * In visit window => false
+     * After end of visit window => true
      */
     public static boolean isPastVisitWindow(Visitas visit, Context context) {
         ArrayList<Cacheable> visitaListBeforeCasting = PreferencesManager.getCacheableList(context,
@@ -67,16 +71,14 @@ public class VisitUtilities {
                     c.add(Calendar.DATE, -1 * visita.DiasAntes);
                     Date windowLeft = c.getTime();
 
-                    c.setTime(windowCenter);
-                    c.add(Calendar.DATE, visita.DiasDespues);
-                    Date windowRight = c.getTime();
+//                    c.setTime(windowCenter);
+//                    c.add(Calendar.DATE, visita.DiasDespues);
+//                    Date windowRight = c.getTime();
 
+                    // again, it's ok if we're early to the visit; this method should only
+                    // return true only if we are beyond the end of the window
                     Date currentDate = new Date();
-                    if (currentDate.after(windowLeft) && currentDate.before(windowRight)) {
-                        return false;
-                    } else {
-                        return true;
-                    }
+                    return currentDate.after(windowLeft);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
