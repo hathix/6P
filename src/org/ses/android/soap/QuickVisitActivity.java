@@ -66,8 +66,8 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
 
         setListeners();
 
-        // Wipe presently stored fingerprint
-        PreferencesManager.removeFingerprint(getBaseContext());
+        wipe();
+
     }
 
     @Override
@@ -129,7 +129,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                             Toast.LENGTH_LONG).show();
 
 
-                    returnToQuick(participant);
+                    wipe();
                 } else {
                     markMissedOrAttended(participant, pending_visit);
                 }
@@ -168,8 +168,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                         getString(R.string.visit_missed_error),
                         Toast.LENGTH_LONG).show();
             }
-            returnToQuick(participant);
-
+            wipe();
         } else {
             //mark attended
             boolean attended_success = VisitUtilities.updateVisitStatus(
@@ -187,7 +186,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                         getString(R.string.visit_confirmed_error),
                         Toast.LENGTH_LONG).show();
             }
-            returnToQuick(participant);
+            wipe();
         }
     }
 
@@ -210,14 +209,20 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
         });
     }
 
+    public void wipe() {
+
+        // Wipe presently stored fingerprint
+        PreferencesManager.removeFingerprint(getBaseContext());
+    }
+
     /**
      * Opens up the dashboard for a particular participant.
-
-    public void takeToDash(Participant participant) {
-        Intent i = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
-        i.putExtra("Participant", participant);
-        startActivity(i);
-    }
+     * <p/>
+     * public void takeToDash(Participant participant) {
+     * Intent i = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
+     * i.putExtra("Participant", participant);
+     * startActivity(i);
+     * }
      */
 
     public void returnToQuick(Participant participant) {
@@ -225,6 +230,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
         i.putExtra("Participant", participant);
         startActivity(i);
     }
+
     /**
      * Asks the patient to re-scan their fingerprint.
      */
