@@ -20,6 +20,7 @@ import org.ses.android.soap.preferences.AdminPreferencesActivity;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.FormListTask;
 import org.ses.android.soap.utils.AppStatus;
+import org.ses.android.soap.utils.VisitUtilities;
 
 import java.util.concurrent.ExecutionException;
 
@@ -38,6 +39,7 @@ public class MainMenuActivity extends BaseActivity {
 
     @SuppressWarnings("unused")
     private SharedPreferences mAdminPreferences;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,18 +51,18 @@ public class MainMenuActivity extends BaseActivity {
 //        mainMenuMessageLabel.setText(appStatus.getVersionedAppName(this));
 
         if (AppStatus.getInstance(this).isOnline(this)) {
-            Toast.makeText(this,R.string.online,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.online, Toast.LENGTH_SHORT).show();
 
         } else {
 
-            Toast.makeText(this,R.string.no_connection,Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.no_connection, Toast.LENGTH_SHORT).show();
         }
 
-        btnCheckInRegisterUpdatePatient = (Button)findViewById(R.id.btnParticipanteOpciones);
-        btnQuickCheckIn = (Button)findViewById(R.id.btnQuickCheckIn);
-        btnViewMissingAppts = (Button)findViewById(R.id.btnLista);
-        btnCerrarSesion = (Button)findViewById(R.id.btnCerrarSesion_new);
-        btnRunODK = (Button)findViewById(R.id.btnRunODK_new);
+        btnCheckInRegisterUpdatePatient = (Button) findViewById(R.id.btnParticipanteOpciones);
+        btnQuickCheckIn = (Button) findViewById(R.id.btnQuickCheckIn);
+        btnViewMissingAppts = (Button) findViewById(R.id.btnLista);
+        btnCerrarSesion = (Button) findViewById(R.id.btnCerrarSesion_new);
+        btnRunODK = (Button) findViewById(R.id.btnRunODK_new);
         mAdminPreferences = this.getSharedPreferences(AdminPreferencesActivity.ADMIN_PREFERENCES, 0);
 
         btnCheckInRegisterUpdatePatient.setOnClickListener(new OnClickListener() {
@@ -85,34 +87,34 @@ public class MainMenuActivity extends BaseActivity {
 
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainMenuActivity.this,ViewMissedVisitsActivity.class);
+                Intent intent = new Intent(MainMenuActivity.this, ViewMissedVisitsActivity.class);
                 startActivity(intent);
             }
         });
 
+        // "Call SEISD" button
         btnRunODK.setOnClickListener(new OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 // Remote Server
                 // JT:04/06/2015
-                mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 String filterForms = "";
                 String url = mPreferences.getString(PreferencesActivity.KEY_SERVER_URL,
                         getString(R.string.default_server_url));
                 String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
                 String codigolocal = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
                 String codigoproyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
-                Log.i("menu", ".userId:"+codigousuario );
-                Log.i("menu", ".codigolocal:"+codigolocal );
-                Log.i("menu", ".codigoproyecto:"+codigoproyecto );
+                Log.i("menu", ".userId:" + codigousuario);
+                Log.i("menu", ".codigolocal:" + codigolocal);
+                Log.i("menu", ".codigoproyecto:" + codigoproyecto);
 
                 FormListTask formList = new FormListTask();
-                formListTask = formList.execute(codigousuario,codigolocal,codigoproyecto,url);
+                formListTask = formList.execute(codigousuario, codigolocal, codigoproyecto, url);
 
                 try {
                     filterForms = formList.get();
-                    Log.i("menu", ".filterForms:"+filterForms );
+                    Log.i("menu", ".filterForms:" + filterForms);
 
                     String Codigo = "002009-1234-2";
                     Intent intents = new Intent(Intent.ACTION_MAIN);
@@ -136,6 +138,12 @@ public class MainMenuActivity extends BaseActivity {
                 logOut();
             }
         });
+
+        // cache the Visita list for later use
+        // TODO: don't cache if we already cached it during this running of the app
+        mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
+        String codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
+        VisitUtilities.cacheVisitaList(codigoProyecto, getBaseContext());
     }
 
 }
