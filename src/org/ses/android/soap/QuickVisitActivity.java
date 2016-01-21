@@ -66,10 +66,9 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
 
         setListeners();
 
-        headerText.setText(R.string.scan_first_time);
+        wipe();
 
-        // Wipe presently stored fingerprint
-        PreferencesManager.removeFingerprint(getBaseContext());
+        headerText.setText(R.string.scan_first_time);
     }
 
     @Override
@@ -98,7 +97,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                 Log.v("myActivity", "no fingerprint match found");
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.no_fingerprint_match),
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
             } else {
                 getParticipantVisits(result);
             }
@@ -125,9 +124,16 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                 Visitas pending_visit = VisitUtilities.getPendingVisit(participant, getBaseContext());
                 if (pending_visit == null) {
                     //take to dash
-                    takeToDash(participant);
+                    //toast with error
+                    Toast.makeText(getApplicationContext(),
+                            getString(R.string.no_pending_visit),
+                            Toast.LENGTH_LONG).show();
+
+
+                    wipe();
                 } else {
                     markMissedOrAttended(participant, pending_visit);
+                    //Todo: schedule a new visit too!
                 }
 
             }
@@ -157,15 +163,14 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
             if (missed_success) {
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.visit_missed_success),
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
             } else {
                 // show toast with error
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.visit_missed_error),
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
             }
-            takeToDash(participant);
-
+            wipe();
         } else {
             //mark attended
             boolean attended_success = VisitUtilities.updateVisitStatus(
@@ -176,14 +181,14 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
             if (attended_success) {
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.visit_confirmed_success),
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
             } else {
                 // show toast with error
                 Toast.makeText(getApplicationContext(),
                         getString(R.string.visit_confirmed_error),
-                        Toast.LENGTH_SHORT).show();
+                        Toast.LENGTH_LONG).show();
             }
-            takeToDash(participant);
+            wipe();
         }
     }
 
@@ -206,11 +211,24 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
         });
     }
 
+    public void wipe() {
+
+        // Wipe presently stored fingerprint
+        PreferencesManager.removeFingerprint(getBaseContext());
+    }
+
     /**
      * Opens up the dashboard for a particular participant.
+     * <p/>
+     * public void takeToDash(Participant participant) {
+     * Intent i = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
+     * i.putExtra("Participant", participant);
+     * startActivity(i);
+     * }
      */
-    public void takeToDash(Participant participant) {
-        Intent i = new Intent(getBaseContext(), ParticipantDashboardActivity.class);
+
+    public void returnToQuick(Participant participant) {
+        Intent i = new Intent(getBaseContext(), QuickVisitActivity.class);
         i.putExtra("Participant", participant);
         startActivity(i);
     }

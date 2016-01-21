@@ -23,9 +23,14 @@
     <string name="login_password">Password</string>
     <string name="login_logo">logo.jpg</string>
     <string name="login_ingresar">Login</string>
+    <string name="confirm_log_visit">Confirm</string>
     <string name="opc_anterior">Before</string>
     <string name="opc_siguiente">Next</string>
     <string name="ingrese_doc_identidad">Identity Document</string>
+    <string name="schedule_date">Schedule Date</string>   <!-- Log_visit_layout -->
+    <string name="end_window">End of Window</string>   <!-- Log_visit_layout -->
+    <string name="start_window">Start of Window</string>   <!-- Log_visit_layout -->
+    <string name="middle_window">Middle of Window</string>   <!-- Log_visit_layout -->
     <string name="invalid_dni">Invalid DNI!</string>
     <string name="invalid_dob">Invalid date of birth!</string>
     <string name="nombres">Names:</string>
@@ -387,6 +392,7 @@
     <string name="fingerprint_saved">Fingerprint Saved</string>
     <string name="fingerprint_save_failed">Fingerprint Save Failed. Please try again.</string>
     <string name="no_fingerprint_match">Found no participants with matching fingerprint. Please try again.</string>
+    <string name="no_pending_visit">"No pending visit, try another patient"</string>
     <string name="first_name">First Name:</string>
     <string name="info_not_matched">Information does not match.</string>
     <string name="lista">View Missing Appointments</string>
