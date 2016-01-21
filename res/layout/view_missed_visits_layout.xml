@@ -26,7 +26,7 @@
         android:layout_marginTop="5dp"
         android:stretchColumns="0,1,2,3">
         <TableRow>
-            <TextView android:text="@string/nombres"
+            <TextView android:text="@string/name"
                 android:id="@+id/name" />
             <TextView
                 android:text="@string/date"

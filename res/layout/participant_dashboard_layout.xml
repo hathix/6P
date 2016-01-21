@@ -24,6 +24,16 @@
             android:paddingRight="10dp" >
 
             <Button
+                android:id="@+id/btn_add_fingerprint"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:textSize="21sp"
+                android:background="@drawable/botonblanco"
+                android:text="@string/fingerprint_missing"
+                android:layout_gravity="center_horizontal" />
+
+            <Button
                 android:id="@+id/sched_visit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

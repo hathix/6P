@@ -15,6 +15,7 @@ import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.preferences.PreferencesActivity;
+import org.ses.android.soap.tasks.PacienteTieneHuellaTask;
 import org.ses.android.soap.tasks.VisitasListTask;
 import org.ses.android.soap.utils.VisitStatus;
 import org.ses.android.soap.utils.VisitUtilities;
@@ -48,6 +49,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
     private TextView monthReceivedView;
     private TextView totalReceivedView;
     private Visitas pendingVisitas;
+    Button btnAddFingerprint;
     Button btnScheduleVisit;
     Button btnLogVisit;
     private static final String TAG = "MyActivity";
@@ -89,8 +91,24 @@ public class ParticipantDashboardActivity extends BaseActivity {
 
 
         // buttons
+        btnAddFingerprint = (Button) findViewById(R.id.btn_add_fingerprint);
         btnScheduleVisit = (Button) findViewById(R.id.sched_visit);
         btnLogVisit = (Button) findViewById(R.id.log_visit);
+
+        if (HuellaExiste())
+        {
+            btnAddFingerprint.setVisibility(View.GONE);
+        }
+
+        btnAddFingerprint.setOnClickListener(new View.OnClickListener() {
+            @Override
+        public void onClick(View v) {
+                Intent i = new Intent(getBaseContext(), FingerprintFirstActivity.class);
+                i.putExtra("Participant", participant);
+                i.putExtra("codigoPaciente", participant.CodigoPaciente);
+                startActivity(i);
+            }
+        });
 
 
         // TODO Calculate next visit date.
@@ -273,5 +291,31 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
+    }
+
+    private boolean HuellaExiste() {
+        PacienteTieneHuellaTask tarea = new PacienteTieneHuellaTask();
+        AsyncTask<String, String, Integer> asyncTaskInteger = tarea.execute(participant.CodigoPaciente);
+        int exist;
+
+        try {
+            exist = asyncTaskInteger.get();
+            Log.i("HuellaExiste", String.valueOf(exist));
+
+            if (exist == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }

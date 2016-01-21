@@ -1,37 +1,23 @@
 package org.ses.android.soap;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.preference.PreferenceManager;
-import android.support.v4.app.FragmentActivity;
-import android.util.Base64;
 import android.util.Log;
-import android.view.MenuItem;
 import android.view.View.OnClickListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.ses.android.seispapp120.R;
-import org.ses.android.soap.database.Idreg;
 import org.ses.android.soap.database.Participant;
-import org.ses.android.soap.preferences.PreferencesActivity;
-import org.ses.android.soap.tasks.AgregarHuellaTask;
-import org.ses.android.soap.tasks.GenerarIdENRTask;
-import org.ses.android.soap.tasks.GenerarIdTAMTask;
-import org.ses.android.soap.tasks.MostrarTipoIDTask;
 import org.ses.android.soap.tasks.ObtenerIdPacienteTask;
+import org.ses.android.soap.tasks.PacienteTieneHuellaTask;
 import org.ses.android.soap.tasks.ParticipantLoadTask;
-import org.ses.android.soap.tasks.RegistrarParticipanteTask;
 import org.ses.android.soap.tasks.StringConexion;
-import org.ses.android.soap.tasks.TienePermisosTask;
-import org.ses.android.soap.utils.PreferencesManager;
 
 import java.util.concurrent.ExecutionException;
 
@@ -50,10 +36,6 @@ public class AddFingerprintExistingActivity extends BaseActivity {
     String dni;
     String url = StringConexion.conexion;
 
-    // Tasks for adding fingerprint
-    AgregarHuellaTask agregarHuellaTask;
-    private AsyncTask<String, String, String> agregarHuella;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,8 +43,6 @@ public class AddFingerprintExistingActivity extends BaseActivity {
 
         enterDni = (EditText) findViewById(R.id.enter_dni);
         btnSearch = (Button) findViewById(R.id.btnSearch);
-
-        // potential TODO: implement other search fields in addition to DNI
 
         btnSearch.setOnClickListener(new OnClickListener() {
             @Override
@@ -105,20 +85,32 @@ public class AddFingerprintExistingActivity extends BaseActivity {
                                                 @Override
                                                 public void onClick(DialogInterface dialog, int id) {
                                                     try {
-                                                        // Redirect to confirm fingerprint
-                                                        Intent intent = new Intent(getBaseContext(), FingerprintConfirmActivity.class);
-                                                        intent.putExtra("Participant", participant);
-                                                        // get CodigoPaciente
-                                                        ObtenerIdPacienteTask obtenerIdPacienteTask = new ObtenerIdPacienteTask();
-                                                        AsyncTask<String, String, String> getIdPaciente =
-                                                                obtenerIdPacienteTask.execute(participant.Nombres,
-                                                                        participant.ApellidoPaterno,
-                                                                        participant.ApellidoMaterno,
-                                                                        participant.FechaNacimiento, url);
-                                                        String id_pac = getIdPaciente.get();
-                                                        Log.e("ObtainCodigo", id_pac);
-                                                        intent.putExtra("codigoPaciente", id_pac);
-                                                        startActivity(intent);
+
+                                                        if (HuellaExiste()) {
+                                                            Toast.makeText(AddFingerprintExistingActivity.this,
+                                                                    getString(R.string.patient_has_fingerprint),
+                                                                    Toast.LENGTH_SHORT).show();
+                                                        }
+
+                                                        else {
+
+                                                            // Redirect to confirm fingerprint
+                                                            Intent intent = new Intent(getBaseContext(), FingerprintConfirmActivity.class);
+                                                            intent.putExtra("Participant", participant);
+                                                            // get CodigoPaciente
+                                                            ObtenerIdPacienteTask obtenerIdPacienteTask = new ObtenerIdPacienteTask();
+                                                            AsyncTask<String, String, String> getIdPaciente =
+                                                                    obtenerIdPacienteTask.execute(participant.Nombres,
+                                                                            participant.ApellidoPaterno,
+                                                                            participant.ApellidoMaterno,
+                                                                            participant.FechaNacimiento, url);
+                                                            String id_pac = getIdPaciente.get();
+                                                            Log.e("ObtainCodigo", id_pac);
+                                                            intent.putExtra("codigoPaciente", id_pac);
+                                                            startActivity(intent);
+
+                                                        }
+
                                                     } catch (Exception e) {
                                                         e.printStackTrace();
                                                         Log.e("ObtainCodigo", "failed");
@@ -149,5 +141,30 @@ public class AddFingerprintExistingActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    private boolean HuellaExiste() {
+        PacienteTieneHuellaTask tarea = new PacienteTieneHuellaTask();
+        AsyncTask<String, String, Integer> asyncTaskInteger = tarea.execute(participant.CodigoPaciente);
+        int exist;
+        try {
+            exist = asyncTaskInteger.get();
+            Log.i("HuellaExiste", String.valueOf(exist));
+
+            if (exist == 1) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return false;
     }
 }
