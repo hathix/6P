@@ -37,6 +37,7 @@ import java.util.concurrent.ExecutionException;
 
 import org.ses.android.soap.models.Locale;
 import org.ses.android.soap.models.Project;
+import org.ses.android.soap.database.Visita;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.LocaleLoadTask;
 import org.ses.android.soap.tasks.ProjectLoadTask;
@@ -47,6 +48,10 @@ import org.ses.android.soap.utils.InternetConnection;
 import org.ses.android.soap.utils.OfflineStorageManager;
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.widgets.CambioServer;
+
+import org.ses.android.soap.tasks.VisitaAllLoadTask;
+
+import org.ses.android.soap.utils.PreferencesManager;
 
 /*
  * Written by Brendan
@@ -266,6 +271,23 @@ public class PromoterLoginActivity extends Activity {
                 try {
                     boolean validPermission = AccountLogin.CheckPermission(user_id, locale_num, project_num,url);
                     if (validPermission) {
+                        // TODO Add cacheing stuff here
+                        VisitaAllLoadTask visitaAllLoadTask = new VisitaAllLoadTask();
+                        AsyncTask<String, String, Visita[]> visitaAllLoad =
+                                visitaAllLoadTask.execute(project_num, "bogusurl");
+                        Visita[] visitaList = null;
+                        try {
+                            visitaList = visitaAllLoad.get();
+                            Log.e("visitaLoadAll", "loaded");
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                            Log.e("visitaLoadAll", "failed to load");
+                        }
+                        if (visitaList != null) {
+                            // TODO Fix this when Internet returns
+                            PreferencesManager.saveCacheableList(getBaseContext(), "visitaList",
+                                    new ArrayList<Visita>(visitaList));
+                        }
 
                         Intent intent=new Intent(PromoterLoginActivity.this,MainMenuActivity.class);
                         startActivity(intent);
@@ -444,5 +466,10 @@ public class PromoterLoginActivity extends Activity {
         catch(NullPointerException e1){
             Log.e("PromoterLoginActivity: loadProjectActivity", "Null Pointer Exception ");
         }
+    }
+
+    // Load the list of "Visita"'s and cache it
+    private void LoadVisitaList() {
+
     }
 }
