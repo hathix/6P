@@ -123,17 +123,17 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
             } else {
                 Visitas pending_visit = VisitUtilities.getPendingVisit(participant, getBaseContext());
                 if (pending_visit == null) {
-                    //take to dash
-                    //toast with error
+                    takeToSchedule(participant);
+                    /*
                     Toast.makeText(getApplicationContext(),
                             getString(R.string.no_pending_visit),
                             Toast.LENGTH_LONG).show();
+                     */
 
-
-                    wipe();
                 } else {
                     markMissedOrAttended(participant, pending_visit);
                     //Todo: schedule a new visit too!
+                    takeToSchedule(participant);
                 }
 
             }
@@ -226,6 +226,12 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
      * startActivity(i);
      * }
      */
+    public void takeToSchedule(Participant participant){
+        Intent i = new Intent(getBaseContext(), ScheduleVisitActivity.class);
+        i.putExtra("Participant", participant);
+        //take to schedule page
+        startActivity(i);
+    }
 
     public void returnToQuick(Participant participant) {
         Intent i = new Intent(getBaseContext(), QuickVisitActivity.class);
