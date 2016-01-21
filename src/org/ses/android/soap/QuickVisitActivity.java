@@ -133,6 +133,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
                     wipe();
                 } else {
                     markMissedOrAttended(participant, pending_visit);
+                    //Todo: schedule a new visit too!
                 }
 
             }
