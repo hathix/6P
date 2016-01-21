@@ -29,6 +29,7 @@
     <string name="schedule_date">Schedule Date</string>   <!-- Log_visit_layout -->
     <string name="end_window">End of Window</string>   <!-- Log_visit_layout -->
     <string name="start_window">Start of Window</string>   <!-- Log_visit_layout -->
+    <string name="middle_window">Middle of Window</string>   <!-- Log_visit_layout -->
     <string name="invalid_dni">Invalid DNI!</string>
     <string name="invalid_dob">Invalid date of birth!</string>
     <string name="nombres">Names:</string>

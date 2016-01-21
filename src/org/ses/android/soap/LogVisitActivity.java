@@ -1,5 +1,6 @@
 package org.ses.android.soap;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,6 +13,7 @@ import android.widget.Toast;
 import org.ses.android.seispapp120.R;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
+import org.ses.android.soap.models.VisitWindow;
 import org.ses.android.soap.utils.VisitStatus;
 import org.ses.android.soap.utils.VisitUtilities;
 
@@ -26,6 +28,8 @@ public class LogVisitActivity extends BaseActivity {
     private TextView end_window;
     private TextView start_window;
     private TextView schedule_date;
+    private TextView middle_window;
+    private VisitWindow visitWindow;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,11 +43,16 @@ public class LogVisitActivity extends BaseActivity {
 
         end_window = (TextView) findViewById(R.id.end_window);
         start_window = (TextView) findViewById(R.id.start_window);
+        middle_window = (TextView) findViewById(R.id.middle_window);
         schedule_date = (TextView) findViewById(R.id.schedule_date);
 
-        end_window.setText("End of Window: " ); //neels new function in VisitUtilities );
-        start_window.setText("Start of Window: " );//neels new function in VisitUtilities );
-        schedule_date.setText("Date of Scheduled Visit: " + pendingVisitas.FechaVisita );
+
+        visitWindow = VisitUtilities.visitWindowFromVisitas(pendingVisitas, getBaseContext());
+
+        end_window.setText("End of Window: " + visitWindow.getEnd()); //neels new function in VisitUtilities );
+        middle_window.setText("Middle of Window: " + visitWindow.getCenter());
+        start_window.setText("Start of Window: " + visitWindow.getStart());//neels new function in VisitUtilities );
+        schedule_date.setText("Date of Scheduled Visit: " + pendingVisitas.FechaVisita);
 
 
 
