@@ -26,6 +26,9 @@
     <string name="opc_anterior">Before</string>
     <string name="opc_siguiente">Next</string>
     <string name="ingrese_doc_identidad">Identity Document</string>
+    <string name="schedule_date">Schedule Date</string>   <!-- Log_visit_layout -->
+    <string name="end_window">End of Window</string>   <!-- Log_visit_layout -->
+    <string name="start_window">Start of Window</string>   <!-- Log_visit_layout -->
     <string name="invalid_dni">Invalid DNI!</string>
     <string name="invalid_dob">Invalid date of birth!</string>
     <string name="nombres">Names:</string>

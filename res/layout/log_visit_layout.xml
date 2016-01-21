@@ -13,4 +13,22 @@
         android:text="@string/log_visit"
         android:id="@+id/log_visit"
         android:layout_gravity="center_horizontal" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/schedule_date"
+        android:id="@+id/schedule_date" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/end_window"
+        android:id="@+id/end_window" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/start_window"
+        android:id="@+id/start_window" />
 </LinearLayout>

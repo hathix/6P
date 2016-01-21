@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.ses.android.seispapp120.R;
@@ -22,6 +23,9 @@ public class LogVisitActivity extends BaseActivity {
     private Participant currentParticipant;
     private Visitas pendingVisitas;
     private SharedPreferences mPreferences;
+    private TextView end_window;
+    private TextView start_window;
+    private TextView schedule_date;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +36,15 @@ public class LogVisitActivity extends BaseActivity {
 
         currentParticipant = getIntent().getParcelableExtra("Participant");
         pendingVisitas = getIntent().getParcelableExtra("Visitas");
+
+        end_window = (TextView) findViewById(R.id.end_window);
+        start_window = (TextView) findViewById(R.id.start_window);
+        schedule_date = (TextView) findViewById(R.id.schedule_date);
+
+        end_window.setText("End of Window: " ); //neels new function in VisitUtilities );
+        start_window.setText("Start of Window: " );//neels new function in VisitUtilities );
+        schedule_date.setText("Date of Scheduled Visit: " + pendingVisitas.FechaVisita );
+
 
 
         /*
