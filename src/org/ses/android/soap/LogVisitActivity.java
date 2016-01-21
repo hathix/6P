@@ -42,18 +42,20 @@ public class LogVisitActivity extends BaseActivity {
         currentParticipant = getIntent().getParcelableExtra("Participant");
         pendingVisitas = getIntent().getParcelableExtra("Visitas");
         Log.v("PendingVisitas2", pendingVisitas.CodigoVisitas);
-
+         /*
         end_window = (TextView) findViewById(R.id.end_window);
         start_window = (TextView) findViewById(R.id.start_window);
         middle_window = (TextView) findViewById(R.id.middle_window);
+        */
         schedule_date = (TextView) findViewById(R.id.schedule_date);
 
 
         visitWindow = VisitUtilities.visitWindowFromVisitas(pendingVisitas, getBaseContext());
-
+        /*
         end_window.setText("End of Window: " + visitWindow.getEnd()); //neels new function in VisitUtilities );
         middle_window.setText("Middle of Window: " + visitWindow.getCenter());
         start_window.setText("Start of Window: " + visitWindow.getStart());//neels new function in VisitUtilities );
+        */
         schedule_date.setText("Date of Scheduled Visit: " + pendingVisitas.FechaVisita);
 
 
@@ -61,7 +63,7 @@ public class LogVisitActivity extends BaseActivity {
         /*
          * when log button hit, call EstadoVisitaTask, TODO change FechaUpdVisita
          */
-        Button logButton = (Button) findViewById(R.id.log_visit);
+        Button logButton = (Button) findViewById(R.id.confirm_log_visit);
         logButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
