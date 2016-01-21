@@ -9,12 +9,22 @@ import android.util.Log;
 import org.ses.android.soap.BaseActivity;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
+import org.ses.android.soap.models.Cacheable;
+import org.ses.android.soap.database.Visita;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.EstadoVisitaTask;
 import org.ses.android.soap.tasks.StringConexion;
 import org.ses.android.soap.tasks.VisitasListTask;
 
+import org.ses.android.soap.utils.PreferencesManager;
+
+import android.content.Context;
+
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Created by neel on 1/20/16.
@@ -48,9 +58,41 @@ public class VisitUtilities extends BaseActivity {
     /**
      * Determines if we are currently past the end of the given visit's window. This compares
      * the current time to the visit's scheduled time plus its buffer length.
+     *
+     * Before start of visit window => false (it's OK if patient comes early to window)
+     * In visit window => false
+     * After end of visit window => true
      */
-    public static boolean isPastVisitWindow(Visitas visit) {
-        // TODO
+    public static boolean isPastVisitWindow(Visitas visit, Context context) {
+        ArrayList<Cacheable> visitaListBeforeCasting = PreferencesManager.getCacheableList(context,
+                "visitaList");
+        for (Cacheable visitaBeforeCasting : visitaListBeforeCasting) {
+            Visita visita = new Visita(visitaBeforeCasting);
+            if (visita.CodigoProyecto == Integer.parseInt(visit.CodigoProyecto) &&
+                    visita.CodigoGrupoVisita == Integer.parseInt(visit.CodigoGrupoVisita) &&
+                    visita.CodigoVisita == Integer.parseInt(visit.CodigoVisita)) {
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                try {
+                    Date windowCenter = dateFormat.parse(visit.FechaVisita);
+                    Calendar c = Calendar.getInstance();
+
+                    c.setTime(windowCenter);
+                    c.add(Calendar.DATE, -1 * visita.DiasAntes);
+                    Date windowLeft = c.getTime();
+
+//                    c.setTime(windowCenter);
+//                    c.add(Calendar.DATE, visita.DiasDespues);
+//                    Date windowRight = c.getTime();
+
+                    // again, it's ok if we're early to the visit; this method should only
+                    // return true only if we are beyond the end of the window
+                    Date currentDate = new Date();
+                    return currentDate.after(windowLeft);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         return false;
     }
 

@@ -207,7 +207,7 @@ public class ParticipantDashboardActivity extends BaseActivity {
                 // window) or the patient is in/before the window (so they can be checked in for it)
 
                 // TODO check if you're past the end of pendingVisitas's window
-                boolean isPastEndOfWindow = VisitUtilities.isPastVisitWindow(pendingVisitas);
+                boolean isPastEndOfWindow = VisitUtilities.isPastVisitWindow(pendingVisitas, getBaseContext());
                 if (isPastEndOfWindow) {
                     boolean success = VisitUtilities.updateVisitStatus(
                             participant, pendingVisitas, VisitStatus.MISSED.value(),
