@@ -109,7 +109,8 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
 
 
     /**
-     * Get participant visits from codigo. Uses ParticipantLoadFromCodigoTask.
+     * Loads all of a participant's visits, finds their pending visit (if any), and continues
+     * to the dashboard or to automatic logging as appropriate.
      */
     public void getParticipantVisits(String patientCodigo) {
         ParticipantLoadFromCodigoTask participantTask = new ParticipantLoadFromCodigoTask();
@@ -136,6 +137,14 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
     }
 
 
+    /**
+     * Given a participant and a visit, marks the participant as having missed the visit if
+     * they're late to it or as having attended the visit if they're early/on time. Redirects
+     * to the appropriate pages.
+     *
+     * @param participant
+     * @param visitas
+     */
     public void markMissedOrAttended(Participant participant, Visitas visitas) {
         if (VisitUtilities.isPastVisitWindow(visitas)) {
             //mark missed
@@ -204,6 +213,9 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
         startActivity(i);
     }
 
+    /**
+     * Asks the patient to re-scan their fingerprint.
+     */
     public void askForRescan() {
         headerText.setText(this.getString(R.string.scan_first));
         imgFingerprint.setImageBitmap(grayBitmap);
