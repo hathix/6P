@@ -93,6 +93,9 @@ public class VisitUtilities extends BaseActivity {
      * Finds the Visita associated with a Visitas, or null if there is no Visita or some
      * error occured.
      *
+     * WARNING(1/21/16): this method crashes a lot because `visit.CodigoGrupoVisita` is `null`!
+     * No idea why. Fix this before using it.
+     *
      * @param visit   a Visitas object
      * @param context from getBaseContext()
      */

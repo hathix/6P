@@ -11,6 +11,10 @@ import java.util.Date;
 
 /**
  * Encapsulates a Visitas and the window around it during which the patient can check in.
+ *
+ * WARNING(1/21/16): the constructor crashes a lot and has a lot of errors, especially parsing
+ * errors. Don't use this for now.
+ *
  * Created by neel on 1/21/16.
  */
 public class VisitWindow {
