@@ -50,7 +50,7 @@ public class LogVisitActivity extends BaseActivity {
         schedule_date = (TextView) findViewById(R.id.schedule_date);
 
 
-        visitWindow = VisitUtilities.visitWindowFromVisitas(pendingVisitas, getBaseContext());
+        //visitWindow = VisitUtilities.visitWindowFromVisitas(pendingVisitas, getBaseContext());
         /*
         end_window.setText("End of Window: " + visitWindow.getEnd()); //neels new function in VisitUtilities );
         middle_window.setText("Middle of Window: " + visitWindow.getCenter());
