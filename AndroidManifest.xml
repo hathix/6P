@@ -151,6 +151,15 @@
                 <category android:name="android.intent.category.ALTERNATIVE" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="org.ses.android.soap.FingerprintFirstActivity"
+            android:theme="@android:style/Theme.Holo.Light"
+            android:label="@string/title_scan_fingerprint" >
+            <intent-filter>
+                <action android:name="android.intent.action.FingerprintFirstActivity" />
+                <category android:name="android.intent.category.ALTERNATIVE" />
+            </intent-filter>
+        </activity>
 
         <activity
             android:theme="@android:style/Theme.Holo.Light"

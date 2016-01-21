@@ -380,6 +380,7 @@
     <string name="dni_found_save">Found patient %1$s with this DNI. Save fingerprint to this patient?</string>
     <string name="dni_not_found">Could not find patient with this DNI.</string>
     <string name="fingerprint_dni_not_matched">This fingerprint belongs to another patient.</string>
+    <string name="fingerprint_missing">Add fingerprint</string>
     <string name="fingerprint_saved">Fingerprint Saved</string>
     <string name="fingerprint_save_failed">Fingerprint Save Failed. Please try again.</string>
     <string name="first_name">First Name:</string>
@@ -399,6 +400,7 @@
     <string name="register_patient_submit">Submit</string>
     <string name="save_visit">Save Visit</string>
     <string name="scan">Scan</string>
+    <string name="scan_first_time">Please scan fingerprint.</string>
     <string name="scan1">Scan again to confirm fingerprint.</string>
     <string name="scan2">Not confirmed. Please try again.</string>
     <string name="scan_again">Does not match previous scan; please scan again.</string>

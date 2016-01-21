@@ -364,7 +364,6 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
                                         intent.putExtra("Participant",participant);
                                         intent.putExtra("codigoPaciente",participant.CodigoPaciente);
                                         startActivity(intent);
-                                        Log.i("Search", "end");
                                     } else {
                                         Toast.makeText(FingerprintFindActivity.this,
                                                 getString(R.string.fingerprint_dni_not_matched),
