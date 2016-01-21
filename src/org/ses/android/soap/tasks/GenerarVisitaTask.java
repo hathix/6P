@@ -13,7 +13,7 @@ public class GenerarVisitaTask extends AsyncTask<String, String, String> {
 
 
     /**
-     * Requires 9 arguments, of which the last one is a bogus URL.
+     * Requires 9 arguments, of which the last one is unused.
      */
     @Override
     protected String doInBackground(String... params) {
@@ -27,7 +27,6 @@ public class GenerarVisitaTask extends AsyncTask<String, String, String> {
 //            final String METHOD_NAME = "NuevoParticipanteSimple";
 //            final String SOAP_ACTION = "http://demo.sociosensalud.org.pe/NuevoParticipanteSimple";
 
-            String urlserver = params[8];
             final String NAMESPACE = StringConexion.conexion;
             final String URL = NAMESPACE + "WSSEIS/WSParticipante.asmx";
             final String METHOD_NAME = "InsertarVisitas";
