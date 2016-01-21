@@ -410,4 +410,15 @@
     <string name="check_gps">Verificar que su GPS este activo</string>
     <string name="register_patient_submit">Guardar</string>
     <string name="next_visit">Siguiente Visita: </string>
+	<string name="dni_found">DNI No Encontrado</string>
+	<string name="dni_not_found">Paciente con ese DNI no fue encontrado.</string>
+	<string name="fingerprint_save_failed">La huella no pudo ser salvada. Favor de intentar de nuevo.</string>
+	<string name="info_not_matched">La información no coincide.</string>
+	<string name="quick_check_in">Registro de Visita Rápido</string>
+	<string name="scan_first">Escanear antes de buscar.</string>
+	<string name="sched_visit">Programar Visita</string>
+	<string name="visit_confirmed_error"> Error en la Confirmación de la Visita</string>
+	<string name="visit_confirmed_success">Visita Confirmada</string>
+	<string name="title_quick_visit">Registro de Visita Rápido</string>
+	<string name="dni_found_save">Encontramos el paciente %1$s con este DNI. Salvarle la huella?</string>
 </resources>
