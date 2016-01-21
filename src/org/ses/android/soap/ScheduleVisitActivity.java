@@ -165,8 +165,8 @@ public class ScheduleVisitActivity extends BaseActivity {
 
         selectedLocal = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
         selectedProject = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
-        // DOES NOT SET selectedGroup
-        // DOES NOT SET selectedVisita
+        // selectedGroup set by spinners
+        // selectedVisita set by spinners
         participantId = currentParticipant.CodigoPaciente;
         // visitDate set when save button hit
         // visitTime set when save button hit
