@@ -17,6 +17,8 @@
     <string name="opc_cerrar_sesion">Close Session</string>
     <string name="visit_confirmed_success">Visit Confirmed</string> <!-- in log visit -->
     <string name="visit_confirmed_error">Error in Visit Confirmation</string> <!-- in log visit -->
+    <string name="visit_missed_success">Patient missed their pending visit!</string> <!-- in log visit -->
+    <string name="visit_missed_error">Error marking visit as missed!</string> <!-- in log visit -->
     <string name="login_usuario">User:</string>
     <string name="login_password">Password</string>
     <string name="login_logo">logo.jpg</string>
