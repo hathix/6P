@@ -66,6 +66,8 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
 
         setListeners();
 
+        headerText.setText(R.string.scan_first_time);
+
         // Wipe presently stored fingerprint
         PreferencesManager.removeFingerprint(getBaseContext());
     }
