@@ -1,9 +1,12 @@
 package org.ses.android.soap.utils;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
+import android.preference.PreferenceManager;
 import android.util.Log;
 
+import org.ses.android.soap.BaseActivity;
 import org.ses.android.soap.database.Participant;
 import org.ses.android.soap.database.Visitas;
 import org.ses.android.soap.models.Cacheable;
@@ -11,6 +14,7 @@ import org.ses.android.soap.database.Visita;
 import org.ses.android.soap.preferences.PreferencesActivity;
 import org.ses.android.soap.tasks.EstadoVisitaTask;
 import org.ses.android.soap.tasks.StringConexion;
+import org.ses.android.soap.tasks.VisitasListTask;
 
 import org.ses.android.soap.utils.PreferencesManager;
 
@@ -25,7 +29,7 @@ import java.util.Date;
 /**
  * Created by neel on 1/20/16.
  */
-public class VisitUtilities {
+public class VisitUtilities extends BaseActivity {
 
     private static final String VISIT_PENDING_STATUS = "Pendiente";
     private static final String UPDATE_VISIT_SUCCESS_RESPONSE = "OK";
@@ -34,8 +38,13 @@ public class VisitUtilities {
     /**
      * Given an array of a patient's visits (which can be loaded from VisitasListTask),
      * finds their one pending visit, if any. (A patient can have at most 1 pending visit.)
+     * Returns null if there is no pending visit or if there are no visits at all.
      */
     public static Visitas getPendingVisit(Visitas[] patientVisits) {
+        if (patientVisits == null) {
+            return null;
+        }
+
         for (Visitas visit : patientVisits) {
             String status = visit.EstadoVisita;
             if (status.equals(VISIT_PENDING_STATUS)) {
@@ -86,6 +95,34 @@ public class VisitUtilities {
         }
         return false;
     }
+
+
+    public static Visitas getPendingVisit(Participant participant, Context context) {
+        //get VisitasListTask visits for said patient:
+        VisitasListTask tarea = new VisitasListTask();
+        Visitas pending_visit;
+        Visitas[] visits;
+
+        SharedPreferences mPreferences = PreferenceManager.getDefaultSharedPreferences(context);
+        AsyncTask<String, String, Visitas[]> asyncTask;
+        String codigoUsuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
+        String codigoProyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
+        asyncTask = tarea.execute(participant.CodigoPaciente, codigoUsuario, codigoProyecto, "bogusurl");
+
+        try {
+            visits = asyncTask.get();
+            pending_visit = getPendingVisit(visits);
+            return pending_visit;
+        }
+         catch (InterruptedException e) {
+            e.printStackTrace();
+            return null;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 
     /**
      * Calls an async task to change a participant's status for a particular visit. That is,
