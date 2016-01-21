@@ -166,7 +166,7 @@ public class PromoterLoginActivity extends Activity {
                     public void onItemSelected(AdapterView<?> parent,
                                                android.view.View v, int position, long id) {
                         String selProject = Integer.toString(position);
-                        //codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
+                        //userId = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
                         Log.i("PromoterLogin Activity","spnProject.setOnItemSelectedListener: pos: "+ selProject + " valor:" + parent.getItemAtPosition(position));
                     }
                     @Override

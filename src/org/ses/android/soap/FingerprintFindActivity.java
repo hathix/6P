@@ -186,7 +186,7 @@ public class FingerprintFindActivity extends FingerprintBaseActivity {
 
                 mPreferences = PreferenceManager.getDefaultSharedPreferences(getBaseContext());
                 String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
-                Log.i("codigousuario", codigousuario);
+                Log.i("userId", codigousuario);
 
                 // Don't really need this, but whatever: tasks have not been properly updated
                 String url = StringConexion.conexion;

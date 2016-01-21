@@ -103,7 +103,7 @@ public class MainMenuActivity extends BaseActivity {
                 String codigousuario = mPreferences.getString(PreferencesActivity.KEY_USERID, "");
                 String codigolocal = mPreferences.getString(PreferencesActivity.KEY_LOCAL_ID, "");
                 String codigoproyecto = mPreferences.getString(PreferencesActivity.KEY_PROJECT_ID, "");
-                Log.i("menu", ".codigousuario:"+codigousuario );
+                Log.i("menu", ".userId:"+codigousuario );
                 Log.i("menu", ".codigolocal:"+codigolocal );
                 Log.i("menu", ".codigoproyecto:"+codigoproyecto );
 
