@@ -68,6 +68,7 @@ public class QuickVisitActivity extends FingerprintBaseActivity {
 
         wipe();
 
+        headerText.setText(R.string.scan_first_time);
     }
 
     @Override

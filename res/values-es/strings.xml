@@ -416,7 +416,7 @@
     <string name="register_patient_submit">Guardar</string>
     <string name="next_visit">Siguiente Visita: </string>
     <string name="fingerprint_dni_not_matched">Esta huella le pertenece a otro paciente.</string>
-    <string name="fingerprint_missing">Agregar huella</string>
+    <string name="fingerprint_missing">Agregar Huella</string>
     <string name="patient_has_fingerprint">No se pudo agregar. Paciente ya tiene una huella.</string>
     <string name="name">Nombre</string>
     <string name="dni_found">DNI No Encontrado</string>
