@@ -413,4 +413,5 @@
     <string name="fingerprint_dni_not_matched">Esta huella le pertenece a otro paciente.</string>
     <string name="fingerprint_missing">Agregar huella</string>
     <string name="patient_has_fingerprint">No se pudo agregar. Paciente ya tiene una huella.</string>
+    <string name="name">Nombre</string>
 </resources>

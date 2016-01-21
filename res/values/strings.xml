@@ -389,6 +389,7 @@
     <string name="lista">View Missing Appointments</string>
     <string name="matches">Select Patient to Confirm</string>
     <string name="maternal_name">Maternal Name:</string>
+    <string name="name">Name</string>
     <string name="next_visit">Next Visit: </string>
     <string name="no_patient_found">No Patient Found</string>
     <string name="not_found">Not Found</string>
